@@ -1804,9 +1804,9 @@ function renderMarketPlayers() {
 
             <!-- Archetype details with Strength & Tactical Sacrifice -->
             ${p.archetype ? (() => {
-              const coachPhilo = (activeScenario.tacticalPhilosophy || '').toLowerCase();
-              const isFit = p.archetype.preferredPhilosophy && coachPhilo.includes(p.archetype.preferredPhilosophy.toLowerCase());
-              const isMisfit = p.archetype.misfitPhilosophy && coachPhilo.includes(p.archetype.misfitPhilosophy.toLowerCase());
+              const coachPhilo = activeScenario.tacticalPhilosophy || '';
+              const isFit = typeof checkPhilosophyMatch === 'function' && checkPhilosophyMatch(p.archetype.preferredPhilosophy, coachPhilo);
+              const isMisfit = typeof checkPhilosophyMatch === 'function' && checkPhilosophyMatch(p.archetype.misfitPhilosophy, coachPhilo);
               return `
                 <div class="flex flex-wrap items-center gap-1.5 text-[10px]">
                   <span class="px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-bold flex items-center gap-1">
@@ -3637,11 +3637,13 @@ function runSeasonSimulation() {
 
     // SYNERGIE OU DISSONANCE DE L'ARCHÉTYPE AVEC LA PHILOSOPHIE DU COACH
     if (p.archetype) {
-      const coachPhilo = (activeScenario.tacticalPhilosophy || '').toLowerCase();
-      if (p.archetype.preferredPhilosophy && coachPhilo.includes(p.archetype.preferredPhilosophy.toLowerCase())) {
+      const coachPhilo = activeScenario.tacticalPhilosophy || '';
+      const isFit = typeof checkPhilosophyMatch === 'function' && checkPhilosophyMatch(p.archetype.preferredPhilosophy, coachPhilo);
+      const isMisfit = typeof checkPhilosophyMatch === 'function' && checkPhilosophyMatch(p.archetype.misfitPhilosophy, coachPhilo);
+      if (isFit) {
         tacticalSynergyDelta += 2;
         p.isArchetypeFit = true;
-      } else if (p.archetype.misfitPhilosophy && coachPhilo.includes(p.archetype.misfitPhilosophy.toLowerCase())) {
+      } else if (isMisfit) {
         tacticalSynergyDelta -= 3;
         p.isArchetypeMisfit = true;
       }

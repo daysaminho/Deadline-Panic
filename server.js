@@ -4,6 +4,7 @@ const { Server } = require('socket.io');
 const path = require('path');
 const { SCENARIOS } = require('./public/data/scenarios.js');
 const { generateProceduralMarket } = require('./public/data/generator.js');
+const { checkPhilosophyMatch } = require('./public/data/archetypes.js');
 
 const app = express();
 const server = http.createServer(app);
@@ -573,10 +574,10 @@ function simulateFullDuelSeason(room) {
 
       // Synergie ou dissonance d'archétype avec la philosophie du club
       if (pl.archetype) {
-        if (pl.archetype.preferredPhilosophy && coachPhilo.includes(pl.archetype.preferredPhilosophy.toLowerCase())) {
+        if (checkPhilosophyMatch(pl.archetype.preferredPhilosophy, coachPhilo)) {
           pts += 2;
           pl.isArchetypeFit = true;
-        } else if (pl.archetype.misfitPhilosophy && coachPhilo.includes(pl.archetype.misfitPhilosophy.toLowerCase())) {
+        } else if (checkPhilosophyMatch(pl.archetype.misfitPhilosophy, coachPhilo)) {
           pts -= 3;
           pl.isArchetypeMisfit = true;
         }

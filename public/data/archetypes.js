@@ -367,6 +367,18 @@ const PSYCHOLOGICAL_PROFILES = [
   }
 ];
 
+function checkPhilosophyMatch(targetPhilo, coachPhilo) {
+  if (!targetPhilo || !coachPhilo) return false;
+  const cp = coachPhilo.toLowerCase();
+  if (Array.isArray(targetPhilo)) {
+    return targetPhilo.some(item => typeof item === 'string' && cp.includes(item.toLowerCase()));
+  }
+  if (typeof targetPhilo === 'string') {
+    return cp.includes(targetPhilo.toLowerCase());
+  }
+  return false;
+}
+
 if (typeof module !== 'undefined') {
-  module.exports = { ARCHETYPES_BY_POS, PSYCHOLOGICAL_PROFILES };
+  module.exports = { ARCHETYPES_BY_POS, PSYCHOLOGICAL_PROFILES, checkPhilosophyMatch };
 }
