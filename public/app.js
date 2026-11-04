@@ -3,6 +3,41 @@
 // Double besoin obligatoire • 1 seule chance de négociation par joueur
 // ==============================================================
 
+// ==============================================================
+// GESTION UNIVERSELLE DES DRAPEAUX HD (PC WINDOWS & MOBILE)
+// ==============================================================
+function getCountryCodeFromEmoji(emoji) {
+  if (!emoji || typeof emoji !== 'string') return null;
+  if (emoji.includes('🏴󠁧󠁢󠁥󠁮󠁧󠁿')) return 'gb-eng';
+  if (emoji.includes('🏴󠁧󠁢󠁳󠁣󠁴󠁿')) return 'gb-sct';
+  if (emoji.includes('🏴󠁧󠁢󠁷󠁬󠁳󠁿')) return 'gb-wls';
+  const chars = [...emoji];
+  for (let i = 0; i < chars.length - 1; i++) {
+    const c1 = chars[i].codePointAt(0);
+    const c2 = chars[i + 1].codePointAt(0);
+    if (c1 >= 0x1F1E6 && c1 <= 0x1F1FF && c2 >= 0x1F1E6 && c2 <= 0x1F1FF) {
+      return (String.fromCharCode(c1 - 0x1F1E6 + 65) + String.fromCharCode(c2 - 0x1F1E6 + 65)).toLowerCase();
+    }
+  }
+  return null;
+}
+
+function renderFlag(flagEmoji, alt = '', cls = '') {
+  if (!flagEmoji) return '';
+  const code = getCountryCodeFromEmoji(flagEmoji);
+  if (!code) return flagEmoji;
+  return `<img src="https://flagcdn.com/24x18/${code}.png" srcset="https://flagcdn.com/48x36/${code}.png 2x" width="18" height="13.5" alt="${alt || code}" title="${alt || code}" class="inline-block align-middle rounded-xs shadow-xs ${cls}" style="display:inline-block; vertical-align: -1px; margin-right: 3px;" loading="lazy" />`;
+}
+
+function formatWithFlags(str) {
+  if (!str || typeof str !== 'string') return str || '';
+  let res = str;
+  if (res.includes('🏴󠁧󠁢󠁥󠁮󠁧󠁿')) res = res.replace(/🏴󠁧󠁢󠁥󠁮󠁧󠁿/g, renderFlag('🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'Angleterre'));
+  if (res.includes('🏴󠁧󠁢󠁳󠁣󠁴󠁿')) res = res.replace(/🏴󠁧󠁢󠁳󠁣󠁴󠁿/g, renderFlag('🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'Écosse'));
+  if (res.includes('🏴󠁧󠁢󠁷󠁬󠁳󠁿')) res = res.replace(/🏴󠁧󠁢󠁷󠁬󠁳󠁿/g, renderFlag('🏴󠁧󠁢󠁷󠁬󠁳󠁿', 'Pays de Galles'));
+  return res.replace(/([\uD83C][\uDDE6-\uDDFF]){2}/g, match => renderFlag(match));
+}
+
 // --- SOUND EFFECTS (WEB AUDIO API) ---
 const audio = {
   ctx: null,
@@ -730,7 +765,7 @@ function renderClubsPicker() {
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-1.5 sm:gap-2 mb-0.5 flex-wrap sm:flex-nowrap">
               <h4 class="font-display font-extrabold text-sm sm:text-base text-white group-hover:text-amber-400 transition truncate">${sc.club}</h4>
-              <span class="text-[11px] sm:text-xs text-gray-400 whitespace-nowrap">• ${sc.country}</span>
+              <span class="text-[11px] sm:text-xs text-gray-400 whitespace-nowrap inline-flex items-center gap-1">• ${formatWithFlags(sc.country)}</span>
               ${isDone ? '<span class="text-[9px] text-emerald-400 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20 whitespace-nowrap">Validé ✅</span>' : ''}
             </div>
             ${sc.tacticalPhilosophy ? `
@@ -1201,7 +1236,7 @@ function openScenarioBriefing(id, isRandom = false) {
 
   document.getElementById('briefing-logo').textContent = activeScenario.logo;
   document.getElementById('briefing-club-name').textContent = activeScenario.club;
-  document.getElementById('briefing-country').textContent = activeScenario.country;
+  document.getElementById('briefing-country').innerHTML = formatWithFlags(activeScenario.country);
   document.getElementById('briefing-budget').textContent = `${activeScenario.budget} M€`;
   document.getElementById('briefing-objective').textContent = activeScenario.objective;
   document.getElementById('briefing-coach-demand').textContent = `"${activeScenario.coachDemand}"`;
@@ -1783,7 +1818,7 @@ function renderMarketPlayers() {
           <div>
             <div class="flex flex-wrap items-center gap-1.5 mb-1">
               <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded border ${subPosColors[subKey] || 'bg-gray-800 text-gray-300'} whitespace-nowrap">${subKey} • ${subLabel}</span>
-              ${p.nationality ? `<span class="text-sm shrink-0" title="${p.nationality.name}">${p.nationality.flag}</span>` : ''}
+              ${p.nationality ? `<span class="inline-flex items-center shrink-0" title="${p.nationality.name}">${renderFlag(p.nationality.flag, p.nationality.name)}</span>` : ''}
               ${p.versatility ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 whitespace-nowrap">🔄 ${p.versatility}</span>` : ''}
               ${isTarget ? `<span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 whitespace-nowrap">⭐ Cible : ${getNeedDisplay(matchingNeed).shortLabel}</span>` : ''}
               ${satisfiesOrigin ? `<span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 whitespace-nowrap">📍 Filière Coach</span>` : ''}
@@ -1877,7 +1912,7 @@ function renderSignedPlayers() {
         <div class="bg-gray-800/80 border border-gray-700/80 rounded-xl p-3 flex items-center justify-between">
           <div class="min-w-0 flex-1 mr-2">
             <h5 class="text-xs font-bold text-white flex items-center gap-1.5 truncate">
-              ${p.nationality ? `<span>${p.nationality.flag}</span>` : ''}
+              ${p.nationality ? `<span class="inline-flex items-center shrink-0">${renderFlag(p.nationality.flag, p.nationality.name)}</span>` : ''}
               <span class="truncate">${p.name}</span>
             </h5>
             <span class="text-[10px] text-amber-400 block truncate">${p.reputation} • ${p.subPosName || p.subPos || p.pos}${p.nationality ? ' • ' + p.nationality.name : ''}${p.versatility ? ' (' + p.versatility + ')' : ''}</span>
@@ -2165,11 +2200,10 @@ function startNegotiation(playerId) {
     usedClause: false
   };
 
-  const natFlag = p.nationality ? `${p.nationality.flag} ` : '';
   const natName = p.nationality ? ` • ${p.nationality.name}` : '';
   document.getElementById('nego-contact-name').textContent = activeNegotiation.sellerName;
   document.getElementById('nego-contact-sub').innerHTML = 'Club Vendeur • <span class="text-emerald-400 font-semibold">En direct</span>';
-  document.getElementById('nego-player-name').textContent = `${natFlag}${p.name}`;
+  document.getElementById('nego-player-name').innerHTML = `${p.nationality ? renderFlag(p.nationality.flag, p.nationality.name) + ' ' : ''}${p.name}`;
 
   let repHtml = `${p.reputation} • ${p.subPosName || p.subPos || p.pos}${natName}${p.versatility ? ' (' + p.versatility + ')' : ''}`;
   if (p.archetype) {
@@ -4329,7 +4363,7 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
         <div class="bg-gray-800/80 border border-gray-700/80 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
           <div class="flex-1">
             <h5 class="text-sm font-bold text-white flex flex-wrap items-center gap-1.5">
-              ${p.nationality ? `<span>${p.nationality.flag}</span>` : ''}
+              ${p.nationality ? `<span class="inline-flex items-center shrink-0">${renderFlag(p.nationality.flag, p.nationality.name)}</span>` : ''}
               <span>${p.name}</span>
               <span class="text-xs text-amber-400 font-normal">(${p.reputation} • ${p.subPosName || p.subPos || p.pos}${p.nationality ? ' • ' + p.nationality.name : ''}${p.versatility ? ' • ' + p.versatility : ''} • ${p.agreedPrice.toFixed(1)} M€)</span>
             </h5>
