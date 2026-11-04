@@ -2,8 +2,18 @@
 <html lang="fr" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>DEADLINE DAY PANIC - Football Manager Rapide</title>
+
+  <!-- PWA & Mobile Web App Meta -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0a0d14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Deadline Panic">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicon.png">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts: Inter & Outfit & Chakra Petch -->
@@ -39,6 +49,26 @@
     ::-webkit-scrollbar-track { background: #0b0f19; }
     ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+
+    /* Modal Active Scroll Lock & Mobile Background Scroll Bleed Prevention */
+    html.modal-locked, body.modal-locked {
+      overflow: hidden !important;
+      height: 100% !important;
+      touch-action: none;
+      -webkit-overflow-scrolling: auto;
+    }
+    
+    .modal-overlay {
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+    }
+
+    .modal-dialog-content {
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+    }
     
     @keyframes pulseTimer {
       0%, 100% { transform: scale(1); }
@@ -162,6 +192,16 @@
         </button>
       </div>
 
+    </div>
+
+    <!-- PWA INSTALL PROMPT PILL (MOBILE & DESKTOP) -->
+    <div class="mt-8 text-center">
+      <button onclick="triggerPwaInstall()" class="btn-pwa-install inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gray-900/90 hover:bg-gray-800 border border-amber-400/40 hover:border-amber-400 text-xs font-bold text-amber-300 transition shadow-lg transform hover:scale-105">
+        <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        <span>📲 Installer sur Smartphone (Application PWA)</span>
+      </button>
     </div>
   </main>
 
@@ -320,7 +360,7 @@
   </main>
 
   <!-- OVERLAY COMPTE À REBOURS DUEL (3.. 2.. 1.. GO !) -->
-  <div id="duel-countdown-overlay" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center hidden">
+  <div id="duel-countdown-overlay" class="modal-overlay fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center hidden">
     <div class="text-center animate-bounce">
       <span class="text-xs uppercase font-extrabold tracking-widest text-amber-400 block mb-2">DÉPART DU MERCATO DANS</span>
       <span id="duel-countdown-text" class="text-8xl sm:text-9xl font-display font-black text-white">3</span>
@@ -439,8 +479,8 @@
   </main>
 
   <!-- MODAL: CHOIX DU CLUB APRÈS SÉLECTION DE DIFFICULTÉ -->
-  <div id="modal-club-picker" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-[#111827] border border-gray-700 rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+  <div id="modal-club-picker" class="modal-overlay fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="modal-dialog-content bg-[#111827] border border-gray-700 rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto">
       <button onclick="closeClubPicker()" class="absolute top-4 right-4 sm:top-5 sm:right-5 text-gray-400 hover:text-white text-xl">✕</button>
 
       <div class="text-center mb-6">
@@ -546,8 +586,8 @@
   </main>
 
   <!-- SCREEN 2: SCENARIO BRIEFING (RESPONSIVE MOBILE SAFE) -->
-  <div id="modal-briefing" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-[#111827] border border-gray-700 rounded-2xl sm:rounded-3xl max-w-lg w-full p-4 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+  <div id="modal-briefing" class="modal-overlay fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="modal-dialog-content bg-[#111827] border border-gray-700 rounded-2xl sm:rounded-3xl max-w-lg w-full p-4 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto">
       
       <!-- HEADER WITH CONTEXTUAL NAVIGATION -->
       <div class="flex items-center justify-between border-b border-gray-800 pb-3 sm:pb-4 mb-4 sm:mb-5">
@@ -781,8 +821,8 @@
   </main>
 
   <!-- SCREEN 4: SMS NEGOTIATION MODAL -->
-  <div id="modal-negotiation" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="w-full max-w-md bg-[#0f172a] border-2 border-gray-700 rounded-[32px] overflow-hidden shadow-2xl flex flex-col h-[92vh] max-h-[660px] relative">
+  <div id="modal-negotiation" class="modal-overlay fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="modal-dialog-content w-full max-w-md bg-[#0f172a] border-2 border-gray-700 rounded-[32px] overflow-hidden shadow-2xl flex flex-col h-[92vh] max-h-[660px] relative">
       
       <!-- TOP STATUS BAR -->
       <div class="bg-gray-900 border-b border-gray-800 p-4 flex items-center justify-between">
@@ -854,8 +894,8 @@
   </div>
 
   <!-- MODAL: MEDICAL EXAM & ANOMALY DILEMMA (HIGH STAKES CHOICE !) -->
-  <div id="modal-medical-dilemma" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-[#111827] border-2 border-amber-500/60 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative text-center">
+  <div id="modal-medical-dilemma" class="modal-overlay fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="modal-dialog-content bg-[#111827] border-2 border-amber-500/60 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative text-center max-h-[92vh] overflow-y-auto">
       <div class="w-16 h-16 rounded-3xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-3xl mx-auto mb-4">
         🩺
       </div>
@@ -884,8 +924,8 @@
   </div>
 
   <!-- MODAL: DEADLINE MADNESS (COUP DE THÉÂTRE DES 90 DERNIÈRES SECONDES) -->
-  <div id="modal-deadline-madness" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-[#111827] border-2 border-amber-400 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl text-center relative animate-pulse">
+  <div id="modal-deadline-madness" class="modal-overlay fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="modal-dialog-content bg-[#111827] border-2 border-amber-400 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl text-center relative animate-pulse max-h-[92vh] overflow-y-auto">
       <span class="text-4xl block mb-2" id="madness-icon">🚨</span>
       <span class="text-[10px] font-extrabold uppercase px-3 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30">
         DERNIÈRE LIGNE DROITE • COUP DE THÉÂTRE
@@ -903,8 +943,8 @@
   </div>
 
   <!-- MODAL: CRISE DE SAISON / SÉISME EN DIRECT (INTERRUPTION DE SIMULATION) -->
-  <div id="modal-crisis" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-gradient-to-b from-[#111827] to-[#090d16] border-2 border-red-500/80 rounded-3xl max-w-lg w-full p-5 sm:p-7 shadow-[0_0_50px_rgba(239,68,68,0.35)] text-center relative overflow-hidden">
+  <div id="modal-crisis" class="modal-overlay fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="modal-dialog-content bg-gradient-to-b from-[#111827] to-[#090d16] border-2 border-red-500/80 rounded-3xl max-w-lg w-full p-5 sm:p-7 shadow-[0_0_50px_rgba(239,68,68,0.35)] text-center relative overflow-y-auto max-h-[92vh]">
       
       <!-- Top glowing beacon badge -->
       <div class="flex items-center justify-center gap-2 mb-3">
@@ -1123,8 +1163,8 @@
   </main>
 
   <!-- MODAL: DUEL CHOC DIRECT (ALLER & RETOUR SYNCHRONISÉS) -->
-  <div id="modal-duel-confrontation" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-gray-900 border-2 border-amber-400 rounded-2xl sm:rounded-3xl max-w-md w-full p-4 sm:p-6 shadow-2xl text-center relative">
+  <div id="modal-duel-confrontation" class="modal-overlay fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="modal-dialog-content bg-gray-900 border-2 border-amber-400 rounded-2xl sm:rounded-3xl max-w-md w-full p-4 sm:p-6 shadow-2xl text-center relative max-h-[92vh] overflow-y-auto">
       <span class="text-xs font-black uppercase tracking-widest text-amber-400 block mb-2" id="duel-match-title">
         ⚔️ CHOC DIRECT ⚔️
       </span>
@@ -1155,8 +1195,8 @@
   </div>
 
   <!-- MODAL: OFFRE DE REVANCHE REÇUE -->
-  <div id="modal-duel-rematch-offer" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-gray-900 border-2 border-indigo-500 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl text-center relative">
+  <div id="modal-duel-rematch-offer" class="modal-overlay fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="modal-dialog-content bg-gray-900 border-2 border-indigo-500 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl text-center relative max-h-[92vh] overflow-y-auto">
       <span class="text-4xl block mb-3 animate-bounce">⚔️</span>
       <h3 class="text-2xl font-display font-extrabold text-white mb-2">Revanche Demandée !</h3>
       <p id="duel-rematch-offer-text" class="text-xs text-gray-300 leading-relaxed mb-6">
@@ -1175,8 +1215,8 @@
   </div>
 
   <!-- MODAL: PASSAGE DEVANT LA DNCG (J22 AUDIT FINANCIER) -->
-  <div id="modal-duel-dncg" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-gray-900 border-2 border-amber-500 rounded-2xl sm:rounded-3xl max-w-xl w-full p-4 sm:p-6 shadow-2xl text-center relative">
+  <div id="modal-duel-dncg" class="modal-overlay fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="modal-dialog-content bg-gray-900 border-2 border-amber-500 rounded-2xl sm:rounded-3xl max-w-xl w-full p-4 sm:p-6 shadow-2xl text-center relative max-h-[92vh] overflow-y-auto">
       <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-black uppercase tracking-wider mb-2">
         ⚖️ COMMISSION DE CONTRÔLE FINANCIER (DNCG) • J22
       </div>
@@ -1201,8 +1241,8 @@
   </div>
 
   <!-- MODAL: DILEMME D'AVANT-DERBY (GUERRE PSYCHOLOGIQUE & ULTRAS) -->
-  <div id="modal-duel-derby-dilemma" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-gray-900 border-2 border-rose-500/80 rounded-2xl sm:rounded-3xl max-w-md w-full p-4 sm:p-6 shadow-2xl text-center relative">
+  <div id="modal-duel-derby-dilemma" class="modal-overlay fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="modal-dialog-content bg-gray-900 border-2 border-rose-500/80 rounded-2xl sm:rounded-3xl max-w-md w-full p-4 sm:p-6 shadow-2xl text-center relative max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-gray-800 pb-2 mb-3 text-xs">
         <span class="text-rose-400 font-extrabold uppercase flex items-center gap-1.5" id="duel-derby-dilemma-tag">
           <span>💣</span> AVANT-MATCH CHOC DIRECT
@@ -1247,10 +1287,96 @@
 
   <!-- Load Data Files & App Logic with Cache Buster -->
   <script src="/socket.io/socket.io.js"></script>
-  <script src="data/archetypes.js?v=2.4"></script>
-  <script src="data/generator.js?v=2.4"></script>
-  <script src="data/scenarios.js?v=2.4"></script>
-  <script src="duel.js?v=2.4"></script>
-  <script src="app.js?v=2.4"></script>
+  <script src="data/archetypes.js?v=2.5"></script>
+  <script src="data/generator.js?v=2.5"></script>
+  <script src="data/scenarios.js?v=2.5"></script>
+  <script src="duel.js?v=2.5"></script>
+  <script src="app.js?v=2.5"></script>
+
+  <!-- PWA & Modal Scroll Lock System -->
+  <script>
+    // 1. REGISTER PWA SERVICE WORKER
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('[PWA] Service Worker actif:', reg.scope))
+          .catch(err => console.warn('[PWA] Erreur SW:', err));
+      });
+    }
+
+    // 2. PWA INSTALL PROMPT
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      document.querySelectorAll('.btn-pwa-install').forEach(btn => btn.classList.remove('hidden'));
+    });
+
+    window.triggerPwaInstall = function() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then((choice) => {
+          if (choice.outcome === 'accepted') {
+            console.log('[PWA] App installée par le manager !');
+          }
+          deferredInstallPrompt = null;
+        });
+      } else {
+        alert("📲 Pour installer l'application :\n\n• Sur iPhone / iPad (Safari) : touchez l'icône de partage (carré avec flèche vers le haut) puis 'Sur l'écran d'accueil'.\n• Sur Android / Chrome : ouvrez les 3 points du navigateur puis 'Installer l'application' ou 'Ajouter à l'écran d'accueil'.");
+      }
+    };
+
+    // 3. BULLETPROOF MODAL SCROLL LOCK (ANTI SCROLL BLEED)
+    (function initModalScrollLock() {
+      const modalIds = [
+        'modal-club-picker', 'modal-briefing', 'modal-negotiation',
+        'modal-medical-dilemma', 'modal-deadline-madness', 'modal-crisis',
+        'modal-duel-confrontation', 'modal-duel-rematch-offer', 'modal-duel-dncg',
+        'modal-duel-derby-dilemma', 'duel-countdown-overlay'
+      ];
+
+      let savedScrollY = 0;
+      let isLocked = false;
+
+      function checkAndApplyLock() {
+        const hasOpenModal = modalIds.some(id => {
+          const el = document.getElementById(id);
+          return el && !el.classList.contains('hidden') && el.offsetParent !== null;
+        });
+
+        if (hasOpenModal && !isLocked) {
+          savedScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+          document.documentElement.classList.add('modal-locked');
+          document.body.classList.add('modal-locked');
+          document.body.style.top = `-${savedScrollY}px`;
+          document.body.style.position = 'fixed';
+          document.body.style.width = '100%';
+          isLocked = true;
+        } else if (!hasOpenModal && isLocked) {
+          document.documentElement.classList.remove('modal-locked');
+          document.body.classList.remove('modal-locked');
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.width = '';
+          window.scrollTo(0, savedScrollY);
+          isLocked = false;
+        }
+      }
+
+      const observer = new MutationObserver(checkAndApplyLock);
+      document.addEventListener('DOMContentLoaded', () => {
+        modalIds.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            observer.observe(el, { attributes: true, attributeFilter: ['class', 'style'] });
+          }
+        });
+        checkAndApplyLock();
+      });
+
+      // Global hook for manual trigger
+      window.syncModalLock = checkAndApplyLock;
+    })();
+  </script>
 </body>
 </html>
