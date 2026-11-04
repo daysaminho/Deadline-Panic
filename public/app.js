@@ -1291,43 +1291,51 @@ function backToPickerFromBriefing() {
 // ==============================================================
 
 function startMercatoRun() {
-  if (!activeScenario) return;
+  if (!activeScenario) {
+    showToast('Erreur : Aucun club sélectionné !', 'error');
+    return;
+  }
 
-  clearInterval(realtimeInterval);
-  clearInterval(rivalsInterval);
+  try {
+    clearInterval(realtimeInterval);
+    clearInterval(rivalsInterval);
 
-  currentRemainingBudget = activeScenario.budget;
-  currentSignedPlayers = [];
-  realtimeRemainingSeconds = 300;
-  deadlineMadnessTriggered = false;
+    currentRemainingBudget = activeScenario.budget;
+    currentSignedPlayers = [];
+    realtimeRemainingSeconds = 300;
+    deadlineMadnessTriggered = false;
 
-  // MARCHÉ IMPITOYABLE ALIGNÉ SUR LES EXIGENCES DU COACH :
-  // Les profils parfaits sont chers, les profils peu chers sont hors-sujet ou toxiques !
-  currentMarketPlayers = generateProceduralMarket(activeScenario.budget, activeScenario);
+    // MARCHÉ IMPITOYABLE ALIGNÉ SUR LES EXIGENCES DU COACH :
+    // Les profils parfaits sont chers, les profils peu chers sont hors-sujet ou toxiques !
+    currentMarketPlayers = generateProceduralMarket(activeScenario.budget, activeScenario);
 
-  document.getElementById('mercato-club-badge').textContent = activeScenario.logo;
-  document.getElementById('mercato-club-title').textContent = activeScenario.club;
-  const originNote = (activeScenario.originConstraint && activeScenario.originConstraint.code !== 'FREE')
-    ? `<span class="block mt-1 font-bold text-amber-300 not-italic">📍 Filière exigée : ${activeScenario.originConstraint.name} (${activeScenario.originConstraint.shortDesc})</span>`
-    : '';
-  document.getElementById('mercato-coach-reminder').innerHTML = `"${activeScenario.coachDemand}"${originNote}`;
+    document.getElementById('mercato-club-badge').textContent = activeScenario.logo;
+    document.getElementById('mercato-club-title').textContent = activeScenario.club;
+    const originNote = (activeScenario.originConstraint && activeScenario.originConstraint.code !== 'FREE')
+      ? `<span class="block mt-1 font-bold text-amber-300 not-italic">📍 Filière exigée : ${activeScenario.originConstraint.name} (${activeScenario.originConstraint.shortDesc})</span>`
+      : '';
+    document.getElementById('mercato-coach-reminder').innerHTML = `"${activeScenario.coachDemand}"${originNote}`;
 
-  updateMercatoHUD();
-  renderSignedPlayers();
-  renderMarketPlayers();
+    updateMercatoHUD();
+    renderSignedPlayers();
+    renderMarketPlayers();
 
-  // En solo : s'assurer que les boutons solo sont visibles et le HUD duel masqué
-  const btnClose = document.getElementById('btn-close-mercato');
-  const btnCloseMob = document.getElementById('btn-close-mercato-mobile');
-  if (btnClose) btnClose.classList.remove('hidden');
-  if (btnCloseMob) btnCloseMob.classList.remove('hidden');
-  const duelHud = document.getElementById('duel-mercato-hud');
-  if (duelHud) duelHud.classList.add('hidden');
+    // En solo : s'assurer que les boutons solo sont visibles et le HUD duel masqué
+    const btnClose = document.getElementById('btn-close-mercato');
+    const btnCloseMob = document.getElementById('btn-close-mercato-mobile');
+    if (btnClose) btnClose.classList.remove('hidden');
+    if (btnCloseMob) btnCloseMob.classList.remove('hidden');
+    const duelHud = document.getElementById('duel-mercato-hud');
+    if (duelHud) duelHud.classList.add('hidden');
 
-  showScreen('screen-mercato');
+    showScreen('screen-mercato');
 
-  startRealtimeClock();
-  startRivalClubsActivity();
+    startRealtimeClock();
+    startRivalClubsActivity();
+  } catch (err) {
+    console.error('Erreur lancement mercato:', err);
+    showToast('Erreur lors du lancement : ' + err.message, 'error', 6000);
+  }
 }
 
 function startRealtimeClock() {
