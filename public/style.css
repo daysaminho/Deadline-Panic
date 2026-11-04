@@ -1,0 +1,665 @@
+:root {
+  --primary-red: #ff334b;
+  --primary-red-glow: rgba(255, 51, 75, 0.45);
+  --primary-blue: #0088ff;
+  --primary-blue-glow: rgba(0, 136, 255, 0.45);
+  --pitch-green: #1d7334;
+  --pitch-stripe: #18632c;
+  --pitch-border: #ffffff;
+  --bg-dark: #090d14;
+  --panel-bg: rgba(14, 21, 35, 0.88);
+  --border-light: rgba(255, 255, 255, 0.12);
+  --gold: #ffbe0b;
+  --text-white: #ffffff;
+  --text-muted: #8e9bb0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-white);
+}
+
+/* Background ambiance */
+.stadium-backdrop {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 20%, #152238 0%, #060910 80%);
+  z-index: 0;
+}
+
+/* Screen overlay & Lobby */
+.screen-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  background: rgba(4, 7, 15, 0.75);
+}
+
+.lobby-card {
+  width: 90%;
+  max-width: 460px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 136, 255, 0.15);
+  animation: cardFadeIn 0.4s ease-out;
+}
+
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.logo-badge {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.logo-badge .ball-icon {
+  font-size: 2.8rem;
+  display: inline-block;
+  animation: bounceBall 1.5s infinite ease-in-out;
+}
+
+@keyframes bounceBall {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.logo-badge h1 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 2px;
+  color: var(--text-white);
+  line-height: 1.1;
+}
+
+.logo-badge .highlight {
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(255, 190, 11, 0.6);
+}
+
+.logo-badge .subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  color: var(--text-white);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.2s;
+}
+
+input[type="text"]:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 15px var(--primary-blue-glow);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.team-selector {
+  display: flex;
+  gap: 12px;
+}
+
+.team-btn {
+  flex: 1;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  color: var(--text-white);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.badge-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.badge-dot.red { background: var(--primary-red); box-shadow: 0 0 10px var(--primary-red); }
+.badge-dot.blue { background: var(--primary-blue); box-shadow: 0 0 10px var(--primary-blue); }
+
+.team-btn.red.active {
+  background: rgba(255, 51, 75, 0.15);
+  border-color: var(--primary-red);
+  box-shadow: 0 0 20px var(--primary-red-glow);
+}
+
+.team-btn.blue.active {
+  background: rgba(0, 136, 255, 0.15);
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 20px var(--primary-blue-glow);
+}
+
+.room-input-wrap {
+  display: flex;
+  gap: 8px;
+}
+
+.room-input-wrap button {
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  color: var(--text-white);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.room-input-wrap button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary-action {
+  position: relative;
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #0088ff, #00d2ff);
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 136, 255, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 10px;
+}
+
+.btn-primary-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 136, 255, 0.6);
+}
+
+.btn-primary-action:active {
+  transform: translateY(1px);
+}
+
+.controls-guide {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* GAME CONTAINER */
+#game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* SCOREBOARD HEADER */
+.scoreboard-bar {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: rgba(10, 15, 26, 0.95);
+  border-bottom: 1px solid var(--border-light);
+  z-index: 20;
+}
+
+.team-score {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.team-color-indicator {
+  width: 12px;
+  height: 38px;
+  border-radius: 6px;
+}
+
+.red-team .team-color-indicator { background: var(--primary-red); box-shadow: 0 0 12px var(--primary-red); }
+.blue-team .team-color-indicator { background: var(--primary-blue); box-shadow: 0 0 12px var(--primary-blue); }
+
+.team-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-name {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.red-team .team-name { color: var(--primary-red); }
+.blue-team .team-name { color: var(--primary-blue); }
+
+.team-count {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.score-number {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  min-width: 48px;
+  text-align: center;
+}
+
+.match-time-box {
+  text-align: center;
+}
+
+.time-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.time-display {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.room-indicator {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+#current-room-label {
+  color: var(--text-white);
+  font-weight: 600;
+}
+
+/* CANVAS & FIELD */
+.canvas-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 10px;
+}
+
+canvas#gameCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1200 / 700;
+  object-fit: contain;
+  background: #111;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+/* GOAL BANNER */
+.goal-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(9, 14, 25, 0.95);
+  border: 3px solid var(--gold);
+  border-radius: 20px;
+  padding: 24px 60px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(255, 190, 11, 0.7);
+  animation: bannerPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 50;
+  pointer-events: none;
+}
+
+@keyframes bannerPop {
+  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.goal-text {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--gold);
+  text-shadow: 0 0 25px rgba(255, 190, 11, 0.8);
+  letter-spacing: 4px;
+}
+
+.goal-scorer {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 4px;
+}
+
+/* GAMEOVER BANNER */
+.gameover-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(9, 14, 25, 0.96);
+  border: 2px solid var(--primary-blue);
+  border-radius: 24px;
+  padding: 36px 60px;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(0, 136, 255, 0.6);
+  z-index: 60;
+}
+
+.gameover-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.gameover-winner {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 12px 0 24px 0;
+}
+
+.btn-action {
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #0088ff, #00d2ff);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-action:hover {
+  transform: scale(1.05);
+}
+
+.pulse {
+  animation: pulseGlow 1.8s infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 136, 255, 0.5); }
+  50% { box-shadow: 0 0 35px rgba(0, 136, 255, 0.9); }
+}
+
+/* ACTION FOOTER */
+.action-bar {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(10, 15, 26, 0.95);
+  border-top: 1px solid var(--border-light);
+  z-index: 20;
+}
+
+.hud-stamina {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stamina-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+.stamina-track {
+  width: 160px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+}
+
+.stamina-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffbe0b, #00ff88);
+  transition: width 0.1s linear;
+}
+
+.hud-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-util {
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  color: var(--text-white);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btn-util:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* CHAT DRAWER */
+.chat-drawer {
+  position: absolute;
+  bottom: 75px;
+  left: 20px;
+  width: 290px;
+  background: rgba(10, 15, 26, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 10px;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.chat-messages {
+  height: 90px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.82rem;
+}
+
+.chat-msg {
+  word-break: break-word;
+  line-height: 1.3;
+}
+
+.chat-msg.system {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.chat-msg .sender-red { color: var(--primary-red); font-weight: 700; }
+.chat-msg .sender-blue { color: var(--primary-blue); font-weight: 700; }
+.chat-msg .sender-neutral { color: var(--text-muted); font-weight: 700; }
+
+.quick-emotes {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+}
+
+.quick-tag {
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.72rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.quick-tag:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 6px;
+}
+
+.chat-input-row input {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+.chat-input-row button {
+  padding: 6px 10px;
+  background: var(--primary-blue);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* TOUCH CONTROLS (Mobile) */
+.touch-controls {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+}
+
+.joystick-zone {
+  position: absolute;
+  bottom: 80px;
+  left: 30px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  pointer-events: auto;
+}
+
+.joystick-knob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+}
+
+.touch-action-buttons {
+  position: absolute;
+  bottom: 80px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  pointer-events: auto;
+}
+
+.btn-touch {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  color: #fff;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.btn-touch.kick { background: var(--gold); color: #000; }
+.btn-touch.sprint { background: var(--primary-blue); }
+
+@media (max-width: 800px) {
+  .chat-drawer { display: none; }
+  .hud-stamina { display: none; }
+  .scoreboard-bar { height: 60px; padding: 0 14px; }
+  .score-number { font-size: 2.2rem; }
+  .time-display { font-size: 1.6rem; }
+  .team-name { font-size: 1rem; }
+}

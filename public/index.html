@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEADLINE DAY PANIC - Micro-SaaS Foot Manager en 24h</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Outfit & Chakra Petch -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Chakra Petch', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              gold: '#ffbe0b',
+              red: '#ef4444',
+              blue: '#3b82f6',
+              green: '#10b981',
+              dark: '#0b0f19',
+              card: '#111827',
+              border: '#1f2937',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0f19; }
+    ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+    
+    @keyframes pulseTimer {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+    .pulse-timer {
+      animation: pulseTimer 1s infinite ease-in-out;
+    }
+
+    @keyframes stampSlam {
+      0% { transform: scale(2.2) rotate(12deg); opacity: 0; }
+      55% { transform: scale(0.92) rotate(-4deg); opacity: 1; }
+      75% { transform: scale(1.04) rotate(-2deg); opacity: 1; }
+      100% { transform: scale(1) rotate(-3deg); opacity: 1; }
+    }
+    .animate-stamp {
+      animation: stampSlam 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+  </style>
+</head>
+<body class="bg-[#0b0f19] text-gray-100 min-h-screen font-sans selection:bg-amber-400 selection:text-black">
+
+  <!-- GLOBAL TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed top-5 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center pointer-events-none space-y-2 w-full max-w-sm px-4"></div>
+
+  <!-- TOP GLOBAL HEADER (RESPONSIVE MOBILE SAFE) -->
+  <header class="border-b border-gray-800 bg-[#0f172a]/90 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 h-16 flex items-center justify-between gap-2">
+      <div class="flex items-center space-x-2 sm:space-x-3 cursor-pointer shrink-0 group transition" onclick="showScreen('screen-portal')" title="Retourner au choix des modes de jeu">
+        <span class="text-xl sm:text-2xl animate-bounce">⏱️</span>
+        <div>
+          <h1 class="font-display font-extrabold text-sm sm:text-xl tracking-tight text-white whitespace-nowrap">
+            DEADLINE DAY <span class="text-amber-400">PANIC</span>
+          </h1>
+          <p class="text-[9px] sm:text-[10px] text-gray-400 font-semibold tracking-wider uppercase whitespace-nowrap">Chrono 5min • Mercato en temps réel</p>
+        </div>
+      </div>
+
+      <!-- Quick Stats on Home -->
+      <div id="header-stats" class="flex items-center space-x-2 sm:space-x-4 text-sm shrink-0">
+        <div class="hidden sm:flex bg-amber-400/10 px-3 py-1.5 rounded-lg border border-amber-400/30 items-center space-x-1.5">
+          <span class="text-xs text-gray-400 uppercase font-semibold">Rang :</span>
+          <span id="header-manager-rank" class="font-bold text-amber-300">🥉 Stagiaire</span>
+        </div>
+        <div class="bg-gray-800/80 px-2.5 py-1 sm:py-1.5 rounded-lg border border-gray-700/60 flex items-center space-x-1.5 whitespace-nowrap">
+          <span class="text-xs sm:hidden">🏆</span>
+          <span class="text-xs text-gray-400 uppercase font-semibold hidden sm:inline">Carrières :</span>
+          <span id="header-completed-count" class="font-bold text-amber-400 text-xs sm:text-sm">0 / 100</span>
+        </div>
+        <div class="hidden md:flex bg-gray-800/60 px-3 py-1.5 rounded-lg border border-gray-700/60 items-center space-x-2">
+          <span class="text-xs text-gray-400 uppercase font-semibold">Progression :</span>
+          <span id="header-progress-pct" class="font-bold text-emerald-400">0%</span>
+        </div>
+        <button onclick="resetAllProgress()" class="hidden sm:inline-block text-xs text-gray-500 hover:text-red-400 transition" title="Réinitialiser la sauvegarde">
+          🗑️ Reset
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SCREEN 0: PORTAIL D'ACCUEIL (CHOIX DU MODE : SOLO OU 1V1 EN LIGNE) -->
+  <main id="screen-portal" class="max-w-5xl mx-auto px-4 py-12">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <div class="inline-flex items-center space-x-2 bg-amber-400/10 border border-amber-400/30 text-amber-400 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 animate-pulse">
+        ⚽ NOUVEAU • MODE DUEL 1V1 MULTIJOUEUR EN LIGNE DISPONIBLE !
+      </div>
+      <h2 class="text-4xl sm:text-6xl font-display font-extrabold text-white mb-4 tracking-tight">
+        DEADLINE DAY <span class="text-amber-400">PANIC</span>
+      </h2>
+      <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+        Le chrono tourne. Négociez avec des agents retors, affrontez des imprévus médicaux et bâtissez l'équipe qui mènera votre club au sommet avant le gong de minuit.
+      </p>
+    </div>
+
+    <!-- 2 BIG MODE CHOICES -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      
+      <!-- CARTE 1: MODE SOLO -->
+      <div class="group relative bg-gradient-to-b from-[#111c2e] to-[#0c1322] border-2 border-emerald-500/30 hover:border-emerald-400 rounded-3xl p-8 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-emerald-500/20 flex flex-col justify-between">
+        <div>
+          <div class="w-16 h-16 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition">
+            🎮
+          </div>
+          <span class="text-xs font-extrabold tracking-wider uppercase text-emerald-400 block mb-1">Expérience Complète</span>
+          <h3 class="text-2xl sm:text-3xl font-display font-bold text-white mb-3">Carrière Solo</h3>
+          <p class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
+            100 clubs authentiques, 3 niveaux de difficulté (Facile, Moyen, Difficile) et 5 minutes au chrono. Négociez contre l'IA et remplissez les exigences de votre coach !
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">100 Carrières</span>
+            <span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-gray-800 text-gray-300 border border-gray-700">Chrono 5 min</span>
+            <span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-amber-400/20 text-amber-300 border border-amber-400/30">Succès Secrets</span>
+          </div>
+        </div>
+
+        <button onclick="openSoloMode()" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-extrabold text-sm rounded-2xl shadow-xl shadow-emerald-500/20 transition transform hover:scale-[1.02]">
+          Lancer une Carrière Solo ▶
+        </button>
+      </div>
+
+      <!-- CARTE 2: MODE DUEL 1V1 -->
+      <div class="group relative bg-gradient-to-b from-[#1c132e] to-[#0f0c22] border-2 border-indigo-500/40 hover:border-indigo-400 rounded-3xl p-8 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/20 flex flex-col justify-between">
+        <div>
+          <div class="w-16 h-16 rounded-2xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition">
+            ⚔️
+          </div>
+          <span class="text-xs font-extrabold tracking-wider uppercase text-indigo-400 block mb-1">Compétition En Direct</span>
+          <h3 class="text-2xl sm:text-3xl font-display font-bold text-white mb-3">Duel 1V1 En Ligne</h3>
+          <p class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
+            Défiez un ami en direct ! Le jeu vous attribue 2 clubs rivaux du même championnat en mode Difficile. 3 minutes de mercato sous haute tension sur un marché partagé !
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Marché Partagé</span>
+            <span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-rose-500/20 text-rose-300 border border-rose-500/30">Chrono 3 min</span>
+            <span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-amber-400/20 text-amber-300 border border-amber-400/30">Chocs Directs Aller-Retour</span>
+          </div>
+        </div>
+
+        <button onclick="openDuelPortal()" class="w-full py-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-400 hover:to-pink-400 text-white font-display font-extrabold text-sm rounded-2xl shadow-xl shadow-indigo-500/20 transition transform hover:scale-[1.02]">
+          Rejoindre ou Créer un Duel 1v1 ⚡
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SCREEN DUEL PORTAL: SAISIE PSEUDO & SALON -->
+  <main id="screen-duel-portal" class="max-w-md mx-auto px-4 py-12 hidden">
+    <div class="bg-gray-900/90 border border-gray-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur">
+      <!-- RETOUR MODES DE JEU (DESIGN PREMIUM) -->
+      <button onclick="showScreen('screen-portal')" class="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gray-800/80 hover:bg-gray-800 border border-gray-700/80 hover:border-amber-400/40 text-xs font-bold text-gray-300 hover:text-white shadow-md transition-all duration-200 transform hover:-translate-x-0.5 mb-6">
+        <svg class="w-3.5 h-3.5 text-amber-400 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        <span>Changer de mode</span>
+        <span class="text-[10px] font-mono text-gray-400 group-hover:text-amber-300 border-l border-gray-700 pl-2">Solo / 1v1</span>
+      </button>
+
+      <div class="text-center mb-6">
+        <span class="text-4xl block mb-2">⚔️</span>
+        <h3 class="text-2xl font-display font-extrabold text-white">Duel 1V1 En Ligne</h3>
+        <p class="text-xs text-gray-400 mt-1">Défiez un ami sur un marché des transferts commun en 3 minutes chrono.</p>
+      </div>
+
+      <!-- PSEUDO INPUT -->
+      <div class="mb-6">
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">Votre Pseudo Manager</label>
+        <input type="text" id="duel-nickname-input" placeholder="Ex: Pep, Mourinho, Zizou..." maxlength="18" class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition">
+      </div>
+
+      <!-- OPTION 1 : CRÉER UN SALON -->
+      <button onclick="createDuelRoomAction()" class="w-full py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg shadow-amber-500/10 transition transform hover:scale-[1.02] mb-6">
+        CRÉER UN NOUVEAU SALON ⚡
+      </button>
+
+      <!-- SÉPARATEUR -->
+      <div class="flex items-center gap-3 my-6">
+        <div class="h-px bg-gray-800 flex-1"></div>
+        <span class="text-[11px] uppercase font-bold text-gray-500">OU REJOINDRE</span>
+        <div class="h-px bg-gray-800 flex-1"></div>
+      </div>
+
+      <!-- OPTION 2 : REJOINDRE UN SALON -->
+      <div class="space-y-3">
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-300">Code du Salon (4 lettres)</label>
+        <div class="flex flex-col sm:flex-row gap-2.5">
+          <input type="text" id="duel-code-input" onkeydown="if(event.key==='Enter') joinDuelRoomAction()" placeholder="Ex: ABCD" maxlength="6" class="flex-1 min-w-0 bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-sm font-mono uppercase text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition text-center tracking-widest font-bold">
+          <button onclick="joinDuelRoomAction()" class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-display font-black text-xs rounded-xl shadow-md transition shrink-0">
+            Rejoindre ▶
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- SCREEN DUEL LOBBY: SALLE D'ATTENTE & CONFRONTATION -->
+  <main id="screen-duel-lobby" class="max-w-3xl mx-auto px-4 py-10 hidden">
+    <div class="bg-gray-900 border border-gray-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+      
+      <!-- HEADER DU LOBBY -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-gray-800 pb-6 mb-6">
+        <div>
+          <span id="duel-lobby-league-badge" class="text-xs font-extrabold uppercase px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+            🏆 Ligue en attente
+          </span>
+          <h3 class="text-2xl font-display font-extrabold text-white mt-2">Salle d'Attente du Duel</h3>
+        </div>
+
+        <div class="flex items-center gap-2 bg-gray-800/80 border border-gray-700 px-4 py-2 rounded-2xl">
+          <span class="text-xs text-gray-400 font-bold uppercase">Code :</span>
+          <span id="duel-lobby-code-display" class="font-mono text-xl font-black text-amber-400 tracking-wider">----</span>
+          <button onclick="copyDuelShareLink()" class="ml-2 text-xs text-gray-300 hover:text-white bg-gray-700 hover:bg-gray-600 px-2.5 py-1 rounded-lg transition" title="Copier le lien du salon">
+            🔗 Copier
+          </button>
+        </div>
+      </div>
+
+      <!-- WAITING OPPONENT HINT -->
+      <div id="duel-waiting-hint" class="p-8 text-center bg-gray-800/40 border border-dashed border-gray-700 rounded-2xl mb-6">
+        <span class="text-4xl block mb-3 animate-spin" style="animation-duration: 8s;">⏳</span>
+        <h4 class="font-display font-bold text-lg text-white mb-1">En attente de votre adversaire...</h4>
+        <p class="text-xs text-gray-400 max-w-sm mx-auto mb-2">Partagez-lui le code ci-dessus ou le lien direct pour qu'il rejoigne la partie.</p>
+        <p id="duel-lobby-share-url" class="text-[11px] font-mono text-amber-400/90 break-all bg-black/50 p-2.5 rounded-xl my-3 border border-gray-700"></p>
+        <button onclick="copyDuelShareLink()" class="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-black font-display font-extrabold text-xs rounded-xl shadow-md transition">
+          Copier le Lien d'Invitation 🔗
+        </button>
+      </div>
+
+      <!-- MATCHUP CARDS (VISIBLE WHEN 2/2 PLAYERS) -->
+      <div id="duel-matchup-box" class="hidden mb-6">
+        <!-- BANNIÈRE DU DERBY / CHOC -->
+        <div class="text-center mb-5">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-red-500/20 border border-amber-500/40 text-amber-300 font-black text-xs uppercase tracking-wider shadow-lg shadow-amber-500/10" id="duel-lobby-rivalry-badge">
+            ⚔️ DERBY EN ATTENTE
+          </div>
+          <p class="text-xs text-gray-400 font-medium mt-1" id="duel-lobby-rivalry-tag">Choc au sommet</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+          
+          <!-- JOUEUR 1 -->
+          <div class="bg-gray-800/60 border border-gray-700 rounded-2xl p-5 relative">
+            <div class="flex items-center justify-between mb-3">
+              <span id="duel-p1-ready-badge" class="text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-gray-800 text-gray-400 border border-gray-700">EN ATTENTE ⏳</span>
+              <span class="text-xs text-gray-400 font-bold" id="duel-p1-name">Manager 1</span>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-4xl" id="duel-p1-logo">🛡️</span>
+              <div>
+                <h4 class="font-display font-extrabold text-lg text-white" id="duel-p1-club">Club A</h4>
+                <span class="text-xs text-emerald-400 font-mono font-bold" id="duel-p1-budget">8.5 M€</span>
+              </div>
+            </div>
+            <p class="text-[11px] text-gray-300 italic bg-gray-900/60 p-2.5 rounded-xl border border-gray-800" id="duel-p1-coach">Exigence du coach...</p>
+          </div>
+
+          <!-- JOUEUR 2 -->
+          <div class="bg-gray-800/60 border border-gray-700 rounded-2xl p-5 relative">
+            <div class="flex items-center justify-between mb-3">
+              <span id="duel-p2-ready-badge" class="text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-gray-800 text-gray-400 border border-gray-700">EN ATTENTE ⏳</span>
+              <span class="text-xs text-gray-400 font-bold" id="duel-p2-name">Manager 2</span>
+            </div>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-4xl" id="duel-p2-logo">⚔️</span>
+              <div>
+                <h4 class="font-display font-extrabold text-lg text-white" id="duel-p2-club">Club B</h4>
+                <span class="text-xs text-emerald-400 font-mono font-bold" id="duel-p2-budget">8.5 M€</span>
+              </div>
+            </div>
+            <p class="text-[11px] text-gray-300 italic bg-gray-900/60 p-2.5 rounded-xl border border-gray-800" id="duel-p2-coach">Exigence du coach...</p>
+          </div>
+
+        </div>
+
+        <!-- REROLL MATCHUP ACTION -->
+        <div class="mt-4 text-center">
+          <button id="btn-reroll-duel" onclick="rerollDuelMatchupAction()" class="group inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-800/90 hover:bg-gray-700/90 border border-gray-700 hover:border-amber-400/50 text-xs font-bold text-gray-300 hover:text-white transition shadow">
+            <span class="group-hover:rotate-180 transition-transform duration-300">🎲</span>
+            <span>Changer de Duel (Petits clubs de 10 championnats)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- READY BUTTON CONTAINER -->
+      <div id="duel-ready-btn-container" class="hidden text-center">
+        <button id="duel-toggle-ready-btn" onclick="toggleDuelReadyAction()" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-extrabold text-sm rounded-2xl shadow-xl shadow-emerald-500/20 transition transform hover:scale-[1.02]">
+          JE SUIS PRÊT ! 🟢
+        </button>
+        <p class="text-xs text-gray-400 mt-2.5">Le mercato de 3 minutes démarre dès que les deux managers ont validé.</p>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-gray-800 text-center">
+        <button onclick="showScreen('screen-portal')" class="text-xs text-gray-500 hover:text-rose-400 transition">
+          ❌ Quitter le salon
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- OVERLAY COMPTE À REBOURS DUEL (3.. 2.. 1.. GO !) -->
+  <div id="duel-countdown-overlay" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center hidden">
+    <div class="text-center animate-bounce">
+      <span class="text-xs uppercase font-extrabold tracking-widest text-amber-400 block mb-2">DÉPART DU MERCATO DANS</span>
+      <span id="duel-countdown-text" class="text-8xl sm:text-9xl font-display font-black text-white">3</span>
+    </div>
+  </div>
+
+  <!-- SCREEN 1: ACCUEIL AVEC 3 GRANDES DIFFICULTÉS (SOLO) -->
+  <main id="screen-home" class="max-w-5xl mx-auto px-4 py-8 sm:py-10 hidden">
+    <!-- RETOUR MODES DE JEU (DESIGN PREMIUM) -->
+    <div class="mb-6 flex items-center justify-between">
+      <button onclick="showScreen('screen-portal')" class="group inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-gray-900/90 hover:bg-gray-800/90 border border-gray-800 hover:border-amber-400/50 text-xs font-bold text-gray-300 hover:text-white shadow-lg backdrop-blur transition-all duration-200 transform hover:-translate-x-0.5">
+        <svg class="w-4 h-4 text-amber-400 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        <span>Changer de mode</span>
+        <span class="text-[10px] font-mono text-gray-400 group-hover:text-amber-300 border-l border-gray-700/80 pl-2 ml-0.5">Solo / 1v1</span>
+      </button>
+
+      <span class="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-semibold text-gray-400 bg-gray-900/60 px-3 py-1.5 rounded-lg border border-gray-800">
+        <span>🎮</span> Mode Carrière Solo
+      </span>
+    </div>
+    <!-- HERO TITLE -->
+    <div class="text-center max-w-2xl mx-auto mb-8">
+      <div class="inline-flex items-center space-x-2 bg-amber-400/10 border border-amber-400/30 text-amber-400 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+        ⚡ 5 Minutes Chrono • Concurrence En Direct
+      </div>
+      <h2 class="text-4xl sm:text-5xl font-display font-extrabold text-white mb-3 tracking-tight">
+        Survivez au <span class="text-amber-400">Chaos du Mercato</span>
+      </h2>
+      <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
+        5 minutes réelles au chronomètre. Les autres clubs achètent sous vos yeux, les agents bluffent, des anomalies médicales éclatent. Réussirez-vous à satisfaire votre coach ?
+      </p>
+    </div>
+
+    <!-- QUICK PLAY EXPRESS BUTTON (LUNCH BREAK SPECIAL) -->
+    <div class="max-w-md mx-auto mb-10">
+      <button onclick="startQuickRandomGame()" class="w-full py-3.5 sm:py-4 px-4 sm:px-6 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-display font-extrabold text-sm rounded-2xl shadow-xl shadow-amber-500/20 transition transform hover:scale-[1.02] flex items-center justify-between gap-2 border-2 border-amber-200">
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          <span class="text-2xl animate-spin shrink-0" style="animation-duration: 6s;">🎲</span>
+          <div class="text-left">
+            <span class="text-[9px] sm:text-[10px] uppercase tracking-wider font-black block text-black/70">Pause Déj / Session Express</span>
+            <span class="text-xs sm:text-sm font-black">LANCER UNE CARRIÈRE ALÉATOIRE ▶</span>
+          </div>
+        </div>
+        <span class="text-[11px] sm:text-xs bg-black/15 px-2 sm:px-2.5 py-1 rounded-lg font-bold shrink-0 whitespace-nowrap">1 Clic ⚡</span>
+      </button>
+    </div>
+
+    <!-- 3 BIG DIFFICULTY BUTTONS -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      
+      <!-- FACILE -->
+      <button onclick="pickDifficulty('facile')" class="group relative text-left bg-gradient-to-b from-[#111c2e] to-[#0c1322] border-2 border-emerald-500/30 hover:border-emerald-400 rounded-3xl p-6 sm:p-8 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-emerald-500/20 flex flex-col justify-between">
+        <div>
+          <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-3xl mb-5 group-hover:scale-110 transition">
+            🟢
+          </div>
+          <span class="text-xs font-extrabold tracking-wider uppercase text-emerald-400 block mb-1">Difficulté</span>
+          <h3 class="text-2xl font-display font-extrabold text-white mb-2 group-hover:text-emerald-400 transition">FACILE</h3>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4">
+            Cadors européens. Gros budget (120M€ - 180M€), vendeurs plus réceptifs mais obligation de tout gagner.
+          </p>
+        </div>
+        <div class="border-t border-gray-800 pt-4 flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-semibold">34 Carrières</span>
+          <span class="text-emerald-400 font-bold group-hover:translate-x-1 transition">Lancer ▶</span>
+        </div>
+      </button>
+
+      <!-- MOYEN -->
+      <button onclick="pickDifficulty('moyen')" class="group relative text-left bg-gradient-to-b from-[#1a1b26] to-[#10121c] border-2 border-amber-500/30 hover:border-amber-400 rounded-3xl p-6 sm:p-8 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/20 flex flex-col justify-between">
+        <div>
+          <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-3xl mb-5 group-hover:scale-110 transition">
+            🟡
+          </div>
+          <span class="text-xs font-extrabold tracking-wider uppercase text-amber-400 block mb-1">Difficulté</span>
+          <h3 class="text-2xl font-display font-extrabold text-white mb-2 group-hover:text-amber-400 transition">MOYEN</h3>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4">
+            Clubs ambitieux. Budget serré (30M€ - 55M€), vendeurs gourmands, dilemmes tactiques fréquents.
+          </p>
+        </div>
+        <div class="border-t border-gray-800 pt-4 flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-semibold">33 Carrières</span>
+          <span class="text-amber-400 font-bold group-hover:translate-x-1 transition">Lancer ▶</span>
+        </div>
+      </button>
+
+      <!-- DIFFICILE -->
+      <button onclick="pickDifficulty('difficile')" class="group relative text-left bg-gradient-to-b from-[#221319] to-[#140b0f] border-2 border-rose-500/30 hover:border-rose-400 rounded-3xl p-6 sm:p-8 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-rose-500/20 flex flex-col justify-between">
+        <div>
+          <div class="w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-3xl mb-5 group-hover:scale-110 transition">
+            🔴
+          </div>
+          <span class="text-xs font-extrabold tracking-wider uppercase text-rose-400 block mb-1">Difficulté</span>
+          <h3 class="text-2xl font-display font-extrabold text-white mb-2 group-hover:text-rose-400 transition">DIFFICILE</h3>
+          <p class="text-xs text-gray-400 leading-relaxed mb-4">
+            Survie en élite. Budget de misère (8M€ - 14M€), négociations impitoyables, risque de relégation et licenciement !
+          </p>
+        </div>
+        <div class="border-t border-gray-800 pt-4 flex items-center justify-between text-xs">
+          <span class="text-gray-500 font-semibold">33 Carrières</span>
+          <span class="text-rose-400 font-bold group-hover:translate-x-1 transition">Lancer ▶</span>
+        </div>
+      </button>
+
+    </div>
+
+    <!-- BUTTON: VOIR LES CARRIÈRES TERMINÉES -->
+    <div class="text-center">
+      <button onclick="showScreen('screen-gallery')" class="inline-flex items-center gap-2.5 px-6 py-3.5 bg-gray-900 hover:bg-gray-800 border border-gray-700/80 rounded-2xl text-sm font-display font-bold text-gray-300 hover:text-white transition shadow-lg">
+        <span>📂 Galerie des 100 Carrières (Verrouillées)</span>
+        <span class="text-xs bg-gray-800 px-2 py-0.5 rounded-full text-amber-400 font-mono" id="btn-gallery-badge">0/100 débloquées</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- MODAL: CHOIX DU CLUB APRÈS SÉLECTION DE DIFFICULTÉ -->
+  <div id="modal-club-picker" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-[#111827] border border-gray-700 rounded-2xl sm:rounded-3xl max-w-2xl w-full p-4 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+      <button onclick="closeClubPicker()" class="absolute top-4 right-4 sm:top-5 sm:right-5 text-gray-400 hover:text-white text-xl">✕</button>
+
+      <div class="text-center mb-6">
+        <span id="picker-diff-badge" class="text-xs font-extrabold uppercase px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+          DIFFICULTÉ : FACILE
+        </span>
+        <h3 class="text-2xl font-display font-extrabold text-white mt-2">Choisissez votre Club</h3>
+        <p class="text-xs text-gray-400 mt-1">3 clubs vous proposent un poste de Directeur Sportif en urgence :</p>
+      </div>
+
+      <div id="picker-clubs-list" class="space-y-3 mb-6"></div>
+
+      <div class="text-center">
+        <button onclick="rerollClubsPicker()" class="text-xs text-gray-400 hover:text-amber-400 transition flex items-center justify-center gap-1.5 mx-auto">
+          <span>🔄 Proposer 3 autres clubs</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: GALERIE DES 100 CARRIÈRES & PALMARÈS -->
+  <main id="screen-gallery" class="max-w-7xl mx-auto px-4 py-8 hidden">
+    
+    <!-- MANAGER LEVEL & BADGES SUMMARY CARD -->
+    <div class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border border-gray-700 rounded-3xl p-6 sm:p-7 mb-8 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-2xl bg-amber-400/10 border-2 border-amber-400/40 flex items-center justify-center text-3xl" id="gallery-manager-avatar">
+          🥉
+        </div>
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">Profil du Directeur Sportif</span>
+          <h2 class="text-2xl font-display font-extrabold text-white" id="gallery-manager-title">Stagiaire de la Deadline Day</h2>
+          <p class="text-xs text-gray-400 mt-0.5" id="gallery-manager-desc">Complétez des carrières et réussissez des coups d'éclats pour monter en grade !</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 border-gray-800 pt-4 md:pt-0">
+        <div class="bg-gray-800/80 px-3.5 py-2 rounded-xl border border-gray-700 text-center flex-1 sm:flex-initial">
+          <span class="text-[10px] text-gray-400 uppercase font-bold block">Carrières Validées</span>
+          <span class="text-lg font-display font-bold text-amber-400" id="gallery-stat-careers">0 / 100</span>
+        </div>
+        <div class="bg-gray-800/80 px-3.5 py-2 rounded-xl border border-gray-700 text-center flex-1 sm:flex-initial">
+          <span class="text-[10px] text-gray-400 uppercase font-bold block">Trophées & Badges</span>
+          <span class="text-lg font-display font-bold text-emerald-400" id="gallery-stat-achievements">0 / 9</span>
+        </div>
+        <div class="bg-gray-800/80 px-3.5 py-2 rounded-xl border border-gray-700 text-center flex-1 sm:flex-initial">
+          <span class="text-[10px] text-gray-400 uppercase font-bold block">Crises & Dramas</span>
+          <span class="text-lg font-display font-bold text-rose-400" id="gallery-stat-crises">0 / 10</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN TABS: CARRIÈRES VS SUCCÈS VS CRISES & DRAMAS -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 border-b border-gray-800 pb-4">
+      <div class="flex flex-wrap gap-2">
+        <button onclick="switchGalleryTab('careers')" id="tab-btn-careers" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-400 text-black shadow transition">
+          📁 Carrières (100)
+        </button>
+        <button onclick="switchGalleryTab('achievements')" id="tab-btn-achievements" class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:text-white transition">
+          🎖️ Succès & Trophées (<span id="tab-ach-count">9</span>)
+        </button>
+        <button onclick="switchGalleryTab('crises')" id="tab-btn-crises" class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-800 text-gray-300 hover:text-white transition flex items-center gap-1.5">
+          <span>💥</span> Crises & Dramas (<span id="tab-crises-count">0/10</span>)
+        </button>
+      </div>
+
+      <div id="gallery-diff-filters" class="flex gap-1.5 self-end sm:self-auto">
+        <button onclick="filterGallery('all')" id="gal-all" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-black">TOUTES (100)</button>
+        <button onclick="filterGallery('facile')" id="gal-facile" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-800 text-gray-300">FACILES</button>
+        <button onclick="filterGallery('moyen')" id="gal-moyen" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-800 text-gray-300">MOYENNES</button>
+        <button onclick="filterGallery('difficile')" id="gal-difficile" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-800 text-gray-300">DIFFICILES</button>
+      </div>
+    </div>
+
+    <!-- TAB 1: 100 LOCKED / UNLOCKED TILES -->
+    <div id="gallery-careers-view">
+      <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
+    </div>
+
+    <!-- TAB 2: ACHIEVEMENTS & SECRET BADGES -->
+    <div id="gallery-achievements-view" class="hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="achievements-list"></div>
+    </div>
+
+    <!-- TAB 3: DRAMAS & CRISIS SCENARIOS (MYSTERY ??? VIEW) -->
+    <div id="gallery-crises-view" class="hidden">
+      <div class="mb-5 p-4 rounded-2xl bg-gradient-to-r from-rose-950/40 via-gray-900 to-black border border-rose-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div>
+          <h3 class="text-sm font-bold text-white flex items-center gap-2">
+            <span class="text-base">🚨</span> Le Dossier Noir : 10 Crises & Dramas de Saison
+          </h3>
+          <p class="text-xs text-gray-400 mt-1">
+            Ces 10 catastrophes peuvent frapper la simulation en cours de saison. Débloquez-les toutes en subissant leur baptême du feu pour décrocher le trophée <strong class="text-rose-300 font-semibold">"Le Livre Noir du Football"</strong> !
+          </p>
+        </div>
+        <div class="px-3 py-1.5 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-mono font-bold whitespace-nowrap" id="crises-discovered-badge">
+          0 / 10 DÉCOUVERTS
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="crises-list"></div>
+    </div>
+
+  </main>
+
+  <!-- SCREEN 2: SCENARIO BRIEFING (RESPONSIVE MOBILE SAFE) -->
+  <div id="modal-briefing" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-[#111827] border border-gray-700 rounded-2xl sm:rounded-3xl max-w-lg w-full p-4 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+      
+      <!-- HEADER WITH CONTEXTUAL NAVIGATION -->
+      <div class="flex items-center justify-between border-b border-gray-800 pb-3 sm:pb-4 mb-4 sm:mb-5">
+        <button id="briefing-back-btn" onclick="backToPickerFromBriefing()" class="text-xs text-gray-400 hover:text-amber-400 font-bold flex items-center gap-1.5 transition">
+          <span>←</span> <span>Retour aux clubs</span>
+        </button>
+        <button id="briefing-reroll-btn" onclick="startQuickRandomGame()" class="hidden text-xs bg-amber-400/10 hover:bg-amber-400/20 text-amber-400 border border-amber-400/30 px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition">
+          <span>🎲</span> <span>Relancer l'aléatoire</span>
+        </button>
+        <button onclick="closeBriefingModal()" class="text-xs text-gray-400 hover:text-white flex items-center gap-1.5 py-1.5 px-3 rounded-lg bg-gray-800/60 hover:bg-gray-800 border border-gray-700 transition font-bold" title="Quitter">
+          <span>✕ Quitter</span>
+        </button>
+      </div>
+      
+      <div class="flex items-center space-x-3 sm:space-x-4 mb-4">
+        <div id="briefing-logo" class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gray-800 border border-gray-700 flex items-center justify-center text-2xl sm:text-3xl shrink-0">
+          👑
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="briefing-difficulty" class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              FACILE
+            </span>
+            <span id="briefing-country" class="text-xs text-gray-400">🇪🇸 Espagne</span>
+          </div>
+          <h3 id="briefing-club-name" class="text-xl sm:text-2xl font-display font-extrabold text-white">Galaxia Madrid</h3>
+        </div>
+      </div>
+
+      <!-- Coach Specific Demand Quote (COMPLETE, NEVER CUT) -->
+      <div class="mb-5 bg-gradient-to-r from-amber-400/10 via-amber-400/5 to-transparent border-l-4 border-amber-400 p-4 rounded-r-xl">
+        <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 block mb-1.5">🗣️ Consigne Formelle du Coach :</span>
+        <p id="briefing-coach-demand" class="text-xs font-semibold text-gray-100 italic leading-relaxed">
+          "On a besoin d'un leader vocal en défense..."
+        </p>
+        <div id="briefing-targets-list" class="flex flex-wrap gap-1.5 mt-3 pt-2.5 border-t border-amber-400/20"></div>
+        <div id="briefing-origin-rule" class="mt-2.5 pt-2 border-t border-amber-400/20 flex items-center gap-2 text-[11px] text-amber-200">
+          <span class="text-sm" id="briefing-origin-icon">📍</span>
+          <span id="briefing-origin-text">Filière exigée : <strong>Filière Locale</strong></span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mb-5">
+        <div class="bg-gray-800/60 p-3 rounded-xl border border-gray-700/60">
+          <span class="text-[10px] text-gray-400 uppercase font-semibold block">Budget Mercato</span>
+          <span id="briefing-budget" class="text-xl font-display font-bold text-emerald-400">180 M€</span>
+        </div>
+        <div class="bg-gray-800/60 p-3 rounded-xl border border-gray-700/60">
+          <span class="text-[10px] text-gray-400 uppercase font-semibold block">Objectif Saisonnier</span>
+          <span id="briefing-objective" class="text-xs font-bold text-white block mt-1">Gagner la C1</span>
+        </div>
+      </div>
+
+      <!-- RUN MODIFIER BOX (SPECIAL CONTEXT) -->
+      <div id="briefing-modifier-box" class="mb-4 p-3 rounded-xl bg-purple-950/40 border border-purple-500/40 flex items-center gap-3 text-xs text-purple-200">
+        <span class="text-2xl" id="briefing-modifier-icon">🎲</span>
+        <div>
+          <span class="font-extrabold block text-[10px] uppercase text-purple-400" id="briefing-modifier-name">Contexte Spécial Mercato</span>
+          <span id="briefing-modifier-desc" class="text-[11px] text-gray-300">Conditions de la session</span>
+        </div>
+      </div>
+
+      <div class="bg-red-950/20 border border-red-500/30 rounded-xl p-3 mb-5 text-[11px] text-red-300 flex items-center gap-2">
+        <span class="text-lg">⏱️</span>
+        <span><strong>Attention :</strong> Le chrono réel de 5 minutes démarre dès l'ouverture du mercato !</span>
+      </div>
+
+      <button id="btn-start-mercato" class="w-full py-4 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-display font-extrabold text-base rounded-xl shadow-lg transition transform hover:-translate-y-0.5">
+        LANCER LE CHRONO & OUVRIR LE MERCATO ⏱️
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: DEADLINE DAY MERCATO (CHRONO 5:00 TEMPS RÉEL + CONSIGNE COACH COMPLÈTE) -->
+  <main id="screen-mercato" class="max-w-7xl mx-auto px-2.5 sm:px-4 py-4 sm:py-6 hidden">
+    
+    <!-- DUEL 1V1 LIVE HUD (Visible only during 1v1 duel) -->
+    <div id="duel-mercato-hud" class="hidden mb-4 bg-gradient-to-r from-gray-900 via-indigo-950/70 to-gray-900 border-2 border-indigo-500/50 rounded-2xl p-3 sm:p-4 shadow-xl">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <!-- Rival Card -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-xl shrink-0" id="duel-opp-club-logo">
+            ⚔️
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Rival Direct</span>
+              <strong class="text-xs sm:text-sm text-white" id="duel-opp-name">Manager 2</strong>
+              <span class="text-xs text-gray-400 font-medium" id="duel-opp-club-name">Le Havre Doyens</span>
+            </div>
+            <div class="flex items-center gap-3 mt-1 text-[11px] text-gray-300">
+              <span>Budget : <strong class="text-emerald-400 font-mono" id="duel-opp-budget">8.5 M€</strong></span>
+              <span>•</span>
+              <span id="duel-opp-count" class="text-amber-300 font-bold">0 recrue</span>
+              <span>•</span>
+              <span id="duel-opp-status" class="italic text-gray-400">En réflexion... ⏳</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-Minute Synchronized Chrono & Finish Button -->
+        <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+          <div class="text-right">
+            <span class="text-[9px] uppercase font-bold text-gray-400 block">Temps Restant</span>
+            <span id="duel-timer-display" class="font-mono text-xl sm:text-2xl font-black text-amber-400">03:00</span>
+          </div>
+          <button id="duel-mercato-done-btn" onclick="finishDuelMercatoAction()" class="py-2.5 px-4 sm:px-5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition transform hover:scale-105 shrink-0">
+            Mercato Bouclé 🏁
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- BREAKING RIVAL ALERT BANNER (Popping when rivals bid) -->
+    <div id="rival-breaking-banner" class="hidden mb-4 bg-gradient-to-r from-red-600 to-rose-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-between shadow-xl animate-bounce">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">🚨</span>
+        <span id="rival-breaking-text">FLASH MERCATO : Chelsea vient de formuler une offre pour Viktor Lindqvist !</span>
+      </div>
+      <span class="text-[10px] bg-black/40 px-2 py-0.5 rounded text-gray-200">En direct</span>
+    </div>
+
+    <!-- MERCATO TOP BAR -->
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl p-3 sm:p-5 mb-4 sm:mb-6 shadow-xl relative lg:sticky lg:top-20 z-30 backdrop-blur-md bg-opacity-95">
+      <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4">
+        
+        <!-- Club, Chrono & Budget (Compact Grid on Mobile, Never Overflowing) -->
+        <div class="flex items-center justify-between gap-2 sm:gap-4 w-full lg:w-auto">
+          <!-- Club & Chrono -->
+          <div class="flex items-center gap-2 sm:gap-4 min-w-0">
+            <div id="mercato-club-badge" class="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center text-lg sm:text-2xl shrink-0">
+              👑
+            </div>
+            <div class="min-w-0">
+              <h2 id="mercato-club-title" class="font-display font-bold text-xs sm:text-lg text-white truncate max-w-[110px] xs:max-w-[140px] sm:max-w-none">Galaxia Madrid</h2>
+              <div class="flex items-center gap-1 sm:gap-2">
+                <span class="text-[9px] sm:text-xs text-amber-400 font-semibold flex items-center gap-1">
+                  <span class="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 animate-ping"></span>
+                  <span class="hidden sm:inline">CHRONO :</span>
+                </span>
+                <span id="realtime-clock" class="font-mono font-extrabold text-sm sm:text-xl text-red-400 tracking-wider">05:00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Budget & Desktop Close Button -->
+          <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+            <div class="bg-gray-800/80 px-2 sm:px-4 py-1 sm:py-2 rounded-xl border border-gray-700 text-right">
+              <span class="text-[8px] sm:text-[10px] text-gray-400 uppercase font-bold block leading-none mb-0.5">Budget</span>
+              <span id="mercato-remaining-budget" class="text-xs sm:text-xl font-display font-bold text-emerald-400">180 M€</span>
+            </div>
+
+            <!-- Visible sur ecran moyen et large (>= sm) -->
+            <button onclick="finishMercatoAndSimulate()" id="btn-close-mercato" class="hidden sm:flex px-4 sm:px-5 py-2.5 sm:py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-display font-bold text-xs rounded-xl shadow-lg transition transform hover:scale-105 items-center gap-1.5 whitespace-nowrap">
+              <span>CLÔTURER</span>
+              <span>🚀</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Coach Reminder Strip (FULL TEXT, NO TRUNCATE !) -->
+        <div class="flex-1 w-full lg:max-w-xl bg-gray-800/80 border border-gray-700/80 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-xs">
+          <div class="flex items-center justify-between mb-0.5">
+            <span class="text-[9px] sm:text-[10px] text-amber-400 font-extrabold uppercase flex items-center gap-1">
+              <span>🗣️ Consigne Coach Intégrale</span>
+            </span>
+            <span id="mercato-needs-badge" class="flex flex-wrap gap-1 items-center justify-end"></span>
+          </div>
+          <p id="mercato-coach-reminder" class="text-gray-200 italic leading-snug text-[11px] sm:text-xs">
+            "Je veux un ailier supersonique pour fendre les défenses en contre, mais pas de joueur au physique en cristal."
+          </p>
+        </div>
+
+        <!-- Bouton Clôturer Dédié Mobile : Pleine largeur, centré, parfaitement intégré au cadre sans débordement -->
+        <button onclick="finishMercatoAndSimulate()" id="btn-close-mercato-mobile" class="sm:hidden w-full py-2.5 px-4 bg-gradient-to-r from-red-600 to-rose-600 active:from-red-700 active:to-rose-700 text-white font-display font-bold text-xs rounded-xl shadow-md flex items-center justify-center gap-2">
+          <span>CLÔTURER LE MERCATO</span>
+          <span>🚀</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- MAIN MERCATO CONTENT: PROCEDURAL RESTRICTED CATALOG & SIGNED SQUAD -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- LEFT 2 COLS: TRANSFER MARKET CATALOG (RESTRICTED 12-14 PLAYERS) -->
+      <div class="lg:col-span-2 space-y-4">
+        
+        <!-- Filters bar -->
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-1.5">
+            <button onclick="filterMarketPosition('ALL')" class="pos-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-black">TOUS</button>
+            <button onclick="filterMarketPosition('ATT')" class="pos-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700">ATT</button>
+            <button onclick="filterMarketPosition('MIL')" class="pos-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700">MIL</button>
+            <button onclick="filterMarketPosition('DEF')" class="pos-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700">DEF</button>
+            <button onclick="filterMarketPosition('GAR')" class="pos-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-gray-800 text-gray-300 hover:bg-gray-700">GAR</button>
+          </div>
+
+          <span class="text-xs text-gray-400" id="market-count-label">13 joueurs sur le mercato</span>
+        </div>
+
+        <!-- Players Cards List -->
+        <div id="market-players-list" class="space-y-3"></div>
+
+      </div>
+
+      <!-- RIGHT COL: MY SIGNED SQUAD & RECAP -->
+      <div class="space-y-4">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 sticky top-48">
+          <h3 class="font-display font-bold text-base text-white mb-3 flex items-center justify-between">
+            <span>📝 Vos Signatures</span>
+            <span id="signed-count" class="text-xs font-sans text-amber-400 font-bold">0 recrue</span>
+          </h3>
+
+          <div id="signed-players-list" class="space-y-2 mb-4 max-h-[360px] overflow-y-auto pr-1"></div>
+
+          <div class="border-t border-gray-800 pt-3 text-xs text-gray-400 space-y-1.5">
+            <div class="flex justify-between">
+              <span>Dépenses totales :</span>
+              <span id="total-spent" class="font-bold text-white">0 M€</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Conformité au coach :</span>
+              <span id="coach-match-status" class="font-bold text-rose-400">Non comblé ❌</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SCREEN 4: SMS NEGOTIATION MODAL -->
+  <div id="modal-negotiation" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="w-full max-w-md bg-[#0f172a] border-2 border-gray-700 rounded-[32px] overflow-hidden shadow-2xl flex flex-col h-[92vh] max-h-[660px] relative">
+      
+      <!-- TOP STATUS BAR -->
+      <div class="bg-gray-900 border-b border-gray-800 p-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="relative">
+            <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-xl text-white font-bold">
+              👔
+            </div>
+            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-gray-900 rounded-full"></span>
+          </div>
+          <div>
+            <h4 id="nego-contact-name" class="font-bold text-sm text-white">Directeur Sportif</h4>
+            <p id="nego-contact-sub" class="text-[11px] text-gray-400">Club Vendeur • <span class="text-emerald-400 font-semibold">En direct</span></p>
+          </div>
+        </div>
+
+        <button onclick="cancelNegotiation()" class="text-xs text-gray-400 hover:text-white bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-700">
+          Quitter ✕
+        </button>
+      </div>
+
+      <!-- TARGET PLAYER SUMMARY STRIP -->
+      <div id="nego-player-strip" class="bg-gray-800/90 border-b border-gray-700/80 px-4 py-2 flex items-center justify-between text-xs">
+        <div>
+          <span class="font-bold text-white block" id="nego-player-name">Joueur</span>
+          <span class="text-[10px] text-amber-400" id="nego-player-rep">Ailier explosif</span>
+        </div>
+        <div class="text-right">
+          <span class="text-gray-400">Valeur Marché : <strong class="text-emerald-400 font-mono" id="nego-player-val">40 M€</strong></span>
+        </div>
+      </div>
+
+      <!-- PATIENCE METER -->
+      <div class="bg-gray-900 px-4 py-1.5 border-b border-gray-800 flex items-center gap-2 text-[11px]">
+        <span class="text-gray-400">Patience du vendeur :</span>
+        <div class="flex-1 bg-gray-800 h-2 rounded-full overflow-hidden">
+          <div id="nego-patience-bar" class="bg-emerald-500 h-full transition-all duration-300" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <!-- CHAT BUBBLES -->
+      <div id="nego-chat-history" class="flex-1 p-4 overflow-y-auto space-y-3 bg-[#0a0f1d]"></div>
+
+      <!-- INTERACTIVE RESPONSE CHOICES -->
+      <div id="nego-choices-box" class="p-4 bg-gray-900 border-t border-gray-800 space-y-2"></div>
+
+      <!-- SUCCESS STAMP OVERLAY (OPTION A) -->
+      <div id="nego-success-overlay" class="absolute inset-0 bg-[#0a0f1d]/90 backdrop-blur-md z-30 flex flex-col items-center justify-center p-6 text-center transition-all duration-300 opacity-0 pointer-events-none hidden">
+        <div id="nego-stamp-content" class="flex flex-col items-center select-none">
+          <div class="w-20 h-20 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center text-4xl mb-3 shadow-xl shadow-emerald-500/30">
+            ✍️
+          </div>
+          <span class="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-1">Accord Officiel Finalisé</span>
+          <div class="border-4 border-emerald-400 bg-emerald-950/80 px-6 py-2.5 rounded-2xl shadow-2xl shadow-emerald-500/40 mb-3">
+            <h3 class="text-2xl sm:text-3xl font-display font-black text-emerald-300 tracking-wider uppercase">
+              CONTRAT SIGNÉ !
+            </h3>
+          </div>
+          <p id="nego-success-player-info" class="text-xs sm:text-sm text-gray-200 font-medium">
+            Le joueur s'engage officiellement.
+          </p>
+          <span class="text-[11px] text-emerald-400 font-mono mt-2.5 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
+            ✅ Bienvenue au club !
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL: MEDICAL EXAM & ANOMALY DILEMMA (HIGH STAKES CHOICE !) -->
+  <div id="modal-medical-dilemma" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-[#111827] border-2 border-amber-500/60 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative text-center">
+      <div class="w-16 h-16 rounded-3xl bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center text-3xl mx-auto mb-4">
+        🩺
+      </div>
+
+      <span class="text-[10px] font-extrabold uppercase px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
+        ALERTE VISITE MÉDICALE & CONTRAT
+      </span>
+
+      <h3 class="text-2xl font-display font-extrabold text-white mt-3 mb-2" id="medical-dilemma-title">
+        Anomalie Décelée !
+      </h3>
+
+      <div class="bg-gray-800/80 border border-gray-700 rounded-2xl p-4 text-xs text-gray-200 text-left my-5 leading-relaxed" id="medical-dilemma-desc">
+        Le médecin du club effectue un examen approfondi des examens radiologiques et antécédents physiques...
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button onclick="resolveMedicalDilemma(true)" class="flex-1 py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition">
+          Prendre le Risque & Signer ✍️
+        </button>
+        <button onclick="resolveMedicalDilemma(false)" class="flex-1 py-3.5 bg-gray-800 hover:bg-gray-700 text-white font-display font-bold text-xs rounded-xl border border-gray-700 transition">
+          Annuler le Transfert ❌
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DEADLINE MADNESS (COUP DE THÉÂTRE DES 90 DERNIÈRES SECONDES) -->
+  <div id="modal-deadline-madness" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-[#111827] border-2 border-amber-400 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl text-center relative animate-pulse">
+      <span class="text-4xl block mb-2" id="madness-icon">🚨</span>
+      <span class="text-[10px] font-extrabold uppercase px-3 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30">
+        DERNIÈRE LIGNE DROITE • COUP DE THÉÂTRE
+      </span>
+      <h3 class="text-xl font-display font-extrabold text-white mt-3 mb-2" id="madness-title">
+        Offre Inattendue !
+      </h3>
+      <div class="text-xs text-gray-300 leading-relaxed bg-gray-800/80 p-4 rounded-xl border border-gray-700 my-4 text-left" id="madness-desc">
+        Un club adverse formule une offre surprise à quelques minutes du gong...
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2.5" id="madness-actions">
+        <!-- Injected dynamically in app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CRISE DE SAISON / SÉISME EN DIRECT (INTERRUPTION DE SIMULATION) -->
+  <div id="modal-crisis" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-gradient-to-b from-[#111827] to-[#090d16] border-2 border-red-500/80 rounded-3xl max-w-lg w-full p-5 sm:p-7 shadow-[0_0_50px_rgba(239,68,68,0.35)] text-center relative overflow-hidden">
+      
+      <!-- Top glowing beacon badge -->
+      <div class="flex items-center justify-center gap-2 mb-3">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+        <span class="text-[10px] sm:text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-red-600/20 text-red-400 border border-red-500/40">
+          🚨 FLASH INFO SPÉCIAL • SÉISME EN DIRECT
+        </span>
+      </div>
+
+      <!-- Icon & Title -->
+      <span class="text-4xl sm:text-5xl block mb-2 transition-transform duration-300" id="crisis-icon">⚖️</span>
+      <h3 class="text-xl sm:text-2xl font-display font-black text-white tracking-tight" id="crisis-title">
+        Passage devant la DNCG
+      </h3>
+      <span class="text-xs text-amber-400 font-semibold block mt-1" id="crisis-matchday-tag">
+        Journée 24 / 38 • Simulation interrompue
+      </span>
+
+      <!-- Narrative context -->
+      <div class="text-xs sm:text-[13px] text-gray-200 leading-relaxed bg-gray-900/90 p-4 rounded-2xl border border-red-900/40 my-4 text-left shadow-inner" id="crisis-desc">
+        La Commission de Contrôle des Clubs Professionnels vient de convoquer la direction en session extraordinaire d'urgence suite à un déficit d'exploitation.
+      </div>
+
+      <!-- Suspense Progress Section -->
+      <div id="crisis-suspense-section" class="space-y-3 mb-2">
+        <div class="flex items-center justify-between text-xs font-bold text-gray-300 px-1">
+          <span id="crisis-phase-text" class="text-amber-400 animate-pulse flex items-center gap-1.5">
+            <span>⏳</span>
+            <span>Examen des bilans comptables...</span>
+          </span>
+          <span id="crisis-progress-pct" class="font-mono font-extrabold text-red-400">0%</span>
+        </div>
+        <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden p-0.5 border border-gray-700">
+          <div id="crisis-progress-bar" class="bg-gradient-to-r from-amber-500 via-rose-500 to-red-600 h-full rounded-full transition-all duration-150" style="width: 0%;"></div>
+        </div>
+        <button onclick="skipCrisisSuspense()" class="text-[11px] text-gray-400 hover:text-white underline transition pt-1">
+          Accélérer la délibération ⏩
+        </button>
+      </div>
+
+      <!-- Verdict Reveal Section (Hidden during suspense) -->
+      <div id="crisis-verdict-section" class="hidden space-y-4 pt-1">
+        <div id="crisis-verdict-box" class="p-4 rounded-2xl border text-left text-xs sm:text-sm font-medium leading-relaxed">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div id="crisis-action-container">
+          <!-- Button to resume season or view fatal crisis recap -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCREEN 5: FAST-FORWARD SEASON SIMULATION -->
+  <main id="screen-simulation" class="max-w-3xl mx-auto px-3 sm:px-4 py-4 sm:py-8 hidden">
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl text-center relative overflow-hidden">
+      
+      <div class="inline-block p-3 sm:p-4 rounded-2xl bg-amber-400/10 border border-amber-400/20 text-3xl sm:text-4xl mb-3">
+        ⚡
+      </div>
+
+      <h2 class="text-2xl sm:text-3xl font-display font-extrabold text-white mb-1.5">SIMULATION DE LA SAISON</h2>
+      <p class="text-gray-400 text-xs sm:text-sm mb-5">Vos paris tactiques et médicaux se heurtent à la réalité du terrain...</p>
+
+      <!-- PROGRESS BAR -->
+      <div class="max-w-xl mx-auto mb-5">
+        <div class="flex justify-between text-xs font-bold text-gray-400 mb-2">
+          <span>Journée 1</span>
+          <span id="sim-matchday" class="text-amber-400 font-display text-base">Journée 1 / 38</span>
+          <span>Journée 38</span>
+        </div>
+        <div class="w-full bg-gray-800 h-3.5 rounded-full overflow-hidden p-0.5 border border-gray-700">
+          <div id="sim-progress-bar" class="bg-gradient-to-r from-amber-400 via-emerald-400 to-blue-500 h-full rounded-full transition-[width] duration-150 ease-linear" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- LIVE BREAKING TICKER -->
+      <div class="max-w-xl mx-auto bg-gray-800/80 border border-gray-700 rounded-2xl p-3 sm:p-4 text-left mb-5 min-h-[85px] flex items-center gap-3 sm:gap-4">
+        <span class="text-2xl sm:text-3xl shrink-0" id="sim-ticker-icon">📰</span>
+        <div class="min-w-0">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 block" id="sim-ticker-tag">FLASH MATCHDAY</span>
+          <p class="text-xs sm:text-sm font-semibold text-gray-200 leading-snug break-words" id="sim-ticker-text">Coup d'envoi du championnat !</p>
+        </div>
+      </div>
+
+      <!-- LIVE CLUBS POSITION (RESPONSIVE SAFE NO OVERFLOW) -->
+      <div class="max-w-xl mx-auto flex flex-wrap items-center justify-center gap-2 bg-gray-800/90 border border-gray-700 px-3.5 py-2 rounded-xl mb-5 text-center">
+        <span class="text-[11px] sm:text-xs text-gray-400 uppercase font-semibold">Classement Virtuel :</span>
+        <span id="sim-virtual-rank" class="text-sm sm:text-lg font-display font-extrabold text-white truncate max-w-[260px] sm:max-w-none">--</span>
+        <span id="sim-virtual-points" class="text-xs text-emerald-400 font-bold whitespace-nowrap">(0 pts)</span>
+      </div>
+
+      <!-- LIVE MINI-TABLEAU DE CLASSEMENT EN DIRECT (DUEL RANGS VOISINS) -->
+      <div class="max-w-xl mx-auto bg-gray-950/80 border border-gray-800 rounded-2xl p-3 sm:p-4 text-left shadow-lg">
+        <div class="flex items-center justify-between text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 border-b border-gray-800 pb-2">
+          <span class="flex items-center gap-1.5 truncate">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
+            <span id="sim-mini-standings-title" class="truncate">Ligue en Direct</span>
+          </span>
+          <span class="text-amber-400 font-mono text-xs shrink-0 ml-2" id="sim-mini-standings-matchday">J1 / 38</span>
+        </div>
+        <div id="sim-mini-standings" class="space-y-1.5 font-sans text-xs">
+          <!-- Dynamically populated in app.js / duel.js on each matchday -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SCREEN 6: SEASON RECAP & REPORT -->
+  <main id="screen-recap" class="max-w-3xl mx-auto px-3 sm:px-4 py-6 sm:py-8 hidden">
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl sm:rounded-3xl p-4 sm:p-10 shadow-2xl">
+      
+      <div id="recap-outcome-banner" class="p-4 sm:p-6 rounded-2xl border text-center mb-6">
+        <span id="recap-outcome-icon" class="text-4xl sm:text-5xl block mb-2">🏆</span>
+        <h2 id="recap-outcome-title" class="text-2xl sm:text-3xl font-display font-extrabold">MISSION ACCOMPLIE !</h2>
+        <p id="recap-outcome-sub" class="text-xs sm:text-sm font-medium mt-1">Vous avez qualifié le club et respecté les exigences du président.</p>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2 sm:gap-3 mb-6 text-center">
+        <div class="bg-gray-800/60 p-2.5 sm:p-3.5 rounded-xl border border-gray-700">
+          <span class="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold block truncate">Classement</span>
+          <span id="recap-final-rank" class="text-base sm:text-2xl font-display font-extrabold text-amber-400 truncate block">1er / 20</span>
+        </div>
+        <div class="bg-gray-800/60 p-2.5 sm:p-3.5 rounded-xl border border-gray-700">
+          <span class="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold block truncate">Note Manager</span>
+          <span id="recap-manager-score" class="text-base sm:text-2xl font-display font-extrabold text-emerald-400 truncate block">A+ (94%)</span>
+        </div>
+        <div class="bg-gray-800/60 p-2.5 sm:p-3.5 rounded-xl border border-gray-700">
+          <span class="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold block truncate">Étoiles</span>
+          <span id="recap-stars" class="text-sm sm:text-xl font-bold text-amber-400 block">⭐⭐⭐</span>
+        </div>
+      </div>
+
+      <!-- COACH CRITIQUE / PRAISE -->
+      <div id="recap-coach-critique" class="mb-6 bg-gray-800/60 border border-gray-700 p-4 rounded-xl text-xs leading-relaxed"></div>
+
+      <!-- SIGNINGS IMPACT REPORT -->
+      <h3 class="font-display font-bold text-base text-white mb-3">📋 Bilan Individuel des Recrues</h3>
+      <div id="recap-signings-report" class="space-y-3 mb-6"></div>
+
+      <!-- ACTIONS BUTTONS WITH INSTANT CHAIN NEXT CAREER & SOCIAL SHARE -->
+      <div class="space-y-3">
+        <button onclick="shareRecapWithFriends()" id="btn-share-recap" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-black text-xs rounded-2xl shadow-lg transition transform hover:scale-[1.01] flex items-center justify-center gap-2">
+          <span>📤 DÉFIER UN AMI (Partager mon Bilan)</span>
+        </button>
+
+        <button onclick="quickStartNextCareer()" class="w-full py-3.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-display font-black text-xs rounded-2xl shadow-xl shadow-amber-500/20 transition transform hover:scale-[1.01] flex items-center justify-center gap-2 border border-amber-300">
+          <span>🎲 CARRIÈRE SUIVANTE EXPRESS (Nouveau Club Aléatoire)</span>
+          <span class="text-sm font-black">▶</span>
+        </button>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button onclick="backToHomeGrid()" class="flex-1 py-3 bg-gray-800 hover:bg-gray-700 text-gray-200 font-display font-bold text-xs rounded-xl border border-gray-700 transition">
+            🏠 Retourner à l'Accueil
+          </button>
+          <button onclick="replayCurrentScenario()" class="flex-1 py-3 bg-gray-800 hover:bg-gray-700 text-gray-200 font-display font-bold text-xs rounded-xl border border-gray-700 transition">
+            🔄 Rejouer ce Scénario
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SCREEN: BILAN DUEL 1V1 (VAINQUEUR, DERBYS & REVANCHE) -->
+  <main id="screen-duel-recap" class="max-w-3xl mx-auto px-3 sm:px-4 py-8 hidden">
+    <div class="bg-gray-900 border border-gray-800 rounded-3xl p-6 sm:p-10 shadow-2xl">
+      
+      <!-- Outcome Banner -->
+      <div id="duel-recap-banner" class="p-6 rounded-3xl border text-center mb-6">
+        <h2 id="duel-recap-title" class="text-2xl sm:text-3xl font-display font-black">VICTOIRE ÉCLATANTE !</h2>
+        <p id="duel-recap-sub" class="text-xs sm:text-sm font-medium mt-1">Vous terminez devant votre rival au classement final !</p>
+      </div>
+
+      <!-- Comparison Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div id="duel-recap-p1-card" class="bg-gray-800/60 p-4 rounded-2xl border border-gray-700"></div>
+        <div id="duel-recap-p2-card" class="bg-gray-800/60 p-4 rounded-2xl border border-gray-700"></div>
+      </div>
+
+      <!-- Direct Head-to-Head Confrontations -->
+      <h3 class="font-display font-bold text-sm uppercase text-gray-300 mb-3 flex items-center gap-2">
+        <span>⚔️</span> Bilan des Confrontations Directes
+      </h3>
+      <div id="duel-recap-h2h" class="mb-6"></div>
+
+      <!-- AUTOPSIE DU DUEL / ANALYSE DÉCISIONNELLE -->
+      <div class="mb-8 bg-gradient-to-br from-gray-900 via-indigo-950/40 to-gray-900 border border-indigo-500/40 rounded-2xl p-5 sm:p-6 shadow-2xl">
+        <div class="flex items-center gap-2.5 mb-4">
+          <span class="text-xl">🔍</span>
+          <h3 class="font-display font-extrabold text-sm sm:text-base uppercase text-amber-300 tracking-wide">
+            Autopsie du Duel • Pourquoi la saison a basculé ?
+          </h3>
+        </div>
+        
+        <!-- Bullets Points d'Analyse Clés -->
+        <div id="duel-recap-analysis-points" class="space-y-3 text-xs text-gray-300"></div>
+
+        <!-- Punchline Finale -->
+        <div id="duel-recap-analysis-punchline" class="mt-4 pt-3.5 border-t border-gray-800 text-xs sm:text-[13px] font-medium italic text-amber-200/90 bg-black/30 p-3 rounded-xl border border-gray-800/80"></div>
+      </div>
+
+      <!-- Actions : Revanche ou Accueil -->
+      <div class="space-y-3">
+        <button id="duel-rematch-btn" onclick="requestDuelRematchAction()" class="w-full py-4 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-display font-black text-xs rounded-2xl shadow-xl transition transform hover:scale-[1.01] flex items-center justify-center gap-2 border border-amber-300">
+          <span>⚔️ PROPOSER UNE REVANCHE IMMÉDIATE</span>
+        </button>
+
+        <button onclick="openSoloMode()" class="w-full py-3 bg-gray-800 hover:bg-gray-700 text-gray-200 font-display font-bold text-xs rounded-xl border border-gray-700 transition">
+          🏠 Quitter et Retourner à l'Accueil
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL: DUEL CHOC DIRECT (ALLER & RETOUR SYNCHRONISÉS) -->
+  <div id="modal-duel-confrontation" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-gray-900 border-2 border-amber-400 rounded-2xl sm:rounded-3xl max-w-md w-full p-4 sm:p-6 shadow-2xl text-center relative">
+      <span class="text-xs font-black uppercase tracking-widest text-amber-400 block mb-2" id="duel-match-title">
+        ⚔️ CHOC DIRECT ⚔️
+      </span>
+      
+      <!-- Big Scoreboard -->
+      <div class="flex items-center justify-around my-4 bg-gray-800/80 border border-gray-700 rounded-2xl p-3 sm:p-4">
+        <div class="flex-1 text-center min-w-0 px-1">
+          <h4 class="font-display font-extrabold text-xs sm:text-sm text-white truncate" id="duel-match-home">Club 1</h4>
+          <span class="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold">Domicile</span>
+        </div>
+        <div class="px-2 sm:px-4 shrink-0">
+          <span id="duel-match-score" class="font-mono text-2xl sm:text-4xl font-black text-amber-400">0 - 0</span>
+        </div>
+        <div class="flex-1 text-center min-w-0 px-1">
+          <h4 class="font-display font-extrabold text-xs sm:text-sm text-white truncate" id="duel-match-away">Club 2</h4>
+          <span class="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold">Extérieur</span>
+        </div>
+      </div>
+
+      <!-- Action Timeline -->
+      <div id="duel-match-timeline" class="max-h-40 sm:max-h-48 overflow-y-auto space-y-1 mb-4 text-left px-2"></div>
+
+      <!-- Synchronized Auto-Resume Notice -->
+      <div id="duel-match-autoresume-notice" class="py-2.5 px-4 bg-amber-400/15 border border-amber-400/40 rounded-xl text-amber-300 text-xs font-bold hidden">
+        ⏱️ Fin du match ! Reprise automatique du championnat...
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: OFFRE DE REVANCHE REÇUE -->
+  <div id="modal-duel-rematch-offer" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-gray-900 border-2 border-indigo-500 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl text-center relative">
+      <span class="text-4xl block mb-3 animate-bounce">⚔️</span>
+      <h3 class="text-2xl font-display font-extrabold text-white mb-2">Revanche Demandée !</h3>
+      <p id="duel-rematch-offer-text" class="text-xs text-gray-300 leading-relaxed mb-6">
+        Votre adversaire souhaite prendre sa revanche immédiate ! Relevez-vous le défi ?
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button onclick="acceptDuelRematchAction()" class="flex-1 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition">
+          Accepter la Revanche ⚔️
+        </button>
+        <button onclick="declineDuelRematchAction()" class="flex-1 py-3.5 bg-gray-800 hover:bg-gray-700 text-white font-display font-bold text-xs rounded-xl border border-gray-700 transition">
+          Refuser ❌
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PASSAGE DEVANT LA DNCG (J22 AUDIT FINANCIER) -->
+  <div id="modal-duel-dncg" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-gray-900 border-2 border-amber-500 rounded-2xl sm:rounded-3xl max-w-xl w-full p-4 sm:p-6 shadow-2xl text-center relative">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-black uppercase tracking-wider mb-2">
+        ⚖️ COMMISSION DE CONTRÔLE FINANCIER (DNCG) • J22
+      </div>
+      <h3 class="text-xl sm:text-2xl font-display font-extrabold text-white mb-1">
+        VERDICT DU GRAND ORAL FINANCIER
+      </h3>
+      <p class="text-xs text-gray-400 mb-5">
+        L'instance de régulation examine la sincérité des bilans et la masse salariale des deux rivaux.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 text-left">
+        <!-- Carte Club 1 -->
+        <div id="duel-dncg-card-p1" class="bg-gray-800/80 border border-gray-700 rounded-2xl p-3.5 relative overflow-hidden"></div>
+        <!-- Carte Club 2 -->
+        <div id="duel-dncg-card-p2" class="bg-gray-800/80 border border-gray-700 rounded-2xl p-3.5 relative overflow-hidden"></div>
+      </div>
+
+      <div id="duel-dncg-autoresume-notice" class="py-2 px-3 bg-amber-400/15 border border-amber-400/30 rounded-xl text-amber-300 text-xs font-bold">
+        ⏱️ Délibération enregistrée ! Reprise du championnat dans 3s...
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DILEMME D'AVANT-DERBY (GUERRE PSYCHOLOGIQUE & ULTRAS) -->
+  <div id="modal-duel-derby-dilemma" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-gray-900 border-2 border-rose-500/80 rounded-2xl sm:rounded-3xl max-w-md w-full p-4 sm:p-6 shadow-2xl text-center relative">
+      <div class="flex items-center justify-between border-b border-gray-800 pb-2 mb-3 text-xs">
+        <span class="text-rose-400 font-extrabold uppercase flex items-center gap-1.5" id="duel-derby-dilemma-tag">
+          <span>💣</span> AVANT-MATCH CHOC DIRECT
+        </span>
+        <span class="font-mono text-amber-400 font-black text-sm" id="duel-derby-dilemma-timer">07s</span>
+      </div>
+
+      <h3 class="text-base sm:text-lg font-display font-extrabold text-white mb-2" id="duel-derby-dilemma-title">
+        Banderole Hostile des Ultras
+      </h3>
+
+      <div class="bg-gray-800/70 border border-gray-700 rounded-xl p-3 text-left mb-4">
+        <p class="text-xs text-gray-200 leading-relaxed italic" id="duel-derby-dilemma-desc">
+          "Les supporters ont préparé une bâche géante sur les affaires judiciaires du président rival..."
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5 mb-2" id="duel-derby-dilemma-actions">
+        <button onclick="submitDuelDerbyChoice(true)" class="py-3 px-3 bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white font-display font-black text-xs rounded-xl shadow-lg transition transform hover:scale-[1.02]">
+          🔥 TENTER LE COUP !
+          <span class="block text-[9px] font-normal opacity-80 mt-0.5">+Pression / Risque</span>
+        </button>
+        <button onclick="submitDuelDerbyChoice(false)" class="py-3 px-3 bg-gray-800 hover:bg-gray-700 text-gray-200 font-display font-bold text-xs rounded-xl border border-gray-700 transition">
+          🛡️ RESTER CLEAN
+          <span class="block text-[9px] font-normal text-gray-400 mt-0.5">Pas de risque</span>
+        </button>
+      </div>
+
+      <!-- Verdict après choix -->
+      <div id="duel-derby-dilemma-verdict" class="hidden py-3 px-3 rounded-xl text-xs font-bold mt-2"></div>
+    </div>
+  </div>
+
+  <!-- ACHIEVEMENT UNLOCKED TOAST NOTIFICATION -->
+  <div id="achievement-toast" class="fixed bottom-6 right-6 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-black px-5 py-3.5 rounded-2xl shadow-2xl z-50 flex items-center gap-3 border-2 border-amber-200 font-display font-extrabold text-sm pointer-events-none transition-all duration-500 transform translate-y-36 opacity-0">
+    <span class="text-3xl" id="toast-icon">🏆</span>
+    <div>
+      <span class="text-[10px] uppercase font-black text-black/70 tracking-wider block">SUCCÈS DÉBLOQUÉ !</span>
+      <span id="toast-title" class="text-sm">Docteur Téméraire</span>
+    </div>
+  </div>
+
+  <!-- Load Data Files & App Logic -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="data/archetypes.js"></script>
+  <script src="data/generator.js"></script>
+  <script src="data/scenarios.js"></script>
+  <script src="duel.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
