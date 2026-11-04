@@ -1,3 +1,70 @@
+function renderDebriefIcon(icon) {
+  if (icon === 'h2h_win' || icon === '⚔️' || icon === '⚔') {
+    return `<span class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">${getCrossedSwordsSvg('w-4 h-4')}</span>`;
+  }
+  if (icon === 'target' || icon === '🎯' || icon === 'fit') {
+    return `<span class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>`;
+  }
+  if (icon === 'chess' || icon === 'tactics' || icon === '♟️' || icon === 'synergy') {
+    return `<span class="w-7 h-7 rounded-lg bg-indigo-500/10 text-indigo-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 5H9l3-5zM9 7h6v3H9zM7 10h10v3H7zM5 13h14v4H5zM3 21h18v-4H3z"/></svg></span>`;
+  }
+  if (icon === 'puzzle' || icon === 'misfit' || icon === '🧩') {
+    return `<span class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19.439 7.85c0-1.571-1.275-2.846-2.846-2.846a2.848 2.848 0 00-2.846 2.846v.286H9.742a2.848 2.848 0 00-2.846-2.846A2.848 2.848 0 004.05 7.85h.286v4.568a2.848 2.848 0 00-2.846 2.846 2.848 2.848 0 002.846 2.846h.286v4.568h4.568a2.848 2.848 0 002.846-2.846 2.848 2.848 0 002.846 2.846h4.568v-4.568a2.848 2.848 0 002.846-2.846 2.848 2.848 0 00-2.846-2.846h-.286V7.85h.286z"/></svg></span>`;
+  }
+  if (icon === 'brain' || icon === 'mind' || icon === '🧠') {
+    return `<span class="w-7 h-7 rounded-lg bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54z"/></svg></span>`;
+  }
+  if (icon === 'crown' || icon === 'leader' || icon === '👑') {
+    return `<span class="w-7 h-7 rounded-lg bg-yellow-500/10 text-yellow-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14v2H5v-2z"/></svg></span>`;
+  }
+  if (icon === 'medical' || icon === 'injury' || icon === '🩹') {
+    return `<span class="w-7 h-7 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>`;
+  }
+  if (icon === 'penalty' || icon === 'drop' || icon === '📉') {
+    return `<span class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></span>`;
+  }
+  if (icon === 'warning' || icon === 'alert' || icon === '⚠️' || icon === '🚨') {
+    return `<span class="w-7 h-7 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>`;
+  }
+  if (icon === 'clean' || icon === 'check' || icon === '🟢' || icon === 'handshake' || icon === '🤝') {
+    return `<span class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>`;
+  }
+  if (icon === 'balance' || icon === 'draw' || icon === '⚖️') {
+    return `<span class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M12 2v20M6 6l-3 7h6l-3-7zM18 6l-3 7h6l-3-7z"/></svg></span>`;
+  }
+  if (icon === 'bolt' || icon === 'resilience' || icon === '⚡') {
+    return `<span class="w-7 h-7 rounded-lg bg-yellow-500/10 text-yellow-500 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>`;
+  }
+  return `<span class="w-7 h-7 rounded-lg bg-slate-500/10 text-slate-400 flex items-center justify-center shrink-0"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg></span>`;
+}
+
+
+function getCrossedSwordsSvg(cls = "w-4 h-4 text-blue-600 dark:text-blue-400 inline-block") {
+  return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5 3 6V3h3l11.5 11.5"/><path d="m13 19 6 2-2-6"/><path d="M9.5 17.5 21 6V3h-3L6.5 14.5"/><path d="m11 19-6 2 2-6"/></svg>`;
+}
+
+function getClawSvg(cls = "w-8 h-8 text-amber-500 dark:text-amber-400") {
+  return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3c1.5 3 2 7 2 12M10 2c1.5 4 2 8 2 14M14 2c1.5 4 2 8 2 14M18 3c1.5 3 2 7 2 12M5 21c3-1 11-1 14 0"/></svg>`;
+}
+
+function getParasolSvg(cls = "w-8 h-8 text-amber-500") {
+  return `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 0-10 10h20a10 10 0 0 0-10-10Z"/><path d="M12 12v9a2 2 0 0 1-2 2"/><path d="M12 2v2"/><path d="M7 12a5 5 0 0 1 5-5"/><path d="M17 12a5 5 0 0 0-5-5"/></svg>`;
+}
+
+function renderDuelClubLogo(club) {
+  if (!club) return '';
+  const name = club.club || club.name || '';
+  const lower = name.toLowerCase();
+  if (lower.includes('boavista')) {
+    return getClawSvg('w-8 h-8 text-amber-500 dark:text-amber-400');
+  }
+  if (lower.includes('estoril')) {
+    return getParasolSvg('w-8 h-8 text-amber-500');
+  }
+  const initials = typeof getClubInitials === 'function' ? getClubInitials(name) : name.substring(0, 2).toUpperCase();
+  return `<div class="w-10 h-10 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-display font-black text-sm flex items-center justify-center border border-blue-200 dark:border-blue-900/40 shadow-xs">${initials}</div>`;
+}
+
 // ==============================================================
 // MODE DUEL 1V1 MULTIJOUEUR EN TEMPS RÉEL (DEADLINE DAY PANIC)
 // ==============================================================
@@ -40,7 +107,7 @@ function initDuelSocket() {
     if (readyBtnBox) readyBtnBox.classList.add('hidden');
     
     showScreen('screen-duel-lobby');
-    showToast(`✅ Salon ${code} créé ! Partagez le code ou le lien avec votre adversaire.`, 'success');
+    showToast(` Salon ${code} créé ! Partagez le code ou le lien avec votre adversaire.`, 'success');
   });
 
   socket.on('duelRoomReady', ({ code, league, rivalryName, rivalryTag, tier, players, market }) => {
@@ -66,7 +133,7 @@ function initDuelSocket() {
     updateDuelReadyBtn(myDuelPlayer ? myDuelPlayer.isReady : false);
     renderDuelLobbyMatchup(league, players, rivalryName, rivalryTag);
     const toastTitle = rivalryName ? `${rivalryName} (${league})` : league;
-    showToast(`⚔️ Préparez-vous pour le choc : ${toastTitle} !`, 'info');
+    showToast(`️ Préparez-vous pour le choc : ${toastTitle} !`, 'info');
   });
 
   socket.on('duelPlayerReadyChanged', ({ playerId, isReady }) => {
@@ -107,6 +174,8 @@ function initDuelSocket() {
     // Initialiser le mode mercato avec le scénario attribué
     activeScenario = myDuelPlayer.club;
     currentRemainingBudget = myDuelPlayer.club.budget;
+    const elMobNego = document.getElementById('nego-mobile-budget');
+    if (elMobNego) elMobNego.textContent = `${currentRemainingBudget.toFixed(1)} M€`;
     currentSignedPlayers = [];
     realtimeRemainingSeconds = timer;
 
@@ -114,7 +183,7 @@ function initDuelSocket() {
     document.getElementById('duel-mercato-hud').classList.remove('hidden');
     updateDuelHUDInfo();
 
-    // Masquer les boutons solo "CLÔTURER" pour éviter tout doublon avec "Mercato Bouclé 🏁"
+    // Masquer les boutons solo "CLÔTURER" pour éviter tout doublon avec "Mercato Bouclé "
     const btnCloseSolo = document.getElementById('btn-close-mercato');
     const btnCloseSoloMob = document.getElementById('btn-close-mercato-mobile');
     if (btnCloseSolo) btnCloseSolo.classList.add('hidden');
@@ -126,12 +195,12 @@ function initDuelSocket() {
 
     // Mettre à jour l'en-tête du club et les cibles du coach sur l'interface
     const badgeEl = document.getElementById('mercato-club-badge');
-    if (badgeEl) badgeEl.textContent = activeScenario.logo || '🛡️';
+    if (badgeEl) badgeEl.textContent = activeScenario.logo || '️';
     const titleEl = document.getElementById('mercato-club-title');
     if (titleEl) titleEl.textContent = activeScenario.club;
 
     const originNote = (activeScenario.originConstraint && activeScenario.originConstraint.code !== 'FREE')
-      ? `<span class="block mt-1 font-bold text-amber-300 not-italic">📍 Filière exigée : ${activeScenario.originConstraint.name || activeScenario.originConstraint.label} (${activeScenario.originConstraint.shortDesc || activeScenario.originConstraint.hint || ''})</span>`
+      ? `<span class="block mt-1 font-bold text-amber-300 not-italic"> Filière exigée : ${activeScenario.originConstraint.name || activeScenario.originConstraint.label} (${activeScenario.originConstraint.shortDesc || activeScenario.originConstraint.hint || ''})</span>`
       : '';
     const coachRem = document.getElementById('mercato-coach-reminder');
     if (coachRem) coachRem.innerHTML = `"${activeScenario.coachDemand}"${originNote}`;
@@ -143,7 +212,7 @@ function initDuelSocket() {
 
     showScreen('screen-mercato');
     audio.play('deal_signed');
-    showToast("⏱️ C'EST PARTI ! 3 minutes pour boucler votre mercato avant votre adversaire !", "success");
+    showToast(" C'EST PARTI ! 3 minutes pour boucler votre mercato avant votre adversaire !", "success");
   });
 
   socket.on('duelTimerTick', ({ timer }) => {
@@ -189,7 +258,7 @@ function initDuelSocket() {
     const isMe = buyerId === socket.id;
 
     if (!isMe) {
-      showToast(`🚨 ${buyerName} vient d'arracher un joueur pour ${agreedPrice.toFixed(1)} M€ !`, 'warning');
+      showToast(` ${buyerName} vient d'arracher un joueur pour ${agreedPrice.toFixed(1)} M€ !`, 'warning');
       if (opponentDuelPlayer) {
         opponentDuelPlayer.remainingBudget = buyerRemainingBudget;
         opponentDuelPlayer.signedCount = buyerSignedCount;
@@ -211,7 +280,7 @@ function initDuelSocket() {
         if (negoModal) negoModal.classList.add('hidden');
         const medModal = document.getElementById('modal-medical-dilemma');
         if (medModal) medModal.classList.add('hidden');
-        showToast(`💥 TROP TARD ! ${buyerName} a finalisé la signature de ce joueur sous votre nez !`, 'error', 4500);
+        showToast(` TROP TARD ! ${buyerName} a finalisé la signature de ce joueur sous votre nez !`, 'error', 4500);
         audio.play('fail');
       }
 
@@ -234,26 +303,48 @@ function initDuelSocket() {
       const btn = document.getElementById('duel-mercato-done-btn');
       if (btn) {
         btn.disabled = true;
-        btn.textContent = 'En attente de votre rival... ⏳';
+        btn.textContent = 'En attente de votre rival...';
         btn.className = 'py-2.5 px-4 bg-gray-800 text-amber-400 font-display font-extrabold text-xs rounded-xl border border-amber-400/40';
       }
     } else {
-      showToast(`🏁 ${playerName} a terminé son mercato !`, 'info');
+      showToast(` ${playerName} a terminé son mercato !`, 'info');
       const oppStatusEl = document.getElementById('duel-opp-status');
-      if (oppStatusEl) oppStatusEl.textContent = 'Mercato bouclé ! 🏁';
+      if (oppStatusEl) oppStatusEl.textContent = 'Mercato bouclé !';
     }
   });
 
   // Lancement de la simulation duel
   socket.on('startDuelSimulation', ({ simResult, p1, p2 }) => {
     duelSimData = { simResult, p1, p2 };
-    directMatchQueue = [...simResult.h2hMatches];
+    directMatchQueue = [...((simResult && simResult.h2hMatches) || [])];
     currentDirectMatchIndex = 0;
 
-    // Fermer toute négociation ouverte
-    document.getElementById('modal-negotiation').classList.add('hidden');
-    document.getElementById('modal-medical-dilemma').classList.add('hidden');
+    // Fermer toute négociation, modale ou overlay mobile en toute sécurité
+    const modNego = document.getElementById('modal-negotiation');
+    if (modNego) modNego.classList.add('hidden');
+    const modMed = document.getElementById('modal-medical-dilemma');
+    if (modMed) modMed.classList.add('hidden');
+    const cdOverlay = document.getElementById('duel-countdown-overlay');
+    if (cdOverlay) cdOverlay.classList.add('hidden');
 
+    // Forcer la fermeture de l'overlay mobile et le masquage de l'écran mercato
+    const negoCol = document.getElementById('in-game-negotiation-col');
+    if (negoCol) {
+      negoCol.classList.remove('mobile-nego-active');
+      negoCol.style.display = 'none';
+    }
+    if (typeof closeMobileNegotiation === 'function') {
+      closeMobileNegotiation();
+    }
+
+    const screenMercato = document.getElementById('screen-mercato');
+    if (screenMercato) {
+      screenMercato.classList.add('hidden');
+      screenMercato.style.display = 'none';
+    }
+    document.body.classList.remove('in-mercato');
+
+    // Basculer immédiatement sur l'écran Flash Matchday et lancer la simulation J1-J38
     runDuelSeasonSimulation(simResult);
   });
 
@@ -286,27 +377,27 @@ function initDuelSocket() {
     const rematchBtn = document.getElementById('duel-rematch-btn');
     if (rematchBtn) {
       rematchBtn.disabled = false;
-      rematchBtn.innerHTML = '<span>⚔️ PROPOSER UNE REVANCHE IMMÉDIATE</span>';
+      rematchBtn.innerHTML = '<span>️ PROPOSER UNE REVANCHE IMMÉDIATE</span>';
       rematchBtn.className = 'w-full py-4 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-display font-black text-xs rounded-2xl shadow-xl transition transform hover:scale-[1.01] flex items-center justify-center gap-2 border border-amber-300';
     }
 
     const doneBtn = document.getElementById('duel-mercato-done-btn');
     if (doneBtn) {
       doneBtn.disabled = false;
-      doneBtn.textContent = '🏁 VALIDER MON EFFECTIF';
+      doneBtn.textContent = ' VALIDER MON EFFECTIF';
       doneBtn.className = 'py-2.5 px-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-black text-xs rounded-xl shadow-lg transition transform hover:scale-105';
     }
 
     updateDuelReadyBtn(false);
     renderDuelLobbyMatchup(league, players, rivalryName, rivalryTag);
     showScreen('screen-duel-lobby');
-    showToast("⚔️ Revanche acceptée ! Nouveaux clubs et nouveau marché prêts !", "success");
+    showToast("️ Revanche acceptée ! Nouveaux clubs et nouveau marché prêts !", "success");
   });
 
   socket.on('opponentLeftRoom', ({ message }) => {
-    showToast(`⚠️ ${message}`, 'warning');
+    showToast(`️ ${message}`, 'warning');
     const oppStatusEl = document.getElementById('duel-opp-status');
-    if (oppStatusEl) oppStatusEl.textContent = 'Déconnecté ❌';
+    if (oppStatusEl) oppStatusEl.textContent = 'Déconnecté ';
   });
 
   socket.on('duelError', ({ message }) => {
@@ -322,15 +413,24 @@ function renderDuelLobbyMatchup(league, players, rivalryName = null, rivalryTag 
   const p1 = players[0];
   const p2 = players[1];
 
+  // 1. Drapeau vectoriel de la ligue en haut à gauche
   const leagueBadge = document.getElementById('duel-lobby-league-badge');
-  if (leagueBadge) leagueBadge.textContent = `🏆 ${league} • D1`;
+  if (leagueBadge) {
+    const rawLeague = league || (p1 && p1.club && p1.club.country) || 'Liga Portugal';
+    const cleanLeague = rawLeague.replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]/g, '').trim() || 'Ligue';
+    const flagHtml = typeof renderFlag === 'function' ? renderFlag(rawLeague, cleanLeague, 'w-4 h-3 inline-block shrink-0') : '';
+    leagueBadge.innerHTML = `<span class="inline-flex items-center gap-1.5">${flagHtml} <span>${cleanLeague} • D1</span></span>`;
+  }
 
-  // Bannière du Choc / Derby
+  // 2. Bannière du Choc / Derby avec SVG d'épées croisées
   const rivBadge = document.getElementById('duel-lobby-rivalry-badge');
   const rivTag = document.getElementById('duel-lobby-rivalry-tag');
-  const actualName = rivalryName || (currentDuelRoom && currentDuelRoom.rivalryName) || '⚔️ CHOC DIRECT EN LIGNE';
+  const actualName = rivalryName || (currentDuelRoom && currentDuelRoom.rivalryName) || 'CHOC DIRECT EN LIGNE';
+  const cleanRivName = actualName.replace(/⚔️/g, '').replace(/️/g, '').trim();
   const actualTag = rivalryTag || (currentDuelRoom && currentDuelRoom.rivalryTag) || 'Rivalité au sommet • Équité parfaite';
-  if (rivBadge) rivBadge.textContent = actualName;
+  if (rivBadge) {
+    rivBadge.innerHTML = `<span class="inline-flex items-center gap-1.5">${getCrossedSwordsSvg('w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0')} <span>${cleanRivName}</span></span>`;
+  }
   if (rivTag) rivTag.textContent = actualTag;
 
   // Désactivation du bouton reroll si au moins un joueur est prêt
@@ -347,80 +447,159 @@ function renderDuelLobbyMatchup(league, players, rivalryName = null, rivalryTag 
     }
   }
 
-  // Joueur 1
+  // Joueur 1 : Logo vectoriel propre (griffe Boavista, parasol Estoril, ou blason typographique)
   if (p1) {
-    document.getElementById('duel-p1-name').textContent = p1.name;
+    const p1NameEl = document.getElementById('duel-p1-name');
+    if (p1NameEl) p1NameEl.textContent = p1.name;
     if (p1.club) {
-      document.getElementById('duel-p1-logo').textContent = p1.club.logo || '🛡️';
-      document.getElementById('duel-p1-club').textContent = p1.club.club;
-      document.getElementById('duel-p1-budget').textContent = `${p1.club.budget.toFixed(1)} M€`;
-      document.getElementById('duel-p1-coach').textContent = `Coach : "${p1.club.coachDemand}"`;
+      const p1LogoEl = document.getElementById('duel-p1-logo');
+      if (p1LogoEl) p1LogoEl.innerHTML = renderDuelClubLogo(p1.club);
+      const p1ClubEl = document.getElementById('duel-p1-club');
+      if (p1ClubEl) p1ClubEl.textContent = p1.club.club;
+      const p1BudEl = document.getElementById('duel-p1-budget');
+      if (p1BudEl) p1BudEl.textContent = `${p1.club.budget.toFixed(1)} M€`;
+      const p1CoachEl = document.getElementById('duel-p1-coach');
+      if (p1CoachEl) p1CoachEl.textContent = `Coach : "${p1.club.coachDemand}"`;
     }
     const r1 = document.getElementById('duel-p1-ready-badge');
-    r1.textContent = p1.isReady ? 'PRÊT 🟢' : 'EN ATTENTE ⏳';
-    r1.className = p1.isReady 
-      ? 'text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-      : 'text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-gray-800 text-gray-400 border border-gray-700';
+    if (r1) {
+      r1.textContent = p1.isReady ? 'PRÊT' : 'EN ATTENTE';
+      r1.className = p1.isReady 
+        ? 'text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+        : 'text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-gray-200 dark:bg-slate-800 text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-700';
+    }
   }
 
-  // Joueur 2
+  // Joueur 2 : Logo vectoriel propre
   if (p2) {
-    document.getElementById('duel-p2-name').textContent = p2.name;
+    const p2NameEl = document.getElementById('duel-p2-name');
+    if (p2NameEl) p2NameEl.textContent = p2.name;
     if (p2.club) {
-      document.getElementById('duel-p2-logo').textContent = p2.club.logo || '⚔️';
-      document.getElementById('duel-p2-club').textContent = p2.club.club;
-      document.getElementById('duel-p2-budget').textContent = `${p2.club.budget.toFixed(1)} M€`;
-      document.getElementById('duel-p2-coach').textContent = `Coach : "${p2.club.coachDemand}"`;
+      const p2LogoEl = document.getElementById('duel-p2-logo');
+      if (p2LogoEl) p2LogoEl.innerHTML = renderDuelClubLogo(p2.club);
+      const p2ClubEl = document.getElementById('duel-p2-club');
+      if (p2ClubEl) p2ClubEl.textContent = p2.club.club;
+      const p2BudEl = document.getElementById('duel-p2-budget');
+      if (p2BudEl) p2BudEl.textContent = `${p2.club.budget.toFixed(1)} M€`;
+      const p2CoachEl = document.getElementById('duel-p2-coach');
+      if (p2CoachEl) p2CoachEl.textContent = `Coach : "${p2.club.coachDemand}"`;
     }
     const r2 = document.getElementById('duel-p2-ready-badge');
-    r2.textContent = p2.isReady ? 'PRÊT 🟢' : 'EN ATTENTE ⏳';
-    r2.className = p2.isReady 
-      ? 'text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-      : 'text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-gray-800 text-gray-400 border border-gray-700';
+    if (r2) {
+      r2.textContent = p2.isReady ? 'PRÊT' : 'EN ATTENTE';
+      r2.className = p2.isReady 
+        ? 'text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+        : 'text-[10px] font-black uppercase px-2.5 py-1 rounded-full bg-gray-200 dark:bg-slate-800 text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-700';
+    }
   }
 }
 
 function rerollDuelMatchupAction() {
   if (!socket) return;
   socket.emit('rerollDuelMatchup');
-  showToast('🎲 Tirage d\'un nouveau duel aléatoire...', 'info');
+  showToast(' Tirage d\'un nouveau duel aléatoire...', 'info');
 }
 
 function updateDuelReadyBtn(isReady) {
   const btn = document.getElementById('duel-toggle-ready-btn');
   if (!btn) return;
   if (isReady) {
-    btn.textContent = 'Annuler mon statut Prêt ⏳';
+    btn.textContent = 'Annuler mon statut Prêt';
     btn.className = 'w-full py-4 bg-gray-800 hover:bg-gray-700 text-amber-300 font-display font-extrabold text-sm rounded-2xl border border-amber-400/40 transition shadow-lg';
   } else {
-    btn.textContent = 'JE SUIS PRÊT ! 🟢';
+    btn.textContent = 'JE SUIS PRÊT !';
     btn.className = 'w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-extrabold text-sm rounded-2xl shadow-xl shadow-emerald-500/20 transition transform hover:scale-[1.02]';
   }
 }
 
 function updateDuelHUDInfo() {
   if (!opponentDuelPlayer) return;
-  document.getElementById('duel-opp-name').textContent = opponentDuelPlayer.name;
-  document.getElementById('duel-opp-club-logo').textContent = opponentDuelPlayer.club ? opponentDuelPlayer.club.logo : '🛡️';
-  document.getElementById('duel-opp-club-name').textContent = opponentDuelPlayer.club ? opponentDuelPlayer.club.club : 'Rival';
-  document.getElementById('duel-opp-budget').textContent = `${opponentDuelPlayer.remainingBudget.toFixed(1)} M€`;
-  document.getElementById('duel-opp-count').textContent = `${opponentDuelPlayer.signedCount || 0} recrue${(opponentDuelPlayer.signedCount || 0) > 1 ? 's' : ''}`;
+  const oppNameEl = document.getElementById('duel-opp-name');
+  if (oppNameEl) oppNameEl.textContent = opponentDuelPlayer.name;
+  const oppLogoEl = document.getElementById('duel-opp-club-logo');
+  if (oppLogoEl) oppLogoEl.innerHTML = renderDuelClubLogo(opponentDuelPlayer.club);
+  const oppClubNameEl = document.getElementById('duel-opp-club-name');
+  if (oppClubNameEl) oppClubNameEl.textContent = opponentDuelPlayer.club ? opponentDuelPlayer.club.club : 'Rival';
+  const oppBudEl = document.getElementById('duel-opp-budget');
+  if (oppBudEl) oppBudEl.textContent = `${opponentDuelPlayer.remainingBudget.toFixed(1)} M€`;
+  const oppCountEl = document.getElementById('duel-opp-count');
+  if (oppCountEl) oppCountEl.textContent = `${opponentDuelPlayer.signedCount || 0} recrue${(opponentDuelPlayer.signedCount || 0) > 1 ? 's' : ''}`;
 }
 
 // Actions utilisateur depuis l'interface
-function openSoloMode() {
-  isDuelActive = false;
-  document.getElementById('duel-mercato-hud').classList.add('hidden');
-  showScreen('screen-home');
+function switchModesTab(mode) {
+  const soloPanel = document.getElementById('modes-panel-solo');
+  const duelPanel = document.getElementById('modes-panel-duel');
+  const soloBtn = document.getElementById('tab-btn-solo');
+  const duelBtn = document.getElementById('tab-btn-duel');
+
+  if (mode === 'duel') {
+    if (soloPanel) {
+      soloPanel.classList.add('hidden');
+      soloPanel.style.display = 'none';
+    }
+    if (duelPanel) {
+      duelPanel.classList.remove('hidden');
+      duelPanel.style.display = 'block';
+    }
+
+    if (soloBtn) {
+      soloBtn.className = 'flex-1 sm:flex-initial px-4 sm:px-6 py-3 rounded-xl text-gray-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white font-extrabold text-xs sm:text-sm transition cursor-pointer text-center select-none';
+    }
+    if (duelBtn) {
+      duelBtn.className = 'flex-1 sm:flex-initial px-4 sm:px-6 py-3 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-black text-xs sm:text-sm shadow-sm transition cursor-pointer text-center select-none';
+    }
+
+    if (typeof initDuelSocket === 'function') {
+      initDuelSocket();
+    }
+
+    const savedNick = localStorage.getItem('ddp_duel_nickname') || '';
+    const nickInput = document.getElementById('duel-nickname-input');
+    if (nickInput && savedNick && !nickInput.value) {
+      nickInput.value = savedNick;
+    }
+  } else {
+    // Mode Solo
+    if (duelPanel) {
+      duelPanel.classList.add('hidden');
+      duelPanel.style.display = 'none';
+    }
+    if (soloPanel) {
+      soloPanel.classList.remove('hidden');
+      soloPanel.style.display = '';
+    }
+
+    if (soloBtn) {
+      soloBtn.className = 'flex-1 sm:flex-initial px-4 sm:px-6 py-3 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-black text-xs sm:text-sm shadow-sm transition cursor-pointer text-center select-none';
+    }
+    if (duelBtn) {
+      duelBtn.className = 'flex-1 sm:flex-initial px-4 sm:px-6 py-3 rounded-xl text-gray-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white font-extrabold text-xs sm:text-sm transition cursor-pointer text-center select-none';
+    }
+  }
 }
 
 function openDuelPortal() {
-  initDuelSocket();
-  const savedNick = localStorage.getItem('ddp_duel_nickname') || '';
-  const nickInput = document.getElementById('duel-nickname-input');
-  if (nickInput && savedNick) nickInput.value = savedNick;
-  showScreen('screen-duel-portal');
+  if (typeof showScreen === 'function') {
+    showScreen('screen-modes');
+  }
+  switchModesTab('duel');
 }
+
+function openSoloMode() {
+  isDuelActive = false;
+  const hud = document.getElementById('duel-mercato-hud');
+  if (hud) hud.classList.add('hidden');
+  if (typeof showScreen === 'function') {
+    showScreen('screen-modes');
+  }
+  switchModesTab('solo');
+}
+
+// Global exports
+window.switchModesTab = switchModesTab;
+window.openDuelPortal = openDuelPortal;
+window.openSoloMode = openSoloMode;
 
 function createDuelRoomAction() {
   const nickInput = document.getElementById('duel-nickname-input');
@@ -470,7 +649,7 @@ function copyDuelShareLink() {
   if (!currentDuelRoom) return;
   const url = window.location.origin + '?duel=' + currentDuelRoom.code;
   navigator.clipboard.writeText(url).then(() => {
-    showToast('🔗 Lien du salon copié dans le presse-papier !', 'success');
+    showToast(' Lien du salon copié dans le presse-papier !', 'success');
   }).catch(() => {
     showToast(`Code salon : ${currentDuelRoom.code}`, 'info');
   });
@@ -486,7 +665,29 @@ function finishDuelMercatoAction() {
 // ==============================================================
 
 function runDuelSeasonSimulation(simResult) {
-  showScreen('screen-simulation');
+  // Masquage forcé du mercato et affichage immédiat de la simulation sur mobile et PC
+  const screenMercato = document.getElementById('screen-mercato');
+  if (screenMercato) {
+    screenMercato.classList.add('hidden');
+    screenMercato.style.display = 'none';
+  }
+  const negoCol = document.getElementById('in-game-negotiation-col');
+  if (negoCol) {
+    negoCol.classList.remove('mobile-nego-active');
+    negoCol.style.display = 'none';
+  }
+  document.body.classList.remove('in-mercato');
+
+  if (typeof showScreen === 'function') {
+    showScreen('screen-simulation');
+  } else {
+    const simScreen = document.getElementById('screen-simulation');
+    if (simScreen) {
+      simScreen.classList.remove('hidden');
+      simScreen.style.display = 'block';
+    }
+  }
+  window.scrollTo({ top: 0, behavior: 'instant' });
 
   const progressBar = document.getElementById('sim-progress-bar');
   const matchdayEl = document.getElementById('sim-matchday');
@@ -495,8 +696,24 @@ function runDuelSeasonSimulation(simResult) {
   const virtualRankEl = document.getElementById('sim-virtual-rank');
   const virtualPointsEl = document.getElementById('sim-virtual-points');
 
+  // En-tête Flash Matchday avec drapeau de la ligue
+  const leagueTitleEl = document.getElementById('sim-mini-standings-title');
+  if (leagueTitleEl) {
+    const rawLeague = (currentDuelRoom && currentDuelRoom.league) || 'Liga Portugal';
+    const flagHtml = typeof renderFlag === 'function' ? renderFlag(rawLeague, 'Ligue', 'w-4 h-3 inline-block') : '';
+    leagueTitleEl.innerHTML = `<span class="inline-flex items-center gap-1.5">${flagHtml} <span>Duel 1v1 en Direct</span></span>`;
+  }
+
+  const tickerTagEl = document.getElementById('sim-ticker-tag');
+  if (tickerTagEl) {
+    const rawLeague = (currentDuelRoom && currentDuelRoom.league) || 'Liga Portugal';
+    const flagHtml = typeof renderFlag === 'function' ? renderFlag(rawLeague, 'Ligue', 'w-3.5 h-2.5 inline-block') : '';
+    tickerTagEl.innerHTML = `<span class="inline-flex items-center gap-1.5">${flagHtml} <span>FLASH MATCHDAY 1V1</span></span>`;
+  }
+
   let matchday = 0;
-  const isP1 = myDuelPlayer.name === simResult.p1Result.name;
+  const myName = (myDuelPlayer && myDuelPlayer.name) || '';
+  const isP1 = simResult.p1Result && simResult.p1Result.name === myName;
   const myResult = isP1 ? simResult.p1Result : simResult.p2Result;
   const oppResult = isP1 ? simResult.p2Result : simResult.p1Result;
 
@@ -510,7 +727,7 @@ function runDuelSeasonSimulation(simResult) {
     const currentPts = Math.round((myResult.points / 38) * matchday);
     const oppPts = Math.round((oppResult.points / 38) * matchday);
     virtualPointsEl.textContent = `${currentPts} pts (Rival : ${oppPts} pts)`;
-    virtualRankEl.textContent = `${myResult.club} vs ${oppResult.club}`;
+    virtualRankEl.innerHTML = `<span class="truncate block max-w-[250px] sm:max-w-[340px]" title="${myResult.club} vs ${oppResult.club}"><span class="text-blue-500 font-bold">${myResult.club}</span> <span class="text-gray-400 font-normal">vs</span> <span>${oppResult.club}</span></span>`;
 
     updateDuelMiniStandings(myResult, oppResult, currentPts, oppPts, matchday);
 
@@ -537,7 +754,7 @@ function runDuelSeasonSimulation(simResult) {
     }
 
     if (matchday % 5 === 0) {
-      tickerIcon.textContent = '⚡';
+      tickerIcon.textContent = '';
       tickerText.textContent = `J${matchday} : Lutte acharnée pour le maintien ! Écart : ${Math.abs(currentPts - oppPts)} pt(s).`;
     }
 
@@ -572,7 +789,7 @@ function resumeDuelSimulation(startMatchday, simResult) {
     const currentPts = Math.round((myResult.points / 38) * matchday);
     const oppPts = Math.round((oppResult.points / 38) * matchday);
     virtualPointsEl.textContent = `${currentPts} pts (Rival : ${oppPts} pts)`;
-    virtualRankEl.textContent = `${myResult.club} vs ${oppResult.club}`;
+    virtualRankEl.innerHTML = `<span class="truncate block max-w-[250px] sm:max-w-[340px]" title="${myResult.club} vs ${oppResult.club}"><span class="text-blue-500 font-bold">${myResult.club}</span> <span class="text-gray-400 font-normal">vs</span> <span>${oppResult.club}</span></span>`;
 
     updateDuelMiniStandings(myResult, oppResult, currentPts, oppPts, matchday);
 
@@ -598,7 +815,7 @@ function resumeDuelSimulation(startMatchday, simResult) {
     }
 
     if (matchday % 5 === 0) {
-      tickerIcon.textContent = '⚡';
+      tickerIcon.textContent = '';
       tickerText.textContent = `J${matchday} : Lutte acharnée pour le maintien ! Écart : ${Math.abs(currentPts - oppPts)} pt(s).`;
     }
 
@@ -625,7 +842,7 @@ function updateDuelMiniStandings(myResult, oppResult, myPts, oppPts, matchday) {
     <div class="flex items-center justify-between p-2 sm:p-2.5 rounded-xl ${first.isMe ? 'bg-amber-500/15 border border-amber-500/40' : 'bg-gray-800/80 border border-gray-700'}">
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-xs font-mono font-bold text-amber-400 w-5">1.</span>
-        <span class="text-sm shrink-0">${first.res.logo || '🛡️'}</span>
+        <span class="text-sm shrink-0">${first.res.logo || '️'}</span>
         <span class="font-bold text-white text-xs truncate">${first.res.club} <span class="text-[10px] text-gray-400 font-normal">(${first.res.name}${first.isMe ? ' - Vous' : ''})</span></span>
       </div>
       <span class="font-mono font-black ${first.isMe ? 'text-amber-400' : 'text-gray-300'} text-xs sm:text-sm shrink-0 ml-2">${first.pts} pts</span>
@@ -633,7 +850,7 @@ function updateDuelMiniStandings(myResult, oppResult, myPts, oppPts, matchday) {
     <div class="flex items-center justify-between p-2 sm:p-2.5 rounded-xl ${second.isMe ? 'bg-amber-500/15 border border-amber-500/40' : 'bg-gray-800/80 border border-gray-700'}">
       <div class="flex items-center gap-2 min-w-0">
         <span class="text-xs font-mono font-bold text-gray-500 w-5">2.</span>
-        <span class="text-sm shrink-0">${second.res.logo || '🛡️'}</span>
+        <span class="text-sm shrink-0">${second.res.logo || '️'}</span>
         <span class="font-bold text-white text-xs truncate">${second.res.club} <span class="text-[10px] text-gray-400 font-normal">(${second.res.name}${second.isMe ? ' - Vous' : ''})</span></span>
       </div>
       <span class="font-mono font-black ${second.isMe ? 'text-amber-400' : 'text-gray-300'} text-xs sm:text-sm shrink-0 ml-2">${second.pts} pts</span>
@@ -661,7 +878,7 @@ function triggerDNCGAnimation(dncgData, onComplete) {
 
   const renderCard = (p) => `
     <div class="flex items-center gap-2.5 mb-2.5">
-      <span class="text-3xl">${p.logo || '🛡️'}</span>
+      <span class="text-3xl">${p.logo || '️'}</span>
       <div class="min-w-0">
         <h4 class="font-display font-black text-sm text-white truncate">${p.club}</h4>
         <span class="text-[10px] text-gray-400 font-bold block truncate">Présidence : ${p.name}</span>
@@ -729,8 +946,8 @@ function triggerDerbyDilemma(matchData, onComplete) {
   verdictEl.classList.add('hidden');
 
   tagEl.innerHTML = isMeHome 
-    ? `<span>🏟️</span> PRESSION DU REPAIRE LOCAL • CHOC J${matchData.matchday}`
-    : `<span>🚌</span> GUERRE PSYCHOLOGIQUE EN DÉPLACEMENT • CHOC J${matchData.matchday}`;
+    ? `<span>️</span> PRESSION DU REPAIRE LOCAL • CHOC J${matchData.matchday}`
+    : `<span></span> GUERRE PSYCHOLOGIQUE EN DÉPLACEMENT • CHOC J${matchData.matchday}`;
 
   titleEl.textContent = dilemma.title;
   descEl.textContent = `"${dilemma.question}"`;
@@ -769,15 +986,15 @@ function submitDuelDerbyChoice(tenteLeCoup) {
     if (success) {
       audio.play('deal_signed');
       verdictEl.className = 'py-3 px-3 rounded-xl text-xs font-bold mt-2 bg-emerald-950/80 border border-emerald-500 text-emerald-300';
-      verdictEl.innerHTML = `<span>🔥 COUP RÉUSSI !</span><p class="text-[11px] font-normal mt-1 text-emerald-200">L'adversaire est totalement déstabilisé par le coup de pression. Avantage psychologique immédiat !</p>`;
+      verdictEl.innerHTML = `<span> COUP RÉUSSI !</span><p class="text-[11px] font-normal mt-1 text-emerald-200">L'adversaire est totalement déstabilisé par le coup de pression. Avantage psychologique immédiat !</p>`;
     } else {
       audio.play('fail');
       verdictEl.className = 'py-3 px-3 rounded-xl text-xs font-bold mt-2 bg-rose-950/80 border border-rose-500 text-rose-300';
-      verdictEl.innerHTML = `<span>💥 RETOUR DE FLAMME !</span><p class="text-[11px] font-normal mt-1 text-rose-200">Le piège a fuité ou s'est retourné contre votre vestiaire. Vos joueurs sont crispés !</p>`;
+      verdictEl.innerHTML = `<span> RETOUR DE FLAMME !</span><p class="text-[11px] font-normal mt-1 text-rose-200">Le piège a fuité ou s'est retourné contre votre vestiaire. Vos joueurs sont crispés !</p>`;
     }
   } else {
     verdictEl.className = 'py-3 px-3 rounded-xl text-xs font-bold mt-2 bg-gray-800 border border-gray-700 text-gray-300';
-    verdictEl.innerHTML = `<span>🛡️ SAGESSE & RESPECT DU JEU</span><p class="text-[11px] font-normal mt-1 text-gray-400">Le piège n'est pas tenté. La vérité se fera exclusivement sur le terrain vert.</p>`;
+    verdictEl.innerHTML = `<span>️ SAGESSE & RESPECT DU JEU</span><p class="text-[11px] font-normal mt-1 text-gray-400">Le piège n'est pas tenté. La vérité se fera exclusivement sur le terrain vert.</p>`;
   }
 
   setTimeout(() => {
@@ -802,7 +1019,7 @@ function triggerDirectMatchAnimation(matchData, onComplete) {
   const autoNotice = document.getElementById('duel-match-autoresume-notice');
 
   modal.classList.remove('hidden');
-  titleEl.textContent = `⚔️ ${matchData.label.toUpperCase()} (J${matchData.matchday}) ⚔️`;
+  titleEl.textContent = `️ ${matchData.label.toUpperCase()} (J${matchData.matchday}) ️`;
   homeEl.textContent = matchData.homeClub;
   awayEl.textContent = matchData.awayClub;
   scoreEl.textContent = '0 - 0';
@@ -829,7 +1046,7 @@ function triggerDirectMatchAnimation(matchData, onComplete) {
       row.className = 'flex items-center gap-2 text-xs py-1.5 border-b border-gray-800';
       row.innerHTML = `
         <span class="font-mono font-bold text-amber-400 w-8">${ev.minute}'</span>
-        <span>${ev.type === 'goal' ? '⚽ BUT !' : (ev.type === 'save' ? '🧤 Parade !' : '🟨 Carton')}</span>
+        <span>${ev.type === 'goal' ? ' BUT !' : (ev.type === 'save' ? ' Parade !' : ' Carton')}</span>
         <strong class="${ev.isP1 ? 'text-amber-300' : 'text-blue-300'} truncate">${ev.player}</strong>
         <span class="text-gray-400 text-[10px] shrink-0">(${ev.team})</span>
       `;
@@ -841,7 +1058,7 @@ function triggerDirectMatchAnimation(matchData, onComplete) {
 
       // Compte à rebours automatique sans bouton manuel pour ne jamais désynchroniser les 2 joueurs
       if (autoNotice) {
-        autoNotice.textContent = "⏱️ Fin du match ! Reprise automatique du championnat...";
+        autoNotice.textContent = " Fin du match ! Reprise automatique du championnat...";
         autoNotice.classList.remove('hidden');
       }
 
@@ -874,15 +1091,15 @@ function showDuelRecapScreen(simResult) {
 
   if (isMeWinner) {
     outcomeBanner.className = 'p-6 rounded-3xl border-2 border-emerald-500 bg-emerald-950/40 text-center mb-6 shadow-2xl shadow-emerald-500/20';
-    outcomeTitle.textContent = `👑 VICTOIRE ÉCLATANTE DE ${myDuelPlayer.name.toUpperCase()} !`;
+    outcomeTitle.textContent = ` VICTOIRE ÉCLATANTE DE ${myDuelPlayer.name.toUpperCase()} !`;
     outcomeSub.textContent = `Vous terminez devant votre rival au classement final ! La direction adverse est en crise.`;
   } else if (isDraw) {
     outcomeBanner.className = 'p-6 rounded-3xl border-2 border-amber-500 bg-amber-950/40 text-center mb-6 shadow-2xl shadow-amber-500/20';
-    outcomeTitle.textContent = `🤝 ÉGALITÉ FRATRICIDE !`;
+    outcomeTitle.textContent = ` ÉGALITÉ FRATRICIDE !`;
     outcomeSub.textContent = `Les deux clubs terminent au coude-à-coude avec un total de points identique !`;
   } else {
     outcomeBanner.className = 'p-6 rounded-3xl border-2 border-rose-500 bg-rose-950/40 text-center mb-6 shadow-2xl shadow-rose-500/20';
-    outcomeTitle.textContent = `💀 DÉFAITE FACE À ${simResult.duelWinner.toUpperCase()}...`;
+    outcomeTitle.textContent = ` DÉFAITE FACE À ${simResult.duelWinner.toUpperCase()}...`;
     outcomeSub.textContent = `Votre rival termine devant vous au classement général. Votre mercato a coûté cher !`;
   }
 
@@ -895,7 +1112,7 @@ function showDuelRecapScreen(simResult) {
 
   document.getElementById('duel-recap-p1-card').innerHTML = `
     <div class="text-center">
-      <span class="text-3xl">${p1.logo || '🛡️'}</span>
+      <span class="text-3xl">${p1.logo || '️'}</span>
       <h4 class="font-display font-extrabold text-base text-white mt-1">${p1.name}</h4>
       <span class="text-xs text-gray-400">${p1.club}</span>
       <div class="mt-3 p-3 bg-gray-900 border border-gray-800 rounded-xl">
@@ -908,7 +1125,7 @@ function showDuelRecapScreen(simResult) {
 
   document.getElementById('duel-recap-p2-card').innerHTML = `
     <div class="text-center">
-      <span class="text-3xl">${p2.logo || '⚔️'}</span>
+      <span class="text-3xl">${p2.logo || '️'}</span>
       <h4 class="font-display font-extrabold text-base text-white mt-1">${p2.name}</h4>
       <span class="text-xs text-gray-400">${p2.club}</span>
       <div class="mt-3 p-3 bg-gray-900 border border-gray-800 rounded-xl">
@@ -940,7 +1157,7 @@ function showDuelRecapScreen(simResult) {
   if (simResult.analysis) {
     const pointsHtml = (simResult.analysis.points || []).map(pt => `
       <div class="flex items-start gap-3 bg-gray-900/70 p-3 rounded-xl border border-gray-800">
-        <span class="text-xl shrink-0 mt-0.5">${pt.icon}</span>
+        ${renderDebriefIcon(pt.icon)}
         <div>
           <strong class="text-white text-xs block font-bold mb-0.5">${pt.title}</strong>
           <p class="text-gray-300 text-[11px] leading-relaxed">${pt.desc}</p>
@@ -948,7 +1165,7 @@ function showDuelRecapScreen(simResult) {
       </div>
     `).join('');
     if (analysisPointsEl) analysisPointsEl.innerHTML = pointsHtml;
-    if (punchlineEl) punchlineEl.innerHTML = `<strong>🎙️ L'avis du consultant :</strong> ${simResult.analysis.punchline}`;
+    if (punchlineEl) punchlineEl.innerHTML = `<span class="inline-flex items-center gap-1.5 font-bold text-blue-400"><svg class="w-4 h-4 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> <span>L'avis du consultant :</span></span> ${simResult.analysis.punchline}`;
   }
 }
 
@@ -958,7 +1175,7 @@ function requestDuelRematchAction() {
   const btn = document.getElementById('duel-rematch-btn');
   if (btn) {
     btn.disabled = true;
-    btn.textContent = 'Demande de revanche envoyée... ⏳';
+    btn.textContent = 'Demande de revanche envoyée... ';
     btn.className = 'py-3 px-6 bg-gray-800 text-amber-400 font-display font-extrabold text-xs rounded-xl border border-amber-400/40';
   }
 }
@@ -972,3 +1189,11 @@ function declineDuelRematchAction() {
   document.getElementById('modal-duel-rematch-offer').classList.add('hidden');
   openSoloMode();
 }
+
+
+window.createDuelRoomAction = createDuelRoomAction;
+window.joinDuelRoomAction = joinDuelRoomAction;
+window.toggleDuelReadyAction = toggleDuelReadyAction;
+window.copyDuelShareLink = copyDuelShareLink;
+window.finishDuelMercatoAction = finishDuelMercatoAction;
+window.rerollDuelMatchupAction = rerollDuelMatchupAction;

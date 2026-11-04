@@ -70,7 +70,7 @@ function selectRivalClubDuo() {
 
   return {
     league: leagueKey,
-    rivalryName: `⚔️ COMMANDO MAINTIEN`,
+    rivalryName: `COMMANDO MAINTIEN`,
     rivalryTag: `Duel d'outsiders • Mission survie dans l'élite`,
     tier: 'maintien',
     clubA,
@@ -216,7 +216,7 @@ function simulateDirectMatch(p1, p2, matchLabel, matchday) {
 const HOME_DERBY_DILEMMAS = [
   {
     id: 'banderole_affaires',
-    title: '🏴 Banderole Hostile des Ultras',
+    title: 'Banderole Hostile des Ultras',
     question: "Les Ultras ont peint une bâche géante sur les affaires financières troubles du président adverse. On l'affiche en tribune présidentielle ?",
     successText: "La banderole fait un vacarme fou ! L'adversaire est totalement déstabilisé et perd ses moyens.",
     failText: "Le délégué de la ligue intervient : amende record et sanctions disciplinaires !",
@@ -227,7 +227,7 @@ const HOME_DERBY_DILEMMAS = [
   },
   {
     id: 'tifo_fumigenes',
-    title: '🔥 Tifo Pyrotechnique Interdit (200 Fumigènes)',
+    title: 'Tifo Pyrotechnique Interdit (200 Fumigènes)',
     question: "Les virages veulent allumer 200 fumigènes au coup d'envoi pour enfumer le gardien rival. Vous fermez les yeux ?",
     successText: "Ambiance volcanique irrespirable : Le gardien adverse commet une boulette sous la fumée !",
     failText: "Le délégué interrompt le match 15 minutes, l'équipe perd sa concentration et encaisse un but.",
@@ -238,7 +238,7 @@ const HOME_DERBY_DILEMMAS = [
   },
   {
     id: 'chants_personnels',
-    title: '📢 Chants Ciblés sur la Star Adverse',
+    title: 'Chants Ciblés sur la Star Adverse',
     question: "Les supporters ont préparé un refrain provocateur sur la vie privée de l'attaquant star rival. Vous autorisez les mégaphones ?",
     successText: "Le buteur adverse pète les plombs, prend un carton d'entrée et sort totalement de son match !",
     failText: "Piqué au vif par les insultes, l'attaquant rival est en fusion et marque un but vengeur !",
@@ -249,7 +249,7 @@ const HOME_DERBY_DILEMMAS = [
   },
   {
     id: 'accueil_car',
-    title: '🚌 Accueil Électrique du Bus Visiteur',
+    title: 'Accueil Électrique du Bus Visiteur',
     question: "Les supporters veulent encercler le bus adverse avec fumigènes et tambours pour les faire trembler dès la descente.",
     successText: "Les joueurs adverses descendent livides et terrorisés, ils n'ont pas les jambes au coup d'envoi !",
     failText: "Les forces de l'ordre interviennent, l'ambiance devient toxique et crispe nos propres joueurs.",
@@ -260,7 +260,7 @@ const HOME_DERBY_DILEMMAS = [
   },
   {
     id: 'champ_de_patates',
-    title: '🌱 Pelouse Sabotée / Champ de Patates',
+    title: 'Pelouse Sabotée / Champ de Patates',
     question: "Le jardinier propose de couper l'arrosage et laisser l'herbe haute pour paralyser le jeu de passes courtes des rivaux.",
     successText: "Leurs combinaisons échouent lamentablement dans les mottes de terre !",
     failText: "Notre propre milieu se prend les pieds dans le gazon et donne un contre létal.",
@@ -274,7 +274,7 @@ const HOME_DERBY_DILEMMAS = [
 const AWAY_DERBY_DILEMMAS = [
   {
     id: 'conf_toxique',
-    title: '🎙️ Attaque Frontale en Conférence de Presse',
+    title: 'Attaque Frontale en Conférence de Presse',
     question: "Vous accusez publiquement les arbitres d'avoir 'peur de siffler contre le club recevant' pour leur mettre la pression médiatique.",
     successText: "L'arbitre, sous pression des caméras, refuse de favoriser l'équipe à domicile !",
     failText: "La déclaration galvanise le stade entier, le public pousse son équipe comme un seul homme !",
@@ -285,7 +285,7 @@ const AWAY_DERBY_DILEMMAS = [
   },
   {
     id: 'taupe_staff',
-    title: '🕵️ Achat de la Feuille Tactique Secrète',
+    title: 'Achat de la Feuille Tactique Secrète',
     question: "Un stadier adverse propose de vous vendre sur clé USB les combinaisons secrètes sur corner de leur coach pour 10 000 €.",
     successText: "Vous lisez dans leur jeu comme dans un livre ouvert ! Leurs attaques sont anticipées.",
     failText: "L'affaire fuite sur Twitter ! Scandale d'espionnage et retrait d'1 point sur tapis vert !",
@@ -296,7 +296,7 @@ const AWAY_DERBY_DILEMMAS = [
   },
   {
     id: 'prime_noire',
-    title: '💼 Valise / Double Prime de Match au Black',
+    title: 'Valise / Double Prime de Match au Black',
     question: "Vous promettez une double prime de match en liquide de votre poche aux joueurs s'ils triomphent chez le rival.",
     successText: "Vos joueurs se dépouillent sur chaque tacle, une combativité héroïque !",
     failText: "La pression de l'argent tétanise le groupe, les passes sont crispées et sans âme.",
@@ -307,7 +307,7 @@ const AWAY_DERBY_DILEMMAS = [
   },
   {
     id: 'vestiaire_glace',
-    title: '🚿 Réclamation pour Vestiaire Glacé',
+    title: 'Réclamation pour Vestiaire Glacé',
     question: "Vous déposez une réclamation officielle pour 'eau glacée et vestiaire insalubre' afin de retarder le coup d'envoi de 20 minutes.",
     successText: "L'équipe adverse s'est refroidie pendant l'attente et rate son début de match !",
     failText: "Le délégué rejette la plainte et inflige un avertissement formel pour obstruction.",
@@ -648,7 +648,7 @@ function simulateFullDuelSeason(room) {
         // 4% crash relégation (Game Over immédiat)
         return {
           status: 'relegation',
-          badge: '🚨 RELÉGATION IMMÉDIATE',
+          badge: 'RELÉGATION IMMÉDIATE',
           badgeClass: 'bg-rose-950/80 text-rose-300 border border-rose-500 font-extrabold',
           ptsLost: 0,
           isGameOver: true,
@@ -664,7 +664,7 @@ function simulateFullDuelSeason(room) {
         ];
         return {
           status: 'penalty',
-          badge: `⚠️ -${ptsLost} POINTS (DNCG)`,
+          badge: `-${ptsLost} POINTS (DNCG)`,
           badgeClass: 'bg-amber-950/80 text-amber-300 border border-amber-500 font-extrabold',
           ptsLost: ptsLost,
           isGameOver: false,
@@ -678,7 +678,7 @@ function simulateFullDuelSeason(room) {
         ];
         return {
           status: 'clean',
-          badge: '🟢 COMPTES VALIDÉS (CLEAN)',
+          badge: 'COMPTES VALIDÉS (CLEAN)',
           badgeClass: 'bg-emerald-950/80 text-emerald-300 border border-emerald-500 font-extrabold',
           ptsLost: 0,
           isGameOver: false,
@@ -1171,7 +1171,7 @@ io.on('connection', (socket) => {
 
 server.listen(PORT, () => {
   console.log(`\n=================================================`);
-  console.log(`⚽ DEADLINE DAY PANIC - SERVEUR EN LIGNE PRÊT !`);
-  console.log(`🔗 Accès Local : http://localhost:${PORT}`);
+  console.log(`DEADLINE DAY PANIC - SERVEUR EN LIGNE PRÊT !`);
+  console.log(`Accès Local : http://localhost:${PORT}`);
   console.log(`=================================================\n`);
 });

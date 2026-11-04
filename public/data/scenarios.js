@@ -9,27 +9,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Galaxia Madrid FC",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "👑",
+    "logo": "",
     "budget": 184,
     "wages": 25,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_ATTAQUE",
         "name": "Polyvalent Buteur / Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "ATT": [
         "Tueur clinique",
@@ -53,7 +53,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -67,7 +67,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -76,28 +76,28 @@ const SCENARIOS = [
     "id": 2,
     "difficulty": "facile",
     "club": "Manchester Red Devils",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "🔴",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 201,
     "wages": 30,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -120,8 +120,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche.",
     "targetRank": 2,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Vision laser",
@@ -135,9 +135,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -145,27 +145,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Paris Capitale SG",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "🗼",
+    "logo": "",
     "budget": 195,
     "wages": 28,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Vision laser",
@@ -188,7 +188,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Pépite U21",
@@ -201,7 +201,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -211,24 +211,24 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Bayern Münchenberg",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 161,
     "wages": 22,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -255,7 +255,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -268,7 +268,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -277,28 +277,28 @@ const SCENARIOS = [
     "id": 5,
     "difficulty": "facile",
     "club": "London Blue Royals",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "🦁",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 178,
     "wages": 26,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Réflexes félins",
@@ -321,8 +321,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Gardien de But, Défenseur Central, Ailier Droit.",
     "targetRank": 2,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Vision laser",
@@ -336,7 +336,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -346,27 +346,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Juventus Piemonte FC",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 140,
     "wages": 15,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_PISTON_AILIER",
         "name": "Piston / Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Piston / Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Piston / Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -390,7 +390,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Pépite U21",
@@ -403,7 +403,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -413,27 +413,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Barca Catalunya FC",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 140,
     "wages": 18,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_10_AILIER",
         "name": "Polyvalent 10 & Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 10 & Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 10 & Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -456,7 +456,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -470,7 +470,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -479,28 +479,28 @@ const SCENARIOS = [
     "id": 8,
     "difficulty": "facile",
     "club": "Liverpool Port FC",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "⭐",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 144,
     "wages": 21,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -523,8 +523,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche.",
     "targetRank": 2,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Vision laser",
@@ -538,37 +538,37 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
     "id": 9,
     "difficulty": "facile",
     "club": "Manchester Sky Blues FC",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "⭐",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 161,
     "wages": 24,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -591,8 +591,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans).",
     "targetRank": 2,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Pépite U21",
@@ -605,7 +605,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -615,24 +615,24 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Inter Milano Nero FC",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 178,
     "wages": 15,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -659,7 +659,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -673,7 +673,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -682,28 +682,28 @@ const SCENARIOS = [
     "id": 11,
     "difficulty": "facile",
     "club": "Arsenal Cannon FC",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "⭐",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 195,
     "wages": 18,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -726,8 +726,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Gardien de But, Défenseur Central, Ailier Droit.",
     "targetRank": 2,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Vision laser",
@@ -741,7 +741,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -751,27 +751,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Lisboa Eagles FC",
     "country": "🇵🇹 Liga Portugal",
-    "logo": "⭐",
+    "logo": "",
     "budget": 140,
     "wages": 21,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_8_10",
         "name": "Polyvalent 8 & 10",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 8 & 10. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 8 & 10. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -795,7 +795,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Liga Portugal",
     "flag": "🇵🇹",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Pépite U21",
@@ -808,7 +808,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -818,27 +818,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Amsterdam Sons FC",
     "country": "🇳🇱 Eredivisie (Pays-Bas)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 140,
     "wages": 24,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_ATTAQUE",
         "name": "Polyvalent Buteur / Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -862,7 +862,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Eredivisie",
     "flag": "🇳🇱",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -876,7 +876,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -886,27 +886,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Riyadh Gold Stars FC",
     "country": "🇸🇦 Saudi Pro League",
-    "logo": "⭐",
+    "logo": "",
     "budget": 144,
     "wages": 15,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -930,7 +930,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Saudi Pro League",
     "flag": "🇸🇦",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Vision laser",
@@ -944,9 +944,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -954,27 +954,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Miami Flamingo FC",
     "country": "🇺🇸 Major League Soccer",
-    "logo": "⭐",
+    "logo": "",
     "budget": 161,
     "wages": 18,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -998,7 +998,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "MLS",
     "flag": "🇺🇸",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Pépite U21",
@@ -1011,7 +1011,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -1021,24 +1021,24 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Madrid Colchoneros FC",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 178,
     "wages": 21,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -1065,7 +1065,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -1078,7 +1078,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -1088,27 +1088,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Dortmund Gelbe Wand FC",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 195,
     "wages": 24,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -1132,7 +1132,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Vision laser",
@@ -1146,7 +1146,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -1156,27 +1156,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Porto Dragons FC",
     "country": "🇵🇹 Liga Portugal",
-    "logo": "⭐",
+    "logo": "",
     "budget": 140,
     "wages": 15,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_PISTON_AILIER",
         "name": "Piston / Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Piston / Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Piston / Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -1200,7 +1200,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Liga Portugal",
     "flag": "🇵🇹",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Pépite U21",
@@ -1213,7 +1213,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -1223,27 +1223,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "AC Rossoneri Milan FC",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 140,
     "wages": 18,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_10_AILIER",
         "name": "Polyvalent 10 & Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 10 & Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 10 & Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -1267,7 +1267,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -1281,7 +1281,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -1290,28 +1290,28 @@ const SCENARIOS = [
     "id": 20,
     "difficulty": "facile",
     "club": "Newcastle Magpies FC",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "⭐",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 144,
     "wages": 21,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -1334,8 +1334,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche.",
     "targetRank": 2,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Vision laser",
@@ -1348,37 +1348,37 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
     "id": 21,
     "difficulty": "facile",
     "club": "Tottenham Cockerels FC",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "⭐",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 161,
     "wages": 24,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -1401,8 +1401,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans).",
     "targetRank": 2,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Pépite U21",
@@ -1415,7 +1415,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -1425,24 +1425,24 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Napoli Partenopei FC",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 178,
     "wages": 15,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -1469,7 +1469,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -1483,7 +1483,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -1493,27 +1493,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Leipzig Red Bullen FC",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 195,
     "wages": 18,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -1537,7 +1537,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Vision laser",
@@ -1551,7 +1551,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -1561,27 +1561,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Marseille Phocéens FC",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 140,
     "wages": 21,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_8_10",
         "name": "Polyvalent 8 & 10",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 8 & 10. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 8 & 10. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -1605,7 +1605,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Pépite U21",
@@ -1618,7 +1618,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -1628,27 +1628,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Bayer Leverkusen FC",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 140,
     "wages": 24,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_ATTAQUE",
         "name": "Polyvalent Buteur / Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -1672,7 +1672,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -1686,7 +1686,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -1695,28 +1695,28 @@ const SCENARIOS = [
     "id": 26,
     "difficulty": "facile",
     "club": "Aston Birmingham FC",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "⭐",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 144,
     "wages": 15,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -1739,8 +1739,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche.",
     "targetRank": 2,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Vision laser",
@@ -1754,9 +1754,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -1764,27 +1764,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Fenerbahce Bosphore FC",
     "country": "🇹🇷 Süper Lig (Turquie)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 161,
     "wages": 18,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -1807,7 +1807,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Süper Lig",
     "flag": "🇹🇷",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Pépite U21",
@@ -1820,7 +1820,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -1830,24 +1830,24 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Galatasaray Lions FC",
     "country": "🇹🇷 Süper Lig (Turquie)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 178,
     "wages": 21,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -1873,7 +1873,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Süper Lig",
     "flag": "🇹🇷",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -1886,7 +1886,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -1896,27 +1896,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Sporting Lions FC",
     "country": "🇵🇹 Liga Portugal",
-    "logo": "⭐",
+    "logo": "",
     "budget": 195,
     "wages": 24,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -1940,7 +1940,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Liga Portugal",
     "flag": "🇵🇹",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Vision laser",
@@ -1954,7 +1954,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -1963,28 +1963,28 @@ const SCENARIOS = [
     "id": 30,
     "difficulty": "facile",
     "club": "Celtic Glasgow FC",
-    "country": "🏴󠁧󠁢󠁳󠁣󠁴󠁿 Premiership (Écosse)",
-    "logo": "⭐",
+    "country": "󠁧󠁢󠁳󠁣󠁴󠁿 Premiership (Écosse)",
+    "logo": "",
     "budget": 140,
     "wages": 15,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_PISTON_AILIER",
         "name": "Piston / Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Piston / Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Piston / Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -2007,8 +2007,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Défenseur Central, Buteur (9), Piston / Ailier.",
     "targetRank": 2,
     "league": "Scottish Premiership",
-    "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "flag": "󠁧󠁢󠁳󠁣󠁴󠁿",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Pépite U21",
@@ -2021,7 +2021,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -2031,27 +2031,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "AS Monaco Rock FC",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 140,
     "wages": 18,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_10_AILIER",
         "name": "Polyvalent 10 & Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 10 & Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 10 & Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -2074,7 +2074,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -2088,7 +2088,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -2098,27 +2098,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Benfica Seixal FC",
     "country": "🇵🇹 Liga Portugal",
-    "logo": "⭐",
+    "logo": "",
     "budget": 144,
     "wages": 21,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -2142,7 +2142,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Liga Portugal",
     "flag": "🇵🇹",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Vision laser",
@@ -2156,9 +2156,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -2166,27 +2166,27 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Feyenoord Port FC",
     "country": "🇳🇱 Eredivisie (Pays-Bas)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 161,
     "wages": 24,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -2210,7 +2210,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Eredivisie",
     "flag": "🇳🇱",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Pépite U21",
@@ -2223,7 +2223,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -2233,24 +2233,24 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Sao Paulo Tricolor FC",
     "country": "🇧🇷 Brasileirão (Brésil)",
-    "logo": "⭐",
+    "logo": "",
     "budget": 178,
     "wages": 15,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -2277,7 +2277,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Brasileirão",
     "flag": "🇧🇷",
-    "tacticalPhilosophy": "👑 Domination & Standing",
+    "tacticalPhilosophy": " Domination & Standing",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Sang-froid clinique",
@@ -2291,7 +2291,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -2301,27 +2301,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Olympique de Paname",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 5,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -2345,7 +2345,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Vision laser",
@@ -2359,7 +2359,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -2369,24 +2369,24 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Sevilla Nervion",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 6.5,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DG_DD",
         "name": "Polyvalent DG / DD",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD.\"",
@@ -2412,7 +2412,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -2426,7 +2426,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "FREE",
       "name": "Scouting Libre & Sans Frontières",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Aucune restriction géographique imposée",
       "ruleDesc": "Le coach ne regarde que la valeur intrinsèque et l'alchimie tactique."
     }
@@ -2435,28 +2435,28 @@ const SCENARIOS = [
     "id": 37,
     "difficulty": "moyen",
     "club": "West Ham Hammers",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "🛡️",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 32,
     "wages": 8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DEUX_AILES",
         "name": "Polyvalent Deux Ailes (AG / AD)",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD). Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD). Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -2479,8 +2479,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD).",
     "targetRank": 6,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Pépite U21",
@@ -2493,7 +2493,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -2503,27 +2503,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Fiorentina Viola",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 35,
     "wages": 5,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -2547,7 +2547,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Vision laser",
@@ -2561,9 +2561,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -2571,27 +2571,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Real Betis",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 38,
     "wages": 6.5,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -2614,7 +2614,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -2628,7 +2628,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -2638,24 +2638,24 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Lazio Aquile Roma",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -2682,7 +2682,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Pépite U21",
@@ -2695,7 +2695,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -2705,27 +2705,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Athletic Bilbao",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 5,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -2749,7 +2749,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Vision laser",
@@ -2763,7 +2763,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -2772,25 +2772,25 @@ const SCENARIOS = [
     "id": 42,
     "difficulty": "moyen",
     "club": "Brighton Seagulls",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "🛡️",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 32,
     "wages": 6.5,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DEUX_AILES",
         "name": "Polyvalent Deux Ailes (AG / AD)",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD).\"",
@@ -2815,8 +2815,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD).",
     "targetRank": 6,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -2830,7 +2830,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "FREE",
       "name": "Scouting Libre & Sans Frontières",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Aucune restriction géographique imposée",
       "ruleDesc": "Le coach ne regarde que la valeur intrinsèque et l'alchimie tactique."
     }
@@ -2840,27 +2840,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Villarreal Amarillo",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 35,
     "wages": 8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_ATTAQUE",
         "name": "Polyvalent Buteur / Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -2883,7 +2883,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Pépite U21",
@@ -2896,7 +2896,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -2906,27 +2906,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Atalanta Bergamo",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 38,
     "wages": 5,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -2950,7 +2950,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Vision laser",
@@ -2963,9 +2963,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -2973,27 +2973,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "LOSC Dogues",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 6.5,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -3016,7 +3016,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -3030,7 +3030,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -3040,24 +3040,24 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Stuttgart Schwaben",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -3084,7 +3084,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Pépite U21",
@@ -3097,7 +3097,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -3106,28 +3106,28 @@ const SCENARIOS = [
     "id": 47,
     "difficulty": "moyen",
     "club": "Wolverhampton Wolves",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "🛡️",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 32,
     "wages": 5,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -3150,8 +3150,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Gardien de But, Défenseur Central, Ailier Droit.",
     "targetRank": 6,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Vision laser",
@@ -3165,7 +3165,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -3175,24 +3175,24 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Real Sociedad",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 35,
     "wages": 6.5,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DG_DD",
         "name": "Polyvalent DG / DD",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD.\"",
@@ -3218,7 +3218,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -3231,7 +3231,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "FREE",
       "name": "Scouting Libre & Sans Frontières",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Aucune restriction géographique imposée",
       "ruleDesc": "Le coach ne regarde que la valeur intrinsèque et l'alchimie tactique."
     }
@@ -3241,27 +3241,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Torino Granata",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 38,
     "wages": 8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DEUX_AILES",
         "name": "Polyvalent Deux Ailes (AG / AD)",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD). Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD). Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -3285,7 +3285,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Pépite U21",
@@ -3298,7 +3298,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -3308,27 +3308,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Eintracht Frankfurt",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 5,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -3352,7 +3352,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Vision laser",
@@ -3366,37 +3366,37 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
     "id": 51,
     "difficulty": "moyen",
     "club": "Crystal Palace",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "🛡️",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 28,
     "wages": 6.5,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -3417,8 +3417,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans).",
     "targetRank": 6,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -3431,7 +3431,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -3441,24 +3441,24 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Bologna Rossoblu",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 32,
     "wages": 8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -3485,7 +3485,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Pépite U21",
@@ -3498,7 +3498,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -3508,27 +3508,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Rennes Celtes",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 35,
     "wages": 5,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -3552,7 +3552,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Vision laser",
@@ -3566,7 +3566,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -3575,25 +3575,25 @@ const SCENARIOS = [
     "id": 54,
     "difficulty": "moyen",
     "club": "Fulham Cottagers",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "🛡️",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 38,
     "wages": 6.5,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DEUX_AILES",
         "name": "Polyvalent Deux Ailes (AG / AD)",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD).\"",
@@ -3618,8 +3618,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD).",
     "targetRank": 6,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -3633,7 +3633,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "FREE",
       "name": "Scouting Libre & Sans Frontières",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Aucune restriction géographique imposée",
       "ruleDesc": "Le coach ne regarde que la valeur intrinsèque et l'alchimie tactique."
     }
@@ -3643,27 +3643,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Girona Kataluna",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_ATTAQUE",
         "name": "Polyvalent Buteur / Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -3687,7 +3687,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Pépite U21",
@@ -3700,7 +3700,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -3710,27 +3710,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Lens Sang et Or",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 5,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -3754,7 +3754,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Vision laser",
@@ -3768,37 +3768,37 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
     "id": 57,
     "difficulty": "moyen",
     "club": "Everton Toffees",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "🛡️",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 32,
     "wages": 6.5,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -3820,8 +3820,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans).",
     "targetRank": 6,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -3835,7 +3835,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -3845,24 +3845,24 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Hoffenheim",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 35,
     "wages": 8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -3889,7 +3889,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Pépite U21",
@@ -3902,7 +3902,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -3912,27 +3912,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Valencia Che",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 38,
     "wages": 5,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -3956,7 +3956,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Vision laser",
@@ -3970,7 +3970,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -3979,25 +3979,25 @@ const SCENARIOS = [
     "id": 60,
     "difficulty": "moyen",
     "club": "Bournemouth Cherries",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "🛡️",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 28,
     "wages": 6.5,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DG_DD",
         "name": "Polyvalent DG / DD",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD.\"",
@@ -4022,8 +4022,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD.",
     "targetRank": 6,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -4037,7 +4037,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "FREE",
       "name": "Scouting Libre & Sans Frontières",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Aucune restriction géographique imposée",
       "ruleDesc": "Le coach ne regarde que la valeur intrinsèque et l'alchimie tactique."
     }
@@ -4047,27 +4047,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "SC Freiburg",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DEUX_AILES",
         "name": "Polyvalent Deux Ailes (AG / AD)",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD). Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD). Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -4091,7 +4091,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Pépite U21",
@@ -4104,7 +4104,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -4114,27 +4114,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Brest Pirates",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 32,
     "wages": 5,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -4158,7 +4158,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Vision laser",
@@ -4172,9 +4172,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -4182,27 +4182,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Genoa Grifone",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 35,
     "wages": 6.5,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -4225,7 +4225,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -4239,7 +4239,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -4249,24 +4249,24 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Augsburg Fugger",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 38,
     "wages": 8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -4293,7 +4293,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Pépite U21",
@@ -4306,7 +4306,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -4316,27 +4316,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Mallorca Barralets",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 5,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -4360,7 +4360,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "🎨 Tiki-Taka & Maîtrise",
+    "tacticalPhilosophy": " Tiki-Taka & Maîtrise",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Vision laser",
@@ -4374,7 +4374,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -4384,24 +4384,24 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Toulouse Violettes",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 28,
     "wages": 6.5,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DEUX_AILES",
         "name": "Polyvalent Deux Ailes (AG / AD)",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD).\"",
@@ -4427,7 +4427,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -4441,7 +4441,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "FREE",
       "name": "Scouting Libre & Sans Frontières",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Aucune restriction géographique imposée",
       "ruleDesc": "Le coach ne regarde que la valeur intrinsèque et l'alchimie tactique."
     }
@@ -4451,27 +4451,27 @@ const SCENARIOS = [
     "difficulty": "moyen",
     "club": "Union Berlin",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 32,
     "wages": 8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_ATTAQUE",
         "name": "Polyvalent Buteur / Ailier",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Buteur / Ailier. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -4494,7 +4494,7 @@ const SCENARIOS = [
     "targetRank": 6,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "💎 Projet Trading & Jeunesse",
+    "tacticalPhilosophy": " Projet Trading & Jeunesse",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Pépite U21",
@@ -4507,7 +4507,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -4517,27 +4517,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Red Star Saint-Ouen",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 5.5,
     "wages": 1.8,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -4561,7 +4561,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "🏰 Catenaccio & Bloc Bas",
+    "tacticalPhilosophy": " Catenaccio & Bloc Bas",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Roc défensif",
@@ -4575,37 +4575,37 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
     "id": 69,
     "difficulty": "difficile",
     "club": "Luton Brick Miners",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "⚡",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 6,
     "wages": 1.8,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -4627,8 +4627,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans).",
     "targetRank": 16,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -4642,7 +4642,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -4652,24 +4652,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Cadiz Piratas",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 6.2,
     "wages": 1.8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -4696,7 +4696,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Leader vocal",
@@ -4710,7 +4710,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -4720,27 +4720,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Darmstadt Lilies",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 6.5,
     "wages": 1.8,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -4764,7 +4764,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "🏰 Catenaccio & Bloc Bas",
+    "tacticalPhilosophy": " Catenaccio & Bloc Bas",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Roc défensif",
@@ -4778,7 +4778,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -4788,24 +4788,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Salernitana Granata",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 6.8,
     "wages": 1.9,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DG_DD",
         "name": "Polyvalent DG / DD",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD.\"",
@@ -4831,7 +4831,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -4844,7 +4844,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "FREE",
       "name": "Scouting Libre & Sans Frontières",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Aucune restriction géographique imposée",
       "ruleDesc": "Le coach ne regarde que la valeur intrinsèque et l'alchimie tactique."
     }
@@ -4854,27 +4854,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Le Havre Doyens",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 7,
     "wages": 2,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_6_DC",
         "name": "Polyvalent 6 & DC",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 6 & DC. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 6 & DC. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -4898,7 +4898,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Leader vocal",
@@ -4912,7 +4912,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -4921,28 +4921,28 @@ const SCENARIOS = [
     "id": 74,
     "difficulty": "difficile",
     "club": "Sheffield Steel",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "⚡",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 7.2,
     "wages": 2,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -4965,8 +4965,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche.",
     "targetRank": 16,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "🏰 Catenaccio & Bloc Bas",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Catenaccio & Bloc Bas",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Roc défensif",
@@ -4979,9 +4979,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -4989,27 +4989,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Frosinone Calcio",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 7.5,
     "wages": 2.1,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -5031,7 +5031,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -5044,7 +5044,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -5054,24 +5054,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Heidenheim Schloss",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 7.8,
     "wages": 2.2,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -5098,7 +5098,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Leader vocal",
@@ -5112,7 +5112,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -5122,27 +5122,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Almeria Indalicos",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 8,
     "wages": 2.2,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -5166,7 +5166,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "🏰 Catenaccio & Bloc Bas",
+    "tacticalPhilosophy": " Catenaccio & Bloc Bas",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Roc défensif",
@@ -5180,7 +5180,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -5190,24 +5190,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Metz Grenats",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 8.2,
     "wages": 2.3,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DEUX_AILES",
         "name": "Polyvalent Deux Ailes (AG / AD)",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD).\"",
@@ -5233,7 +5233,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -5247,7 +5247,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "FREE",
       "name": "Scouting Libre & Sans Frontières",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Aucune restriction géographique imposée",
       "ruleDesc": "Le coach ne regarde que la valeur intrinsèque et l'alchimie tactique."
     }
@@ -5256,28 +5256,28 @@ const SCENARIOS = [
     "id": 79,
     "difficulty": "difficile",
     "club": "Burnley Turf",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "⚡",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 8.5,
     "wages": 2.4,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DG_DD",
         "name": "Polyvalent DG / DD",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -5299,8 +5299,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD.",
     "targetRank": 16,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Leader vocal",
@@ -5314,7 +5314,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -5324,27 +5324,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Granada Nazaries",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 8.8,
     "wages": 2.5,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -5368,7 +5368,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "🏰 Catenaccio & Bloc Bas",
+    "tacticalPhilosophy": " Catenaccio & Bloc Bas",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Roc défensif",
@@ -5382,9 +5382,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -5392,27 +5392,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Empoli Azzurri",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 9,
     "wages": 2.5,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -5435,7 +5435,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -5449,7 +5449,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -5459,24 +5459,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Bochum Ruhr",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 9.2,
     "wages": 2.6,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -5503,7 +5503,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Leader vocal",
@@ -5517,7 +5517,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -5527,27 +5527,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Clermont Foot",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 9.5,
     "wages": 2.7,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -5571,7 +5571,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "🏰 Catenaccio & Bloc Bas",
+    "tacticalPhilosophy": " Catenaccio & Bloc Bas",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Roc défensif",
@@ -5585,7 +5585,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -5595,24 +5595,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Cagliari Sardaigne",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 9.8,
     "wages": 2.7,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DG_DD",
         "name": "Polyvalent DG / DD",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD.\"",
@@ -5638,7 +5638,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -5652,7 +5652,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "FREE",
       "name": "Scouting Libre & Sans Frontières",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Aucune restriction géographique imposée",
       "ruleDesc": "Le coach ne regarde que la valeur intrinsèque et l'alchimie tactique."
     }
@@ -5662,27 +5662,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "St Pauli Piraten",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 10,
     "wages": 2.8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_6_DC",
         "name": "Polyvalent 6 & DC",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 6 & DC. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 6 & DC. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -5706,7 +5706,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Leader vocal",
@@ -5719,7 +5719,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -5729,27 +5729,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Las Palmas Canaries",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 10.2,
     "wages": 2.9,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -5773,7 +5773,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "🏰 Catenaccio & Bloc Bas",
+    "tacticalPhilosophy": " Catenaccio & Bloc Bas",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Roc défensif",
@@ -5787,9 +5787,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -5797,27 +5797,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Monza Brianzoli",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 10.5,
     "wages": 2.9,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -5840,7 +5840,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -5854,7 +5854,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -5864,24 +5864,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Auxerre Abbé Deschamps",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 10.8,
     "wages": 3,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -5908,7 +5908,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Leader vocal",
@@ -5922,7 +5922,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -5931,28 +5931,28 @@ const SCENARIOS = [
     "id": 89,
     "difficulty": "difficile",
     "club": "Ipswich Tractor",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "⚡",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 11,
     "wages": 3.1,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -5975,8 +5975,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Gardien de But, Défenseur Central, Ailier Droit.",
     "targetRank": 16,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "🏰 Catenaccio & Bloc Bas",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": " Catenaccio & Bloc Bas",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Roc défensif",
@@ -5989,7 +5989,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -5999,24 +5999,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Verona Mastini",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 11.2,
     "wages": 3.1,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DEUX_AILES",
         "name": "Polyvalent Deux Ailes (AG / AD)",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent Deux Ailes (AG / AD).\"",
@@ -6042,7 +6042,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -6056,7 +6056,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "FREE",
       "name": "Scouting Libre & Sans Frontières",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Aucune restriction géographique imposée",
       "ruleDesc": "Le coach ne regarde que la valeur intrinsèque et l'alchimie tactique."
     }
@@ -6066,27 +6066,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Kiel Störche",
     "country": "🇩🇪 Bundesliga (Allemagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 11.5,
     "wages": 3.2,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DG_DD",
         "name": "Polyvalent DG / DD",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -6110,7 +6110,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Bundesliga",
     "flag": "🇩🇪",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Leader vocal",
@@ -6124,7 +6124,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -6134,27 +6134,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Rayo Vallecano",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 11.8,
     "wages": 3.3,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -6178,7 +6178,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "🏰 Catenaccio & Bloc Bas",
+    "tacticalPhilosophy": " Catenaccio & Bloc Bas",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Roc défensif",
@@ -6192,9 +6192,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -6202,27 +6202,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Angers Scoïstes",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 12,
     "wages": 3.4,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -6245,7 +6245,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Meneur d'Hommes & Sang Chaud",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -6259,7 +6259,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -6268,25 +6268,25 @@ const SCENARIOS = [
     "id": 94,
     "difficulty": "difficile",
     "club": "Southampton Saints",
-    "country": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
-    "logo": "⚡",
+    "country": "󠁧󠁢󠁥󠁮󠁧󠁿 Premier League (Angleterre)",
+    "logo": "",
     "budget": 12.2,
     "wages": 3.4,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -6312,8 +6312,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9).",
     "targetRank": 16,
     "league": "Premier League",
-    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "flag": "󠁧󠁢󠁥󠁮󠁧󠁿",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Pari Jeunesse & Pépites",
     "preferredTraits": [
       "Leader vocal",
@@ -6327,7 +6327,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -6337,27 +6337,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Lecce Salentini",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 12.5,
     "wages": 3.5,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "🌍"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
+    "coachDemand": "\"Chaque match est une bataille tactique pour assurer notre maintien. Il me faut des joueurs avec un gros volume de jeu et une vraie solidité dans les duels. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Priorité à un profil athlétique et rigoureux issu des championnats nordiques ou d'Europe de l'Est.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -6381,7 +6381,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "🏰 Catenaccio & Bloc Bas",
+    "tacticalPhilosophy": " Catenaccio & Bloc Bas",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Roc défensif",
@@ -6395,7 +6395,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "NORDIC_EAST",
       "name": "Réseau Europe du Nord & de l'Est",
-      "icon": "🧭",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
       "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
@@ -6405,24 +6405,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Getafe Azulones",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 7.5,
     "wages": 2.1,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_DG_DD",
         "name": "Polyvalent DG / DD",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent DG / DD.\"",
@@ -6448,7 +6448,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Folie Offensive Champagne",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -6461,7 +6461,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "FREE",
       "name": "Scouting Libre & Sans Frontières",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Aucune restriction géographique imposée",
       "ruleDesc": "Le coach ne regarde que la valeur intrinsèque et l'alchimie tactique."
     }
@@ -6471,27 +6471,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Saint-Étienne Verts",
     "country": "🇫🇷 Ligue 1 (France)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 8,
     "wages": 2.2,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "POLYVALENT_6_DC",
         "name": "Polyvalent 6 & DC",
-        "icon": "🔄"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 6 & DC. Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Buteur (9), Polyvalent 6 & DC. Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -6515,7 +6515,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Ligue 1",
     "flag": "🇫🇷",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Leader vocal",
@@ -6529,7 +6529,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
     }
@@ -6539,27 +6539,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Leganes Pepineros",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 8.5,
     "wages": 2.4,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Et amenez-moi au moins un talent sud-américain pour insuffler de la grinta à ce vestiaire.\"",
+    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. La direction sportive cible au moins un renfort issu du vivier sud-américain (CONMEBOL).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -6583,7 +6583,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "🏰 Catenaccio & Bloc Bas",
+    "tacticalPhilosophy": " Catenaccio & Bloc Bas",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Roc défensif",
@@ -6596,9 +6596,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -6606,27 +6606,27 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Venezia Laguna",
     "country": "🇮🇹 Serie A (Italie)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 9,
     "wages": 2.5,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "PEPITE_U21",
         "name": "Pépite U21 (-21 ans)",
-        "icon": "💎"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de scouting recommande d'activer notre filière de recrutement sur les championnats africains.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -6648,7 +6648,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Serie A",
     "flag": "🇮🇹",
-    "tacticalPhilosophy": "⚡ Transition Éclair",
+    "tacticalPhilosophy": " Transition Éclair",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -6661,7 +6661,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "AFRICA",
       "name": "Réseau Afrique (Partenariats CAF)",
-      "icon": "🌍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
       "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
@@ -6671,24 +6671,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Espanyol Pericos",
     "country": "🇪🇸 La Liga (Espagne)",
-    "logo": "⚡",
+    "logo": "",
     "budget": 10,
     "wages": 2.8,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
@@ -6715,7 +6715,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "La Liga",
     "flag": "🇪🇸",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Leader vocal",
@@ -6729,7 +6729,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
@@ -6738,28 +6738,28 @@ const SCENARIOS = [
     "id": 101,
     "difficulty": "facile",
     "club": "Glasgow Blue Rangers FC",
-    "country": "🏴󠁧󠁢󠁳󠁣󠁴󠁿 Premiership (Écosse)",
-    "logo": "🦁",
+    "country": "󠁧󠁢󠁳󠁣󠁴󠁿 Premiership (Écosse)",
+    "logo": "",
     "budget": 138,
     "wages": 15,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
-    "coachDemand": "\"L'Old Firm ne se joue pas, il se gagne ! Je veux du caractère, de la hargne britannique et un tueur devant la cage. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Milieu Relayeur (8), Buteur (9). Et je tiens à l'ADN local : il me faut au moins un renfort issu de notre propre pays.\"",
+    "coachDemand": "\"L'Old Firm ne se joue pas, il se gagne ! Je veux du caractère, de la hargne britannique et un tueur devant la cage. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Milieu Relayeur (8), Buteur (9). Objectif de conformité : intégrer au moins un joueur formé localement (quota national).\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -6781,8 +6781,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Défenseur Central, Milieu Relayeur (8), Buteur (9).",
     "targetRank": 2,
     "league": "Scottish Premiership",
-    "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
-    "tacticalPhilosophy": "⚔️ Intensité & Caractère",
+    "flag": "󠁧󠁢󠁳󠁣󠁴󠁿",
+    "tacticalPhilosophy": "️ Intensité & Caractère",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Guerrier",
@@ -6794,7 +6794,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité britannique et exige au moins un renfort national."
     }
@@ -6804,24 +6804,24 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Rio Mengão FC",
     "country": "🇧🇷 Brasileirão (Brésil)",
-    "logo": "🔴",
+    "logo": "",
     "budget": 180,
     "wages": 16,
     "needs": [
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       },
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       }
     ],
     "coachDemand": "\"La nation Mengão exige le spectacle, la créativité et la victoire ! Donnez-moi des artistes balle au pied. Nos 3 besoins prioritaires à pourvoir avant minuit : Meneur de Jeu (10), Buteur (9), Latéral Droit. Amenez-moi au moins un talent sud-américain pour sublimer notre jeu.\"",
@@ -6847,7 +6847,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Brasileirão",
     "flag": "🇧🇷",
-    "tacticalPhilosophy": "🎨 Joga Bonito & Samba",
+    "tacticalPhilosophy": " Joga Bonito & Samba",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Dribbleur déroutant",
@@ -6859,7 +6859,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la créativité et de la virtuosité sud-américaine."
     }
@@ -6869,24 +6869,24 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Buenos Aires Boca Xeneizes",
     "country": "🇦🇷 Primera División (Argentine)",
-    "logo": "💙",
+    "logo": "",
     "budget": 145,
     "wages": 14,
     "needs": [
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"À la Bombonera, on ne triche jamais ! Je veux des lions affamés, du tacle saignant et une ferveur inextinguible. Nos 3 besoins prioritaires avant minuit : Sentinelle (6), Défenseur Central, Buteur (9). Grinta sud-américaine absolue exigée.\"",
@@ -6912,7 +6912,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Primera División",
     "flag": "🇦🇷",
-    "tacticalPhilosophy": "🔥 Grinta & Bombonera",
+    "tacticalPhilosophy": " Grinta & Bombonera",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Guerrier",
@@ -6924,9 +6924,9 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
-      "ruleDesc": "Le coach exige des joueurs forgés dans la passion et les ambiances incandescentes."
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -6934,24 +6934,24 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Buenos Aires River Millonarios",
     "country": "🇦🇷 Primera División (Argentine)",
-    "logo": "⚪",
+    "logo": "",
     "budget": 148,
     "wages": 14,
     "needs": [
       {
         "code": "MO",
         "name": "Meneur de Jeu (10)",
-        "icon": "🎨"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Le Monumental exige l'élégance technique et la vitesse d'exécution ! On joue au ballon avec panache. Nos 3 besoins prioritaires avant minuit : Meneur de Jeu (10), Milieu Relayeur (8), Buteur (9). Grinta et finesse sud-américaine requises.\"",
@@ -6977,7 +6977,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Primera División",
     "flag": "🇦🇷",
-    "tacticalPhilosophy": "🎨 Fútbol Total & Étoiles",
+    "tacticalPhilosophy": " Fútbol Total & Étoiles",
     "tacticalTag": "Tiki-Taka & Jeu de Position",
     "preferredTraits": [
       "Vision laser",
@@ -6989,7 +6989,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach privilégie les manieurs de ballon et créateurs sud-américains."
     }
@@ -6999,24 +6999,24 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Riyadh Blue Crescent FC",
     "country": "🇸🇦 Saudi Pro League",
-    "logo": "🌙",
+    "logo": "",
     "budget": 150,
     "wages": 16,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Nous sommes les rois d'Asie, notre standing est intouchable ! Il me faut des cadres expérimentés pour régner sur Riyad. Nos 3 besoins prioritaires avant minuit : Défenseur Central, Sentinelle (6), Buteur (9). Rigueur tactique européenne bienvenue.\"",
@@ -7042,7 +7042,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "Saudi Pro League",
     "flag": "🇸🇦",
-    "tacticalPhilosophy": "👑 Domination Royale",
+    "tacticalPhilosophy": " Domination Royale",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Cadre international",
@@ -7054,7 +7054,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach recherche l'expérience des grands rendez-vous continentaux."
     }
@@ -7064,24 +7064,24 @@ const SCENARIOS = [
     "difficulty": "facile",
     "club": "Los Angeles Angels FC",
     "country": "🇺🇸 Major League Soccer",
-    "logo": "🌟",
+    "logo": "",
     "budget": 155,
     "wages": 16,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "AG",
         "name": "Ailier Gauche",
-        "icon": "💨"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Sous les projecteurs d'Hollywood, on veut du spectacle, de la vitesse et des étincelles ! Nos 3 besoins prioritaires avant minuit : Latéral Gauche, Milieu Relayeur (8), Ailier Gauche. Pépites rapides et détonantes souhaitées.\"",
@@ -7107,7 +7107,7 @@ const SCENARIOS = [
     "targetRank": 2,
     "league": "MLS",
     "flag": "🇺🇸",
-    "tacticalPhilosophy": "⚡ Vitesse & Show Hollywood",
+    "tacticalPhilosophy": " Vitesse & Show Hollywood",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Vitesse supersonique",
@@ -7119,7 +7119,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "SOUTH_AMERICA",
       "name": "Réseau Amérique du Sud (CONMEBOL)",
-      "icon": "🌎",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
@@ -7129,24 +7129,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Boavista Panteras FC",
     "country": "🇵🇹 Liga Portugal",
-    "logo": "🐾",
+    "logo": "",
     "budget": 9,
     "wages": 2,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Mission commando ! On verrouille l'axe et on mord sur chaque ballon. Nos 3 besoins prioritaires avant minuit : Défenseur Central, Sentinelle (6), Buteur (9). Rigueur tactique et esprit de combat obligatoires.\"",
@@ -7172,7 +7172,7 @@ const SCENARIOS = [
     "targetRank": 15,
     "league": "Liga Portugal",
     "flag": "🇵🇹",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Guerrier",
@@ -7184,7 +7184,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé en Europe",
       "ruleDesc": "Le coach veut de la rigueur et du placement défensif."
     }
@@ -7194,24 +7194,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Estoril Praia FC",
     "country": "🇵🇹 Liga Portugal",
-    "logo": "🏖️",
+    "logo": "",
     "budget": 8.5,
     "wages": 2,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"On ne lâchera aucun pouce de terrain ! Il faut sauver le club à tout prix. Nos 3 besoins prioritaires : Gardien de But, Latéral Gauche, Buteur (9). Joueurs prêts à mourir sur le pré demandés.\"",
@@ -7237,7 +7237,7 @@ const SCENARIOS = [
     "targetRank": 15,
     "league": "Liga Portugal",
     "flag": "🇵🇹",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Guerrier",
@@ -7248,7 +7248,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur local",
       "ruleDesc": "Le coach veut des joueurs attachés à l'identité du club."
     }
@@ -7258,24 +7258,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Almere Black Sheep FC",
     "country": "🇳🇱 Eredivisie (Pays-Bas)",
-    "logo": "🐑",
+    "logo": "",
     "budget": 8,
     "wages": 2,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"On est le Petit Poucet de la ligue, chaque point arraché sera une victoire nationale ! Nos 3 besoins : Défenseur Central, Milieu Relayeur (8), Buteur (9). Amenez-moi des morts de faim.\"",
@@ -7301,7 +7301,7 @@ const SCENARIOS = [
     "targetRank": 15,
     "league": "Eredivisie",
     "flag": "🇳🇱",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Solide au duel",
@@ -7312,7 +7312,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 profil européen discipliné",
       "ruleDesc": "Le coach veut de la discipline tactique."
     }
@@ -7322,24 +7322,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Waalwijk Waal FC",
     "country": "🇳🇱 Eredivisie (Pays-Bas)",
-    "logo": "🌊",
+    "logo": "",
     "budget": 8.5,
     "wages": 2,
     "needs": [
       {
         "code": "DD",
         "name": "Latéral Droit",
-        "icon": "🏃‍♂️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Chaque match est une finale ! Il faut fermer la boutique et piquer en contre. Nos 3 besoins : Latéral Droit, Sentinelle (6), Buteur (9). Des guerriers infatigables exigés.\"",
@@ -7364,7 +7364,7 @@ const SCENARIOS = [
     "targetRank": 15,
     "league": "Eredivisie",
     "flag": "🇳🇱",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Gros volume de jeu",
@@ -7375,7 +7375,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur néerlandais",
       "ruleDesc": "Le coach exige un joueur du cru."
     }
@@ -7385,24 +7385,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Pendikspor Istanbul FC",
     "country": "🇹🇷 Süper Lig (Turquie)",
-    "logo": "⚓",
+    "logo": "",
     "budget": 9,
     "wages": 2,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"La survie en Süper Lig ne se négocie pas ! Il nous faut du caractère trempé dans l'acier. Nos 3 besoins : Défenseur Central, Milieu Relayeur (8), Buteur (9).\"",
@@ -7427,7 +7427,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Süper Lig",
     "flag": "🇹🇷",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Gegenpressing & Intensité",
     "preferredTraits": [
       "Guerrier",
@@ -7438,7 +7438,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 renfort européen aguerri",
       "ruleDesc": "Le coach veut de l'expérience sous pression."
     }
@@ -7448,24 +7448,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Hatayspor Sud FC",
     "country": "🇹🇷 Süper Lig (Turquie)",
-    "logo": "🛡️",
+    "logo": "",
     "budget": 8.5,
     "wages": 2,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Pour le peuple et la survie de la région ! On va se battre jusqu'à la 95e minute de la 38e journée. Nos 3 besoins : Gardien de But, Défenseur Central, Buteur (9).\"",
@@ -7490,7 +7490,7 @@ const SCENARIOS = [
     "targetRank": 16,
     "league": "Süper Lig",
     "flag": "🇹🇷",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Guerrier",
@@ -7501,34 +7501,34 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 renfort turc",
-      "ruleDesc": "Le coach tient à l'ADN combatif local."
+      "ruleDesc": "Le club souhaite valoriser un joueur formé localement."
     }
   },
   {
     "id": 113,
     "difficulty": "difficile",
     "club": "Ross County Highlands FC",
-    "country": "🏴󠁧󠁢󠁳󠁣󠁴󠁿 Premiership (Écosse)",
-    "logo": "🦌",
+    "country": "󠁧󠁢󠁳󠁣󠁴󠁿 Premiership (Écosse)",
+    "logo": "",
     "budget": 7.5,
     "wages": 1.5,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Dans le froid des Highlands, personne ne vient prendre des points facilement ! Nos 3 besoins : Défenseur Central, Sentinelle (6), Buteur (9). Du jeu direct et de l'impact physique.\"",
@@ -7553,8 +7553,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Défenseur Central, Sentinelle (6), Buteur (9).",
     "targetRank": 10,
     "league": "Scottish Premiership",
-    "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "flag": "󠁧󠁢󠁳󠁣󠁴󠁿",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Catenaccio & Verrouillage",
     "preferredTraits": [
       "Guerrier",
@@ -7565,34 +7565,34 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur britannique",
-      "ruleDesc": "Le coach exige la culture du kick and rush."
+      "ruleDesc": "Le coach privilégie des joueurs formés dans les championnats britanniques."
     }
   },
   {
     "id": 114,
     "difficulty": "difficile",
     "club": "Dundee Stags FC",
-    "country": "🏴󠁧󠁢󠁳󠁣󠁴󠁿 Premiership (Écosse)",
-    "logo": "⚔️",
+    "country": "󠁧󠁢󠁳󠁣󠁴󠁿 Premiership (Écosse)",
+    "logo": "",
     "budget": 8,
     "wages": 1.5,
     "needs": [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "🌍"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"On va se dépouiller à chaque match ! Nos 3 besoins : Latéral Gauche, Milieu Relayeur (8), Buteur (9). Des poumons d'acier demandés avant minuit.\"",
@@ -7616,8 +7616,8 @@ const SCENARIOS = [
     "description": "3 dossiers prioritaires à boucler avant minuit : Latéral Gauche, Milieu Relayeur (8), Buteur (9).",
     "targetRank": 10,
     "league": "Scottish Premiership",
-    "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "flag": "󠁧󠁢󠁳󠁣󠁴󠁿",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Infatigable",
@@ -7628,7 +7628,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "DOMESTIC",
       "name": "Quota Formation Locale (Homegrown)",
-      "icon": "📍",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur local",
       "ruleDesc": "Le coach veut des joueurs formés au pays."
     }
@@ -7638,24 +7638,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Courtrai Groeninge FC",
     "country": "🇧🇪 Pro League (Belgique)",
-    "logo": "🏰",
+    "logo": "",
     "budget": 8.5,
     "wages": 2,
     "needs": [
       {
         "code": "DC",
         "name": "Défenseur Central",
-        "icon": "🛡️"
+        "icon": ""
       },
       {
         "code": "MDF",
         "name": "Sentinelle (6)",
-        "icon": "⚓"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"Opération survie en Jupiler Pro League ! On doit être compacts et tranchants. Nos 3 besoins : Défenseur Central, Sentinelle (6), Buteur (9).\"",
@@ -7680,7 +7680,7 @@ const SCENARIOS = [
     "targetRank": 14,
     "league": "Pro League",
     "flag": "🇧🇪",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Pragmatisme du Maintien",
     "preferredTraits": [
       "Solide au duel",
@@ -7691,7 +7691,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 profil tactique européen",
       "ruleDesc": "Le coach veut du sérieux et de la rigueur tactique."
     }
@@ -7701,24 +7701,24 @@ const SCENARIOS = [
     "difficulty": "difficile",
     "club": "Eupen Pandas FC",
     "country": "🇧🇪 Pro League (Belgique)",
-    "logo": "🐼",
+    "logo": "",
     "budget": 8,
     "wages": 2,
     "needs": [
       {
         "code": "GAR",
         "name": "Gardien de But",
-        "icon": "🧤"
+        "icon": ""
       },
       {
         "code": "MC",
         "name": "Milieu Relayeur (8)",
-        "icon": "🎯"
+        "icon": ""
       },
       {
         "code": "BU",
         "name": "Buteur (9)",
-        "icon": "⚽"
+        "icon": ""
       }
     ],
     "coachDemand": "\"On refuse la relégation ! Il me faut des battants qui donneront tout jusqu'à la dernière seconde. Nos 3 besoins : Gardien de But, Milieu Relayeur (8), Buteur (9).\"",
@@ -7743,7 +7743,7 @@ const SCENARIOS = [
     "targetRank": 14,
     "league": "Pro League",
     "flag": "🇧🇪",
-    "tacticalPhilosophy": "⚔️ Commando Maintien",
+    "tacticalPhilosophy": "️ Commando Maintien",
     "tacticalTag": "Transition Éclair & Contre-Attaque",
     "preferredTraits": [
       "Guerrier",
@@ -7754,7 +7754,7 @@ const SCENARIOS = [
     "originConstraint": {
       "code": "EURO_TACTICAL",
       "name": "Filière Championnats Majeurs (UEFA)",
-      "icon": "🛡️",
+      "icon": "",
       "shortDesc": "Au moins 1 joueur formé en Europe",
       "ruleDesc": "Le coach veut un collectif solidaire."
     }

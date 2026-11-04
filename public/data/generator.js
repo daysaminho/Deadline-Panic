@@ -73,7 +73,7 @@ const NATIONALITIES_DB = [
   // Europe de l'Ouest & Sud
   { name: 'France', flag: '🇫🇷', region: 'DOMESTIC_FR', continent: 'Europe' },
   { name: 'Espagne', flag: '🇪🇸', region: 'DOMESTIC_ES', continent: 'Europe' },
-  { name: 'Angleterre', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', region: 'DOMESTIC_EN', continent: 'Europe' },
+  { name: 'Angleterre', flag: '󠁧󠁢󠁥󠁮󠁧󠁿', region: 'DOMESTIC_EN', continent: 'Europe' },
   { name: 'Italie', flag: '🇮🇹', region: 'DOMESTIC_IT', continent: 'Europe' },
   { name: 'Allemagne', flag: '🇩🇪', region: 'DOMESTIC_DE', continent: 'Europe' },
   { name: 'Portugal', flag: '🇵🇹', region: 'EURO_TACTICAL', continent: 'Europe' },
@@ -167,22 +167,22 @@ const OFF_TARGET_TRAITS = [
 
 const SUBPOS_CATALOG = {
   // DEF
-  DC: { pos: 'DEF', name: 'Défenseur Central', icon: '🛡️', versatilities: ['Polyvalent 6 / DC', 'Polyvalent DC / DD', null, null] },
-  DG: { pos: 'DEF', name: 'Latéral Gauche', icon: '⚡', versatilities: ['Polyvalent DG / DD', 'Piston DG / Ailier', null, null] },
-  DD: { pos: 'DEF', name: 'Latéral Droit', icon: '🏃‍♂️', versatilities: ['Polyvalent DD / DG', 'Polyvalent DD / DC', null, null] },
+  DC: { pos: 'DEF', name: 'Défenseur Central', icon: '️', versatilities: ['Polyvalent 6 / DC', 'Polyvalent DC / DD', null, null] },
+  DG: { pos: 'DEF', name: 'Latéral Gauche', icon: '', versatilities: ['Polyvalent DG / DD', 'Piston DG / Ailier', null, null] },
+  DD: { pos: 'DEF', name: 'Latéral Droit', icon: '‍️', versatilities: ['Polyvalent DD / DG', 'Polyvalent DD / DC', null, null] },
   
   // MIL
-  MDF: { pos: 'MIL', name: 'Sentinelle (6)', icon: '⚓', versatilities: ['Polyvalent 6 / DC', 'Polyvalent 6 / 8', null, null] },
-  MC: { pos: 'MIL', name: 'Milieu Relayeur (8)', icon: '🎯', versatilities: ['Polyvalent 8 / 6', 'Polyvalent 8 / 10', null, null] },
-  MO: { pos: 'MIL', name: 'Meneur de Jeu (10)', icon: '🎨', versatilities: ['Polyvalent 10 / Ailier', 'Polyvalent 10 / BU', null, null] },
+  MDF: { pos: 'MIL', name: 'Sentinelle (6)', icon: '', versatilities: ['Polyvalent 6 / DC', 'Polyvalent 6 / 8', null, null] },
+  MC: { pos: 'MIL', name: 'Milieu Relayeur (8)', icon: '', versatilities: ['Polyvalent 8 / 6', 'Polyvalent 8 / 10', null, null] },
+  MO: { pos: 'MIL', name: 'Meneur de Jeu (10)', icon: '', versatilities: ['Polyvalent 10 / Ailier', 'Polyvalent 10 / BU', null, null] },
   
   // ATT
-  BU: { pos: 'ATT', name: 'Buteur (9)', icon: '⚽', versatilities: ['Polyvalent BU / Ailier', null, null] },
-  AG: { pos: 'ATT', name: 'Ailier Gauche', icon: '💨', versatilities: ['Polyvalent AG / AD', 'Polyvalent AG / BU', null, null] },
-  AD: { pos: 'ATT', name: 'Ailier Droit', icon: '⚡', versatilities: ['Polyvalent AD / AG', 'Polyvalent AD / DD', null, null] },
+  BU: { pos: 'ATT', name: 'Buteur (9)', icon: '', versatilities: ['Polyvalent BU / Ailier', null, null] },
+  AG: { pos: 'ATT', name: 'Ailier Gauche', icon: '', versatilities: ['Polyvalent AG / AD', 'Polyvalent AG / BU', null, null] },
+  AD: { pos: 'ATT', name: 'Ailier Droit', icon: '', versatilities: ['Polyvalent AD / AG', 'Polyvalent AD / DD', null, null] },
   
   // GAR
-  GAR: { pos: 'GAR', name: 'Gardien de But', icon: '🧤', versatilities: [null] }
+  GAR: { pos: 'GAR', name: 'Gardien de But', icon: '', versatilities: [null] }
 };
 
 /**
@@ -353,12 +353,12 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
         if (originConstraint.code === 'DOMESTIC') {
           if (clubCountry.includes('France')) nationality = { name: 'France', flag: '🇫🇷', region: 'DOMESTIC_FR', continent: 'Europe' };
           else if (clubCountry.includes('Espagne')) nationality = { name: 'Espagne', flag: '🇪🇸', region: 'DOMESTIC_ES', continent: 'Europe' };
-          else if (clubCountry.includes('Angleterre')) nationality = { name: 'Angleterre', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', region: 'DOMESTIC_EN', continent: 'Europe' };
+          else if (clubCountry.includes('Angleterre')) nationality = { name: 'Angleterre', flag: '󠁧󠁢󠁥󠁮󠁧󠁿', region: 'DOMESTIC_EN', continent: 'Europe' };
           else if (clubCountry.includes('Italie')) nationality = { name: 'Italie', flag: '🇮🇹', region: 'DOMESTIC_IT', continent: 'Europe' };
           else if (clubCountry.includes('Allemagne')) nationality = { name: 'Allemagne', flag: '🇩🇪', region: 'DOMESTIC_DE', continent: 'Europe' };
           else if (clubCountry.includes('Portugal')) nationality = { name: 'Portugal', flag: '🇵🇹', region: 'EURO_TACTICAL', continent: 'Europe' };
           else if (clubCountry.includes('Pays-Bas')) nationality = { name: 'Pays-Bas', flag: '🇳🇱', region: 'EURO_TACTICAL', continent: 'Europe' };
-          else if (clubCountry.includes('Écosse') || clubCountry.includes('Premiership')) nationality = { name: 'Écosse', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', region: 'DOMESTIC_EN', continent: 'Europe' };
+          else if (clubCountry.includes('Écosse') || clubCountry.includes('Premiership')) nationality = { name: 'Écosse', flag: '󠁧󠁢󠁳󠁣󠁴󠁿', region: 'DOMESTIC_EN', continent: 'Europe' };
           else if (clubCountry.includes('Turquie') || clubCountry.includes('Süper Lig')) nationality = { name: 'Turquie', flag: '🇹🇷', region: 'EURO_TACTICAL', continent: 'Europe' };
           else if (clubCountry.includes('Brésil') || clubCountry.includes('Brasileirão')) nationality = { name: 'Brésil', flag: '🇧🇷', region: 'SOUTH_AMERICA', continent: 'Amérique du Sud' };
           else if (clubCountry.includes('Argentine') || clubCountry.includes('Primera División')) nationality = { name: 'Argentine', flag: '🇦🇷', region: 'SOUTH_AMERICA', continent: 'Amérique du Sud' };
@@ -396,7 +396,7 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
     let priceRatio = 0.30;
     let stance = { text: 'Négociation ouverte', factor: 1.10, profile: 'greedy' };
     let reputation = 'Joueur de rotation';
-    let caliberLabel = '🔄 Rotation';
+    let caliberLabel = ' Rotation';
     let caliberBadgeStyle = 'bg-blue-950/60 text-blue-300 border border-blue-800';
     let age = slot.target.forceU21 ? (18 + Math.floor(Math.random() * 4)) : (22 + Math.floor(Math.random() * 8));
     let playerTraits = [];
@@ -424,7 +424,7 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
         // Club maintien : Vétéran revanchard ou leader de vestiaire D1
         priceRatio = 0.40 + Math.random() * 0.10;
         reputation = 'Leader de maintien';
-        caliberLabel = '⭐ Leader de Maintien';
+        caliberLabel = 'Leader de Maintien';
         caliberBadgeStyle = 'bg-amber-950/60 text-amber-300 border border-amber-700/60 font-bold';
         playerTraits = [goodOptions[0] || 'Roc défensif', 'Leader vocal'];
         stance = { text: 'Cadre indispensable', factor: 1.20, profile: 'aggressive' };
@@ -433,7 +433,7 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
         // Club milieu : Tête d'affiche internationale
         priceRatio = 0.38 + Math.random() * 0.10;
         reputation = 'Tête d\'affiche D1';
-        caliberLabel = '⭐ Recrue Phare';
+        caliberLabel = 'Recrue Phare';
         caliberBadgeStyle = 'bg-amber-950/60 text-amber-300 border border-amber-700/60 font-bold';
         playerTraits = [goodOptions[0], goodOptions[1] || 'Vision laser'];
         stance = { text: 'Star de l\'équipe', factor: 1.25, profile: 'aggressive' };
@@ -442,7 +442,7 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
         // Top club : Superstar mondiale
         priceRatio = 0.42 + Math.random() * 0.12;
         reputation = 'Superstar Mondiale';
-        caliberLabel = '⭐ Superstar Mondiale';
+        caliberLabel = 'Superstar Mondiale';
         caliberBadgeStyle = 'bg-amber-950/80 text-amber-200 border border-amber-400 font-extrabold shadow-sm';
         playerTraits = [goodOptions[0], 'Sang-froid clinique'];
         stance = { text: 'Intransférable en théorie', factor: 1.30, profile: 'aggressive' };
@@ -454,13 +454,13 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
       priceRatio = 0.28 + Math.random() * 0.08;
       if (diff === 'difficile') {
         reputation = 'Soldat de D1';
-        caliberLabel = '💼 Bon Soldat de D1';
+        caliberLabel = ' Bon Soldat de D1';
       } else if (diff === 'moyen') {
         reputation = 'Titulaire régulier';
-        caliberLabel = '💼 Titulaire Fiable';
+        caliberLabel = ' Titulaire Fiable';
       } else {
         reputation = 'Titulaire Élite LDC';
-        caliberLabel = '💼 Titulaire Élite';
+        caliberLabel = ' Titulaire Élite';
       }
       caliberBadgeStyle = 'bg-emerald-950/60 text-emerald-300 border border-emerald-700/60 font-semibold';
       playerTraits = [goodOptions[Math.floor(Math.random() * goodOptions.length)], 'Collectif avant tout'];
@@ -471,7 +471,7 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
       // JOUEUR DE ROTATION / COMPROMIS
       priceRatio = 0.17 + Math.random() * 0.07;
       reputation = diff === 'difficile' ? 'Rotation D1' : 'Joueur de rotation';
-      caliberLabel = '🔄 Rotation Fiable';
+      caliberLabel = ' Rotation Fiable';
       caliberBadgeStyle = 'bg-blue-950/60 text-blue-300 border border-blue-800';
       playerTraits = ['Discipline tactique', 'Infatigable'];
       stance = { text: 'Sur la liste des transferts', factor: 0.95, profile: 'relaxed' };
@@ -483,7 +483,7 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
       const toxic = NEGATIVE_TRAITS[Math.floor(Math.random() * NEGATIVE_TRAITS.length)];
       playerTraits = [goodOptions[0] || 'Sens du but', toxic];
       reputation = 'Pari risqué';
-      caliberLabel = '🎲 Pari à Risque';
+      caliberLabel = ' Pari à Risque';
       caliberBadgeStyle = 'bg-purple-950/60 text-purple-300 border border-purple-800';
       stance = { text: 'En froid avec le club', factor: 0.85, profile: 'desperate' };
       if (!slot.target.forceU21) age = 21 + Math.floor(Math.random() * 7);
@@ -496,7 +496,7 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
         'Irrégulier'
       ];
       reputation = diff === 'difficile' ? 'Dépannage Low-Cost' : 'Complément très limité';
-      caliberLabel = '⚠️ Dépannage Low-Cost';
+      caliberLabel = '️ Dépannage Low-Cost';
       caliberBadgeStyle = 'bg-rose-950/60 text-rose-300 border border-rose-900/60';
       stance = { text: 'Libre de partir à prix bradé', factor: 0.78, profile: 'desperate' };
       age = Math.random() > 0.5 ? (18 + Math.floor(Math.random() * 3)) : 33;
@@ -506,7 +506,7 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
       priceRatio = 0.15 + Math.random() * 0.15;
       playerTraits = ['Discipline tactique', 'Polyvalent'];
       reputation = 'Joueur de complément';
-      caliberLabel = '🔄 Profil Complément';
+      caliberLabel = ' Profil Complément';
       caliberBadgeStyle = 'bg-gray-800 text-gray-300 border border-gray-700';
     }
 

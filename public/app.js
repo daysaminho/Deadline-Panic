@@ -1,3 +1,12 @@
+
+function closeMobileNegotiation() {
+  const negoCol = document.getElementById('in-game-negotiation-col');
+  if (negoCol) {
+    negoCol.classList.remove('mobile-nego-active');
+  }
+}
+window.closeMobileNegotiation = closeMobileNegotiation;
+
 // ==============================================================
 // DEADLINE DAY PANIC - CORE APPLICATION ENGINE v4.0
 // Double besoin obligatoire • 1 seule chance de négociation par joueur
@@ -5,6 +14,22 @@
 
 // ==============================================================
 // GESTION UNIVERSELLE DES DRAPEAUX HD (PC WINDOWS & MOBILE)
+const COUNTRY_TO_ISO = {
+  'france': 'fr', 'espagne': 'es', 'angleterre': 'gb-eng', 'italie': 'it', 'allemagne': 'de',
+  'portugal': 'pt', 'pays-bas': 'nl', 'belgique': 'be', 'suisse': 'ch', 'bresil': 'br', 'brésil': 'br',
+  'argentine': 'ar', 'uruguay': 'uy', 'colombie': 'co', 'chili': 'cl', 'senegal': 'sn', 'sénégal': 'sn',
+  'cote d\'ivoire': 'ci', 'côte d\'ivoire': 'ci', 'maroc': 'ma', 'algerie': 'dz', 'algérie': 'dz',
+  'cameroun': 'cm', 'nigeria': 'ng', 'nigéria': 'ng', 'mali': 'ml', 'egypte': 'eg', 'égypte': 'eg',
+  'tunisie': 'tn', 'danemark': 'dk', 'suede': 'se', 'suède': 'se', 'norvege': 'no', 'norvège': 'no',
+  'croatie': 'hr', 'serbie': 'rs', 'pologne': 'pl', 'japon': 'jp', 'coree du sud': 'kr', 'corée du sud': 'kr',
+  'etats-unis': 'us', 'états-unis': 'us', 'usa': 'us', 'ecosse': 'gb-sct', 'écosse': 'gb-sct',
+  'pays de galles': 'gb-wls', 'turquie': 'tr', 'arabie saoudite': 'sa', 'autriche': 'at', 'grece': 'gr',
+  'grèce': 'gr', 'republique tcheque': 'cz', 'république tchèque': 'cz', 'roumanie': 'ro',
+  'slovaquie': 'sk', 'ukraine': 'ua', 'mexique': 'mx', 'ghana': 'gh', 'irlande': 'ie', 'finlande': 'fi', 'islande': 'is'
+};
+
+const GLOBE_SVG_ICON = `<svg class="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>`;
+
 // ==============================================================
 function getCountryCodeFromEmoji(emoji) {
   if (!emoji || typeof emoji !== 'string') return null;
@@ -22,11 +47,44 @@ function getCountryCodeFromEmoji(emoji) {
   return null;
 }
 
-function renderFlag(flagEmoji, alt = '', cls = '') {
-  if (!flagEmoji) return '';
-  const code = getCountryCodeFromEmoji(flagEmoji);
-  if (!code) return flagEmoji;
-  return `<img src="https://flagcdn.com/24x18/${code}.png" srcset="https://flagcdn.com/48x36/${code}.png 2x" width="18" height="13.5" alt="${alt || code}" title="${alt || code}" class="inline-block align-middle rounded-xs shadow-xs ${cls}" style="display:inline-block; vertical-align: -1px; margin-right: 3px;" loading="lazy" />`;
+function renderFlag(input, alt = '', cls = '') {
+  let countryName = '';
+  let flagEmoji = '';
+
+  if (typeof input === 'object' && input !== null) {
+    countryName = input.name || '';
+    flagEmoji = input.flag || '';
+  } else if (typeof input === 'string') {
+    if (getCountryCodeFromEmoji(input)) {
+      flagEmoji = input;
+    } else {
+      countryName = input;
+    }
+  }
+
+  let code = null;
+  if (countryName) {
+    const normalized = countryName.toLowerCase().trim();
+    code = COUNTRY_TO_ISO[normalized] || COUNTRY_TO_ISO[normalized.normalize("NFD").replace(/[\u0300-\u036f]/g, "")];
+    // Support direct ISO codes like 'fr', 'es', 'gb-eng', 'de', 'it', 'ar', 'br', etc.
+    if (!code) {
+      if (/^[a-z]{2}(-[a-z]{2,4})?$/.test(normalized)) {
+        code = normalized;
+      }
+    }
+  }
+  if (!code && flagEmoji) {
+    code = getCountryCodeFromEmoji(flagEmoji);
+  }
+
+  const label = alt || countryName || 'Nationalité';
+
+  if (!code) {
+    // Fallback obligatoire : icône générique de globe terrestre dans conteneur fixe 24px
+    return `<span class="inline-flex items-center justify-center shrink-0 w-6 min-w-[24px] max-w-[24px] select-none text-center ${cls}" style="width: 24px; min-width: 24px; flex-shrink: 0;" title="${label}">${GLOBE_SVG_ICON}</span>`;
+  }
+
+  return `<span class="inline-flex items-center justify-center shrink-0 w-6 min-w-[24px] max-w-[24px] select-none text-center ${cls}" style="width: 24px; min-width: 24px; flex-shrink: 0;" title="${label}"><img src="https://flagcdn.com/24x18/${code}.png" srcset="https://flagcdn.com/48x36/${code}.png 2x" width="18" height="13.5" alt="${label}" class="inline-block rounded-xs shadow-xs" style="display:inline-block; vertical-align:middle;" loading="lazy" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline-flex'"><span style="display:none;width:24px;height:18px;align-items:center;justify-content:center;">${GLOBE_SVG_ICON}</span></span>`;
 }
 
 function formatWithFlags(str) {
@@ -127,17 +185,31 @@ function showToast(message, type = 'success', duration = 2800) {
   if (!container) return;
 
   const toast = document.createElement('div');
-  const typeStyles = {
-    success: 'bg-emerald-950/95 border-emerald-500/70 text-emerald-200 shadow-emerald-500/30',
-    error: 'bg-rose-950/95 border-rose-500/70 text-rose-200 shadow-rose-500/30',
-    info: 'bg-amber-950/95 border-amber-500/70 text-amber-200 shadow-amber-500/30'
+  const typeConfig = {
+    success: {
+      card: 'bg-white dark:bg-[#121826] border border-emerald-500/30 text-slate-800 dark:text-white shadow-xl shadow-emerald-500/10',
+      badge: 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400',
+      svg: (typeof getSvgIcon === 'function') ? getSvgIcon('check', 'w-3.5 h-3.5') : '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+    },
+    error: {
+      card: 'bg-white dark:bg-[#121826] border border-rose-500/30 text-slate-800 dark:text-white shadow-xl shadow-rose-500/10',
+      badge: 'bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400',
+      svg: (typeof getSvgIcon === 'function') ? getSvgIcon('x', 'w-3.5 h-3.5') : '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+    },
+    info: {
+      card: 'bg-white dark:bg-[#121826] border border-blue-500/30 text-slate-800 dark:text-white shadow-xl shadow-blue-500/10',
+      badge: 'bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400',
+      svg: (typeof getSvgIcon === 'function') ? getSvgIcon('info', 'w-3.5 h-3.5') : '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>'
+    }
   };
-  const icon = type === 'success' ? '✅' : (type === 'error' ? '❌' : 'ℹ️');
 
-  toast.className = `pointer-events-auto transform -translate-y-4 opacity-0 transition-all duration-300 border-2 px-4 py-2.5 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs font-semibold backdrop-blur-md ${typeStyles[type] || typeStyles.info}`;
+  const cfg = typeConfig[type] || typeConfig.info;
+  const cleanMsg = (message || '').replace(/^[\uD800-\uDBFF\uDC00-\uDFFF\u2600-\u27BF\u2300-\u23FF\s]+/, '').trim();
+
+  toast.className = `pointer-events-auto transform -translate-y-4 opacity-0 transition-all duration-300 px-4 py-2.5 rounded-2xl flex items-center gap-3 text-xs font-semibold backdrop-blur-md ${cfg.card}`;
   toast.innerHTML = `
-    <span class="text-base shrink-0">${icon}</span>
-    <span class="flex-1 leading-tight">${message}</span>
+    <span class="w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${cfg.badge}">${cfg.svg}</span>
+    <span class="flex-1 leading-snug font-medium">${cleanMsg || message}</span>
   `;
 
   container.appendChild(toast);
@@ -507,13 +579,45 @@ function showAchievementToast(ach) {
 }
 
 function getManagerRank(completedCount) {
-  if (completedCount >= 50) return { title: 'Légende Absolue du Football', icon: '🏆', badge: '🏆 Légende' };
-  if (completedCount >= 30) return { title: 'Maître du Mercato', icon: '👑', badge: '👑 Maître' };
-  if (completedCount >= 16) return { title: 'Directeur Sportif Confirmé', icon: '💎', badge: '💎 Directeur' };
-  if (completedCount >= 8) return { title: 'Négociateur Averti', icon: '🥇', badge: '🥇 Négociateur' };
-  if (completedCount >= 3) return { title: 'Scout Prometteur', icon: '🥈', badge: '🥈 Scout' };
-  return { title: 'Stagiaire de la Deadline Day', icon: '🥉', badge: '🥉 Stagiaire' };
+  if (completedCount >= 50) return { title: 'Légende Absolue du Football', shortTitle: 'Légende', tier: 'legende' };
+  if (completedCount >= 30) return { title: 'Maître du Mercato', shortTitle: 'Maître', tier: 'maitre' };
+  if (completedCount >= 16) return { title: 'Directeur Sportif Confirmé', shortTitle: 'Directeur', tier: 'directeur' };
+  if (completedCount >= 8) return { title: 'Négociateur Averti', shortTitle: 'Négociateur', tier: 'negociateur' };
+  if (completedCount >= 3) return { title: 'Scout Prometteur', shortTitle: 'Scout', tier: 'scout' };
+  return { title: 'Stagiaire de la Deadline Day', shortTitle: 'Stagiaire', tier: 'stagiaire' };
 }
+
+function getManagerRankSvg(tier, size = 'sm') {
+  const sizeClass = size === 'lg' ? 'w-8 h-8' : (size === 'md' ? 'w-5 h-5' : 'w-3.5 h-3.5');
+
+  if (tier === 'legende' || tier === 'maitre') {
+    return `
+      <svg class="${sizeClass} text-amber-500 dark:text-amber-400 inline-block shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"/>
+        <path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"/>
+        <path d="M4 3h16v6a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6V3z"/>
+        <path d="M12 15v4"/>
+        <path d="M8 21h8"/>
+      </svg>
+    `;
+  } else if (tier === 'directeur') {
+    return `
+      <svg class="${sizeClass} text-indigo-500 dark:text-indigo-400 inline-block shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+    `;
+  } else {
+    // Médaille vectorielle élégante (Stagiaire, Scout, Négociateur)
+    const colorClass = tier === 'negociateur' ? 'text-amber-500 dark:text-amber-400' : (tier === 'scout' ? 'text-slate-400 dark:text-slate-300' : 'text-amber-600 dark:text-amber-500');
+    return `
+      <svg class="${sizeClass} ${colorClass} inline-block shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="6"/>
+        <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+      </svg>
+    `;
+  }
+}
+window.getManagerRankSvg = getManagerRankSvg;
 
 function saveScenarioSuccess(scenarioId, data) {
   const saved = getSavedProgress();
@@ -569,23 +673,79 @@ let activeNegotiation = {
 let pendingDeal = null;
 
 // --- NAVIGATION & SCREENS ---
+window.showScreen = showScreen;
 function showScreen(screenId) {
-  [
+  if (screenId === 'screen-home') {
+    screenId = 'screen-portal';
+  }
+
+  const allScreenIds = [
     'screen-portal',
+    'screen-modes',
+    'screen-duel-portal',
+    'screen-duel-lobby',
     'screen-home',
     'screen-gallery',
     'screen-mercato',
     'screen-simulation',
     'screen-recap',
-    'screen-duel-portal',
-    'screen-duel-lobby',
     'screen-duel-recap'
-  ].forEach(id => {
+  ];
+
+  // 1. Masquage strict de tous les écrans enregistrés
+  allScreenIds.forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.classList.add('hidden');
+    if (el) {
+      el.classList.add('hidden');
+      el.style.display = 'none';
+    }
   });
+
+  // 2. Nettoyage DOM préventif sur tous les conteneurs <main id^="screen-">
+  document.querySelectorAll('main[id^="screen-"]').forEach(scr => {
+    if (scr.id !== screenId) {
+      scr.classList.add('hidden');
+      scr.style.display = 'none';
+    }
+  });
+
+  // 3. Affichage unique de l'écran cible
   const target = document.getElementById(screenId);
-  if (target) target.classList.remove('hidden');
+  if (target) {
+    target.classList.remove('hidden');
+    target.style.display = '';
+  }
+
+  // Gestion responsive de la classe body.in-mercato pour masquer le header global sur mobile
+  if (screenId === 'screen-mercato') {
+    document.body.classList.add('in-mercato');
+  } else {
+    document.body.classList.remove('in-mercato');
+    const screenMercato = document.getElementById('screen-mercato');
+    if (screenMercato) {
+      screenMercato.classList.add('hidden');
+      screenMercato.style.display = 'none';
+    }
+    if (typeof closeMobileNegotiation === 'function') {
+      closeMobileNegotiation();
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  // Annulation préventive de la simulation de saison si on quitte l'écran
+  if (screenId !== 'screen-simulation') {
+    currentSimulationRunId++;
+    if (crisisResumeResolver) {
+      crisisResumeResolver('aborted');
+      crisisResumeResolver = null;
+    }
+  }
+
+  // 4. Fermeture préventive de toute modale de sélection de club / briefing résiduelle
+  const clubPickerModal = document.getElementById('modal-club-picker');
+  if (clubPickerModal && screenId === 'screen-mercato') clubPickerModal.classList.add('hidden');
+  const briefingModal = document.getElementById('modal-briefing');
+  if (briefingModal && screenId === 'screen-mercato') briefingModal.classList.add('hidden');
 
   if (screenId === 'screen-gallery') {
     if (currentGalleryTab === 'crises') {
@@ -597,7 +757,10 @@ function showScreen(screenId) {
     }
   }
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // 5. Repositionnement immédiat et strict tout en haut de l'écran
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  if (document.body) document.body.scrollTop = 0;
+  if (document.documentElement) document.documentElement.scrollTop = 0;
 }
 
 function updateHeaderStats() {
@@ -622,7 +785,12 @@ function updateHeaderStats() {
 
   if (countEl) countEl.textContent = `${completedCount} / ${SCENARIOS.length}`;
   if (pctEl) pctEl.textContent = `${pct}%`;
-  if (rankEl) rankEl.textContent = rankInfo.badge;
+  if (rankEl) {
+    rankEl.style.display = 'inline-flex';
+    rankEl.style.alignItems = 'center';
+    rankEl.style.gap = '8px';
+    rankEl.innerHTML = `${getManagerRankSvg(rankInfo.tier, 'sm')} <span class="leading-none">${rankInfo.shortTitle}</span>`;
+  }
   if (galleryBadgeEl) galleryBadgeEl.textContent = `${completedCount}/100 débloquées`;
 
   if (statCareersEl) statCareersEl.textContent = `${completedCount} / ${SCENARIOS.length}`;
@@ -641,9 +809,9 @@ function pickDifficulty(diff) {
   currentPickedDiff = diff;
 
   const diffBadges = {
-    facile: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-    moyen: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-    difficile: 'bg-rose-500/20 text-rose-400 border-rose-500/30'
+    facile: 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/50',
+    moyen: 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800/50',
+    difficile: 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800/50'
   };
 
   const badgeEl = document.getElementById('picker-diff-badge');
@@ -664,6 +832,43 @@ function rerollClubsPicker() {
 }
 
 // Formattage propre et uniforme des besoins et postes (y compris polyvalence)
+// Générateur dynamique d'avatar typographique (initiales du club)
+function getClubInitials(name) {
+  if (!name || typeof name !== 'string') return 'FC';
+  
+  const stopWords = new Set(['FC', 'CF', 'AS', 'AC', 'SC', 'UD', 'US', 'RC', 'OGC', 'SSC', 'SK', 'RB', 'TSG', 'SV', 'VFL', 'BSC', 'FK', 'CSKA', 'SL', 'CP']);
+  
+  const words = name
+    .replace(/[()]/g, '')
+    .trim()
+    .split(/[\s-]+/)
+    .filter(w => w.length > 0);
+
+  const significant = words.filter(w => !stopWords.has(w.toUpperCase()));
+  
+  if (significant.length >= 2) {
+    return (significant[0][0] + significant[1][0]).toUpperCase();
+  }
+  if (significant.length === 1) {
+    const single = significant[0];
+    if (single.length >= 2) {
+      return single.slice(0, 2).toUpperCase();
+    }
+    return (single + 'C').toUpperCase();
+  }
+  if (words.length >= 2) {
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+  if (words.length === 1) {
+    return (words[0].slice(0, 2)).toUpperCase();
+  }
+  return 'FC';
+}
+
+if (typeof window !== 'undefined') {
+  window.getClubInitials = getClubInitials;
+}
+
 function getNeedDisplay(need) {
   if (!need) return { code: '', shortLabel: '', fullLabel: '', icon: '🎯' };
   const code = typeof need === 'object' ? (need.code || '') : need;
@@ -755,40 +960,44 @@ function renderClubsPicker() {
 
   container.innerHTML = selectedClubs.map(sc => {
     const isDone = !!saved[sc.id];
+    const initials = getClubInitials(sc.club);
 
     return `
-      <div onclick="selectClubFromPicker(${sc.id})" class="cursor-pointer group bg-gray-800/80 hover:bg-gray-800 border border-gray-700 hover:border-amber-400 rounded-2xl p-3 sm:p-4 transition-all duration-200 flex items-center justify-between gap-3 sm:gap-4">
+      <div onclick="selectClubFromPicker(${sc.id})" class="cursor-pointer group bg-slate-50/70 hover:bg-white dark:bg-slate-900/50 dark:hover:bg-slate-800/80 border border-slate-200/80 hover:border-blue-500/50 dark:border-slate-800 dark:hover:border-blue-500/50 rounded-2xl p-3.5 sm:p-4 transition-all duration-200 flex items-center justify-between gap-3 sm:gap-4 shadow-xs hover:shadow-md">
         <div class="flex items-center space-x-3 sm:space-x-3.5 min-w-0 flex-1">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gray-700/80 border border-gray-600 flex items-center justify-center text-xl sm:text-2xl shrink-0 group-hover:scale-110 transition">
-            ${sc.logo}
+          <div class="w-14 h-14 min-w-[56px] min-h-[56px] shrink-0 rounded-2xl bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-900/40 flex items-center justify-center font-display font-black text-base tracking-wider shadow-xs group-hover:scale-105 transition-transform duration-200 select-none" style="width: 56px; height: 56px; min-width: 56px; min-height: 56px; flex-shrink: 0;">
+            ${initials}
           </div>
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-1.5 sm:gap-2 mb-0.5 flex-wrap sm:flex-nowrap">
-              <h4 class="font-display font-extrabold text-sm sm:text-base text-white group-hover:text-amber-400 transition truncate">${sc.club}</h4>
-              <span class="text-[11px] sm:text-xs text-gray-400 whitespace-nowrap inline-flex items-center gap-1">• ${formatWithFlags(sc.country)}</span>
-              ${isDone ? '<span class="text-[9px] text-emerald-400 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20 whitespace-nowrap">Validé ✅</span>' : ''}
+              <h4 class="font-display font-black text-sm sm:text-base text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition truncate">${sc.club}</h4>
+              <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap inline-flex items-center gap-1">• ${formatWithFlags(sc.country)}</span>
+              ${isDone ? `<span class="text-[9px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/40 whitespace-nowrap inline-flex items-center gap-1"><svg class="w-2.5 h-2.5 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Validé</span>` : ''}
             </div>
             ${sc.tacticalPhilosophy ? `
               <div class="flex items-center gap-1.5 mb-1 flex-wrap">
-                <span class="text-[9px] font-bold text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded">${sc.tacticalPhilosophy}</span>
-                <span class="text-[10px] text-gray-400">• ${sc.tacticalTag || ''}</span>
+                <span class="text-[9px] font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/40 px-2 py-0.5 rounded-md">${sc.tacticalPhilosophy}</span>
+                <span class="text-[10px] text-slate-400 dark:text-slate-500">• ${sc.tacticalTag || ''}</span>
               </div>
             ` : ''}
-            <p class="text-[11px] sm:text-xs text-gray-300 italic line-clamp-1 mb-1.5">
+            <p class="text-[11px] sm:text-xs text-slate-600 dark:text-slate-300 italic line-clamp-1 mb-1.5">
               ${sc.coachDemand}
             </p>
-            <div class="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] text-gray-400 flex-wrap">
-              <span>Budget : <strong class="text-emerald-400 font-mono font-bold">${sc.budget} M€</strong></span>
-              <span class="text-gray-600">•</span>
+            <div class="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 flex-wrap">
+              <span>Budget : <strong class="text-emerald-600 dark:text-emerald-400 font-mono font-bold">${sc.budget} M€</strong></span>
+              <span class="text-slate-300 dark:text-slate-700">•</span>
               <div class="inline-flex items-center gap-1.5 flex-wrap">
-                <span class="text-gray-400 text-[10px] uppercase font-bold">Missions :</span>
+                <span class="text-slate-400 dark:text-slate-500 text-[10px] uppercase font-bold">Missions :</span>
                 ${(sc.needs || []).map(n => {
                   const info = getNeedDisplay(n);
                   const isPoly = info.code.startsWith('POLYVALENT');
                   const isU21 = info.code === 'PEPITE_U21';
-                  const badgeColor = isPoly ? 'border-indigo-500/40 bg-indigo-950/40 text-indigo-300' : (isU21 ? 'border-purple-500/40 bg-purple-950/40 text-purple-300' : 'border-amber-400/30 bg-gray-900/90 text-amber-300');
-                  return `<span class="inline-flex items-center gap-1 border ${badgeColor} px-2 py-0.5 rounded-md text-[10px] font-bold shadow-sm whitespace-nowrap">
-                    <span>${info.icon}</span>
+                  const badgeColor = isPoly
+                    ? 'border-indigo-200 dark:border-indigo-900/50 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300'
+                    : (isU21
+                      ? 'border-purple-200 dark:border-purple-900/50 bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300'
+                      : 'border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300');
+                  return `<span class="inline-flex items-center gap-1 border ${badgeColor} px-2 py-0.5 rounded-md text-[10px] font-bold shadow-xs whitespace-nowrap">
                     <span>${info.shortLabel}</span>
                   </span>`;
                 }).join('')}
@@ -797,8 +1006,11 @@ function renderClubsPicker() {
           </div>
         </div>
 
-        <button class="px-3 sm:px-4 py-2 bg-gradient-to-r from-amber-400 to-amber-500 group-hover:from-amber-300 group-hover:to-amber-400 text-black font-display font-bold text-xs rounded-xl shadow transition whitespace-nowrap shrink-0">
-          Choisir ▶
+        <button class="px-3.5 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-display font-bold text-xs rounded-xl shadow-xs transition-all whitespace-nowrap shrink-0 flex items-center gap-1.5 group-hover:shadow-sm">
+          <span>Choisir</span>
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </button>
       </div>
     `;
@@ -881,7 +1093,7 @@ function renderCrisesList() {
       }).join(' ');
 
       return `
-        <div class="bg-gradient-to-br from-rose-950/30 via-gray-900 to-black border-2 border-rose-500/40 rounded-2xl p-4 shadow-xl flex flex-col justify-between gap-3 relative overflow-hidden transition hover:border-rose-500/70">
+        <div onclick="openCrisisDetailModal('${crisis.id}')" class="bg-gradient-to-br from-rose-950/30 via-gray-900 to-black border-2 border-rose-500/40 hover:border-rose-500 rounded-2xl p-4 shadow-xl flex flex-col justify-between gap-3 relative overflow-hidden transition cursor-pointer hover:scale-[1.01] group">
           <div class="flex items-start justify-between gap-3">
             <div class="flex items-center space-x-3.5">
               <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/40 flex items-center justify-center text-2xl shadow-inner shrink-0">
@@ -891,15 +1103,16 @@ function renderCrisesList() {
                 <div class="flex flex-wrap items-center gap-1.5 mb-1">
                   ${diffBadges}
                 </div>
-                <h4 class="font-display font-extrabold text-sm text-white">${crisis.title}</h4>
+                <h4 class="font-display font-extrabold text-sm text-white group-hover:text-rose-300 transition">${crisis.title}</h4>
               </div>
             </div>
-            <span class="text-[11px] font-bold text-rose-400 bg-rose-950/80 px-2.5 py-1 rounded-lg border border-rose-800 whitespace-nowrap shrink-0 flex items-center gap-1">
-              <span>🚨</span> Découvert
+            <span class="inline-flex items-center gap-1 text-[11px] font-bold text-rose-400 bg-rose-950/80 px-2.5 py-1 rounded-lg border border-rose-800 whitespace-nowrap shrink-0">
+              ${typeof getSvgIcon === 'function' ? getSvgIcon('beacon', 'w-3.5 h-3.5 text-rose-400') : '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v3M4.93 4.93l2.12 2.12M19.07 4.93l-2.12 2.12M6 18h12M7 18a5 5 0 0 1 10 0M9 22h6"/></svg>'}
+              <span>Découvert</span>
             </span>
           </div>
 
-          <p class="text-xs text-gray-300 leading-relaxed bg-black/40 p-2.5 rounded-xl border border-rose-950/60">
+          <p class="text-xs text-gray-300 leading-relaxed bg-black/40 p-2.5 rounded-xl border border-rose-950/60 line-clamp-2">
             ${typeof crisis.description === 'function' ? crisis.description('votre club') : crisis.description}
           </p>
 
@@ -909,8 +1122,12 @@ function renderCrisesList() {
               <span class="text-rose-400 font-bold">${crisis.failureRate ? `Difficile ${Math.round((crisis.failureRate.difficile || 0.5)*100)}% • Moyen ${Math.round((crisis.failureRate.moyen || 0.3)*100)}%` : 'Élevé'}</span>
             </div>
             <div class="text-rose-300 italic text-[11px] truncate">
-              💀 ${crisis.fatalVerdict}
+              [FATAL] ${crisis.fatalVerdict}
             </div>
+          </div>
+          <div class="flex items-center justify-between text-[10px] text-rose-400 font-bold pt-0.5 group-hover:text-rose-300">
+            <span>Consulter le dossier intégral</span>
+            <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
         </div>
       `;
@@ -945,6 +1162,127 @@ function renderCrisesList() {
   }).join('');
 }
 
+// ==============================================================
+// GESTION DES ICÔNES SVG THÉMATIQUES DES TROPHÉES & BADGES
+// ==============================================================
+function getAchievementSvg(achId, isUnlocked = true) {
+  if (!isUnlocked) {
+    // Cadenas fermé élégant avec la même bibliothèque et stroke-width: 2
+    return `
+      <svg class="w-6 h-6 text-slate-400 dark:text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="11" width="14" height="10" rx="2" />
+        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+      </svg>
+    `;
+  }
+
+  // Icône SVG moderne, minimaliste et thématique pour chaque trophée débloqué (vert émeraude)
+  switch (achId) {
+    case 'doc_temeraire':
+      // Docteur Téméraire : Cœur avec électrocardiogramme / pulsation
+      return `
+        <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+          <path d="M3.22 12H9.5l1.5-3 2 6.5 1.5-3.5h6.28" />
+        </svg>
+      `;
+
+    case 'mur_solitaire':
+      // Le Mur Solitaire : Bouclier défensif infranchissable
+      return `
+        <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="M12 8v8m-4-4h8" />
+        </svg>
+      `;
+
+    case 'gong_minuit':
+      // Gong de Minuit : Chronomètre / horloge des dernières secondes
+      return `
+        <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="14" r="8" />
+          <path d="M12 10v4l2.5 2" />
+          <path d="M10 2h4" />
+          <path d="M12 2v4" />
+        </svg>
+      `;
+
+    case 'as_bluff':
+      // As du Bluff : Carte / étincelle de poker
+      return `
+        <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="3" />
+          <path d="M12 7l1.5 2.5 3 .5-2 2 .5 3-3-1.5-3 1.5.5-3-2-2 3-.5z" />
+        </svg>
+      `;
+
+    case 'maitre_clauses':
+      // Maître des Clauses : Contrat officiel paraphé
+      return `
+        <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </svg>
+      `;
+
+    case 'grand_chelem':
+      // Grand Chelem C1 : Trophée d'élite / Coupe des Champions
+      return `
+        <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2" />
+          <path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2" />
+          <path d="M4 3h16v6a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6V3z" />
+          <path d="M12 15v4" />
+          <path d="M8 21h8" />
+        </svg>
+      `;
+
+    case 'genie_debrouille':
+      // Génie de la Débrouille : Ampoule allumée / étincelle d'ingéniosité
+      return `
+        <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+          <path d="M9 18h6" />
+          <path d="M10 22h4" />
+        </svg>
+      `;
+
+    case 'dompteur_nuit':
+      // Dompteur de Fauves : Maîtrise de la vie nocturne (lune & étoile)
+      return `
+        <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+          <path d="M19 3v4m2-2h-4" />
+        </svg>
+      `;
+
+    case 'livre_noir':
+      // Le Livre Noir du Football : Grimoire des crises et secrets
+      return `
+        <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+        </svg>
+      `;
+
+    default:
+      // Trophée générique épuré
+      return `
+        <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2" />
+          <path d="M18 9h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2" />
+          <path d="M4 3h16v6a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6V3z" />
+          <path d="M12 15v4" />
+          <path d="M8 21h8" />
+        </svg>
+      `;
+  }
+}
+window.getAchievementSvg = getAchievementSvg;
+
 function renderAchievementsList() {
   const container = document.getElementById('achievements-list');
   if (!container) return;
@@ -956,34 +1294,36 @@ function renderAchievementsList() {
 
     if (isUnlocked) {
       return `
-        <div class="bg-gradient-to-r from-gray-900 to-gray-800/90 border-2 border-emerald-500/50 rounded-2xl p-4 shadow-lg flex items-center justify-between gap-4">
-          <div class="flex items-center space-x-3.5">
-            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/40 flex items-center justify-center text-2xl">
-              ${ach.icon}
+        <div class="bg-white dark:bg-[#121826] border border-emerald-500/30 dark:border-emerald-500/20 rounded-2xl p-4 sm:p-5 shadow-xs flex items-center justify-between gap-4 transition-all hover:border-emerald-500/50">
+          <div class="flex items-center space-x-3.5 min-w-0">
+            <!-- Fond circulaire très légèrement teinté en vert sans bordure -->
+            <div class="w-12 h-12 rounded-full bg-emerald-500/10 dark:bg-emerald-500/15 flex items-center justify-center shrink-0">
+              ${getAchievementSvg(ach.id, true)}
             </div>
-            <div>
-              <h4 class="font-display font-extrabold text-sm text-white">${ach.title}</h4>
-              <p class="text-xs text-gray-300 mt-0.5">${ach.desc}</p>
+            <div class="min-w-0">
+              <h4 class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white tracking-tight truncate">${ach.title}</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5 leading-relaxed">${ach.desc}</p>
             </div>
           </div>
-          <span class="text-xs font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-800 whitespace-nowrap">
-            Débloqué 🏆
+          <span class="inline-flex items-center gap-1.5 text-xs font-extrabold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full whitespace-nowrap shrink-0">
+            ✓ Débloqué
           </span>
         </div>
       `;
     } else {
       return `
-        <div class="bg-gray-950/60 border border-gray-800 rounded-2xl p-4 opacity-60 flex items-center justify-between gap-4 select-none">
-          <div class="flex items-center space-x-3.5">
-            <div class="w-12 h-12 rounded-2xl bg-gray-900 border border-gray-800 flex items-center justify-center text-2xl grayscale">
-              🔒
+        <div class="bg-slate-50/70 dark:bg-[#121826]/40 border border-slate-200/80 dark:border-slate-800/60 rounded-2xl p-4 sm:p-5 opacity-70 flex items-center justify-between gap-4 select-none transition-all">
+          <div class="flex items-center space-x-3.5 min-w-0">
+            <!-- Fond circulaire gris sans bordure avec cadenas même stroke-width -->
+            <div class="w-12 h-12 rounded-full bg-slate-200/60 dark:bg-slate-800/60 flex items-center justify-center shrink-0">
+              ${getAchievementSvg(ach.id, false)}
             </div>
-            <div>
-              <h4 class="font-display font-bold text-sm text-gray-400">${ach.title}</h4>
-              <p class="text-xs text-gray-500 mt-0.5">${ach.desc}</p>
+            <div class="min-w-0">
+              <h4 class="font-bold text-sm text-slate-700 dark:text-slate-300 tracking-tight truncate">${ach.title}</h4>
+              <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 leading-relaxed">${ach.desc}</p>
             </div>
           </div>
-          <span class="text-[11px] font-bold text-gray-600 bg-gray-900 px-2.5 py-1 rounded-lg border border-gray-800 whitespace-nowrap">
+          <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full whitespace-nowrap shrink-0">
             Verrouillé
           </span>
         </div>
@@ -991,6 +1331,7 @@ function renderAchievementsList() {
     }
   }).join('');
 }
+
 
 function filterGallery(diff) {
   galleryFilter = diff;
@@ -1025,7 +1366,7 @@ function renderGallery() {
   const tabAchCountEl = document.getElementById('tab-ach-count');
   const tabCrisesCountEl = document.getElementById('tab-crises-count');
 
-  if (managerAvatarEl) managerAvatarEl.textContent = rankInfo.icon;
+  if (managerAvatarEl) managerAvatarEl.innerHTML = getManagerRankSvg(rankInfo.tier, 'md');
   if (managerTitleEl) managerTitleEl.textContent = rankInfo.title;
   if (statCareersEl) statCareersEl.textContent = `${completedCount} / ${SCENARIOS.length}`;
   if (statAchEl) statAchEl.textContent = `${unlocked.length} / ${ACHIEVEMENTS_DEF.length}`;
@@ -1044,7 +1385,7 @@ function renderGallery() {
         <div class="bg-gray-900 border border-emerald-500/40 rounded-2xl p-3.5 shadow-md flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="text-xl">${sc.logo}</span>
+              <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-900/40 flex items-center justify-center text-xs font-black tracking-wider shadow-xs">${getClubInitials(sc.club)}</span>
               <span class="text-[9px] font-mono text-gray-500">#${sc.id.toString().padStart(3, '0')}</span>
             </div>
             <h4 class="font-display font-bold text-xs text-white truncate">${sc.club}</h4>
@@ -1184,10 +1525,11 @@ function startQuickRandomGame() {
 
 function quickStartNextCareer() {
   audio.init();
+  const currentDiff = (activeScenario && activeScenario.difficulty) ? activeScenario.difficulty : (currentPickedDiff || 'moyen');
   const saved = getSavedProgress();
-  const uncompleted = SCENARIOS.filter(s => !saved[s.id] && (!activeScenario || s.id !== activeScenario.id));
-  const pool = uncompleted.length > 0 ? uncompleted : SCENARIOS;
-  const picked = pool[Math.floor(Math.random() * pool.length)];
+  const uncompleted = SCENARIOS.filter(s => s.difficulty === currentDiff && !saved[s.id] && (!activeScenario || s.id !== activeScenario.id));
+  const pool = uncompleted.length > 0 ? uncompleted : SCENARIOS.filter(s => s.difficulty === currentDiff);
+  const picked = pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : SCENARIOS[0];
 
   currentPickedDiff = picked.difficulty;
   openScenarioBriefing(picked.id, true);
@@ -1200,6 +1542,7 @@ function openScenarioBriefing(id, isRandom = false) {
 
   // Clone scenario to allow modifier without corrupting database
   activeScenario = JSON.parse(JSON.stringify(sc));
+  enrichScenarioTacticalDemands(activeScenario);
 
   // Règle d'attribution du Contexte Mercato :
   // - Difficile : JAMAIS positif (100% négatif)
@@ -1234,7 +1577,8 @@ function openScenarioBriefing(id, isRandom = false) {
     }
   }
 
-  document.getElementById('briefing-logo').textContent = activeScenario.logo;
+  const briefingLogoEl = document.getElementById('briefing-logo');
+  if (briefingLogoEl) briefingLogoEl.textContent = getClubInitials(activeScenario.club);
   document.getElementById('briefing-club-name').textContent = activeScenario.club;
   document.getElementById('briefing-country').innerHTML = formatWithFlags(activeScenario.country);
   document.getElementById('briefing-budget').textContent = `${activeScenario.budget} M€`;
@@ -1282,11 +1626,11 @@ function openScenarioBriefing(id, isRandom = false) {
     if (activeRunModifier.isPositive) {
       modBox.className = 'mb-4 p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/50 flex items-center gap-3 text-xs text-emerald-200 shadow-sm';
       modName.className = 'font-extrabold block text-[10px] uppercase text-emerald-400';
-      modName.textContent = `✨ Contexte Favorable : ${activeRunModifier.name}`;
+      modName.textContent = `Contexte Favorable : ${activeRunModifier.name}`;
     } else {
       modBox.className = 'mb-4 p-3 rounded-xl bg-rose-950/40 border border-rose-500/50 flex items-center gap-3 text-xs text-rose-200 shadow-sm';
       modName.className = 'font-extrabold block text-[10px] uppercase text-rose-400';
-      modName.textContent = `⚠️ Contexte Défavorable : ${activeRunModifier.name}`;
+      modName.textContent = `Contexte Défavorable : ${activeRunModifier.name}`;
     }
     modDesc.textContent = activeRunModifier.desc;
     modBox.classList.remove('hidden');
@@ -1326,6 +1670,9 @@ function backToPickerFromBriefing() {
 // ==============================================================
 
 function startMercatoRun() {
+  if (activeScenario && typeof enrichScenarioTacticalDemands === 'function') {
+    enrichScenarioTacticalDemands(activeScenario);
+  }
   if (!activeScenario) {
     showToast('Erreur : Aucun club sélectionné !', 'error');
     return;
@@ -1340,25 +1687,100 @@ function startMercatoRun() {
     realtimeRemainingSeconds = 300;
     deadlineMadnessTriggered = false;
 
-    // MARCHÉ IMPITOYABLE ALIGNÉ SUR LES EXIGENCES DU COACH :
-    // Les profils parfaits sont chers, les profils peu chers sont hors-sujet ou toxiques !
+    // Réinitialisation complète de l'état de négociation
+    activeNegotiation = {
+      player: null,
+      sellerName: '',
+      patience: 100,
+      history: [],
+      usedClause: false,
+      isOver: true
+    };
+    pendingDeal = null;
+
+    // Réinitialisation de l'affichage de négociation (bureau d'attente/idle)
+    const chatHistory = document.getElementById('nego-chat-history');
+    if (chatHistory) chatHistory.innerHTML = '';
+    const choicesBox = document.getElementById('nego-choices-box');
+    if (choicesBox) choicesBox.innerHTML = '';
+    const activeState = document.getElementById('nego-active-state');
+    if (activeState) activeState.classList.add('hidden');
+    const idleState = document.getElementById('nego-idle-state');
+    if (idleState) idleState.classList.remove('hidden');
+    const stampOverlay = document.getElementById('nego-success-overlay');
+    if (stampOverlay) {
+      stampOverlay.classList.add('hidden', 'opacity-0', 'pointer-events-none');
+      stampOverlay.classList.remove('opacity-100');
+    }
+
+    // Initialisation responsive des accordéons coach et signatures
+    const isDesktop = window.innerWidth >= 1024;
+    const coachDetails = document.getElementById('mercato-coach-details');
+    if (coachDetails) coachDetails.open = isDesktop;
+    const sigDetails = document.getElementById('mercato-signatures-details');
+    if (sigDetails) sigDetails.open = isDesktop;
+    if (typeof closeMobileNegotiation === 'function') closeMobileNegotiation();
+
     currentMarketPlayers = generateProceduralMarket(activeScenario.budget, activeScenario);
 
-    document.getElementById('mercato-club-badge').textContent = activeScenario.logo;
-    document.getElementById('mercato-club-title').textContent = activeScenario.club;
+    // Mise à jour du rappel permanent de budget dans la pop-up / desk de négociation
+  const budgetStr = `${currentRemainingBudget.toFixed(1)} M€`;
+  const elNegoBudget = document.getElementById('nego-budget-amount');
+  if (elNegoBudget) elNegoBudget.textContent = budgetStr;
+  const elNegoMobBudget = document.getElementById('nego-mobile-budget');
+  if (elNegoMobBudget) elNegoMobBudget.textContent = budgetStr;
+
+  const badgeEl = document.getElementById('mercato-club-badge');
+    if (badgeEl) badgeEl.textContent = getClubInitials(activeScenario.club);
+
+    const titleEl = document.getElementById('mercato-club-title');
+    if (titleEl) titleEl.textContent = activeScenario.club || '';
+
+    // Cohérence stricte de l'objectif selon le niveau de difficulté
+    const objEl = document.getElementById('mercato-club-objective');
+    if (objEl) {
+      let targetObj = activeScenario.objective;
+      if (activeScenario.difficulty === 'difficile') {
+        if (!targetObj || targetObj.toLowerCase().includes('c1') || targetObj.toLowerCase().includes('titre') || targetObj.toLowerCase().includes('podium')) {
+          targetObj = "Maintien héroïque & Éviter la relégation";
+          activeScenario.objective = targetObj;
+        }
+      } else if (activeScenario.difficulty === 'moyen') {
+        if (!targetObj || targetObj.toLowerCase().includes('c1') || targetObj.toLowerCase().includes('titre')) {
+          targetObj = "Top 6 & Qualification Européenne";
+          activeScenario.objective = targetObj;
+        }
+      } else {
+        if (!targetObj) {
+          targetObj = "Course au Titre & Qualification C1";
+          activeScenario.objective = targetObj;
+        }
+      }
+      objEl.textContent = `Objectif : ${targetObj}`;
+    }
+
     const originNote = (activeScenario.originConstraint && activeScenario.originConstraint.code !== 'FREE')
-      ? `<span class="block mt-1 font-bold text-amber-300 not-italic">📍 Réseau prioritaire : ${activeScenario.originConstraint.name} (${activeScenario.originConstraint.shortDesc})</span>`
+      ? `<span class="block mt-1 font-bold text-amber-300 not-italic">Réseau prioritaire : ${activeScenario.originConstraint.name} (${activeScenario.originConstraint.shortDesc})</span>`
       : '';
-    document.getElementById('mercato-coach-reminder').innerHTML = `"${activeScenario.coachDemand}"${originNote}`;
+    const tacticalClues = (activeScenario.needs && activeScenario.needs.length > 0)
+      ? activeScenario.needs.map((n, i) => {
+          const posInfo = formatNeedPositionLabels(n);
+          return `<span class="block mt-1 font-normal text-blue-100 text-xs sm:text-[13px] leading-relaxed">• <strong>${posInfo.fullConcatenated}</strong> : ${n.tacticalClue || n.name}</span>`;
+        }).join('')
+      : activeScenario.coachDemand;
+
+    const reminderEl = document.getElementById('mercato-coach-reminder');
+    if (reminderEl) {
+      reminderEl.innerHTML = `<span class="font-extrabold text-white block mb-1">"Voici mes exigences tactiques impératives :"</span>${tacticalClues}${originNote}`;
+    }
 
     updateMercatoHUD();
     renderSignedPlayers();
     renderMarketPlayers();
 
-    // En solo : s'assurer que les boutons solo sont visibles et le HUD duel masqué
     const btnClose = document.getElementById('btn-close-mercato');
-    const btnCloseMob = document.getElementById('btn-close-mercato-mobile');
     if (btnClose) btnClose.classList.remove('hidden');
+    const btnCloseMob = document.getElementById('btn-close-mercato-mobile');
     if (btnCloseMob) btnCloseMob.classList.remove('hidden');
     const duelHud = document.getElementById('duel-mercato-hud');
     if (duelHud) duelHud.classList.add('hidden');
@@ -1384,7 +1806,7 @@ function startRealtimeClock() {
       clearInterval(rivalsInterval);
       clockEl.textContent = '00:00';
       audio.play('alert');
-      showToast('⏰ GONG FINAL ! La Deadline Day est terminée !', 'info', 2000);
+      showToast('Gong Final : La Deadline Day est terminée !', 'info', 2000);
       setTimeout(() => {
         finishMercatoAndSimulate();
       }, 700);
@@ -1467,7 +1889,7 @@ function triggerDeadlineMadness() {
   const titleEl = document.getElementById('madness-title');
   const descEl = document.getElementById('madness-desc');
   const actionsEl = document.getElementById('madness-actions');
-  const iconEl = document.getElementById('madness-icon');
+  const iconWrapper = document.getElementById('madness-icon-wrapper');
 
   if (!modal || !titleEl || !descEl || !actionsEl) return;
 
@@ -1478,49 +1900,85 @@ function triggerDeadlineMadness() {
     const buyer = BUYERS[Math.floor(Math.random() * BUYERS.length)];
 
     let cashBonus = 3.0;
-    if (activeScenario.difficulty === 'facile') cashBonus = 25.0;
-    else if (activeScenario.difficulty === 'moyen') cashBonus = 7.5;
+    if (activeScenario && activeScenario.difficulty === 'facile') cashBonus = 25.0;
+    else if (activeScenario && activeScenario.difficulty === 'moyen') cashBonus = 7.5;
     else cashBonus = 2.8;
 
-    iconEl.textContent = '💰';
-    titleEl.textContent = `Offre d'Achat Express (${buyer})`;
+    if (iconWrapper) {
+      iconWrapper.className = 'w-14 h-14 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-3 shadow-xs';
+      iconWrapper.innerHTML = `
+        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23"/>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+      `;
+    }
+
+    titleEl.textContent = `Offre Inattendue : Achat Express (${buyer})`;
     descEl.innerHTML = `
       Un émissaire de <strong>${buyer}</strong> débarque en urgence à 23h30 !<br><br>
       Ils cherchent un joueur de complément et formulent une offre ferme et immédiate pour racheter l'un de vos remplaçants.<br><br>
-      Si vous acceptez, le club encaisse immédiatement <strong class="text-emerald-400 font-bold">+${cashBonus.toFixed(1)} M€</strong> sur vos liquidités disponibles pour le sprint final !
+      Si vous acceptez, le club encaisse immédiatement <strong class="text-emerald-600 dark:text-emerald-400 font-bold">+${cashBonus.toFixed(1)} M€</strong> sur vos liquidités disponibles pour le sprint final !
     `;
 
+    // Choix interactif : Bouton primaire 'Accepter l'offre' + Bouton secondaire 'Refuser'
     actionsEl.innerHTML = `
-      <button onclick="acceptMadnessSale(${cashBonus})" class="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-emerald-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg hover:from-emerald-400 hover:to-emerald-300 transition">
-        Vendre & Encaisser +${cashBonus.toFixed(1)} M€ ✍️
+      <button onclick="acceptMadnessSale(${cashBonus})" class="flex-1 py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-emerald-600 hover:bg-emerald-500 text-white shadow-xs transition">
+        Accepter l'offre (+${cashBonus.toFixed(1)} M€)
       </button>
-      <button onclick="closeMadnessModal()" class="flex-1 py-3 bg-gray-800 hover:bg-gray-700 text-gray-300 font-display font-bold text-xs rounded-xl border border-gray-700 transition">
-        Décliner l'Offre ✕
+      <button onclick="closeMadnessModal()" class="flex-1 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
+        Refuser
       </button>
     `;
   } else {
     // Braderie Flash du vendeur (-35%)
     const available = currentMarketPlayers.filter(p => !p.isSoldToRival && !p.isNegotiationFailed && !currentSignedPlayers.some(sp => sp.id === p.id));
-    if (available.length === 0) return;
+    if (available.length === 0) {
+      if (iconWrapper) {
+        iconWrapper.className = 'w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto mb-3 shadow-xs';
+      }
+      titleEl.textContent = "Offre Inattendue : Opportunité Marché";
+      descEl.innerHTML = "Une vague de rumeurs secoue les dernières minutes du marché des transferts. Restez vigilant sur vos cibles prioritaires.";
+      actionsEl.innerHTML = `
+        <button onclick="closeMadnessModal()" class="w-full py-3 px-5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs sm:text-sm shadow-xs transition">
+          Compris
+        </button>
+      `;
+      modal.classList.remove('hidden');
+      return;
+    }
 
     const target = available[Math.floor(Math.random() * available.length)];
     const oldPrice = target.estimatedPrice;
     const newPrice = Math.round(target.estimatedPrice * 0.65 * 10) / 10;
     target.estimatedPrice = newPrice;
     target.hiddenRealPrice = Math.round(target.hiddenRealPrice * 0.65 * 10) / 10;
-    target.availability = '⚡ BRADERIE FLASH (-35%)';
+    target.availability = 'BRADERIE FLASH (-35%)';
 
-    iconEl.textContent = '📉';
-    titleEl.textContent = `Braderie Flash : ${target.club}`;
+    if (iconWrapper) {
+      iconWrapper.className = 'w-14 h-14 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center mx-auto mb-3 shadow-xs';
+      iconWrapper.innerHTML = `
+        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+          <polyline points="17 6 23 6 23 12"/>
+        </svg>
+      `;
+    }
+
+    titleEl.textContent = `Offre Inattendue : Braderie Flash (${target.club})`;
     descEl.innerHTML = `
       Le directeur sportif de <strong>${target.club}</strong> est aux abois avant la fermeture du marché !<br><br>
-      Pour éviter de conserver son joueur mécontent, il brade <strong>${target.name}</strong> (${target.pos} • ${target.reputation}) pour seulement <strong class="text-emerald-400 font-bold">${newPrice.toFixed(1)} M€</strong> (au lieu de ${oldPrice.toFixed(1)} M€) !<br><br>
+      Pour éviter de conserver son joueur mécontent, il brade <strong>${target.name}</strong> (${target.pos} • ${target.reputation}) pour seulement <strong class="text-emerald-600 dark:text-emerald-400 font-bold">${newPrice.toFixed(1)} M€</strong> (au lieu de ${oldPrice.toFixed(1)} M€) !<br><br>
       Profitez de cette opportunité en or sur le marché avant minuit !
     `;
 
+    // Simple information / opportunité : Bouton primaire 'Voir la recrue' + Bouton secondaire 'Ignorer'
     actionsEl.innerHTML = `
-      <button onclick="closeMadnessModal(); filterMarketPosition('${target.pos}')" class="w-full py-3 bg-gradient-to-r from-amber-400 to-amber-500 text-black font-display font-extrabold text-xs rounded-xl shadow-lg hover:from-amber-300 hover:to-amber-400 transition">
-        Voir la Fiche de ${target.name} (${newPrice.toFixed(1)} M€) 🔍
+      <button onclick="closeMadnessModal(); filterMarketPosition('${target.pos}')" class="flex-1 py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-blue-600 hover:bg-blue-500 text-white shadow-xs transition">
+        Voir la recrue (${newPrice.toFixed(1)} M€)
+      </button>
+      <button onclick="closeMadnessModal()" class="flex-1 py-3 px-4 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition">
+        Ignorer
       </button>
     `;
 
@@ -1539,19 +1997,20 @@ function acceptMadnessSale(cashBonus) {
 
   const banner = document.getElementById('rival-breaking-banner');
   const bannerText = document.getElementById('rival-breaking-text');
-  bannerText.textContent = `💰 VENTE CONFIRMÉE : +${cashBonus.toFixed(1)} M€ ajoutés à vos liquidités pour le sprint final !`;
-  banner.classList.remove('hidden');
-  setTimeout(() => banner.classList.add('hidden'), 5000);
+  if (banner && bannerText) {
+    bannerText.textContent = `VENTE CONFIRMÉE : +${cashBonus.toFixed(1)} M€ ajoutés à vos liquidités pour le sprint final !`;
+    banner.classList.remove('hidden');
+    setTimeout(() => banner.classList.add('hidden'), 5000);
+  }
 }
 
 function closeMadnessModal() {
   const modal = document.getElementById('modal-deadline-madness');
   if (modal) modal.classList.add('hidden');
 }
+window.closeMadnessModal = closeMadnessModal;
+window.acceptMadnessSale = acceptMadnessSale;
 
-// ==============================================================
-// VÉRIFICATION DE LA FILIÈRE / PROVENANCE EXIGÉE PAR LE COACH
-// ==============================================================
 function checkPlayerFulfillsOrigin(player, originConstraint, scenario) {
   if (!originConstraint || originConstraint.code === 'FREE') return true;
   if (!player || !player.nationality) return false;
@@ -1599,15 +2058,335 @@ function checkPlayerFulfillsOrigin(player, originConstraint, scenario) {
 }
 
 // ==============================================================
+
+function formatNeedPositionLabels(need) {
+  if (!need) return { fullPos: '', shortPos: '', profile: '', fullConcatenated: '', shortConcatenated: '' };
+  const code = (typeof need === 'object' ? (need.code || '') : need).toUpperCase();
+  let fullPos = '';
+  let shortPos = '';
+
+  if (code === 'DC') {
+    fullPos = 'Défenseur Central (DC)';
+    shortPos = 'DC';
+  } else if (code === 'DD') {
+    fullPos = 'Latéral Droit (DD)';
+    shortPos = 'DD';
+  } else if (code === 'DG') {
+    fullPos = 'Latéral Gauche (DG)';
+    shortPos = 'DG';
+  } else if (code === 'MDF') {
+    fullPos = 'Sentinelle (MDF)';
+    shortPos = 'MDF';
+  } else if (code === 'MC') {
+    fullPos = 'Milieu Relayeur (MC)';
+    shortPos = 'MC';
+  } else if (code === 'MO') {
+    fullPos = 'Meneur de Jeu (MO)';
+    shortPos = 'MO';
+  } else if (code === 'BU') {
+    fullPos = 'Buteur (BU)';
+    shortPos = 'BU';
+  } else if (code === 'AG') {
+    fullPos = 'Ailier Gauche (AG)';
+    shortPos = 'AG';
+  } else if (code === 'AD') {
+    fullPos = 'Ailier Droit (AD)';
+    shortPos = 'AD';
+  } else if (code === 'GAR' || code === 'GB') {
+    fullPos = 'Gardien de But (GB)';
+    shortPos = 'GB';
+  } else if (code.includes('6_DC')) {
+    fullPos = 'Polyvalent (6 / DC)';
+    shortPos = '6 / DC';
+  } else if (code.includes('DG_DD') || code === 'LATERAL' || code.includes('LATERAUX')) {
+    fullPos = 'Latéral Deux Côtés (DG / DD)';
+    shortPos = 'DG / DD';
+  } else if (code.includes('PISTON')) {
+    fullPos = 'Piston / Ailier';
+    shortPos = 'Piston';
+  } else if (code.includes('6_8')) {
+    fullPos = 'Polyvalent (6 & 8)';
+    shortPos = '6 / 8';
+  } else if (code.includes('8_10')) {
+    fullPos = 'Polyvalent (8 & 10)';
+    shortPos = '8 / 10';
+  } else if (code.includes('10_AILIER')) {
+    fullPos = 'Polyvalent (10 / Ailier)';
+    shortPos = '10 / Ailier';
+  } else if (code.includes('DEUX_AILES')) {
+    fullPos = 'Polyvalent (Deux Ailes)';
+    shortPos = 'AG / AD';
+  } else if (code.includes('ATTAQUE') || code.includes('BU_AILIER')) {
+    fullPos = 'Polyvalent (Buteur / Ailier)';
+    shortPos = 'BU / Ailier';
+  } else if (code.includes('U21')) {
+    fullPos = 'Pépite U21 (-21 ans)';
+    shortPos = 'U21';
+  } else {
+    fullPos = need.name || code;
+    shortPos = code;
+  }
+
+  const profile = need.tacticalTitle || need.name || code;
+  let fullConcatenated = profile;
+  let shortConcatenated = profile;
+
+  if (profile && fullPos && !profile.toLowerCase().includes(shortPos.toLowerCase())) {
+    fullConcatenated = `${fullPos} - ${profile}`;
+    shortConcatenated = `${shortPos} - ${profile}`;
+  } else {
+    fullConcatenated = profile || fullPos;
+    shortConcatenated = profile || shortPos;
+  }
+
+  return { fullPos, shortPos, profile, fullConcatenated, shortConcatenated };
+}
+
 // VÉRIFICATION DE CORRESPONDANCE DES 3 BESOINS (POSTES, RÔLES, POLYVALENCE)
+// ==============================================================
+
+// ==============================================================
+// BASE DE DONNÉES DES PROFILS TACTIQUES & INDICES DU COACH
+// ==============================================================
+const TACTICAL_PROFILES_BY_POS = {
+  GAR: [
+    {
+      tacticalTitle: "Gardien Relanceur",
+      archetypeCode: "GAR_SWEEPER",
+      clue: "Il me faut un gardien moderne capable de relancer court sous pression pour faire monter notre bloc."
+    },
+    {
+      tacticalTitle: "Mur sur sa Ligne",
+      archetypeCode: "GAR_MUR",
+      clue: "Je veux un mur sur sa ligne, imbattable à bout portant sur les tirs réflexes."
+    },
+    {
+      tacticalTitle: "Colosse Aérien",
+      archetypeCode: "GAR_COLOSSE",
+      clue: "Il nous faut un gardien géant dominant dans les airs pour sécuriser tous les centres."
+    }
+  ],
+  DC: [
+    {
+      tacticalTitle: "Défenseur Relanceur",
+      archetypeCode: "DC_LIBERO_RELANCEUR",
+      clue: "Un libéro technique avec une relance laser pour ressortir proprement de nos 30 mètres."
+    },
+    {
+      tacticalTitle: "Stoppeur Rugueux",
+      archetypeCode: "DC_STOPPEUR_BRUTAL",
+      clue: "Un stoppeur viril intraitable au duel physique au corps-à-corps et dans le combat."
+    },
+    {
+      tacticalTitle: "Défenseur Couvreur",
+      archetypeCode: "DC_COUVREUR_RAPIDE",
+      clue: "Un défenseur rapide pour couvrir la profondeur et rattraper les attaquants lancés."
+    },
+    {
+      tacticalTitle: "Leader de Ligne",
+      archetypeCode: "DC_LEADER_VOCAL",
+      clue: "Un patron vocal pour commander notre arrière-garde avec une rigueur tactique totale."
+    }
+  ],
+  LATERAL: [
+    {
+      tacticalTitle: "Piston TGV",
+      archetypeCode: "LAT_PISTON_TGV",
+      clue: "Un piston supersonique qui déboule dans son couloir pour multiplier les centres tranchants."
+    },
+    {
+      tacticalTitle: "Latéral Cadenas",
+      archetypeCode: "LAT_CADENAS_DEF",
+      clue: "Un latéral cadenas pour museler l'ailier vedette adverse et verrouiller le couloir."
+    },
+    {
+      tacticalTitle: "Latéral Intérieur",
+      archetypeCode: "LAT_INVERTED",
+      clue: "Un faux latéral intelligent pour repiquer dans le demi-espace et densifier l'entrejeu."
+    }
+  ],
+  MDF: [
+    {
+      tacticalTitle: "Sentinelle Râtisseur",
+      archetypeCode: "MDF_RATISSEUR",
+      clue: "Un râtisseur infatigable qui coupe les trajectoires et presse haut pour étouffer l'adversaire."
+    },
+    {
+      tacticalTitle: "Regista / Maestro",
+      archetypeCode: "MDF_REGISTA",
+      clue: "Une plaque tournante capable d'orienter le tempo par des transversales millimétrées."
+    },
+    {
+      tacticalTitle: "Sentinelle Physique",
+      archetypeCode: "MDF_COLOSSE",
+      clue: "Un colosse aérien intimidant pour régner dans les airs et poser un verrou dans l'axe."
+    }
+  ],
+  MC: [
+    {
+      tacticalTitle: "Milieu Box-to-Box",
+      archetypeCode: "MC_BOX_TO_BOX",
+      clue: "Un milieu infatigable avec un gros volume de jeu, capable d'attaquer la surface et de se replier."
+    },
+    {
+      tacticalTitle: "Métronome de Possession",
+      archetypeCode: "MC_METRONOME",
+      clue: "Un métronome technique pour temporiser, conserver le cuir et fluidifier nos circuits."
+    },
+    {
+      tacticalTitle: "Percuteur Balle au Pied",
+      archetypeCode: "MC_PERCUTEUR",
+      clue: "Un milieu percutant capable de casser les lignes par ses accélérations dévastatrices."
+    }
+  ],
+  MO: [
+    {
+      tacticalTitle: "Meneur Magicien (10)",
+      archetypeCode: "MO_MAGICIEN",
+      clue: "Un 10 pur créatif capable de débloquer les défenses regroupées par une passe d'anthologie."
+    },
+    {
+      tacticalTitle: "Meneur Pressant",
+      archetypeCode: "MO_PRESSING",
+      clue: "Un meneur travailleur qui griffe des ballons hauts et joue vite pour ses partenaires."
+    },
+    {
+      tacticalTitle: "Sniper des 25m",
+      archetypeCode: "MO_SNIPER",
+      clue: "Un sniper capable de faire basculer une rencontre fermée d'un missile de loin."
+    }
+  ],
+  AILIER: [
+    {
+      tacticalTitle: "Flèche de Débordement",
+      archetypeCode: "AIL_FLECHE_LIGNE",
+      clue: "Une flèche supersonique qui prend la profondeur et dépose son vis-à-vis en un contre un."
+    },
+    {
+      tacticalTitle: "Ailier Intérieur Buteur",
+      archetypeCode: "AIL_INTERIEUR_BUTEUR",
+      clue: "Un ailier percutant qui repique vers l'axe pour enrouler et empiler les buts."
+    },
+    {
+      tacticalTitle: "Dribbleur Provocateur",
+      archetypeCode: "AIL_SOLISTE_DRIBBLEUR",
+      clue: "Un soliste imprévisible qui déséquilibre les blocs compacts et provoque fautes et cartons."
+    }
+  ],
+  BU: [
+    {
+      tacticalTitle: "Renard des Surfaces",
+      archetypeCode: "BU_RENARD_CLINIQUE",
+      clue: "Un renard clinique qui transforme la moindre demi-occasion en but au fond des filets."
+    },
+    {
+      tacticalTitle: "Pivot Athlétique",
+      archetypeCode: "BU_PIVOT_ATHLETIQUE",
+      clue: "Un pivot athlétique pour gagner tous les dégagements aériens et faire monter notre bloc."
+    },
+    {
+      tacticalTitle: "Faux 9 Décrocheur",
+      archetypeCode: "BU_FAUX_NEUF",
+      clue: "Un faux 9 combinatoire qui décroche entre les lignes pour ouvrir des boulevards aux ailiers."
+    }
+  ]
+};
+
+function enrichScenarioTacticalDemands(scenario) {
+  if (!scenario || !scenario.needs) return;
+
+  const scId = typeof scenario.id === 'number' ? scenario.id : 42;
+
+  scenario.needs.forEach((need, idx) => {
+    if (need.tacticalTitle && need.tacticalClue) return;
+
+    const code = (need.code || '').toUpperCase();
+    let posKey = null;
+
+    if (code === 'GAR') posKey = 'GAR';
+    else if (code === 'DC') posKey = 'DC';
+    else if (['DG', 'DD', 'LATERAL'].includes(code)) posKey = 'LATERAL';
+    else if (code === 'MDF') posKey = 'MDF';
+    else if (code === 'MC') posKey = 'MC';
+    else if (code === 'MO') posKey = 'MO';
+    else if (['AG', 'AD', 'AILIER'].includes(code)) posKey = 'AILIER';
+    else if (code === 'BU' || code === 'ATT') posKey = 'BU';
+
+    if (posKey && TACTICAL_PROFILES_BY_POS[posKey]) {
+      const list = TACTICAL_PROFILES_BY_POS[posKey];
+      const pickIdx = Math.abs((scId * 7 + idx * 11) % list.length);
+      const chosen = list[pickIdx];
+      need.tacticalTitle = chosen.tacticalTitle;
+      need.archetypeCode = chosen.archetypeCode;
+      need.tacticalClue = chosen.clue;
+    } else if (code.includes('6_DC')) {
+      need.tacticalTitle = "Polyvalent 6 / DC";
+      need.tacticalClue = "Un profil hybride capable d'évoluer en Sentinelle (6) et de dépanner en Défenseur Central.";
+      need.allowedArchetypes = ['MDF_RATISSEUR', 'MDF_COLOSSE', 'DC_STOPPEUR_BRUTAL', 'DC_LIBERO_RELANCEUR'];
+    } else if (code.includes('DG_DD') || code.includes('LATERAUX')) {
+      need.tacticalTitle = "Polyvalent Deux Côtés";
+      need.tacticalClue = "Un latéral polyvalent capable d'occuper les couloirs gauche (DG) et droit (DD).";
+      need.allowedArchetypes = ['LAT_PISTON_TGV', 'LAT_CADENAS_DEF', 'LAT_INVERTED'];
+    } else if (code.includes('ATTAQUE') || code.includes('BU_AILIER')) {
+      need.tacticalTitle = "Polyvalent Buteur / Ailier";
+      need.tacticalClue = "Un attaquant polyvalent à l'aise aussi bien en pointe axiale (9) que sur les ailes.";
+      need.allowedArchetypes = ['BU_RENARD_CLINIQUE', 'BU_FAUX_NEUF', 'AIL_INTERIEUR_BUTEUR', 'AIL_FLECHE_LIGNE'];
+    } else if (code.includes('6_8')) {
+      need.tacticalTitle = "Polyvalent 6 & 8";
+      need.tacticalClue = "Un milieu complet capable d'assurer en Sentinelle défensive et en Relayeur box-to-box.";
+      need.allowedArchetypes = ['MDF_RATISSEUR', 'MC_BOX_TO_BOX', 'MC_METRONOME'];
+    } else if (code.includes('8_10')) {
+      need.tacticalTitle = "Polyvalent 8 & 10";
+      need.tacticalClue = "Un milieu créatif capable de jouer en Relayeur et de monter d'un cran en Meneur.";
+      need.allowedArchetypes = ['MC_METRONOME', 'MC_PERCUTEUR', 'MO_MAGICIEN', 'MO_PRESSING'];
+    } else if (code.includes('PISTON')) {
+      need.tacticalTitle = "Piston / Ailier";
+      need.tacticalClue = "Un coureur de couloir polyvalent capable de jouer Piston et Ailier de débordement.";
+      need.allowedArchetypes = ['LAT_PISTON_TGV', 'AIL_FLECHE_LIGNE'];
+    } else if (code.includes('U21')) {
+      need.tacticalTitle = "Pépite U21";
+      need.tacticalClue = "Un jeune diamant brut de moins de 21 ans (U21) avec un fort potentiel de progression.";
+    } else {
+      need.tacticalTitle = need.name || code;
+      need.tacticalClue = `Un profil solide au poste de ${need.name || code}.`;
+    }
+  });
+
+  // Re-génère la consigne de présentation du coach comme UNIQUE INDICE
+  const cluesList = scenario.needs.map((n, i) => {
+    const posInfo = formatNeedPositionLabels(n);
+    return `${i + 1}. [${posInfo.fullConcatenated}] : ${n.tacticalClue}`;
+  }).join(' ');
+  scenario.coachDemand = `"Notre plan de jeu est strict. Voici mes exigences tactiques impératives : ${cluesList}"`;
+}
+
+// ==============================================================
+// VÉRIFICATION DE CORRESPONDANCE DES 3 BESOINS (PROFIL TACTIQUE & RÔLE)
 // ==============================================================
 function checkPlayerFulfillsNeed(player, need) {
   if (!player || !need) return false;
+
+  // 1. Exigence stricte par Archétype / Rôle précis demandé par le coach
+  // Si le coach exige un profil tactique précis (ex: LAT_PISTON_TGV), un autre profil (ex: LAT_INVERTED) NE DOIT PAS être validé
+  if (need.archetypeCode) {
+    return !!(player.archetype && player.archetype.code === need.archetypeCode);
+  }
+
+  // 2. Si le besoin autorise une liste précise d'archétypes (ex: profils polyvalents)
+  if (need.allowedArchetypes && Array.isArray(need.allowedArchetypes) && need.allowedArchetypes.length > 0) {
+    return !!(player.archetype && need.allowedArchetypes.includes(player.archetype.code));
+  }
+
+  // 3. Critère spécial U21
   const needCode = typeof need === 'object' ? need.code : need;
+  if (needCode === 'PEPITE_U21' || (need.tacticalTitle && need.tacticalTitle.includes('U21'))) {
+    return player.age <= 21;
+  }
+
+  // 4. Polyvalences tactiques sans liste d'archétypes stricte
   const v = (player.versatility || '').toUpperCase();
   const sub = player.subPos || player.pos || '';
 
-  // 1. Profils Polyvalents Précis
   if (needCode === 'POLYVALENT_6_DC') {
     return (v.includes('6') && v.includes('DC')) ||
            (sub === 'DC' && (v.includes('6') || v.includes('MDF') || v.includes('SENTINELLE'))) ||
@@ -1651,53 +2430,62 @@ function checkPlayerFulfillsNeed(player, need) {
            ((sub === 'AG' || sub === 'AD') && (v.includes('BU') || v.includes('BUTEUR')));
   }
   if (needCode === 'POLYVALENT_DC_LATERAL') {
-    return (v.includes('DC') && (v.includes('DD') || v.includes('DG') || v.includes('LATÉRAL') || v.includes('LATERAL'))) ||
-           (sub === 'DC' && (v.includes('DD') || v.includes('DG'))) ||
-           ((sub === 'DD' || sub === 'DG') && v.includes('DC'));
+    return (sub === 'DC' && (v.includes('DG') || v.includes('DD') || v.includes('LATÉRAL') || v.includes('LATERAL'))) ||
+           ((sub === 'DG' || sub === 'DD') && v.includes('DC'));
   }
 
-  // 2. Pépite U21
-  if (needCode === 'PEPITE_U21') {
-    return player.age <= 21;
-  }
+  // 5. Fallback uniquement si aucun archétype précis n'était exigé
+  if (needCode === 'DC') return sub === 'DC';
+  if (needCode === 'DG') return sub === 'DG';
+  if (needCode === 'DD') return sub === 'DD';
+  if (needCode === 'MDF') return sub === 'MDF';
+  if (needCode === 'MC') return sub === 'MC';
+  if (needCode === 'MO') return sub === 'MO';
+  if (needCode === 'BU') return sub === 'BU';
+  if (needCode === 'AG') return sub === 'AG';
+  if (needCode === 'AD') return sub === 'AD';
+  if (needCode === 'GAR') return sub === 'GAR' || player.pos === 'GAR';
 
-  // 3. Postes spécifiques ou correspondances directes
-  if (['DC', 'DD', 'DG', 'MDF', 'MC', 'MO', 'BU', 'AG', 'AD', 'GAR'].includes(needCode)) {
-    if (player.subPos === needCode) return true;
-    if (player.versatility && player.versatility.toUpperCase().includes(needCode)) return true;
-    if (player.pos === needCode) return true;
-  }
-
-  // Fallback général
-  if (player.pos === needCode) return true;
   return false;
 }
 
+
 function updateMercatoHUD() {
   const budgetEl = document.getElementById('mercato-remaining-budget');
-  budgetEl.textContent = `${currentRemainingBudget.toFixed(1)} M€`;
-  if (currentRemainingBudget <= 0.2) {
-    budgetEl.className = 'text-sm sm:text-xl font-display font-bold text-rose-500 animate-pulse';
-  } else {
-    budgetEl.className = 'text-sm sm:text-xl font-display font-bold text-emerald-400';
+  const elMobNegoBud = document.getElementById('nego-mobile-budget');
+  if (elMobNegoBud) {
+    elMobNegoBud.textContent = `${currentRemainingBudget.toFixed(1)} M€`;
   }
 
-  // 3 Besoins & Missions tracker
+  if (budgetEl) {
+    budgetEl.textContent = `${currentRemainingBudget.toFixed(1)} M€`;
+    if (currentRemainingBudget <= 0.2) {
+      budgetEl.className = 'text-sm sm:text-xl font-display font-bold text-rose-500 animate-pulse';
+    } else {
+      budgetEl.className = 'text-sm sm:text-xl font-display font-bold text-emerald-400';
+    }
+  }
+
+  // 3 Besoins & Missions tracker avec titres tactiques et zéro emoji
   const needsBadge = document.getElementById('mercato-needs-badge');
   if (needsBadge && activeScenario && activeScenario.needs) {
     const usedPlayerIds = new Set();
     const badgesHtml = activeScenario.needs.map(n => {
       const match = currentSignedPlayers.find(p => !usedPlayerIds.has(p.id) && checkPlayerFulfillsNeed(p, n));
-      const info = getNeedDisplay(n);
+      const posInfo = formatNeedPositionLabels(n);
 
       if (match) {
         usedPlayerIds.add(match.id);
-        return `<span class="inline-flex items-center gap-1 text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30 whitespace-nowrap text-[9px] sm:text-[10px] shadow-sm">
-          ${info.icon} ${info.shortLabel} : Validé ✅
+        return `<span class="inline-flex items-center gap-1.5 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-full text-[11px] font-bold shadow-xs whitespace-nowrap">
+          <span>${posInfo.shortConcatenated}</span>
+          <span class="text-slate-400 dark:text-slate-500 font-normal">|</span>
+          <span class="bg-emerald-600 text-white text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded">SIGNÉ</span>
         </span>`;
       } else {
-        return `<span class="inline-flex items-center gap-1 text-rose-400 font-bold bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/30 whitespace-nowrap text-[9px] sm:text-[10px] shadow-sm">
-          ${info.icon} ${info.shortLabel} : Requis ❌
+        return `<span class="inline-flex items-center gap-1.5 bg-white/90 dark:bg-slate-800/80 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 px-3 py-1 rounded-full text-[11px] font-bold shadow-xs whitespace-nowrap">
+          <strong class="text-blue-600 dark:text-blue-400 font-extrabold">${posInfo.shortConcatenated}</strong>
+          <span class="text-slate-400 dark:text-slate-500 font-normal">|</span>
+          <span class="bg-blue-100 dark:bg-blue-950/70 text-blue-700 dark:text-blue-300 text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded">À POURVOIR</span>
         </span>`;
       }
     }).join(' ');
@@ -1705,6 +2493,7 @@ function updateMercatoHUD() {
     needsBadge.innerHTML = badgesHtml;
   }
 }
+
 
 function filterMarketPosition(pos) {
   selectedMarketPos = pos;
@@ -1731,188 +2520,217 @@ function renderMarketPlayers() {
 
   if (countLabel) {
     const activeCount = filtered.filter(p => !p.isSoldToRival && !p.isNegotiationFailed).length;
-    countLabel.textContent = `${activeCount} joueur${activeCount > 1 ? 's' : ''} sur le mercato`;
+    countLabel.textContent = `${activeCount} joueur${activeCount > 1 ? 's' : ''}`;
   }
 
   if (filtered.length === 0) {
     container.innerHTML = `
-      <div class="bg-gray-900 border border-gray-800 rounded-xl p-8 text-center text-gray-400 text-xs">
+      <div class="bg-white dark:bg-[#121826] border border-gray-200 dark:border-slate-800 rounded-2xl p-8 text-center text-gray-400 text-xs">
         Aucun joueur disponible pour ce poste.
       </div>
     `;
     return;
   }
 
-  container.innerHTML = filtered.map(p => {
-    const posColors = {
-      ATT: 'bg-rose-500/20 text-rose-400 border-rose-500/30',
-      MIL: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-      DEF: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-      GAR: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-    };
+  container.innerHTML = filtered.map((p, idx) => {
+    const subPos = p.subPos || p.pos || 'PRO';
+    let posBadgeStyle = 'bg-gray-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-gray-300 dark:border-slate-700';
+    if (['DC', 'DD', 'DG', 'DEF'].includes(subPos)) {
+      posBadgeStyle = 'bg-blue-100 dark:bg-blue-950/70 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800';
+    } else if (['MDF', 'MC', 'MO', 'MIL'].includes(subPos)) {
+      posBadgeStyle = 'bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+    } else if (['BU', 'AG', 'AD', 'ATT'].includes(subPos)) {
+      posBadgeStyle = 'bg-rose-100 dark:bg-rose-950/70 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800';
+    } else if (['GAR', 'GB'].includes(subPos)) {
+      posBadgeStyle = 'bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800';
+    }
+
+    const flagHtml = renderFlag(p.nationality, p.nationality ? p.nationality.name : '');
+    const isLocked = !!p.isLockedByRival;
+    const isCurrentlyNegotiating = !!p.isNegotiating;
 
     if (p.isSoldToRival) {
       return `
-        <div class="bg-gray-950/60 border border-gray-800/60 rounded-2xl p-4 opacity-50 flex items-center justify-between">
-          <div class="flex items-center space-x-3">
-            <span class="text-2xl">🚫</span>
-            <div>
-              <h4 class="font-display font-bold text-sm text-gray-400 line-through">${p.name}</h4>
-              <span class="text-[10px] text-rose-400 font-bold">Transféré à ${p.rivalBidClub || 'un concurrent'}</span>
+        <div class="bg-white/60 dark:bg-[#121826]/40 border border-gray-200 dark:border-slate-800 rounded-2xl p-4 sm:p-5 opacity-40 flex items-center justify-between gap-4 min-h-[90px]">
+          <div class="shrink-0 flex items-center justify-center">
+            <span class="px-2.5 py-1.5 rounded-xl text-xs font-mono font-bold ${posBadgeStyle} border">${subPos}</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0;">
+            <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+              ${flagHtml}
+              <h4 class="font-extrabold text-sm text-gray-400 line-through truncate">${p.name}</h4>
+              <span class="text-xs text-gray-400 font-medium shrink-0 whitespace-nowrap">(${p.age} ans)</span>
+            </div>
+            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+              <span class="px-1.5 py-0.5 rounded text-[8.5px] font-bold uppercase tracking-wider bg-red-100 dark:bg-red-950/60 text-red-600 border border-red-200 dark:border-red-800 shrink-0">VENDU À UN CONCURRENT</span>
             </div>
           </div>
-          <span class="text-xs text-gray-600 font-mono">VENDU</span>
+          <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 6px; flex-shrink: 0;">
+            <span class="text-xs font-bold text-gray-400">VENDU</span>
+          </div>
         </div>
       `;
     }
 
     if (p.isNegotiationFailed) {
       return `
-        <div class="bg-gray-950/70 border border-rose-900/40 rounded-2xl p-4 opacity-60 flex items-center justify-between">
-          <div class="flex items-center space-x-3">
-            <span class="text-2xl">❌</span>
-            <div>
-              <h4 class="font-display font-bold text-sm text-gray-300">${p.name} <span class="text-xs text-gray-500 font-normal">(${p.pos} • ${p.estimatedPrice} M€)</span></h4>
-              <span class="text-[10px] text-rose-400 font-bold">Piste définitivement fermée suite à l'échec des négociations</span>
+        <div class="bg-white/60 dark:bg-[#121826]/40 border border-red-200 dark:border-red-900/30 rounded-2xl p-4 sm:p-5 opacity-50 flex items-center justify-between gap-4 min-h-[90px]">
+          <div class="shrink-0 flex items-center justify-center">
+            <span class="px-2.5 py-1.5 rounded-xl text-xs font-mono font-bold ${posBadgeStyle} border">${subPos}</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0;">
+            <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+              <span class="shrink-0 leading-none">${flagHtml}</span>
+              <h4 class="font-extrabold text-sm text-slate-800 dark:text-gray-300 truncate">${p.name}</h4>
+              <span class="text-xs text-gray-400 font-medium shrink-0 whitespace-nowrap">(${p.age} ans)</span>
+            </div>
+            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+              <span class="px-1.5 py-0.5 rounded text-[8.5px] font-bold uppercase tracking-wider bg-red-100 dark:bg-red-950/60 text-red-600 border border-red-200 dark:border-red-800 shrink-0">NÉGOCIATIONS ROMPUES</span>
             </div>
           </div>
-          <span class="text-[11px] font-bold text-rose-500 bg-rose-950/80 px-3 py-1.5 rounded-lg border border-rose-800">Rupture définitive ❌</span>
+          <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 6px; flex-shrink: 0;">
+            <span class="text-[10px] font-bold text-red-500 bg-red-50 dark:bg-red-950/40 px-2.5 py-1 rounded-full">Échec</span>
+          </div>
         </div>
       `;
     }
 
-    const subPosColors = {
-      DC: 'bg-blue-600/20 text-blue-300 border-blue-500/40',
-      DG: 'bg-cyan-600/20 text-cyan-300 border-cyan-500/40',
-      DD: 'bg-sky-600/20 text-sky-300 border-sky-500/40',
-      MDF: 'bg-emerald-600/20 text-emerald-300 border-emerald-500/40',
-      MC: 'bg-teal-600/20 text-teal-300 border-teal-500/40',
-      MO: 'bg-purple-600/20 text-purple-300 border-purple-500/40',
-      BU: 'bg-rose-600/20 text-rose-300 border-rose-500/40',
-      AG: 'bg-pink-600/20 text-pink-300 border-pink-500/40',
-      AD: 'bg-orange-600/20 text-orange-300 border-orange-500/40',
-      GAR: 'bg-amber-600/20 text-amber-300 border-amber-500/40'
-    };
+    const archetypeLabel = p.archetype ? p.archetype.name : (p.subPosName || 'Titulaire');
+    const personalityLabel = (p.psychology && p.psychology.label) ? p.psychology.label.trim() : (Array.isArray(p.traits) && p.traits[0] ? p.traits[0] : '');
+    const strengthText = p.archetype && p.archetype.strength ? p.archetype.strength : 'Grande régularité et respect des consignes du coach.';
+    const sacrificeText = p.archetype && p.archetype.sacrifice ? p.archetype.sacrifice : 'Rendement limité face aux attaques de très haut niveau.';
 
-    const subKey = p.subPos || p.pos;
-    const subLabel = p.subPosName || p.subPos || p.pos;
-    const subIcon = p.subPosIcon || (p.pos === 'ATT' ? '⚡' : (p.pos === 'MIL' ? '🎯' : (p.pos === 'DEF' ? '🛡️' : '🧤')));
-
-    // Check if player satisfies one of the active scenario needs
-    const matchingNeed = (activeScenario.needs || []).find(n => checkPlayerFulfillsNeed(p, n));
-    const isTarget = !!matchingNeed;
-    const satisfiesOrigin = activeScenario.originConstraint && activeScenario.originConstraint.code !== 'FREE' && checkPlayerFulfillsOrigin(p, activeScenario.originConstraint, activeScenario);
-
-    const isLocked = !!p.isLockedByRival;
-    const isAffordable = currentRemainingBudget >= 0.4 && !isLocked;
+    // Construction exclusive des badges de la Ligne 2 : ZÉRO SPOILER CIBLE COACH !
+    const badges = [];
+    if (p.age <= 21) {
+      badges.push('<span class="px-2 py-0.5 rounded text-[8.5px] font-extrabold uppercase tracking-wider bg-indigo-100 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300 border border-indigo-200/80 dark:border-indigo-800/60 whitespace-nowrap shrink-0">U21</span>');
+    }
+    if (p.versatility) {
+      badges.push('<span class="px-2 py-0.5 rounded text-[8.5px] font-extrabold uppercase tracking-wider bg-purple-100 dark:bg-purple-950/70 text-purple-700 dark:text-purple-300 border border-purple-200/80 dark:border-purple-800/60 whitespace-nowrap shrink-0">POLYVALENT</span>');
+    }
+    if (p.isRivalBidActive) {
+      badges.push('<span class="px-2 py-0.5 rounded text-[8.5px] font-extrabold uppercase tracking-wider bg-red-100 dark:bg-red-950/70 text-red-700 dark:text-red-300 border border-red-200/80 dark:border-red-800/60 whitespace-nowrap shrink-0">OFFRE RIVALE</span>');
+    }
+    if (badges.length === 0) {
+      badges.push('<span class="px-2 py-0.5 rounded text-[8.5px] font-semibold uppercase tracking-wider bg-slate-100/70 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 border border-slate-200/50 dark:border-slate-800 whitespace-nowrap shrink-0">DISPONIBLE</span>');
+    }
 
     return `
-      <div data-player-id="${p.id}" class="bg-gray-900/95 hover:bg-gray-900 border ${isLocked ? 'border-amber-500/80 bg-amber-950/10' : (isTarget ? 'border-amber-500/50 shadow-lg shadow-amber-500/5' : 'border-gray-800/80 hover:border-gray-700')} rounded-2xl p-4 transition-all flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      <div data-player-id="${p.id}" class="bg-white dark:bg-[#121826] border ${isCurrentlyNegotiating ? 'border-blue-600 ring-2 ring-blue-500/20' : 'border-gray-200/80 dark:border-slate-800'} rounded-2xl p-4 sm:p-5 shadow-sm hover:border-blue-400 dark:hover:border-blue-500/50 transition-all min-h-[92px] flex flex-col justify-center">
         
-        <!-- Player Info & Scouting Profile -->
-        <div class="flex items-start space-x-3.5 flex-1 min-w-0">
-          <div class="w-12 h-12 rounded-2xl bg-gray-800/80 border border-gray-700 flex flex-col items-center justify-center font-display text-xl text-white shrink-0 mt-0.5">
-            ${subIcon}
+        <!-- CONTENEUR PRINCIPAL DE LA CARTE -->
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+          
+          <!-- PASTILLE DU POSTE (À GAUCHE, CENTRÉE VERTICALEMENT) -->
+          <div class="shrink-0 flex items-center justify-center">
+            <span class="px-2.5 py-1.5 rounded-xl text-xs font-mono font-black border shadow-xs ${posBadgeStyle}">
+              ${subPos}
+            </span>
           </div>
 
-          <div class="flex-1 min-w-0 space-y-2">
-            <!-- Header Line: Position, Flag, Name, Age, Status Badges -->
-            <div class="flex flex-wrap items-center gap-1.5">
-              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded border ${subPosColors[subKey] || 'bg-gray-800 text-gray-300'} whitespace-nowrap">${subKey}</span>
-              ${p.nationality ? `<span class="inline-flex items-center shrink-0" title="${p.nationality.name}">${renderFlag(p.nationality.flag, p.nationality.name)}</span>` : ''}
-              <h4 class="font-display font-bold text-base text-white tracking-wide truncate max-w-[200px] sm:max-w-none">${p.name}</h4>
-              <span class="text-xs text-gray-400 font-medium whitespace-nowrap">(${p.age} ans)</span>
-
-              ${isTarget ? `<span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 whitespace-nowrap">⭐ Cible Coach</span>` : ''}
-              ${satisfiesOrigin ? `<span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 whitespace-nowrap">📍 Réseau Club</span>` : ''}
-              ${p.versatility ? `<span class="text-[9px] font-medium px-1.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 whitespace-nowrap">🔄 ${p.versatility}</span>` : ''}
-              ${p.age <= 21 ? `<span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 whitespace-nowrap">💎 U21</span>` : ''}
-              ${p.caliberLabel ? `<span class="text-[9px] ${p.caliberBadgeStyle || 'bg-gray-800 text-gray-300'} px-2 py-0.5 rounded-md whitespace-nowrap">${p.caliberLabel}</span>` : ''}
-              ${isLocked ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-pulse whitespace-nowrap">⏳ Négociation (${p.rivalLockerName || 'Rival'})</span>` : ''}
+          <!-- BLOC CENTRAL (INFORMATIONS DU JOUEUR) -->
+          <div style="display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0;">
+            
+            <!-- LIGNE 1 : CONTENEUR DU NOM ET DE L'ÂGE FORCÉS STRICTEMENT SUR LA MÊME LIGNE -->
+            <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+              <span class="shrink-0 leading-none">${flagHtml}</span>
+              <h4 class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white tracking-tight truncate">
+                ${p.name}
+              </h4>
+              <span class="text-xs text-gray-400 dark:text-gray-500 font-semibold shrink-0 whitespace-nowrap">
+                (${p.age} ans)
+              </span>
             </div>
 
-            <!-- Club & Secondary Context -->
-            <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-400">
-              <span>Club : <strong class="text-gray-200">${p.club}</strong></span>
-              <span class="text-gray-600">•</span>
-              <span class="italic text-gray-300">${p.availability}</span>
-              ${p.traits && p.traits.length > 0 ? `
-                <span class="text-gray-600 hidden sm:inline">•</span>
-                <span class="text-gray-400 text-[11px] flex flex-wrap gap-1 items-center">
-                  ${p.traits.map(t => {
-                    const isForbidden = (activeScenario.forbiddenTraits || []).includes(t);
-                    return isForbidden
-                      ? `<span class="px-1.5 py-0.5 rounded bg-rose-950/70 text-rose-300 border border-rose-800/80 font-bold text-[10px]">⚠️ ${t}</span>`
-                      : `<span class="text-gray-400">${t}</span>`;
-                  }).join('<span class="text-gray-600">, </span>')}
-                </span>
-              ` : ''}
+            <!-- LIGNE 2 : BADGES SANS TRONCATURE RESTRICTIVE -->
+            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+              ${badges.join('')}
             </div>
-
-            <!-- Scouting Box (Archetype, Strength & Tactical Sacrifice) -->
-            ${(p.archetype || p.psychology) ? (() => {
-              const coachPhilo = activeScenario.tacticalPhilosophy || '';
-              const isFit = p.archetype && typeof checkPhilosophyMatch === 'function' && checkPhilosophyMatch(p.archetype.preferredPhilosophy, coachPhilo);
-              const isMisfit = p.archetype && typeof checkPhilosophyMatch === 'function' && checkPhilosophyMatch(p.archetype.misfitPhilosophy, coachPhilo);
-              
-              return `
-                <div class="bg-gray-950/70 border border-gray-800/80 rounded-xl p-2.5 space-y-1.5">
-                  <div class="flex flex-wrap items-center justify-between gap-1.5">
-                    <div class="flex flex-wrap items-center gap-1.5">
-                      ${p.archetype ? `
-                        <span class="text-[10px] font-bold text-indigo-300 bg-indigo-500/15 border border-indigo-500/30 px-2 py-0.5 rounded-md flex items-center gap-1">
-                          <span>${p.archetype.icon || '⚡'}</span>
-                          <span>${p.archetype.name}</span>
-                        </span>
-                      ` : ''}
-                      ${p.psychology ? `
-                        <span class="text-[10px] font-medium px-2 py-0.5 rounded-md border ${p.psychology.badgeClass}" title="${p.psychology.summary}">
-                          ${p.psychology.icon || '🧠'} ${p.psychology.label}
-                        </span>
-                      ` : ''}
-                    </div>
-
-                    <div class="flex items-center gap-1">
-                      ${isFit ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-700/60">🎯 Idéal Coach (+2)</span>` : ''}
-                      ${isMisfit ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded bg-rose-950/80 text-rose-300 border border-rose-700/60">⛔ Dissonance (-3)</span>` : ''}
-                    </div>
-                  </div>
-
-                  ${p.archetype && (p.archetype.strength || p.archetype.sacrifice) ? `
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1 border-t border-gray-800/60 text-[11px]">
-                      <div class="bg-emerald-950/30 border border-emerald-900/40 rounded-lg px-2 py-1 text-emerald-300 flex items-start gap-1.5">
-                        <span class="font-bold text-emerald-400 shrink-0">✓ Atout :</span>
-                        <span class="text-emerald-200/90 leading-tight">${p.archetype.strength || 'Profil polyvalent'}</span>
-                      </div>
-                      <div class="bg-amber-950/30 border border-amber-900/40 rounded-lg px-2 py-1 text-amber-300 flex items-start gap-1.5">
-                        <span class="font-bold text-amber-400 shrink-0">⚠️ Faille :</span>
-                        <span class="text-amber-200/90 leading-tight">${p.archetype.sacrifice || 'Aucune faille majeure'}</span>
-                      </div>
-                    </div>
-                  ` : ''}
-                </div>
-              `;
-            })() : ''}
 
           </div>
+
+          <!-- CONTENEUR FLEX COMMUN DU BLOC D'ACTION (PRIX CONNECTÉ JUSTE AU-DESSUS DU BOUTON) -->
+          <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 6px; flex-shrink: 0;">
+            
+            <!-- VALEUR MARCHANDE POSITIONNÉE JUSTE AU-DESSUS, BIEN ALIGNÉE À DROITE -->
+            <div class="text-right whitespace-nowrap leading-none">
+              <span class="font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-sans tracking-tight">
+                ${p.estimatedPrice} M€
+              </span>
+            </div>
+
+            <!-- BOUTON NÉGOCIER + CHEVRON -->
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              <button onclick="startNegotiation('${p.id}')" ${isLocked ? 'disabled' : ''} class="px-3.5 sm:px-4 py-2 rounded-xl font-bold text-xs transition transform hover:scale-[1.02] shadow-sm whitespace-nowrap ${isCurrentlyNegotiating ? 'bg-blue-600 text-white' : (isLocked ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-slate-900 hover:bg-black text-white dark:bg-white dark:text-slate-900 dark:hover:bg-gray-100')}">
+                ${isCurrentlyNegotiating ? 'En ligne' : (isLocked ? 'Occupé' : 'Négocier')}
+              </button>
+
+              <button onclick="togglePlayerAccordion('${p.id}')" class="p-2 rounded-xl text-gray-400 hover:text-blue-600 hover:bg-gray-100 dark:hover:bg-slate-800 border border-transparent hover:border-gray-200 dark:hover:border-slate-700 transition shrink-0" title="Afficher Profil, Atout & Faille">
+                <svg class="w-4 h-4 transition-transform duration-200" id="chevron-${p.id}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+            </div>
+
+          </div>
+
         </div>
 
-        <!-- Price & Action Button -->
-        <div class="flex sm:flex-col items-center sm:items-end justify-between w-full md:w-44 border-t md:border-t-0 md:border-l border-gray-800 pt-3 md:pt-0 md:pl-4 shrink-0 gap-2">
-          <div class="sm:text-right">
-            <span class="text-[10px] text-gray-400 block uppercase font-bold tracking-wider">Valeur Estimée</span>
-            <span class="text-xl font-display font-extrabold text-emerald-400">${p.estimatedPrice} M€</span>
+        <!-- ZONE DÉPLIÉE DE LA CARTE (ACCORDÉON ALLÉGÉ SANS FOND GRIS SOUSTRAIT NI BORDURES COLORÉES) -->
+        <div id="accordion-${p.id}" class="hidden pt-3 mt-3 border-t border-gray-100 dark:border-slate-800/80 space-y-3">
+          
+          <!-- LIGNE DE CONTEXTE ÉPURÉE POSÉE DIRECTEMENT SUR LE FOND AVEC POINTS MÉDIANS -->
+          <div class="text-xs text-slate-600 dark:text-slate-400 font-medium flex items-center flex-wrap gap-1.5 px-0.5">
+            <span class="font-extrabold text-slate-900 dark:text-white">${archetypeLabel}</span>
+            ${p.club ? `<span class="text-slate-300 dark:text-slate-600">•</span><span class="text-slate-700 dark:text-slate-300 font-medium">${p.club}</span>` : ''}
+            <span class="text-slate-300 dark:text-slate-600">•</span>
+            <span class="text-slate-500 dark:text-slate-400 italic">${p.availability || 'Libre de négocier'}</span>
+            ${personalityLabel ? `<span class="text-slate-300 dark:text-slate-600">•</span><span class="text-slate-500 dark:text-slate-400 font-medium">${personalityLabel}</span>` : ''}
           </div>
 
-          <button onclick="startNegotiation('${p.id}')" ${!isAffordable ? 'disabled' : ''} class="w-full sm:w-auto px-4 py-2.5 ${isLocked ? 'bg-gray-800 text-gray-500 cursor-not-allowed border border-gray-700' : 'bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-extrabold shadow-lg shadow-amber-500/10'} disabled:opacity-40 disabled:cursor-not-allowed font-display text-xs rounded-xl transition flex items-center justify-center gap-1.5 whitespace-nowrap">
-            <span>${isLocked ? '🔒 En négociation' : '💬 Négocier'}</span>
-          </button>
+          <!-- GRILLE FLAT-DESIGN 2 COLONNES : SANS BORDURES, REMPLISSAGE SUBTIL & BORDER-RADIUS DOUX -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            
+            <!-- ATOUT MAJEUR (VERT TRÈS PÂLE SANS BORDURE) -->
+            <div class="bg-emerald-500/10 dark:bg-emerald-500/10 rounded-2xl p-3.5 sm:p-4 text-xs">
+              <div class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400 font-extrabold text-[11px] uppercase tracking-wide mb-1.5">
+                <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Atout Majeur</span>
+              </div>
+              <p class="text-slate-700 dark:text-slate-300 text-xs leading-relaxed font-normal">${strengthText}</p>
+            </div>
+
+            <!-- POINT FAIBLE TACTIQUE (ROUGE TRÈS PÂLE SANS BORDURE) -->
+            <div class="bg-rose-500/10 dark:bg-rose-500/10 rounded-2xl p-3.5 sm:p-4 text-xs">
+              <div class="flex items-center gap-1.5 text-rose-700 dark:text-rose-400 font-extrabold text-[11px] uppercase tracking-wide mb-1.5">
+                <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>Point Faible Tactique</span>
+              </div>
+              <p class="text-slate-700 dark:text-slate-300 text-xs leading-relaxed font-normal">${sacrificeText}</p>
+            </div>
+
+          </div>
+
         </div>
 
       </div>
     `;
   }).join('');
 }
+
+function togglePlayerAccordion(playerId) {
+  const el = document.getElementById('accordion-' + playerId);
+  const chevron = document.getElementById('chevron-' + playerId);
+  if (!el) return;
+  const isHidden = el.classList.contains('hidden');
+  if (isHidden) {
+    el.classList.remove('hidden');
+    if (chevron) chevron.style.transform = 'rotate(180deg)';
+  } else {
+    el.classList.add('hidden');
+    if (chevron) chevron.style.transform = 'rotate(0deg)';
+  }
+}
+window.togglePlayerAccordion = togglePlayerAccordion;
+
 
 function renderSignedPlayers() {
   const container = document.getElementById('signed-players-list');
@@ -1921,43 +2739,42 @@ function renderSignedPlayers() {
 
   if (!container) return;
 
-  countEl.textContent = `${currentSignedPlayers.length} recrue${currentSignedPlayers.length > 1 ? 's' : ''}`;
+  if (countEl) {
+    countEl.textContent = `${currentSignedPlayers.length} recrue${currentSignedPlayers.length > 1 ? 's' : ''}`;
+  }
 
   let totalSpent = 0;
 
   if (currentSignedPlayers.length === 0) {
     container.innerHTML = `
-      <p class="text-xs text-gray-500 italic p-4 text-center border border-dashed border-gray-800 rounded-lg">
+      <p class="text-xs text-gray-400 italic p-3 text-center border border-dashed border-gray-200 dark:border-slate-800 rounded-2xl">
         Aucune signature pour le moment.<br>Négociez avant la fin des 5 minutes !
       </p>
     `;
   } else {
     container.innerHTML = currentSignedPlayers.map(p => {
-      totalSpent += p.agreedPrice;
+      totalSpent += (p.agreedPrice || 0);
 
       return `
-        <div class="bg-gray-800/80 border border-gray-700/80 rounded-xl p-3 flex items-center justify-between">
+        <div class="bg-gray-50/80 dark:bg-slate-800/60 border border-gray-100 dark:border-slate-800 rounded-2xl p-3 flex items-center justify-between">
           <div class="min-w-0 flex-1 mr-2">
-            <h5 class="text-xs font-bold text-white flex items-center gap-1.5 truncate">
+            <h5 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5 truncate">
               ${p.nationality ? `<span class="inline-flex items-center shrink-0">${renderFlag(p.nationality.flag, p.nationality.name)}</span>` : ''}
               <span class="truncate">${p.name}</span>
             </h5>
-            <span class="text-[10px] text-amber-400 block truncate">${p.reputation} • ${p.subPosName || p.subPos || p.pos}${p.nationality ? ' • ' + p.nationality.name : ''}${p.versatility ? ' (' + p.versatility + ')' : ''}</span>
-            ${p.archetype ? `<span class="text-[9px] text-indigo-300 font-semibold block truncate">${p.archetype.icon} ${p.archetype.name} (✓ ${p.archetype.strength})</span>` : ''}
-            ${p.psychology ? `<span class="text-[9px] ${p.psychology.badgeClass} px-1.5 py-0.2 rounded inline-block mt-0.5">${p.psychology.icon} ${p.psychology.label}</span>` : ''}
+            <span class="text-[10px] text-blue-600 dark:text-blue-400 block truncate">${p.subPosName || p.subPos || p.pos}${p.nationality ? ' • ' + p.nationality.name : ''}${p.versatility ? ' (' + p.versatility + ')' : ''}</span>
+            ${p.archetype ? `<span class="text-[9px] text-slate-500 dark:text-slate-400 font-semibold block truncate">${p.archetype.name} (✓ ${p.archetype.strength})</span>` : ''}
           </div>
-          <span class="text-xs font-mono font-bold text-emerald-400 shrink-0">${p.agreedPrice.toFixed(1)} M€</span>
+          <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 shrink-0">${(p.agreedPrice || 0).toFixed(1)} M€</span>
         </div>
       `;
     }).join('');
   }
 
-  spentEl.textContent = `${totalSpent.toFixed(1)} M€`;
+  if (spentEl) {
+    spentEl.textContent = `${totalSpent.toFixed(1)} M€`;
+  }
 }
-
-// ==============================================================
-// 5. NÉGOCIATION STRICTE & DIALOGUES DYNAMIQUES (10+ VARIANTES)
-// ==============================================================
 
 const NEGO_DIALOGUES = {
   sellerOpeningNeutral: [
@@ -2205,6 +3022,25 @@ function startNegotiation(playerId) {
   const p = currentMarketPlayers.find(pl => pl.id === playerId);
   if (!p || p.isSoldToRival || p.isNegotiationFailed || p.isSold || p.isLockedByRival) return;
 
+  // Si on clique sur le joueur avec qui on négocie déjà activement, ne pas réinitialiser la conversation
+  if (activeNegotiation && activeNegotiation.player && activeNegotiation.player.id === p.id && p.isNegotiating) {
+    return;
+  }
+
+  // 1. DÉVERROUILLAGE ÉVENTUEL DE L'ANCIEN JOUEUR (mode multijoueur Duel)
+  if (activeNegotiation && activeNegotiation.player && activeNegotiation.player.id !== p.id) {
+    if (typeof isDuelActive !== 'undefined' && isDuelActive && typeof socket !== 'undefined' && socket) {
+      socket.emit('unlockPlayerNegotiation', { playerId: activeNegotiation.player.id });
+    }
+  }
+
+  // 2. NETTOYAGE STRICT DES STATUTS (CLEANUP)
+  // Un seul joueur à la fois dans toute la base de données locale peut posséder le booléen isNegotiating: true
+  currentMarketPlayers.forEach(pl => {
+    pl.isNegotiating = false;
+  });
+  p.isNegotiating = true;
+
   // En mode Duel 1v1 : vérifier et verrouiller le joueur auprès du serveur
   if (typeof isDuelActive !== 'undefined' && isDuelActive && typeof socket !== 'undefined' && socket) {
     socket.emit('lockPlayerNegotiation', { playerId: p.id });
@@ -2217,6 +3053,7 @@ function startNegotiation(playerId) {
     basePatience = Math.max(35, basePatience - 10);
   }
 
+  // 3. ÉCRASEMENT STRICT DE L'ÉTAT (REMPLACEMENT PUR ET SIMPLE SANS FUSION DE DONNÉES)
   activeNegotiation = {
     player: p,
     patience: basePatience,
@@ -2226,23 +3063,58 @@ function startNegotiation(playerId) {
     history: [],
     usedClause: false
   };
+  window.currentNegotiation = activeNegotiation;
 
-  const natName = p.nationality ? ` • ${p.nationality.name}` : '';
-  document.getElementById('nego-contact-name').textContent = activeNegotiation.sellerName;
-  document.getElementById('nego-contact-sub').innerHTML = 'Club Vendeur • <span class="text-emerald-400 font-semibold">En direct</span>';
-  document.getElementById('nego-player-name').innerHTML = `${p.nationality ? renderFlag(p.nationality.flag, p.nationality.name) + ' ' : ''}${p.name}`;
+  // 4. RÉINITIALISATION COMPLÈTE DU CHAT ET DES CONTRÔLES
+  const chatHistory = document.getElementById('nego-chat-history');
+  if (chatHistory) chatHistory.innerHTML = '';
+  const choicesBox = document.getElementById('nego-choices-box');
+  if (choicesBox) choicesBox.innerHTML = '';
 
-  let repHtml = `${p.reputation} • ${p.subPosName || p.subPos || p.pos}${natName}${p.versatility ? ' (' + p.versatility + ')' : ''}`;
-  if (p.archetype) {
-    repHtml += ` | <strong class="text-indigo-300">${p.archetype.icon || '⚡'} ${p.archetype.name}</strong> <span class="text-emerald-400">(✓ ${p.archetype.strength})</span> <span class="text-amber-400">(⚠️ ${p.archetype.sacrifice})</span>`;
+  const patienceBar = document.getElementById('nego-patience-bar');
+  if (patienceBar) {
+    patienceBar.style.width = `${activeNegotiation.patience}%`;
+    patienceBar.className = 'bg-blue-600 h-full rounded-full transition-all duration-300';
   }
-  if (p.psychology) {
-    repHtml += ` | <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${p.psychology.badgeClass}">${p.psychology.icon || '🧠'} ${p.psychology.label}</span>`;
+  const patiencePct = document.getElementById('nego-patience-pct');
+  if (patiencePct) patiencePct.textContent = `${activeNegotiation.patience}%`;
+
+  const stampOverlay = document.getElementById('nego-success-overlay');
+  if (stampOverlay) {
+    stampOverlay.classList.add('hidden', 'opacity-0', 'pointer-events-none');
+    stampOverlay.classList.remove('opacity-100');
   }
-  document.getElementById('nego-player-rep').innerHTML = repHtml;
-  document.getElementById('nego-player-val').textContent = `${p.estimatedPrice} M€ (Valeur marché)`;
-  document.getElementById('nego-patience-bar').style.width = `${activeNegotiation.patience}%`;
-  document.getElementById('nego-chat-history').innerHTML = '';
+
+  // En-tête épuré
+  const natName = p.nationality ? p.nationality.name : '';
+  const roleName = p.subPosName || p.subPos || p.pos || 'Joueur';
+  const valText = `Valeur : ${p.estimatedPrice} M€`;
+  const subText = [roleName, natName, valText].filter(Boolean).join(' • ');
+
+  const elContact = document.getElementById('nego-contact-name');
+  if (elContact) elContact.textContent = activeNegotiation.sellerName;
+  const elContactSub = document.getElementById('nego-contact-sub');
+  if (elContactSub) elContactSub.innerHTML = `${typeof getSvgIcon === 'function' ? getSvgIcon('liveRadar', 'w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400') : '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block"></span>'} <span>En direct</span>`;
+
+  // Ligne 1 : Drapeau et Nom du joueur en gras
+  const elPName = document.getElementById('nego-player-name');
+  if (elPName) {
+    elPName.innerHTML = `${p.nationality ? renderFlag(p.nationality.flag, p.nationality.name) + ' ' : ''}<span>${p.name}</span>`;
+  }
+
+  // Ligne 2 : Rôle • Nationalité • Valeur (épuré, texte plus petit, grisé)
+  const elPSub = document.getElementById('nego-player-sub');
+  if (elPSub) {
+    elPSub.textContent = subText;
+  }
+  const elPRep = document.getElementById('nego-player-rep');
+  if (elPRep) {
+    elPRep.textContent = subText;
+  }
+  const elPVal = document.getElementById('nego-player-val');
+  if (elPVal) {
+    elPVal.textContent = '';
+  }
 
   let introMsg = getNegoDialogue('sellerOpeningNeutral', { NAME: p.name, PRICE: p.estimatedPrice });
   if (p.sellerProfile === 'aggressive') {
@@ -2255,7 +3127,24 @@ function startNegotiation(playerId) {
   audio.play('sms_in');
 
   showNegoChoicesStep1();
-  document.getElementById('modal-negotiation').classList.remove('hidden');
+  const elModNego = document.getElementById('modal-negotiation'); if (elModNego) elModNego.classList.remove('hidden');
+  const idleState = document.getElementById('nego-idle-state'); if (idleState) idleState.classList.add('hidden');
+  const activeState = document.getElementById('nego-active-state'); if (activeState) activeState.classList.remove('hidden');
+
+  // 4b. Activation de l'overlay mobile plein écran et liaison de données du budget
+  const negoCol = document.getElementById('in-game-negotiation-col');
+  if (negoCol) {
+    negoCol.classList.add('mobile-nego-active');
+    negoCol.scrollTop = 0;
+  }
+  const elNegoMobBudget = document.getElementById('nego-mobile-budget');
+  if (elNegoMobBudget) {
+    const liveVal = typeof currentRemainingBudget === 'number' ? currentRemainingBudget.toFixed(1) : '0.0';
+    elNegoMobBudget.textContent = `${liveVal} M€`;
+  }
+
+  // 5. RAFRAÎCHISSEMENT IMMÉDIAT DU MARCHÉ (seul le joueur actif portera 'En ligne')
+  renderMarketPlayers();
 }
 
 function addNegoMessage(sender, text) {
@@ -2267,8 +3156,8 @@ function addNegoMessage(sender, text) {
 
   const bubble = document.createElement('div');
   bubble.className = sender === 'me' 
-    ? 'bg-amber-400 text-black font-medium text-xs px-3.5 py-2.5 rounded-2xl rounded-tr-none max-w-[85%] shadow-md leading-relaxed' 
-    : 'bg-gray-800 text-gray-100 font-medium text-xs px-3.5 py-2.5 rounded-2xl rounded-tl-none max-w-[85%] border border-gray-700 shadow-md leading-relaxed';
+    ? 'bg-blue-600 text-white font-medium text-xs px-3.5 py-2.5 rounded-2xl rounded-tr-none max-w-[85%] shadow-xs leading-relaxed' 
+    : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-gray-100 font-medium text-xs px-3.5 py-2.5 rounded-2xl rounded-tl-none max-w-[85%] border border-slate-200/60 dark:border-slate-700/60 shadow-xs leading-relaxed';
 
   bubble.textContent = text;
   msgDiv.appendChild(bubble);
@@ -2307,7 +3196,7 @@ function updatePatience(delta) {
       audio.play('fail');
       document.getElementById('nego-choices-box').innerHTML = `
         <button onclick="failAndLockNegotiation()" class="w-full py-3 bg-gray-800 text-rose-400 hover:bg-gray-700 font-display font-bold text-xs rounded-xl border border-rose-900/60">
-          Négociations rompues (Piste perdue) ❌
+          Négociations rompues (Piste perdue)
         </button>
       `;
     }, 500);
@@ -2315,13 +3204,30 @@ function updatePatience(delta) {
 }
 
 function failAndLockNegotiation() {
+  isDealSigningLocked = false;
   if (activeNegotiation.player) {
     activeNegotiation.player.isNegotiationFailed = true;
+    activeNegotiation.player.isNegotiating = false;
     if (typeof isDuelActive !== 'undefined' && isDuelActive && typeof socket !== 'undefined' && socket) {
       socket.emit('unlockPlayerNegotiation', { playerId: activeNegotiation.player.id });
     }
   }
-  document.getElementById('modal-negotiation').classList.add('hidden');
+  activeNegotiation = {
+    player: null,
+    sellerName: '',
+    patience: 100,
+    history: [],
+    usedClause: false,
+    isOver: true
+  };
+  const activeState = document.getElementById('nego-active-state');
+  if (activeState) activeState.classList.add('hidden');
+  const idleState = document.getElementById('nego-idle-state');
+  if (idleState) idleState.classList.remove('hidden');
+  const choicesBox = document.getElementById('nego-choices-box');
+  if (choicesBox) choicesBox.innerHTML = '';
+  const elModNegoClose = document.getElementById('modal-negotiation');
+  if (elModNegoClose) elModNegoClose.classList.add('hidden');
   renderMarketPlayers();
 }
 
@@ -2336,14 +3242,14 @@ function showNegoChoicesStep1() {
   if (lowOffer > budget) {
     choicesContainer.innerHTML = `
       <div class="bg-rose-950/40 border border-rose-500/30 p-2.5 rounded-xl text-[11px] text-rose-300 mb-2">
-        ⚠️ Valeur (${standardOffer} M€) très supérieure à vos fonds restants (${budget.toFixed(1)} M€).
+        Valeur (${standardOffer} M€) très supérieure à vos fonds restants (${budget.toFixed(1)} M€).
       </div>
       <button onclick="handleDesperateAllInOffer(${budget})" class="w-full text-left p-3 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition flex items-center justify-between text-xs mb-1.5">
-        <span>💸 Tenter le coup de poker : poser tous nos fonds (<strong>${budget.toFixed(1)} M€</strong>)</span>
+        <span>Tenter le coup de poker : poser tous nos fonds (<strong>${budget.toFixed(1)} M€</strong>)</span>
         <span class="text-rose-400 font-bold">Chances infimes</span>
       </button>
       <button onclick="declineBecauseTooExpensive()" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 font-display font-bold text-xs rounded-xl border border-gray-700">
-        🚪 Décliner : Hors de nos moyens financiers
+        Décliner : Hors de nos moyens financiers
       </button>
     `;
     return;
@@ -2354,7 +3260,7 @@ function showNegoChoicesStep1() {
   if (lowOffer <= budget) {
     buttons.push(`
       <button onclick="handleOfferPrice(${lowOffer}, 'low')" class="w-full text-left p-3 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition flex items-center justify-between text-xs">
-        <span>📉 Offre au rabais (<strong>${lowOffer} M€</strong>)</span>
+        <span>Offre au rabais (<strong>${lowOffer} M€</strong>)</span>
         <span class="text-rose-400 font-bold">Risqué</span>
       </button>
     `);
@@ -2363,14 +3269,14 @@ function showNegoChoicesStep1() {
   if (standardOffer <= budget) {
     buttons.push(`
       <button onclick="handleOfferPrice(${standardOffer}, 'standard')" class="w-full text-left p-3 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition flex items-center justify-between text-xs">
-        <span>🤝 Offrir la valeur marchande (<strong>${standardOffer} M€</strong>)</span>
+        <span>Offrir la valeur marchande (<strong>${standardOffer} M€</strong>)</span>
         <span class="text-amber-400 font-bold">Standard</span>
       </button>
     `);
   } else {
     buttons.push(`
       <button onclick="handleOfferPrice(${budget}, 'max_budget')" class="w-full text-left p-3 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition flex items-center justify-between text-xs">
-        <span>💰 Offrir notre budget max disponible (<strong>${budget.toFixed(1)} M€</strong>)</span>
+        <span>Offrir notre budget max disponible (<strong>${budget.toFixed(1)} M€</strong>)</span>
         <span class="text-amber-400 font-bold">All-In</span>
       </button>
     `);
@@ -2417,7 +3323,7 @@ function handleDesperateAllInOffer(budgetAmount) {
 
       document.getElementById('nego-choices-box').innerHTML = `
         <button onclick="failAndLockNegotiation()" class="w-full py-3 bg-gray-800 text-rose-400 hover:bg-gray-700 font-display font-bold text-xs rounded-xl border border-rose-900/60">
-          Clore la négociation (Piste perdue) ❌
+          Clore la négociation (Piste perdue)
         </button>
       `;
     }
@@ -2478,7 +3384,7 @@ function showCounterChoices(counterPrice) {
   if (canAffordRaw) {
     buttonsHtml += `
       <button onclick="handleOfferPrice(${counterPrice}, 'counter_accepted')" class="w-full py-2.5 bg-amber-400 hover:bg-amber-300 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition">
-        Accepter l'exigence du club (${counterPrice.toFixed(1)} M€) 🤝
+        Accepter l'exigence du club (${counterPrice.toFixed(1)} M€)
       </button>
     `;
   }
@@ -2488,7 +3394,7 @@ function showCounterChoices(counterPrice) {
     buttonsHtml += `
       <button onclick="handleClauseSellOn(${counterPrice}, ${sellOnPrice})" class="w-full text-left p-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 border border-emerald-500/40 hover:border-emerald-400 transition flex items-center justify-between text-xs">
         <div>
-          <span class="font-bold text-emerald-400">📄 Proposer Clause 20% à la revente</span>
+          <span class="font-bold text-emerald-400">Proposer Clause 20% à la revente</span>
           <span class="block text-[10px] text-gray-400">Offrir <strong>${sellOnPrice.toFixed(1)} M€ cash</strong> + 20% sur la plus-value future</span>
         </div>
         <span class="text-[11px] font-mono font-bold text-emerald-300">-${(counterPrice - sellOnPrice).toFixed(1)} M€ cash</span>
@@ -2501,7 +3407,7 @@ function showCounterChoices(counterPrice) {
     buttonsHtml += `
       <button onclick="handleClauseBonus(${counterPrice}, ${bonusPrice})" class="w-full text-left p-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 border border-blue-500/40 hover:border-blue-400 transition flex items-center justify-between text-xs">
         <div>
-          <span class="font-bold text-blue-400">🏆 Proposer Bonus Fin de Saison (1.0 M€)</span>
+          <span class="font-bold text-blue-400">Proposer Bonus Fin de Saison (1.0 M€)</span>
           <span class="block text-[10px] text-gray-400">Offrir <strong>${bonusPrice.toFixed(1)} M€ cash</strong> + 1 M€ si objectif atteint</span>
         </div>
         <span class="text-[11px] font-mono font-bold text-blue-300">-1.0 M€ cash</span>
@@ -2515,7 +3421,7 @@ function showCounterChoices(counterPrice) {
         Le vendeur exige au moins ${sellOnPrice.toFixed(1)} M€ avec clause, mais vos caisses ne comptent que ${budget.toFixed(1)} M€ !
       </div>
       <button onclick="handleDesperateAllInOffer(${budget})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 mb-1">
-        💸 Proposer notre max absolu (${budget.toFixed(1)} M€)
+        Proposer notre max absolu (${budget.toFixed(1)} M€)
       </button>
     `;
   }
@@ -2523,7 +3429,7 @@ function showCounterChoices(counterPrice) {
   // Coup de bluff
   buttonsHtml += `
     <button onclick="handleBluffUltimatum()" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-rose-400 font-display font-bold text-xs rounded-xl border border-gray-700">
-      🃏 Coup de Bluff : "À ce prix-là, on quitte la table."
+      Coup de Bluff : "À ce prix-là, on quitte la table."
     </button>
     <button onclick="declineBecauseTooExpensive()" class="w-full py-2 bg-transparent text-gray-500 hover:text-white text-xs">
       Rompre la discussion (Piste fermée)
@@ -2621,7 +3527,10 @@ function handleBluffUltimatum() {
 }
 
 // STEP 2: AGENT NEGOTIATION (TENSION SUR LES CONDITIONS DU JOUEUR)
+let isDealSigningLocked = false;
+
 function showAgentStep(agreedClubPrice) {
+  isDealSigningLocked = false;
   const choicesContainer = document.getElementById('nego-choices-box');
   const p = activeNegotiation.player;
   const agentBonus = Math.max(0.6, Math.round(agreedClubPrice * 0.08 * 10) / 10);
@@ -2629,8 +3538,8 @@ function showAgentStep(agreedClubPrice) {
 
   setTimeout(() => {
     // Contact updates to the Agent
-    document.getElementById('nego-contact-name').textContent = `Agent de ${p.name} 💼`;
-    document.getElementById('nego-contact-sub').innerHTML = `<span class="text-amber-400 font-bold">Conseiller Sportif</span> • <span class="text-emerald-400 font-semibold">En direct</span>`;
+    document.getElementById('nego-contact-name').textContent = `Agent de ${p.name}`;
+    document.getElementById('nego-contact-sub').innerHTML = `<span class="text-amber-400 font-bold">Conseiller Sportif</span> • <span class="inline-flex items-center gap-1 text-emerald-400 font-semibold">${typeof getSvgIcon === 'function' ? getSvgIcon('liveRadar', 'w-3 h-3 text-emerald-400') : ''} En direct</span>`;
 
     const agentDialogues = [
       `[Agent] Accord trouvé avec le club vendeur pour ${agreedClubPrice.toFixed(1)} M€ ! Mon joueur est très motivé, mais un club anglais lui propose une prime de signature de ${agentBonus.toFixed(1)} M€. Si vous vous alignez (+${agentBonus.toFixed(1)} M€), nous signons dans la minute !`,
@@ -2645,32 +3554,63 @@ function showAgentStep(agreedClubPrice) {
 
     choicesContainer.innerHTML = `
       ${canAffordBonus ? `
-        <button onclick="acceptAgentBonus(${totalCost})" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-1.5">
-          <span>💰 Payer la prime & Valider le contrat (${totalCost.toFixed(1)} M€)</span>
+        <button id="btn-accept-agent-bonus" onclick="acceptAgentBonus(${totalCost})" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-1.5 cursor-pointer">
+          <span>Payer la prime & Valider le contrat (${totalCost.toFixed(1)} M€)</span>
         </button>
       ` : `
         <div class="text-[11px] text-rose-400 mb-2 bg-rose-950/30 p-2 rounded-lg border border-rose-900/40">
-          ⚠️ La prime ferait dépasser votre budget disponible (${currentRemainingBudget.toFixed(1)} M€ restants).
+          La prime ferait dépasser votre budget disponible (${currentRemainingBudget.toFixed(1)} M€ restants).
         </div>
       `}
-      <button onclick="refuseAgentBonus(${agreedClubPrice})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 transition flex items-center justify-center gap-1.5">
-        <span>🎲 Coup de bluff : « À prendre ou à laisser sans prime (${agreedClubPrice.toFixed(1)} M€) ! »</span>
+      <button id="btn-refuse-agent-bonus" onclick="refuseAgentBonus(${agreedClubPrice})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 transition flex items-center justify-center gap-1.5 cursor-pointer">
+        <span>Coup de bluff : « À prendre ou à laisser sans prime (${agreedClubPrice.toFixed(1)} M€) ! »</span>
       </button>
     `;
   }, 400);
 }
 
 function acceptAgentBonus(totalCost) {
+  if (isDealSigningLocked) return;
+  isDealSigningLocked = true;
+
+  // Verrouillage et désactivation immédiate des boutons pour éliminer les clics multiples
+  const choicesContainer = document.getElementById('nego-choices-box');
+  if (choicesContainer) {
+    choicesContainer.innerHTML = `
+      <div class="py-3 px-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/50 text-emerald-700 dark:text-emerald-300 text-xs font-bold text-center flex items-center justify-center gap-2">
+        <svg class="w-4 h-4 animate-spin text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
+        <span>Validation du contrat en cours...</span>
+      </div>
+    `;
+  }
+
   audio.play('sms_out');
   addNegoMessage('me', `D'accord pour la prime. L'important est que le joueur soit pleinement investi dès demain.`);
   setTimeout(() => {
-    addNegoMessage('seller', `[Agent] Parfait, accord personnel validé ! Nous finalisons les examens médicaux. ✍️`);
+    addNegoMessage('seller', `[Agent] Parfait, accord personnel validé ! Nous finalisons les examens médicaux.`);
     audio.play('sms_in');
-    setTimeout(() => proceedToMedicalExam(totalCost), 600);
+    setTimeout(() => {
+      proceedToMedicalExam(totalCost);
+      isDealSigningLocked = false;
+    }, 600);
   }, 600);
 }
 
 function refuseAgentBonus(basePrice) {
+  if (isDealSigningLocked) return;
+  isDealSigningLocked = true;
+
+  // Verrouillage et désactivation immédiate des boutons
+  const choicesContainer = document.getElementById('nego-choices-box');
+  if (choicesContainer) {
+    choicesContainer.innerHTML = `
+      <div class="py-3 px-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold text-center flex items-center justify-center gap-2">
+        <svg class="w-4 h-4 animate-spin text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
+        <span>Attente de la réponse de l'agent...</span>
+      </div>
+    `;
+  }
+
   audio.play('sms_out');
   const p = activeNegotiation.player;
   addNegoMessage('me', `Hors de question de céder aux surenchères d'agent. C'est l'offre sèche (${basePrice.toFixed(1)} M€) ou nous nous retirons.`);
@@ -2678,11 +3618,15 @@ function refuseAgentBonus(basePrice) {
   setTimeout(() => {
     const success = Math.random() < 0.72;
     if (success) {
-      addNegoMessage('seller', `[Agent] Bon... mon client adore le coach et veut absolument rejoindre votre équipe. On signe sans la prime ! 🤝`);
+      addNegoMessage('seller', `[Agent] Bon... mon client adore le coach et veut absolument rejoindre votre équipe. On signe sans la prime !`);
       audio.play('sms_in');
-      setTimeout(() => proceedToMedicalExam(basePrice), 600);
+      setTimeout(() => {
+        proceedToMedicalExam(basePrice);
+        isDealSigningLocked = false;
+      }, 600);
     } else {
-      addNegoMessage('seller', `[Agent] Dommage. Mon client ne se bradera pas dans ces conditions. Les discussions sont rompues ! ❌`);
+      isDealSigningLocked = false;
+      addNegoMessage('seller', `[Agent] Dommage. Mon client ne se bradera pas dans ces conditions. Les discussions sont rompues !`);
       audio.play('fail');
       updatePatience(-100);
     }
@@ -2696,73 +3640,73 @@ function refuseAgentBonus(basePrice) {
 const MEDICAL_DILEMMAS_DB = [
   {
     id: 'achille',
-    title: '⚠️ Tendon d\'Achille Enflammé',
+    title: 'Tendon d\'Achille Enflammé',
     desc: (p) => `Le médecin-chef alerte : un épaississement et un nodule inflammatoire sont visibles à l'échographie sur le tendon d'Achille de <strong>${p.name}</strong>. Risque élevé de rupture en cas d'enchaînement de matchs. Prenez-vous le risque de valider le contrat ?`,
     addedTrait: 'Genou en cristal'
   },
   {
     id: 'pubalgie',
-    title: '⚠️ Pubalgie Chronique Tenace',
+    title: 'Pubalgie Chronique Tenace',
     desc: (p) => `L'IRM pelvienne révèle une inflammation symphysaire carabinée chez <strong>${p.name}</strong>. Il a joué sous infiltrations ces derniers mois. Risque d'arrêt de 3 à 5 mois au moindre faux mouvement. Signez-vous quand même ?`,
     addedTrait: 'Genou en cristal'
   },
   {
     id: 'ischios',
-    title: '⚠️ Fibrose aux Ischio-Jambiers',
+    title: 'Fibrose aux Ischio-Jambiers',
     desc: (p) => `Le staff médical relève une cicatrice fibreuse profonde à l'arrière de la cuisse de <strong>${p.name}</strong> suite à un ancien claquage mal soigné. Les accélérations brutales risquent de rouvrir la lésion. Validez-vous ce pari ?`,
     addedTrait: 'Genou en cristal'
   },
   {
     id: 'croises',
-    title: '⚠️ Laxité du Ligament Croisé Antérieur',
+    title: 'Laxité du Ligament Croisé Antérieur',
     desc: (p) => `L'examen orthopédique décèle un tiroir antérieur anormal au genou de <strong>${p.name}</strong>. Une rechute ligamentaire majeure n'est pas à exclure lors des chocs hivernaux. Prenez-vous le risque ?`,
     addedTrait: 'Genou en cristal'
   },
   {
     id: 'metatarse',
-    title: '⚠️ Fissure de Fatigue au Métatarse',
+    title: 'Fissure de Fatigue au Métatarse',
     desc: (p) => `La radiologie osseuse montre une micro-fissure d'usure au pied d'appui de <strong>${p.name}</strong>. S'il enchaîne les 90 minutes sans repos strict, une fracture nette le privera de compétition. Confirmez-vous le transfert ?`,
     addedTrait: 'Genou en cristal'
   },
   {
     id: 'cheville',
-    title: '⚠️ Instabilité Chronique de la Cheville',
+    title: 'Instabilité Chronique de la Cheville',
     desc: (p) => `Les antécédents d'entorses à répétition ont provoqué une distension ligamentaire à la cheville de <strong>${p.name}</strong>. Le joueur aura besoin d'infiltrations et d'un protocole renforcé chaque semaine. Prenez-vous le risque ?`,
     addedTrait: 'Genou en cristal'
   },
   {
     id: 'epaule',
-    title: '⚠️ Séquelles d\'Opération de l\'Épaule',
+    title: 'Séquelles d\'Opération de l\'Épaule',
     desc: (p) => `Le médecin constate une instabilité de la coiffe des rotateurs suite à une ancienne luxation de <strong>${p.name}</strong>. Il sera très vulnérable au moindre duel aérien rugueux. Validez-vous la signature ?`,
     addedTrait: 'Genou en cristal'
   },
   {
     id: 'lombalgie',
-    title: '⚠️ Pincement Discal L5-S1 (Lombalgie)',
+    title: 'Pincement Discal L5-S1 (Lombalgie)',
     desc: (p) => `Le scanner vertébral met en évidence une hernie discale naissante chez <strong>${p.name}</strong>. Des douleurs sciatiques invalidantes risquent de le paralyser sur les terrains lourds. Prenez-vous le risque ?`,
     addedTrait: 'Genou en cristal'
   },
   {
     id: 'menisque',
-    title: '⚠️ Languette Méniscale Fissurée',
+    title: 'Languette Méniscale Fissurée',
     desc: (p) => `Le radiologue repère une petite languette cartilagineuse instable au ménisque interne de <strong>${p.name}</strong>. Un blocage articulaire soudain reste possible à tout moment s'il subit une torsion. Prenez-vous le risque de signer ?`,
     addedTrait: 'Genou en cristal'
   },
   {
     id: 'cardiologie',
-    title: '⚠️ Alerte Cardiaque : Extrasystoles d\'Effort',
+    title: 'Alerte Cardiaque : Extrasystoles d\'Effort',
     desc: (p) => `Le cardiologue du club relève une légère arythmie bénigne mais atypique lors du test VO2 max de <strong>${p.name}</strong>. Un protocole physique et des bilans trimestriels devront être scrupuleusement respectés. Signez-vous ?`,
     addedTrait: 'Genou en cristal'
   },
   {
     id: 'nocturne',
-    title: '⚠️ Vie Nocturne Tumultueuse',
+    title: 'Vie Nocturne Tumultueuse',
     desc: (p) => `Un rapport d'indicateur révèle que <strong>${p.name}</strong> a écumé plusieurs boîtes de nuit jusqu'à 5h du matin ces dernières semaines. Le coach abhorre ce manque de discipline. Prenez-vous le risque d'enflammer le vestiaire ?`,
     addedTrait: 'Fêtard invétéré'
   },
   {
     id: 'clash_ego',
-    title: '⚠️ Égo Surdimensionné & Conflit d\'Agent',
+    title: 'Égo Surdimensionné & Conflit d\'Agent',
     desc: (p) => `L'entourage de <strong>${p.name}</strong> réclame déjà des privilèges contractuels exorbitants et menace de créer un scandale médiatique s'il n'est pas titulaire garanti à chaque match. Prenez-vous le risque ?`,
     addedTrait: 'Fêtard invétéré'
   }
@@ -2785,7 +3729,7 @@ function proceedToMedicalExam(finalPrice) {
 
   if (hasAnomaly) {
     // Fermer le chat et ouvrir la modale de dilemme médical
-    document.getElementById('modal-negotiation').classList.add('hidden');
+    const elModNegoClose = document.getElementById('modal-negotiation'); if (elModNegoClose) elModNegoClose.classList.add('hidden');
     audio.play('alert');
     const p = pendingDeal.player;
 
@@ -2823,7 +3767,7 @@ function resolveMedicalDilemma(acceptRisk) {
     finalizePlayerSigning(p, pendingDeal.finalPrice, pendingDeal.anomaly, pendingDeal.usedClause);
   } else {
     audio.play('fail');
-    showToast('❌ Transfert annulé par précaution. La piste est refermée.', 'error');
+    showToast('Transfert annulé par précaution. La piste est refermée.', 'error');
     if (pendingDeal.player) {
       pendingDeal.player.isNegotiationFailed = true;
       if (typeof isDuelActive !== 'undefined' && isDuelActive && typeof socket !== 'undefined' && socket) {
@@ -2837,6 +3781,7 @@ function resolveMedicalDilemma(acceptRisk) {
 }
 
 function finalizePlayerSigning(player, price, anomaly, usedClause) {
+  isDealSigningLocked = false;
   if (price > currentRemainingBudget) {
     showToast("Action impossible : fonds insuffisants !", "error");
     return;
@@ -2862,6 +3807,10 @@ function finalizePlayerSigning(player, price, anomaly, usedClause) {
     usedClause: !!usedClause
   });
 
+  player.isSold = true;
+  player.isSigned = true;
+  player.isNegotiating = false;
+
   // En mode Duel 1v1 : synchroniser l'achat avec le serveur pour retirer le joueur du marché partagé
   if (typeof isDuelActive !== 'undefined' && isDuelActive && typeof socket !== 'undefined' && socket) {
     socket.emit('playerSignedSuccess', {
@@ -2882,8 +3831,9 @@ function finalizePlayerSigning(player, price, anomaly, usedClause) {
   const playerInfoEl = document.getElementById('nego-success-player-info');
   const choicesBox = document.getElementById('nego-choices-box');
 
-  if (negoModal && !negoModal.classList.contains('hidden') && stampOverlay && stampContent) {
-    if (choicesBox) choicesBox.innerHTML = ''; // Nettoyer les boutons de négociation
+  if (choicesBox) choicesBox.innerHTML = ''; // Nettoyer immédiatement les boutons de négociation
+
+  if (stampOverlay && stampContent) {
     if (playerInfoEl) {
       playerInfoEl.innerHTML = `<strong class="text-amber-400 font-bold">${player.name}</strong> s'engage pour <strong class="text-emerald-400 font-mono font-bold">${price.toFixed(1)} M€</strong>`;
     }
@@ -2899,7 +3849,7 @@ function finalizePlayerSigning(player, price, anomaly, usedClause) {
 
     spawnNegoConfetti();
 
-    // Fermeture automatique fluide après 1.2s et affichage du toast
+    // Fermeture automatique fluide après 1.2s et retour à l'état d'attente (idle)
     setTimeout(() => {
       stampOverlay.classList.add('opacity-0', 'pointer-events-none');
       stampOverlay.classList.remove('opacity-100');
@@ -2907,13 +3857,34 @@ function finalizePlayerSigning(player, price, anomaly, usedClause) {
       setTimeout(() => {
         stampOverlay.classList.add('hidden');
         stampContent.classList.remove('animate-stamp');
-        negoModal.classList.add('hidden');
-        showToast(`🎉 Transfert officialisé : ${player.name} (${price.toFixed(1)} M€) !`, 'success');
+        if (negoModal) negoModal.classList.add('hidden');
+
+        // Bascule automatique du bureau de négociation vers l'état d'attente (idle)
+        const activeState = document.getElementById('nego-active-state');
+        if (activeState) activeState.classList.add('hidden');
+        const idleState = document.getElementById('nego-idle-state');
+        if (idleState) idleState.classList.remove('hidden');
+
+        activeNegotiation = {
+          player: null,
+          sellerName: '',
+          patience: 100,
+          history: [],
+          usedClause: false,
+          isOver: true
+        };
+
+        showToast(`Transfert officialisé : ${player.name} (${price.toFixed(1)} M€)`, 'success');
+        if (typeof closeMobileNegotiation === 'function') closeMobileNegotiation();
       }, 250);
     }, 1200);
   } else {
-    // Si la modale était déjà fermée (dilemme médical)
-    showToast(`🎉 Transfert officialisé : ${player.name} (${price.toFixed(1)} M€) !`, 'success');
+    // Si pas de conteneur d'overlay
+    const activeState = document.getElementById('nego-active-state');
+    if (activeState) activeState.classList.add('hidden');
+    const idleState = document.getElementById('nego-idle-state');
+    if (idleState) idleState.classList.remove('hidden');
+    showToast(`Transfert officialisé : ${player.name} (${price.toFixed(1)} M€)`, 'success');
   }
 }
 
@@ -3133,6 +4104,8 @@ let currentSimMatchday = 0;
 let currentSimInterval = null;
 let currentSimSpeed = 480;
 let currentSimStepFn = null;
+let currentSimulationRunId = 0;
+let crisisResumeResolver = null;
 
 // ==============================================================
 // 10 SCÉNARIOS DE CRISE MAJEURE & INTERRUPTION DE SIMULATION
@@ -3173,7 +4146,7 @@ function triggerCrisisEvent(crisis, isInstant = false) {
 
   if (!modal) return;
 
-  iconEl.textContent = crisis.icon;
+  if (iconEl) iconEl.textContent = crisis.icon || '';
   titleEl.textContent = crisis.title;
   matchdayTagEl.textContent = `Journée ${crisis.matchday} / 38 • Simulation interrompue d'urgence`;
   descEl.textContent = typeof crisis.description === 'function' ? crisis.description(activeScenario.club) : crisis.description;
@@ -3239,7 +4212,7 @@ function renderCrisisVerdict(crisis) {
     verdictBox.className = 'p-4 sm:p-5 rounded-2xl border border-rose-500/80 bg-rose-950/40 text-rose-200 leading-relaxed text-xs sm:text-sm shadow-xl';
     verdictBox.innerHTML = `
       <div class="flex items-center gap-2 mb-2">
-        <span class="text-xl">💀</span>
+        <span class="text-xl inline-flex">${typeof getSvgIcon === 'function' ? getSvgIcon('skull', 'w-6 h-6 text-rose-400') : '💀'}</span>
         <strong class="font-display font-extrabold text-rose-400 text-sm sm:text-base uppercase tracking-tight">VERDICT FATAL : CESSATION DE LA SAISON</strong>
       </div>
       <p class="mb-2 font-medium">${crisis.fatalVerdict}</p>
@@ -3251,7 +4224,7 @@ function renderCrisisVerdict(crisis) {
     actionContainer.innerHTML = `
       <button onclick="resolveFatalCrisis()" class="w-full py-3.5 px-4 bg-gradient-to-r from-red-700 via-rose-700 to-red-800 hover:from-red-600 hover:to-rose-600 text-white font-display font-black text-xs sm:text-sm rounded-xl shadow-2xl transition transform hover:scale-[1.02] flex items-center justify-center gap-2">
         <span>ACCÉDER AU BILAN DE LA CRISE</span>
-        <span>💀</span>
+        <span>${typeof getSvgIcon === 'function' ? getSvgIcon('skull', 'w-4 h-4 text-white') : '💀'}</span>
       </button>
     `;
   } else {
@@ -3259,7 +4232,7 @@ function renderCrisisVerdict(crisis) {
     verdictBox.className = 'p-4 sm:p-5 rounded-2xl border border-emerald-500/80 bg-emerald-950/40 text-emerald-200 leading-relaxed text-xs sm:text-sm shadow-xl';
     verdictBox.innerHTML = `
       <div class="flex items-center gap-2 mb-2">
-        <span class="text-xl">🛡️</span>
+        <span class="text-xl inline-flex">${typeof getSvgIcon === 'function' ? getSvgIcon('shield', 'w-6 h-6 text-emerald-400') : '🛡️'}</span>
         <strong class="font-display font-extrabold text-emerald-400 text-sm sm:text-base uppercase tracking-tight">VERDICT FAVORABLE : LE CLUB EST SAUVÉ !</strong>
       </div>
       <p class="mb-2 font-medium">${crisis.survivalVerdict}</p>
@@ -3282,9 +4255,13 @@ function resumeSimulationAfterCrisis() {
   if (modal) modal.classList.add('hidden');
   isCrisisActive = false;
 
-  showToast('Reprise du championnat après la crise ! ⚽', 'info');
+  showToast('Reprise du championnat après la crise.', 'info');
 
-  if (currentSimStepFn) {
+  if (crisisResumeResolver) {
+    const resolve = crisisResumeResolver;
+    crisisResumeResolver = null;
+    resolve('resumed');
+  } else if (currentSimStepFn) {
     if (currentSimInterval) clearInterval(currentSimInterval);
     currentSimInterval = setInterval(() => currentSimStepFn(false), currentSimSpeed);
   }
@@ -3294,6 +4271,12 @@ function resolveFatalCrisis() {
   const modal = document.getElementById('modal-crisis');
   if (modal) modal.classList.add('hidden');
   isCrisisActive = false;
+
+  if (crisisResumeResolver) {
+    const resolve = crisisResumeResolver;
+    crisisResumeResolver = null;
+    resolve('fatal');
+  }
 
   if (currentSimInterval) {
     clearInterval(currentSimInterval);
@@ -3423,7 +4406,7 @@ function generatePlayerSeasonEvaluation(p, ctx = {}) {
       narrative = `Gros coup d'arrêt : <strong>${dramaTxt}</strong>. Son rendement a chuté vertigineusement au fil des semaines.`;
     }
     return {
-      badgeLabel: '💔 Drame Sportif',
+      badgeLabel: 'Drame Sportif',
       badgeClass: 'bg-rose-950 text-rose-300 border-rose-800 font-bold',
       narrative
     };
@@ -3434,7 +4417,7 @@ function generatePlayerSeasonEvaluation(p, ctx = {}) {
     const matchesPlayed = 4 + Math.floor(Math.random() * 6);
     const injuryTemplate = INJURY_NARRATIVES[Math.floor(Math.random() * INJURY_NARRATIVES.length)];
     return {
-      badgeLabel: '🚑 Saison Tronquée (Infirmerie)',
+      badgeLabel: 'Saison Tronquée (Infirmerie)',
       badgeClass: 'bg-rose-950 text-rose-300 border-rose-800 font-bold',
       narrative: `Trahison physique : ${injuryTemplate(p, matchesPlayed)} Un investissement de <strong>${priceStr}</strong> passé en grande partie sous perfusion.`
     };
@@ -3444,7 +4427,7 @@ function generatePlayerSeasonEvaluation(p, ctx = {}) {
   if (p.hadScandal) {
     const scandalTemplate = SCANDAL_NARRATIVES[Math.floor(Math.random() * SCANDAL_NARRATIVES.length)];
     return {
-      badgeLabel: '🍸 Scandale Nocturne',
+      badgeLabel: 'Scandale Nocturne',
       badgeClass: 'bg-amber-950 text-amber-300 border-amber-800 font-bold',
       narrative: `Frasques en dehors des terrains : ${scandalTemplate(p)} Sanctionné par la direction, il a plombé l'ambiance du groupe.`
     };
@@ -3456,7 +4439,7 @@ function generatePlayerSeasonEvaluation(p, ctx = {}) {
     const tmpl = ANOMALY_SUCCESS_NARRATIVES[Math.floor(Math.random() * ANOMALY_SUCCESS_NARRATIVES.length)];
     const specificAnomaly = (p.anomalyData && p.anomalyData.title) ? ` (${p.anomalyData.title.replace('⚠️ ', '')})` : '';
     return {
-      badgeLabel: '✨ Pari Médical Réussi',
+      badgeLabel: 'Pari Médical Réussi',
       badgeClass: 'bg-emerald-950 text-emerald-300 border-emerald-600 font-bold',
       narrative: `${tmpl(p, matchesPlayed)}${specificAnomaly} Un investissement de <strong>${priceStr}</strong> 100% amorti.`
     };
@@ -3492,7 +4475,7 @@ function generatePlayerSeasonEvaluation(p, ctx = {}) {
       narrative = `Trop limité dans l'entrejeu : pressing inexistant, pertes de balle à répétition et relégué dans la hiérarchie dès l'automne.`;
     }
     return {
-      badgeLabel: '❌ Flop Low-Cost',
+      badgeLabel: 'Flop Low-Cost',
       badgeClass: 'bg-red-950/80 text-rose-300 border-rose-800 font-bold',
       narrative
     };
@@ -3507,7 +4490,7 @@ function generatePlayerSeasonEvaluation(p, ctx = {}) {
       narrative = `Pari non concluant : trop intermittent pour porter l'équipe dans les moments durs. Son investissement défensif a laissé à désirer.`;
     }
     return {
-      badgeLabel: '⚠️ Pari Contrasté',
+      badgeLabel: 'Pari Contrasté',
       badgeClass: 'bg-amber-950/70 text-amber-300 border-amber-800 font-semibold',
       narrative
     };
@@ -3518,7 +4501,7 @@ function generatePlayerSeasonEvaluation(p, ctx = {}) {
     const appearances = 14 + Math.floor(Math.random() * 12);
     let narrative = `Rôle de doublure tenu avec sérieux : <strong>${appearances} apparitions</strong> (souvent en sortie de banc). A apporté de la fraîcheur tactique sans fausse note.`;
     return {
-      badgeLabel: '🔄 Doublure Utile',
+      badgeLabel: 'Doublure Utile',
       badgeClass: 'bg-blue-950 text-blue-300 border-blue-800',
       narrative
     };
@@ -3543,7 +4526,7 @@ function generatePlayerSeasonEvaluation(p, ctx = {}) {
     }
 
     return {
-      badgeLabel: '🛡️ Titulaire Fiable',
+      badgeLabel: 'Titulaire Fiable',
       badgeClass: 'bg-emerald-950/70 text-emerald-300 border-emerald-700/60 font-semibold',
       narrative
     };
@@ -3581,13 +4564,13 @@ function generatePlayerSeasonEvaluation(p, ctx = {}) {
 
   // WILDCARD / AUTRES
   return {
-    badgeLabel: '🔄 Profil Complément',
+    badgeLabel: 'Profil Complément',
     badgeClass: 'bg-gray-800 text-gray-300 border-gray-700',
     narrative: `A fait le métier en apportant une solution tactique d'appoint lors des rotations d'effectif.`
   };
 }
 
-function runSeasonSimulation() {
+async function runSeasonSimulation() {
   const progressBar = document.getElementById('sim-progress-bar');
   const matchdayEl = document.getElementById('sim-matchday');
   const tickerIcon = document.getElementById('sim-ticker-icon');
@@ -3830,7 +4813,14 @@ function runSeasonSimulation() {
 
   const leagueTitleEl = document.getElementById('sim-mini-standings-title');
   if (leagueTitleEl) {
-    leagueTitleEl.textContent = `${activeScenario.flag || '🏆'} ${activeScenario.league || 'Ligue'} en direct`;
+    const flagHtml = renderFlag(activeScenario.flag || activeScenario.country || 'FR', activeScenario.league || 'Ligue', 'w-4 h-3 inline-block');
+    leagueTitleEl.innerHTML = `<span class="inline-flex items-center gap-1.5">${flagHtml} <span>${activeScenario.league || 'Ligue'} en direct</span></span>`;
+  }
+
+  const tickerTagEl = document.getElementById('sim-ticker-tag');
+  if (tickerTagEl) {
+    const flagHtml = renderFlag(activeScenario.flag || activeScenario.country || 'FR', activeScenario.league || 'Ligue', 'w-3.5 h-2.5 inline-block');
+    tickerTagEl.innerHTML = `<span class="inline-flex items-center gap-1.5">${flagHtml} <span>FLASH MATCHDAY</span></span>`;
   }
 
   let matchday = 0;
@@ -3919,12 +4909,25 @@ function runSeasonSimulation() {
     text: `J38 : Fin du championnat ! Les supporters et la direction attendent le débriefing.`
   });
 
-  currentSimStepFn = (isInstant = false) => {
-    matchday++;
+  const runId = ++currentSimulationRunId;
+  // Ralentissement dramatique progressif : défilement rapide initial (80ms), puis tension croissante (300ms à 500ms sur les 5 dernières journées)
+
+  // Initialisation UI
+  if (progressBar) progressBar.style.width = '0%';
+  if (matchdayEl) matchdayEl.textContent = 'Journée 1 / 38';
+  if (virtualRankEl) virtualRankEl.textContent = '--';
+  if (virtualPointsEl) virtualPointsEl.textContent = '(0 pts)';
+  if (tickerIcon) tickerIcon.textContent = '⚽';
+  if (tickerText) tickerText.textContent = "Coup d'envoi du championnat ! Les dés sont jetés.";
+
+  for (let matchday = 1; matchday <= 38; matchday++) {
+    // Si la simulation a été interrompue ou réinitialisée, on sort immédiatement
+    if (currentSimulationRunId !== runId) return;
+
     currentSimMatchday = matchday;
-    const pct = Math.round((matchday / 38) * 100);
-    progressBar.style.width = `${pct}%`;
-    matchdayEl.textContent = `Journée ${matchday} / 38`;
+    const pct = Math.min(100, Math.round((matchday / 38) * 100));
+    if (progressBar) progressBar.style.width = `${pct}%`;
+    if (matchdayEl) matchdayEl.textContent = `Journée ${matchday} / 38`;
 
     // Interruption d'urgence par une crise majeure de mi-saison !
     if (plannedCrisis && matchday === plannedCrisis.matchday && !isCrisisActive) {
@@ -3943,8 +4946,13 @@ function runSeasonSimulation() {
       currentCrisisUserPoints = userPoints;
       currentCrisisFilledCount = filledCount;
 
-      triggerCrisisEvent(plannedCrisis, isInstant);
-      return;
+      triggerCrisisEvent(plannedCrisis, false);
+      const crisisOutcome = await new Promise(resolve => {
+        crisisResumeResolver = resolve;
+      });
+      if (currentSimulationRunId !== runId || crisisOutcome === 'fatal' || crisisOutcome === 'aborted') {
+        return;
+      }
     }
 
     // Roll user match
@@ -3968,8 +4976,8 @@ function runSeasonSimulation() {
 
     // Real rank
     const rank = rivals.filter(riv => riv.points > userPoints).length + 1;
-    virtualRankEl.textContent = `${rank}e / 20`;
-    virtualPointsEl.textContent = `(${userPoints} pts)`;
+    if (virtualRankEl) virtualRankEl.textContent = `${rank}e / 20`;
+    if (virtualPointsEl) virtualPointsEl.textContent = `(${userPoints} pts)`;
 
     // Update Live Mini-Standings Widget
     const miniStandingsEl = document.getElementById('sim-mini-standings');
@@ -3995,65 +5003,67 @@ function runSeasonSimulation() {
         const cRank = allClubs.indexOf(c) + 1;
         if (c.isUser) {
           return `
-            <div class="flex items-center justify-between bg-amber-400/20 border border-amber-400/70 text-amber-300 font-bold px-3 py-1.5 rounded-xl shadow-md transition-all">
+            <div class="flex items-center justify-between bg-blue-50/90 dark:bg-blue-950/40 text-blue-900 dark:text-blue-100 font-bold px-3 py-1.5 rounded-xl transition-all shadow-xs">
               <div class="flex items-center gap-2">
-                <span class="w-7 text-center font-mono font-extrabold text-amber-400">${cRank}e</span>
-                <span class="truncate max-w-[170px] sm:max-w-[220px]">${c.name}</span>
-                <span class="text-[9px] bg-amber-400 text-black px-1.5 py-0.5 rounded font-extrabold uppercase">VOUS</span>
+                <span class="w-6 text-center font-mono font-black text-blue-600 dark:text-blue-400">${cRank}e</span>
+                <span class="truncate max-w-[170px] sm:max-w-[220px] font-extrabold">${c.name}</span>
+                <span class="text-[9px] bg-blue-600 text-white px-1.5 py-0.5 rounded font-black uppercase">VOUS</span>
               </div>
-              <span class="font-mono font-extrabold text-amber-300">${c.points} pts</span>
+              <span class="font-mono font-black text-blue-600 dark:text-blue-400">${c.points} pts</span>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="flex items-center justify-between text-slate-600 dark:text-slate-400 font-medium px-3 py-1 text-xs transition-all hover:bg-gray-100/50 dark:hover:bg-slate-800/40 rounded-lg">
+              <div class="flex items-center gap-2">
+                <span class="w-6 text-center font-mono text-slate-400 text-xs font-semibold">${cRank}e</span>
+                <span class="truncate max-w-[170px] sm:max-w-[220px]">${c.name}</span>
+              </div>
+              <span class="font-mono font-bold text-slate-700 dark:text-slate-300">${c.points} pts</span>
             </div>
           `;
         }
-
-        let rankColor = 'text-gray-400';
-        if (cRank <= 4) rankColor = 'text-emerald-400 font-bold';
-        else if (cRank >= 18) rankColor = 'text-rose-400 font-bold';
-
-        return `
-          <div class="flex items-center justify-between bg-gray-900/60 border border-gray-800 text-gray-300 px-3 py-1 rounded-lg transition-all">
-            <div class="flex items-center gap-2">
-              <span class="w-7 text-center font-mono ${rankColor}">${cRank}e</span>
-              <span class="truncate max-w-[170px] sm:max-w-[220px] text-gray-300">${c.name}</span>
-            </div>
-            <span class="font-mono text-gray-400">${c.points} pts</span>
-          </div>
-        `;
       }).join('');
     }
 
-    const ev = dynamicTicker.find(e => e.j === matchday);
-    if (ev) {
-      tickerIcon.textContent = ev.icon;
-      tickerText.textContent = ev.text;
-      if (!isInstant) audio.play('sms_in');
+    // Dynamic Live Ticker Update
+    const tick = dynamicTicker.find(t => t.j === matchday);
+    if (tick) {
+      if (tickerIcon) tickerIcon.textContent = tick.icon;
+      if (tickerText) tickerText.textContent = tick.text;
     }
 
-    if (matchday >= 38) {
-      if (currentSimInterval) {
-        clearInterval(currentSimInterval);
-        currentSimInterval = null;
-      }
-      currentSimStepFn = null;
-      const delay = isInstant ? 50 : 800;
-      setTimeout(() => {
-        showRecapScreen(userPoints, rank, filledCount, neededPositions.length, {
-          exploitPlayer,
-          exploitReason,
-          dramaFlopPlayer,
-          dramaReason,
-          lowCostCount,
-          topPlayerCount,
-          tacticalSynergyDelta,
-          hasFulfilledOrigin,
-          matchingOriginPlayer,
-          originConstraint
-        });
-      }, delay);
-    }
-  };
+    // Pause asynchrone non-bloquante pour rythmer la simulation et créer la tension
+    // Calcul du délai progressif pour maximiser la tension en fin de saison
+    let matchdayDelay = 250; // J1-J30 : Défilement posé et lisible (250ms)
+    if (matchday >= 31 && matchday <= 34) matchdayDelay = 350;
+    else if (matchday === 35) matchdayDelay = 400;
+    else if (matchday === 36) matchdayDelay = 450;
+    else if (matchday === 37) matchdayDelay = 500;
+    else if (matchday >= 38) matchdayDelay = 550;
 
-  currentSimInterval = setInterval(() => currentSimStepFn(false), currentSimSpeed);
+    await new Promise(resolve => setTimeout(resolve, matchdayDelay));
+  }
+
+  // Fin de la saison : pause dramatique finale avant d'afficher le bilan
+  if (currentSimulationRunId === runId) {
+    const finalRank = rivals.filter(riv => riv.points > userPoints).length + 1;
+    await new Promise(resolve => setTimeout(resolve, 850));
+    if (currentSimulationRunId === runId) {
+      showRecapScreen(userPoints, finalRank, filledCount, neededPositions.length, {
+        exploitPlayer,
+        exploitReason,
+        dramaFlopPlayer,
+        dramaReason,
+        lowCostCount,
+        topPlayerCount,
+        tacticalSynergyDelta,
+        hasFulfilledOrigin,
+        matchingOriginPlayer,
+        originConstraint
+      });
+    }
+  }
 }
 
 // ==============================================================
@@ -4093,7 +5103,7 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
   if (crisisGameOver) {
     audio.play('fail');
     outcomeBanner.className = 'p-6 rounded-2xl border-2 border-rose-600 bg-gradient-to-b from-rose-950/60 to-black text-center mb-6 text-rose-400 shadow-[0_0_40px_rgba(225,29,72,0.3)]';
-    outcomeIcon.textContent = '💀';
+    outcomeIcon.innerHTML = typeof getSvgIcon === 'function' ? getSvgIcon('skull', 'w-12 h-12 text-rose-500 mx-auto') : '💀';
     outcomeTitle.textContent = 'CRISE FATALE : SAISON AVORTÉE !';
     outcomeSub.textContent = `Interruption définitive à la J${crisisGameOver.matchday} suite à : "${crisisGameOver.title}". Le club est disqualifié et votre mandat prend fin prématurément.`;
 
@@ -4103,10 +5113,10 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
 
     coachCritiqueEl.className = 'mb-6 bg-rose-950/40 border border-rose-500/50 p-4 rounded-xl text-xs leading-relaxed text-rose-300';
     coachCritiqueEl.innerHTML = `
-      <strong class="font-bold text-rose-400 block mb-1 text-sm">📰 ÉDITION SPÉCIALE : "Séisme à ${activeScenario.club} !"</strong>
+      <strong class="font-bold text-rose-400 block mb-1 text-sm">ÉDITION SPÉCIALE : "Séisme à ${activeScenario.club} !"</strong>
       <p class="mb-2.5">${crisisGameOver.pressReport}</p>
       <div class="mt-2.5 p-3 bg-black/60 border border-rose-600/40 rounded-xl text-rose-200">
-        💀 <strong>SANCTION ADMINISTRATIVE IRRÉVOCABLE :</strong> ${crisisGameOver.fatalVerdict}
+        <strong>SANCTION ADMINISTRATIVE IRRÉVOCABLE :</strong> ${crisisGameOver.fatalVerdict}
       </div>
     `;
 
@@ -4114,7 +5124,7 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
       if (currentSignedPlayers.length === 0) {
         signingsContainer.innerHTML = `
           <p class="text-xs text-rose-400 italic bg-rose-950/20 p-3 rounded-xl border border-rose-900/40">
-            ⚠️ Zéro signature sur cette Deadline Day. Le groupe n'a pas été renouvelé.
+            Zéro signature sur cette Deadline Day. Le groupe n'a pas été renouvelé.
           </p>
         `;
       } else {
@@ -4144,7 +5154,7 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
   if (isSuccess) {
     audio.play('deal_signed');
     outcomeBanner.className = 'p-6 rounded-2xl border border-emerald-500/50 bg-emerald-950/30 text-center mb-6 text-emerald-400';
-    outcomeIcon.textContent = '🏆';
+    outcomeIcon.innerHTML = typeof getSvgIcon === 'function' ? getSvgIcon('trophy', 'w-12 h-12 text-amber-400 mx-auto') : '🏆';
     outcomeTitle.textContent = isDauphinSuccess && finalRank > activeScenario.targetRank ? 'PODIUM & QUALIFICATION C1 !' : 'MISSION ACCOMPLIE !';
     outcomeSub.textContent = `Félicitations ! Vous terminez ${finalRank}e avec ${points} points et validez l'objectif : "${activeScenario.objective}".`;
 
@@ -4176,25 +5186,25 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
       
       if (exploitPlayer) {
         coachCritiqueEl.innerHTML = `
-          <strong class="font-bold text-emerald-400 block mb-1">🗣️ Bilan du Coach : "Le Coup de Génie du Siècle (3 Étoiles ⭐⭐⭐) !"</strong>
+          <strong class="font-bold text-emerald-400 block mb-1">Bilan du Coach : "Le Coup de Génie du Siècle (3 Étoiles ⭐⭐⭐) !"</strong>
           "Personne n'y croyait... Votre recrue à bas coût <strong>${exploitPlayer.name}</strong> (${exploitPlayer.agreedPrice.toFixed(1)} M€) s'est transcendée pour devenir la sensation absolue de la saison ! L'équipe a survolé les débats avec ${points} points !"
           <div class="mt-2.5 p-2.5 bg-amber-500/10 border border-amber-500/30 rounded-lg text-amber-300">
-            🚀 <strong>RÉVÉLATION HISTORIQUE :</strong> ${exploitPlayer.name} a déjoué tous les pronostics et fait exploser notre plafond de verre !
+            <strong>RÉVÉLATION HISTORIQUE :</strong> ${exploitPlayer.name} a déjoué tous les pronostics et fait exploser notre plafond de verre !
           </div>
         `;
       } else if (isMajorChampion) {
         coachCritiqueEl.innerHTML = `
-          <strong class="font-bold text-emerald-400 block mb-1">🗣️ Bilan du Coach : "CHAMPIONS ! Une Saison dans la Légende (3 Étoiles ⭐⭐⭐) !"</strong>
+          <strong class="font-bold text-emerald-400 block mb-1">Bilan du Coach : "CHAMPIONS ! Une Saison dans la Légende (3 Étoiles ⭐⭐⭐) !"</strong>
           "Quel accomplissement monumental ! Nous terminons 1er du championnat avec ${points} points. Votre mercato a été un sans-faute chirurgical : leadership, profondeur et alchimie totale sur le terrain !"
         `;
       } else if (isSurprisePodium) {
         coachCritiqueEl.innerHTML = `
-          <strong class="font-bold text-emerald-400 block mb-1">🗣️ Bilan du Coach : "Podium Inattendu & Qualification C1 (3 Étoiles ⭐⭐⭐) !"</strong>
+          <strong class="font-bold text-emerald-400 block mb-1">Bilan du Coach : "Podium Inattendu & Qualification C1 (3 Étoiles ⭐⭐⭐) !"</strong>
           "Un exploit retentissant ! Alors que nous visions simplement le maintien ou le ventre mou (${targetRank}e), l'équipe termine ${finalRank}e (${points} pts) et décroche l'Europe grâce à des recrues de tout premier ordre !"
         `;
       } else {
         coachCritiqueEl.innerHTML = `
-          <strong class="font-bold text-emerald-400 block mb-1">🗣️ Bilan du Coach : "Masterclass Stratégique (3 Étoiles ⭐⭐⭐) !"</strong>
+          <strong class="font-bold text-emerald-400 block mb-1">Bilan du Coach : "Masterclass Stratégique (3 Étoiles ⭐⭐⭐) !"</strong>
           "Recrutement d'orfèvre. Vos choix de calibres supérieurs ont totalement métamorphosé notre jeu collectif. L'équipe termine ${finalRank}e (${points} pts) en pulvérisant les attentes du conseil d'administration !"
         `;
       }
@@ -4207,12 +5217,12 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
       
       if (isDauphinSuccess && finalRank > activeScenario.targetRank) {
         coachCritiqueEl.innerHTML = `
-          <strong class="font-bold text-emerald-400 block mb-1">🗣️ Bilan du Coach : "Dauphin Héroïque & Podium Européen (2 Étoiles ⭐⭐) !"</strong>
+          <strong class="font-bold text-emerald-400 block mb-1">Bilan du Coach : "Dauphin Héroïque & Podium Européen (2 Étoiles ⭐⭐) !"</strong>
           "Nous finissons 2e avec un total magistral de ${points} points ! Même si le titre nous échappe d'un souffle face à un rival en surrégime, notre saison est éclatante et nous validons notre billet direct pour la Ligue des Champions !"
         `;
       } else {
         coachCritiqueEl.innerHTML = `
-          <strong class="font-bold text-emerald-400 block mb-1">🗣️ Bilan du Coach : "Très Bon Mercato & Objectif Rempli (2 Étoiles ⭐⭐) !"</strong>
+          <strong class="font-bold text-emerald-400 block mb-1">Bilan du Coach : "Très Bon Mercato & Objectif Rempli (2 Étoiles ⭐⭐) !"</strong>
           "L'équipe avait la solidité requise. Vos recrues ont apporté le supplément de consistance nécessaire pour aller chercher cette ${finalRank}e place (${points} pts). Mission accomplie avec maîtrise !"
         `;
       }
@@ -4226,7 +5236,7 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
 
       if (dramaFlopPlayer) {
         coachCritiqueEl.innerHTML = `
-          <strong class="font-bold text-amber-400 block mb-1">🗣️ Bilan du Coach : "Sauvetage Héroïque malgré le Coup du Sort (1 Étoile ⭐) !"</strong>
+          <strong class="font-bold text-amber-400 block mb-1">Bilan du Coach : "Sauvetage Héroïque malgré le Coup du Sort (1 Étoile ⭐) !"</strong>
           "Notre recrue phare ${dramaFlopPlayer.name} a été victime d'un coup dur (${dramaReason}), mais le groupe a fait bloc pour arracher cette ${finalRank}e place (${points} pts). L'objectif est validé dans la douleur !"
           <div class="mt-2.5 p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-200 text-[11px]">
             ⚠️ L'équipe a compensé le manque de rendement de la recrue vedette par un courage exemplaire.
@@ -4234,25 +5244,25 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
         `;
       } else if (lowCostCount >= 2) {
         coachCritiqueEl.innerHTML = `
-          <strong class="font-bold text-amber-400 block mb-1">🗣️ Bilan du Coach : "Objectif Validé... Mais Trop Limite (1 Étoile ⭐) !"</strong>
+          <strong class="font-bold text-amber-400 block mb-1">Bilan du Coach : "Objectif Validé... Mais Trop Limite (1 Étoile ⭐) !"</strong>
           "L'effectif a tenu bon pour terminer ${finalRank}e (${points} pts), mais votre pari sur des recrues discount a failli nous coûter cher. Les limites techniques étaient criantes face aux équipes du haut de tableau."
           <div class="mt-2.5 p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-200 text-[11px]">
-            ⚠️ <strong>BRICOLAGE :</strong> Plusieurs joueurs au rabais ont manqué d'impact pour viser plus haut.
+            <strong>BRICOLAGE :</strong> Plusieurs joueurs au rabais ont manqué d'impact pour viser plus haut.
           </div>
         `;
       } else if (filledCount < totalNeeded) {
         coachCritiqueEl.innerHTML = `
-          <strong class="font-bold text-amber-400 block mb-1">🗣️ Bilan du Coach : "Des Trous dans l'Effectif Comblés au Courage (1 Étoile ⭐) !"</strong>
+          <strong class="font-bold text-amber-400 block mb-1">Bilan du Coach : "Des Trous dans l'Effectif Comblés au Courage (1 Étoile ⭐) !"</strong>
           "Nous finissons ${finalRank}e (${points} pts) et l'objectif est atteint. Cependant, ne pas avoir signé de joueur sur tous les postes prioritaires demandés nous a obligés à bricoler toute la saison."
         `;
       } else if (tacticalSynergyDelta < 0) {
         coachCritiqueEl.innerHTML = `
-          <strong class="font-bold text-amber-400 block mb-1">🗣️ Bilan du Coach : "Dissonance Tactique & Résultats Poussifs (1 Étoile ⭐) !"</strong>
+          <strong class="font-bold text-amber-400 block mb-1">Bilan du Coach : "Dissonance Tactique & Résultats Poussifs (1 Étoile ⭐) !"</strong>
           "L'objectif est validé (${finalRank}e, ${points} pts), mais certaines recrues ne correspondaient pas du tout à l'identité de jeu voulue. Le collectif a manqué de fluidité."
         `;
       } else {
         coachCritiqueEl.innerHTML = `
-          <strong class="font-bold text-amber-400 block mb-1">🗣️ Bilan du Coach : "Objectif Validé sur le Fil (1 Étoile ⭐) !"</strong>
+          <strong class="font-bold text-amber-400 block mb-1">Bilan du Coach : "Objectif Validé sur le Fil (1 Étoile ⭐) !"</strong>
           "C'était irrespirable jusqu'au bout ! Nous finissons ${finalRank}e avec ${points} points, tout juste à hauteur de notre objectif (${targetRank}e). La marge de manœuvre était infime, il faudra viser plus d'envergure au prochain mercato !"
         `;
       }
@@ -4263,7 +5273,7 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
     const isNarrowMiss = finalRank <= activeScenario.targetRank + 2;
 
     outcomeBanner.className = 'p-6 rounded-2xl border border-rose-500/50 bg-rose-950/30 text-center mb-6 text-rose-400';
-    outcomeIcon.textContent = isReligated ? '💀' : '❌';
+    outcomeIcon.innerHTML = isReligated ? (typeof getSvgIcon === 'function' ? getSvgIcon('skull', 'w-12 h-12 text-rose-500 mx-auto') : '💀') : (typeof getSvgIcon === 'function' ? getSvgIcon('xCircle', 'w-12 h-12 text-rose-500 mx-auto') : '❌');
     outcomeTitle.textContent = isReligated ? 'RELÉGUÉ EN DIVISION INFÉRIEURE !' : 'OBJECTIF NON ATTEINT...';
     outcomeSub.textContent = `Vous terminez ${finalRank}e avec seulement ${points} pts (objectif exigé : ${activeScenario.targetRank}e). La direction est furieuse.`;
 
@@ -4276,29 +5286,29 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
     if (lowCostCount >= 2 && !exploitPlayer) {
       // ÉCHEC DU AU LOW-COST / RECRU AU RABAIS
       coachCritiqueEl.innerHTML = `
-        <strong class="font-bold text-rose-400 block mb-1">🗣️ Bilan du Coach : "Le Piège du Low-Cost !"</strong>
+        <strong class="font-bold text-rose-400 block mb-1">Bilan du Coach : "Le Piège du Low-Cost !"</strong>
         "Vous avez voulu faire des économies de bouts de chandelle en empilant des joueurs au rabais qui n'avaient absolument pas le niveau requis pour cette division ! L'équipe a coulé dès l'automne. C'est impardonnable !"
         <div class="mt-2.5 p-2.5 bg-rose-500/20 border border-rose-500/30 rounded-lg text-rose-200">
-          ⚠️ <strong>NIVEAU INSUFFISANT :</strong> Vos recrues discount n'ont pas fait le poids face aux cadors de la ligue.
+          <strong>NIVEAU INSUFFISANT :</strong> Vos recrues discount n'ont pas fait le poids face aux cadors de la ligue.
         </div>
       `;
     } else if (dramaFlopPlayer) {
       // COUP DU SORT : RECRUE PHARE TOUCHÉE PAR UN DRAME
       coachCritiqueEl.innerHTML = `
-        <strong class="font-bold text-rose-400 block mb-1">🗣️ Bilan du Coach : "Le Coup du Sort Fatal !"</strong>
+        <strong class="font-bold text-rose-400 block mb-1">Bilan du Coach : "Le Coup du Sort Fatal !"</strong>
         "Tout notre plan reposait sur notre recrue phare <strong>${dramaFlopPlayer.name}</strong>, mais le destin a frappé : <em>${dramaReason}</em>. Privée de son leader, l'équipe a sombré dans la spirale de l'échec."
         <div class="mt-2.5 p-2.5 bg-rose-500/20 border border-rose-500/30 rounded-lg text-rose-200">
-          💔 <strong>DRAME SPORTIF :</strong> Sans le rendement attendu de ${dramaFlopPlayer.name}, la saison est gâchée.
+          <strong>DRAME SPORTIF :</strong> Sans le rendement attendu de ${dramaFlopPlayer.name}, la saison est gâchée.
         </div>
       `;
     } else if (isNarrowMiss) {
       coachCritiqueEl.innerHTML = `
-        <strong class="font-bold text-rose-400 block mb-1">🗣️ Bilan du Coach : "La pièce est retombée du mauvais côté"</strong>
+        <strong class="font-bold text-rose-400 block mb-1">Bilan du Coach : "La pièce est retombée du mauvais côté"</strong>
         "Il ne nous manquait qu'un ou deux points pour valider l'objectif. Le manque de profondeur et les lacunes sur certains postes coûtent très cher sur la durée d'une saison."
       `;
     } else {
       coachCritiqueEl.innerHTML = `
-        <strong class="font-bold text-rose-400 block mb-1">🗣️ Bilan du Coach : "Naufrage Collectif"</strong>
+        <strong class="font-bold text-rose-400 block mb-1">Bilan du Coach : "Naufrage Collectif"</strong>
         "Le recrutement n'a pas permis d'élever notre niveau de jeu. L'équipe a été dominée de bout en bout et n'a jamais su répondre aux exigences de la division."
       `;
     }
@@ -4313,7 +5323,7 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
         <div class="mt-2.5 p-2.5 bg-emerald-500/15 border border-emerald-500/30 rounded-xl text-emerald-300 text-xs flex items-center gap-2">
           <span class="inline-flex shrink-0">${pFlag}</span>
           <div>
-            <strong>Réseau ciblé respecté (${originConstraint.label}) :</strong> L'arrivée de <strong>${matchingOriginPlayer.name}</strong> cadre parfaitement avec les orientations de recrutement du club (+3 pts synergie tactique).
+            <strong>Réseau ciblé respecté (${originConstraint.label || originConstraint.name || 'Filière ciblée'}) :</strong> L'arrivée de <strong>${matchingOriginPlayer.name}</strong> cadre parfaitement avec les orientations de recrutement du club (+3 pts synergie tactique).
           </div>
         </div>
       `;
@@ -4322,7 +5332,7 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
         <div class="mt-2.5 p-2.5 bg-amber-500/15 border border-amber-500/30 rounded-xl text-amber-300 text-xs flex items-center gap-2">
           <span class="text-base">⚠️</span>
           <div>
-            <strong>Réseau ciblé non exploité (${originConstraint.label}) :</strong> Aucune recrue issue du réseau recommandé (${originConstraint.hint}). Un léger déficit d'alchimie tactique (-2 pts synergie).
+            <strong>Réseau ciblé non exploité (${originConstraint.label || originConstraint.name || 'Filière ciblée'}) :</strong> Aucune recrue issue du réseau recommandé (${originConstraint.hint || originConstraint.shortDesc || originConstraint.ruleDesc || 'Filière recommandée'}). Un léger déficit d'alchimie tactique (-2 pts synergie).
           </div>
         </div>
       `;
@@ -4330,8 +5340,13 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
     coachCritiqueEl.innerHTML += originFeedbackHtml;
   }
 
-  managerScoreEl.textContent = `${grade} (${scorePct}%)`;
-  starsEl.textContent = stars > 0 ? '⭐'.repeat(stars) : '❌ 0 Étoile';
+  finalRankEl.innerHTML = `<span class="text-lg sm:text-2xl md:text-3xl font-black text-slate-900 dark:text-white block">${finalRank}e / 20</span><span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-semibold block mt-0.5">(${points} pts)</span>`;
+  managerScoreEl.innerHTML = `<span class="text-lg sm:text-2xl md:text-3xl font-black text-blue-600 dark:text-blue-400 block">${grade}</span><span class="text-[11px] sm:text-xs text-blue-500/80 dark:text-blue-400/80 font-semibold block mt-0.5">(${scorePct}%)</span>`;
+  if (stars > 0) {
+    starsEl.innerHTML = `<span class="text-base sm:text-2xl font-black text-amber-500 block tracking-wider">${'★'.repeat(stars)}</span><span class="text-[11px] sm:text-xs text-amber-600/90 dark:text-amber-400/90 font-semibold block mt-0.5">(${stars} Étoile${stars > 1 ? 's' : ''})</span>`;
+  } else {
+    starsEl.innerHTML = `<span class="text-base sm:text-2xl font-black text-rose-500 block">0 Étoile</span><span class="text-[11px] sm:text-xs text-rose-400 font-semibold block mt-0.5">(Objectif Échoué)</span>`;
+  }
 
   if (isSuccess) {
     saveScenarioSuccess(activeScenario.id, {
@@ -4360,11 +5375,12 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
     }
   }
 
+  const misfitPlayers = currentSignedPlayers.filter(p => p.isTacticalMisfit || p.isArchetypeMisfit);
   if (signingsContainer) {
     if (currentSignedPlayers.length === 0) {
     signingsContainer.innerHTML = `
       <p class="text-xs text-rose-400 italic bg-rose-950/20 p-3 rounded-xl border border-rose-900/40">
-        ⚠️ Zéro signature sur cette Deadline Day. Le groupe n'a pas été renouvelé.
+        Zéro signature sur cette Deadline Day. Le groupe n'a pas été renouvelé.
       </p>
     `;
   } else {
@@ -4379,11 +5395,22 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
         dramaReason
       });
 
+      const isMisfit = (typeof misfitPlayers !== 'undefined' && misfitPlayers ? misfitPlayers.some(m => m.id === p.id) : (p.isTacticalMisfit || p.isArchetypeMisfit));
       let tacticalNoteHtml = '';
-      if (p.isTacticalMisfit) {
-        tacticalNoteHtml = `<div class="mt-1.5 text-[11px] text-rose-400 font-semibold flex items-center gap-1"><span>⚠️ Dissonance tactique :</span> profil en décalage avec les exigences du coach.</div>`;
+      if (isMisfit || p.isTacticalMisfit) {
+        tacticalNoteHtml = `
+          <div class="mt-2 p-2 bg-rose-950/40 border border-rose-500/40 rounded-xl text-[11px] text-rose-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <span class="inline-flex items-center gap-1.5 font-medium text-rose-300">
+              ${typeof getSvgIcon === 'function' ? getSvgIcon('alert', 'w-3.5 h-3.5 text-rose-400') : '⚠️'}
+              <span>Son profil (${p.archetype ? p.archetype.name : (p.subPosName || p.subPos)}) ne collait pas au système tactique exigé par le coach.</span>
+            </span>
+            <span class="bg-rose-500/20 border border-rose-500/40 text-rose-300 text-[9px] font-black uppercase px-2 py-0.5 rounded-md whitespace-nowrap shrink-0">
+              Erreur de casting tactique
+            </span>
+          </div>
+        `;
       } else if (p.isTacticalFit) {
-        tacticalNoteHtml = `<div class="mt-1.5 text-[11px] text-emerald-400 font-semibold flex items-center gap-1"><span>✨ Alchimie tactique :</span> profil taillé sur mesure pour la philosophie du club.</div>`;
+        tacticalNoteHtml = `<div class="mt-1.5 text-[11px] text-emerald-400 font-semibold flex items-center gap-1">${typeof getSvgIcon === 'function' ? getSvgIcon('check', 'w-3.5 h-3.5 text-emerald-400') : '✓'} <span>Alchimie tactique :</span> profil taillé sur mesure pour la philosophie du club.</div>`;
       }
 
       return `
@@ -4411,13 +5438,53 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
 
 function backToHomeGrid() {
   updateHeaderStats();
-  showScreen('screen-home');
+  showScreen('screen-portal');
 }
 
 function replayCurrentScenario() {
-  if (activeScenario) {
-    startMercatoRun();
+  if (!activeScenario) return;
+
+  // 1. Récupération d'une copie fraîche du scénario d'origine
+  const originalScenario = SCENARIOS.find(s => s.id === activeScenario.id) || activeScenario;
+  activeScenario = JSON.parse(JSON.stringify(originalScenario));
+  if (typeof enrichScenarioTacticalDemands === 'function') {
+    enrichScenarioTacticalDemands(activeScenario);
   }
+
+  isDealSigningLocked = false;
+  activeNegotiation = {
+    player: null,
+    sellerName: '',
+    patience: 100,
+    history: [],
+    usedClause: false,
+    isOver: true
+  };
+  pendingDeal = null;
+
+  // 2. Nettoyage complet de l'interface
+  const chatHistory = document.getElementById('nego-chat-history');
+  if (chatHistory) chatHistory.innerHTML = '';
+  const choicesBox = document.getElementById('nego-choices-box');
+  if (choicesBox) choicesBox.innerHTML = '';
+  const activeState = document.getElementById('nego-active-state');
+  if (activeState) activeState.classList.add('hidden');
+  const idleState = document.getElementById('nego-idle-state');
+  if (idleState) idleState.classList.remove('hidden');
+  const stampOverlay = document.getElementById('nego-success-overlay');
+  if (stampOverlay) {
+    stampOverlay.classList.add('hidden', 'opacity-0', 'pointer-events-none');
+    stampOverlay.classList.remove('opacity-100');
+  }
+
+  const negoModal = document.getElementById('modal-negotiation');
+  if (negoModal) negoModal.classList.add('hidden');
+  const crisisModal = document.getElementById('modal-crisis-flash');
+  if (crisisModal) crisisModal.classList.add('hidden');
+  const medicalModal = document.getElementById('modal-medical-dilemma');
+  if (medicalModal) medicalModal.classList.add('hidden');
+
+  startMercatoRun();
 }
 
 function shareRecapWithFriends() {
@@ -4439,7 +5506,7 @@ function shareRecapWithFriends() {
     }).catch(() => {});
   } else if (navigator.clipboard) {
     navigator.clipboard.writeText(shareText).then(() => {
-      showToast("📋 Bilan copié dans le presse-papier !", "success");
+      showToast("Bilan copié dans le presse-papier !", "success");
     }).catch(() => {
       prompt("Copie ton bilan pour tes amis :", shareText);
     });
@@ -4460,5 +5527,157 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast(`Code de salon ${duelCode.toUpperCase()} pré-rempli ! Cliquez sur Rejoindre.`, 'info');
   } else {
     showScreen('screen-portal');
+  }
+});
+
+
+function openCrisisDetailModal(crisisId) {
+  const crisis = (typeof CRISIS_SCENARIOS_DB !== 'undefined' ? CRISIS_SCENARIOS_DB : []).find(c => c.id === crisisId);
+  const modal = document.getElementById('modal-crisis-detail');
+  const body = document.getElementById('crisis-detail-modal-body');
+  if (!modal || !body) return;
+
+  if (!crisis) {
+    body.innerHTML = `
+      <div class="text-center py-6">
+        <p class="text-sm text-gray-500">Dossier de crise introuvable.</p>
+      </div>
+    `;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    return;
+  }
+
+  const diffBadges = (crisis.difficulties || []).map(d => {
+    const color = d === 'facile' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : (d === 'moyen' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-rose-500/20 text-rose-400 border-rose-500/30');
+    return `<span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${color}">${d}</span>`;
+  }).join(' ');
+
+  const clubName = (typeof activeScenario !== 'undefined' && activeScenario && activeScenario.club) ? activeScenario.club : 'votre club';
+  const desc = typeof crisis.description === 'function' ? crisis.description(clubName) : crisis.description;
+
+  const phasesHtml = (crisis.phases || []).map((phase, idx) => `
+    <div class="flex items-start gap-2.5 p-2.5 rounded-xl bg-gray-50 dark:bg-slate-900/60 border border-gray-100 dark:border-slate-800 text-xs">
+      <span class="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">${idx + 1}</span>
+      <span class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">${phase}</span>
+    </div>
+  `).join('');
+
+  body.innerHTML = `
+    <div class="flex items-start gap-3.5 mb-5 pr-8">
+      <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-500 shrink-0">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="flex flex-wrap items-center gap-1.5 mb-1">
+          ${diffBadges}
+          <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30">Dossier Noir</span>
+        </div>
+        <h3 class="text-lg font-black text-slate-900 dark:text-white leading-tight">${crisis.title}</h3>
+      </div>
+    </div>
+
+    <div class="space-y-4 text-xs text-gray-600 dark:text-gray-300">
+      <div class="bg-gray-50 dark:bg-slate-900/40 border border-gray-100 dark:border-slate-800 p-3.5 rounded-2xl">
+        <strong class="block text-slate-900 dark:text-white font-bold mb-1 uppercase tracking-wider text-[10px]">Contexte & Enjeux</strong>
+        <p class="leading-relaxed">${desc}</p>
+      </div>
+
+      <div>
+        <strong class="block text-slate-900 dark:text-white font-bold mb-2 uppercase tracking-wider text-[10px]">Phases d'investigation</strong>
+        <div class="space-y-1.5">
+          ${phasesHtml}
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        <div class="p-3 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-500/30 rounded-xl">
+          <span class="text-[10px] uppercase font-black tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">Issue Favorable</span>
+          <p class="text-[11px] text-emerald-800 dark:text-emerald-300 leading-snug">${crisis.survivalVerdict || 'Le club s\'en sort indemne.'}</p>
+        </div>
+        <div class="p-3 bg-rose-50 dark:bg-rose-950/20 border border-rose-500/30 rounded-xl">
+          <span class="text-[10px] uppercase font-black tracking-wider text-rose-600 dark:text-rose-400 block mb-1">Issue Fatale (Game Over)</span>
+          <p class="text-[11px] text-rose-800 dark:text-rose-300 leading-snug">${crisis.fatalVerdict || 'Disqualification immédiate.'}</p>
+        </div>
+      </div>
+    </div>
+  `;
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeCrisisDetailModal() {
+  const modal = document.getElementById('modal-crisis-detail');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+window.openCrisisDetailModal = openCrisisDetailModal;
+window.closeCrisisDetailModal = closeCrisisDetailModal;
+
+
+// Expose switchModesTab on window from app.js as safety fallback
+if (typeof window.switchModesTab !== 'function') {
+  window.switchModesTab = function(mode) {
+    const soloPanel = document.getElementById('modes-panel-solo');
+    const duelPanel = document.getElementById('modes-panel-duel');
+    const soloBtn = document.getElementById('tab-btn-solo');
+    const duelBtn = document.getElementById('tab-btn-duel');
+
+    if (mode === 'duel') {
+      if (soloPanel) { soloPanel.classList.add('hidden'); soloPanel.style.display = 'none'; }
+      if (duelPanel) { duelPanel.classList.remove('hidden'); duelPanel.style.display = 'block'; }
+      if (soloBtn) soloBtn.className = 'px-6 py-2.5 rounded-xl text-gray-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white font-extrabold text-xs sm:text-sm transition cursor-pointer select-none';
+      if (duelBtn) duelBtn.className = 'px-6 py-2.5 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-black text-xs sm:text-sm shadow-sm transition cursor-pointer select-none';
+      if (typeof initDuelSocket === 'function') initDuelSocket();
+      const savedNick = localStorage.getItem('ddp_duel_nickname') || '';
+      const nickInput = document.getElementById('duel-nickname-input');
+      if (nickInput && savedNick && !nickInput.value) nickInput.value = savedNick;
+    } else {
+      if (duelPanel) { duelPanel.classList.add('hidden'); duelPanel.style.display = 'none'; }
+      if (soloPanel) { soloPanel.classList.remove('hidden'); soloPanel.style.display = ''; }
+      if (soloBtn) soloBtn.className = 'px-6 py-2.5 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-black text-xs sm:text-sm shadow-sm transition cursor-pointer select-none';
+      if (duelBtn) duelBtn.className = 'px-6 py-2.5 rounded-xl text-gray-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white font-extrabold text-xs sm:text-sm transition cursor-pointer select-none';
+    }
+  };
+}
+if (typeof window.openDuelPortal !== 'function') {
+  window.openDuelPortal = function() {
+    showScreen('screen-modes');
+    window.switchModesTab('duel');
+  };
+}
+
+
+// Attachement strict des événements Touch & Click sur les boutons de mode
+document.addEventListener('DOMContentLoaded', () => {
+  const tabDuel = document.getElementById('tab-btn-duel');
+  if (tabDuel) {
+    const triggerDuel = (e) => {
+      if (e) {
+        if (e.cancelable) e.preventDefault();
+        e.stopPropagation();
+      }
+      if (typeof window.switchModesTab === 'function') window.switchModesTab('duel');
+    };
+    tabDuel.addEventListener('click', triggerDuel);
+    tabDuel.addEventListener('touchend', triggerDuel, { passive: false });
+  }
+
+  const tabSolo = document.getElementById('tab-btn-solo');
+  if (tabSolo) {
+    const triggerSolo = (e) => {
+      if (e) {
+        if (e.cancelable) e.preventDefault();
+        e.stopPropagation();
+      }
+      if (typeof window.switchModesTab === 'function') window.switchModesTab('solo');
+    };
+    tabSolo.addEventListener('click', triggerSolo);
+    tabSolo.addEventListener('touchend', triggerSolo, { passive: false });
   }
 });
