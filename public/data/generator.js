@@ -81,7 +81,7 @@ const NATIONALITIES_DB = [
   { name: 'Belgique', flag: '🇧🇪', region: 'EURO_TACTICAL', continent: 'Europe' },
   { name: 'Suisse', flag: '🇨🇭', region: 'EURO_TACTICAL', continent: 'Europe' },
 
-  // Amérique du Sud (Grinta)
+  // Réseau Amérique du Sud (CONMEBOL)
   { name: 'Brésil', flag: '🇧🇷', region: 'SOUTH_AMERICA', continent: 'Amérique du Sud' },
   { name: 'Argentine', flag: '🇦🇷', region: 'SOUTH_AMERICA', continent: 'Amérique du Sud' },
   { name: 'Uruguay', flag: '🇺🇾', region: 'SOUTH_AMERICA', continent: 'Amérique du Sud' },

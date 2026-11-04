@@ -1263,11 +1263,11 @@ function openScenarioBriefing(id, isRandom = false) {
   if (originEl && originIconEl && originTextEl) {
     if (activeScenario.originConstraint && activeScenario.originConstraint.code !== 'FREE') {
       originIconEl.textContent = activeScenario.originConstraint.icon || '📍';
-      originTextEl.innerHTML = `Filière exigée : <strong class="text-amber-300 font-bold">${activeScenario.originConstraint.name}</strong> • <span class="italic text-gray-300">${activeScenario.originConstraint.shortDesc}</span>`;
+      originTextEl.innerHTML = `Réseau ciblé : <strong class="text-amber-300 font-bold">${activeScenario.originConstraint.name}</strong> • <span class="italic text-gray-300">${activeScenario.originConstraint.shortDesc}</span>`;
       originEl.classList.remove('hidden');
     } else {
       originIconEl.textContent = '🌍';
-      originTextEl.innerHTML = `Filière : <strong class="text-gray-300">Scouting Libre</strong> • Aucun quota géographique imposé`;
+      originTextEl.innerHTML = `Réseau : <strong class="text-gray-300">Scouting International</strong> • Aucun quota géographique imposé`;
       originEl.classList.remove('hidden');
     }
   }
@@ -1347,7 +1347,7 @@ function startMercatoRun() {
     document.getElementById('mercato-club-badge').textContent = activeScenario.logo;
     document.getElementById('mercato-club-title').textContent = activeScenario.club;
     const originNote = (activeScenario.originConstraint && activeScenario.originConstraint.code !== 'FREE')
-      ? `<span class="block mt-1 font-bold text-amber-300 not-italic">📍 Filière exigée : ${activeScenario.originConstraint.name} (${activeScenario.originConstraint.shortDesc})</span>`
+      ? `<span class="block mt-1 font-bold text-amber-300 not-italic">📍 Réseau prioritaire : ${activeScenario.originConstraint.name} (${activeScenario.originConstraint.shortDesc})</span>`
       : '';
     document.getElementById('mercato-coach-reminder').innerHTML = `"${activeScenario.coachDemand}"${originNote}`;
 
@@ -1807,77 +1807,104 @@ function renderMarketPlayers() {
     const isAffordable = currentRemainingBudget >= 0.4 && !isLocked;
 
     return `
-      <div data-player-id="${p.id}" class="bg-gray-900 border ${isLocked ? 'border-amber-500/80 bg-amber-950/10' : (isTarget ? 'border-amber-500/40 shadow-lg shadow-amber-500/5' : 'border-gray-800 hover:border-gray-700')} rounded-2xl p-4 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div data-player-id="${p.id}" class="bg-gray-900/95 hover:bg-gray-900 border ${isLocked ? 'border-amber-500/80 bg-amber-950/10' : (isTarget ? 'border-amber-500/50 shadow-lg shadow-amber-500/5' : 'border-gray-800/80 hover:border-gray-700')} rounded-2xl p-4 transition-all flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         
-        <!-- Player Info -->
-        <div class="flex items-center space-x-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-gray-800 border border-gray-700 flex flex-col items-center justify-center font-display text-xl text-white shrink-0">
+        <!-- Player Info & Scouting Profile -->
+        <div class="flex items-start space-x-3.5 flex-1 min-w-0">
+          <div class="w-12 h-12 rounded-2xl bg-gray-800/80 border border-gray-700 flex flex-col items-center justify-center font-display text-xl text-white shrink-0 mt-0.5">
             ${subIcon}
           </div>
 
-          <div>
-            <div class="flex flex-wrap items-center gap-1.5 mb-1">
-              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded border ${subPosColors[subKey] || 'bg-gray-800 text-gray-300'} whitespace-nowrap">${subKey} • ${subLabel}</span>
+          <div class="flex-1 min-w-0 space-y-2">
+            <!-- Header Line: Position, Flag, Name, Age, Status Badges -->
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded border ${subPosColors[subKey] || 'bg-gray-800 text-gray-300'} whitespace-nowrap">${subKey}</span>
               ${p.nationality ? `<span class="inline-flex items-center shrink-0" title="${p.nationality.name}">${renderFlag(p.nationality.flag, p.nationality.name)}</span>` : ''}
-              ${p.versatility ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 whitespace-nowrap">🔄 ${p.versatility}</span>` : ''}
-              ${isTarget ? `<span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 whitespace-nowrap">⭐ Cible : ${getNeedDisplay(matchingNeed).shortLabel}</span>` : ''}
-              ${satisfiesOrigin ? `<span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 whitespace-nowrap">📍 Filière Coach</span>` : ''}
-              ${p.age <= 21 ? `<span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">💎 U21</span>` : ''}
-              ${isLocked ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-pulse whitespace-nowrap">⏳ Négociation en cours (${p.rivalLockerName || 'Rival'})</span>` : ''}
-              <h4 class="font-display font-bold text-base text-white ml-1">${p.name}</h4>
-              <span class="text-xs text-gray-400 font-medium">• ${p.nationality ? p.nationality.name : ''} (${p.age} ans)</span>
-              ${p.caliberLabel ? `<span class="text-[10px] ${p.caliberBadgeStyle || 'bg-gray-800 text-gray-300'} px-2 py-0.5 rounded-md whitespace-nowrap">${p.caliberLabel}</span>` : `<span class="text-[10px] font-semibold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/20">${p.reputation}</span>`}
+              <h4 class="font-display font-bold text-base text-white tracking-wide truncate max-w-[200px] sm:max-w-none">${p.name}</h4>
+              <span class="text-xs text-gray-400 font-medium whitespace-nowrap">(${p.age} ans)</span>
+
+              ${isTarget ? `<span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40 whitespace-nowrap">⭐ Cible Coach</span>` : ''}
+              ${satisfiesOrigin ? `<span class="text-[9px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 whitespace-nowrap">📍 Réseau Club</span>` : ''}
+              ${p.versatility ? `<span class="text-[9px] font-medium px-1.5 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 whitespace-nowrap">🔄 ${p.versatility}</span>` : ''}
+              ${p.age <= 21 ? `<span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 whitespace-nowrap">💎 U21</span>` : ''}
+              ${p.caliberLabel ? `<span class="text-[9px] ${p.caliberBadgeStyle || 'bg-gray-800 text-gray-300'} px-2 py-0.5 rounded-md whitespace-nowrap">${p.caliberLabel}</span>` : ''}
+              ${isLocked ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-pulse whitespace-nowrap">⏳ Négociation (${p.rivalLockerName || 'Rival'})</span>` : ''}
             </div>
 
-            <p class="text-xs text-gray-400 mb-2">
-              Club vendeur : <strong class="text-gray-300">${p.club}</strong> • <span class="italic text-gray-400">${p.availability}</span>
-            </p>
-
-            <!-- Traits pills & Archetype & Psychology -->
-            <div class="flex flex-wrap gap-1.5 mb-1.5">
-              ${p.traits.map(t => {
-                const isForbidden = (activeScenario.forbiddenTraits || []).includes(t);
-                let badgeClass = 'bg-gray-800 text-gray-300';
-                if (isForbidden) badgeClass = 'bg-rose-950 text-rose-300 border-rose-800 font-bold';
-
-                return `<span class="text-[10px] ${badgeClass} px-2 py-0.5 rounded-md border border-gray-700">${isForbidden ? '⚠️ ' : ''}${t}</span>`;
-              }).join('')}
-              ${p.psychology ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded border ${p.psychology.badgeClass}" title="${p.psychology.summary}">${p.psychology.icon || '🧠'} ${p.psychology.label}</span>` : ''}
+            <!-- Club & Secondary Context -->
+            <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-400">
+              <span>Club : <strong class="text-gray-200">${p.club}</strong></span>
+              <span class="text-gray-600">•</span>
+              <span class="italic text-gray-300">${p.availability}</span>
+              ${p.traits && p.traits.length > 0 ? `
+                <span class="text-gray-600 hidden sm:inline">•</span>
+                <span class="text-gray-400 text-[11px] flex flex-wrap gap-1 items-center">
+                  ${p.traits.map(t => {
+                    const isForbidden = (activeScenario.forbiddenTraits || []).includes(t);
+                    return isForbidden
+                      ? `<span class="px-1.5 py-0.5 rounded bg-rose-950/70 text-rose-300 border border-rose-800/80 font-bold text-[10px]">⚠️ ${t}</span>`
+                      : `<span class="text-gray-400">${t}</span>`;
+                  }).join('<span class="text-gray-600">, </span>')}
+                </span>
+              ` : ''}
             </div>
 
-            <!-- Archetype details with Strength & Tactical Sacrifice -->
-            ${p.archetype ? (() => {
+            <!-- Scouting Box (Archetype, Strength & Tactical Sacrifice) -->
+            ${(p.archetype || p.psychology) ? (() => {
               const coachPhilo = activeScenario.tacticalPhilosophy || '';
-              const isFit = typeof checkPhilosophyMatch === 'function' && checkPhilosophyMatch(p.archetype.preferredPhilosophy, coachPhilo);
-              const isMisfit = typeof checkPhilosophyMatch === 'function' && checkPhilosophyMatch(p.archetype.misfitPhilosophy, coachPhilo);
+              const isFit = p.archetype && typeof checkPhilosophyMatch === 'function' && checkPhilosophyMatch(p.archetype.preferredPhilosophy, coachPhilo);
+              const isMisfit = p.archetype && typeof checkPhilosophyMatch === 'function' && checkPhilosophyMatch(p.archetype.misfitPhilosophy, coachPhilo);
+              
               return `
-                <div class="flex flex-wrap items-center gap-1.5 text-[10px]">
-                  <span class="px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-bold flex items-center gap-1">
-                    <span>${p.archetype.icon || '⚡'}</span>
-                    <span>${p.archetype.name}</span>
-                  </span>
-                  <span class="px-1.5 py-0.5 rounded bg-emerald-950/70 text-emerald-300 border border-emerald-800/60 font-medium" title="Atout principal">
-                    ✓ ${p.archetype.strength}
-                  </span>
-                  <span class="px-1.5 py-0.5 rounded bg-amber-950/70 text-amber-300 border border-amber-800/60 font-medium" title="Sacrifice / Faille tactique">
-                    ⚠️ ${p.archetype.sacrifice}
-                  </span>
-                  ${isFit ? `<span class="px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-600 font-bold">🎯 Idéal Coach (+2 pts)</span>` : ''}
-                  ${isMisfit ? `<span class="px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-700 font-bold">⛔ Dissonance Coach (-3 pts)</span>` : ''}
+                <div class="bg-gray-950/70 border border-gray-800/80 rounded-xl p-2.5 space-y-1.5">
+                  <div class="flex flex-wrap items-center justify-between gap-1.5">
+                    <div class="flex flex-wrap items-center gap-1.5">
+                      ${p.archetype ? `
+                        <span class="text-[10px] font-bold text-indigo-300 bg-indigo-500/15 border border-indigo-500/30 px-2 py-0.5 rounded-md flex items-center gap-1">
+                          <span>${p.archetype.icon || '⚡'}</span>
+                          <span>${p.archetype.name}</span>
+                        </span>
+                      ` : ''}
+                      ${p.psychology ? `
+                        <span class="text-[10px] font-medium px-2 py-0.5 rounded-md border ${p.psychology.badgeClass}" title="${p.psychology.summary}">
+                          ${p.psychology.icon || '🧠'} ${p.psychology.label}
+                        </span>
+                      ` : ''}
+                    </div>
+
+                    <div class="flex items-center gap-1">
+                      ${isFit ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-700/60">🎯 Idéal Coach (+2)</span>` : ''}
+                      ${isMisfit ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded bg-rose-950/80 text-rose-300 border border-rose-700/60">⛔ Dissonance (-3)</span>` : ''}
+                    </div>
+                  </div>
+
+                  ${p.archetype && (p.archetype.strength || p.archetype.sacrifice) ? `
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1 border-t border-gray-800/60 text-[11px]">
+                      <div class="bg-emerald-950/30 border border-emerald-900/40 rounded-lg px-2 py-1 text-emerald-300 flex items-start gap-1.5">
+                        <span class="font-bold text-emerald-400 shrink-0">✓ Atout :</span>
+                        <span class="text-emerald-200/90 leading-tight">${p.archetype.strength || 'Profil polyvalent'}</span>
+                      </div>
+                      <div class="bg-amber-950/30 border border-amber-900/40 rounded-lg px-2 py-1 text-amber-300 flex items-start gap-1.5">
+                        <span class="font-bold text-amber-400 shrink-0">⚠️ Faille :</span>
+                        <span class="text-amber-200/90 leading-tight">${p.archetype.sacrifice || 'Aucune faille majeure'}</span>
+                      </div>
+                    </div>
+                  ` : ''}
                 </div>
               `;
             })() : ''}
+
           </div>
         </div>
 
         <!-- Price & Action Button -->
-        <div class="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto border-t sm:border-t-0 border-gray-800 pt-3 sm:pt-0 shrink-0">
-          <div class="sm:text-right mb-2">
-            <span class="text-[10px] text-gray-400 block uppercase font-bold">Valeur Estimée</span>
-            <span class="text-lg font-display font-extrabold text-emerald-400">${p.estimatedPrice} M€</span>
+        <div class="flex sm:flex-col items-center sm:items-end justify-between w-full md:w-44 border-t md:border-t-0 md:border-l border-gray-800 pt-3 md:pt-0 md:pl-4 shrink-0 gap-2">
+          <div class="sm:text-right">
+            <span class="text-[10px] text-gray-400 block uppercase font-bold tracking-wider">Valeur Estimée</span>
+            <span class="text-xl font-display font-extrabold text-emerald-400">${p.estimatedPrice} M€</span>
           </div>
 
-          <button onclick="startNegotiation('${p.id}')" ${!isAffordable ? 'disabled' : ''} class="px-4 py-2 ${isLocked ? 'bg-gray-800 text-gray-500 cursor-not-allowed border border-gray-700' : 'bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black'} disabled:opacity-40 disabled:cursor-not-allowed font-display font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5 whitespace-nowrap">
+          <button onclick="startNegotiation('${p.id}')" ${!isAffordable ? 'disabled' : ''} class="w-full sm:w-auto px-4 py-2.5 ${isLocked ? 'bg-gray-800 text-gray-500 cursor-not-allowed border border-gray-700' : 'bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-extrabold shadow-lg shadow-amber-500/10'} disabled:opacity-40 disabled:cursor-not-allowed font-display text-xs rounded-xl transition flex items-center justify-center gap-1.5 whitespace-nowrap">
             <span>${isLocked ? '🔒 En négociation' : '💬 Négocier'}</span>
           </button>
         </div>
@@ -4277,16 +4304,16 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
     }
   }
 
-  // Bilan de la consigne de provenance / filière du coach
+  // Bilan de la consigne de provenance / réseau du coach
   if (originConstraint && originConstraint.code !== 'FREE' && currentSignedPlayers.length > 0) {
     let originFeedbackHtml = '';
     if (hasFulfilledOrigin && matchingOriginPlayer) {
-      const pFlag = matchingOriginPlayer.nationality ? `${matchingOriginPlayer.nationality.flag} ` : '📍 ';
+      const pFlag = matchingOriginPlayer.nationality ? `${renderFlag(matchingOriginPlayer.nationality.flag, matchingOriginPlayer.nationality.name)} ` : '📍 ';
       originFeedbackHtml = `
         <div class="mt-2.5 p-2.5 bg-emerald-500/15 border border-emerald-500/30 rounded-xl text-emerald-300 text-xs flex items-center gap-2">
-          <span class="text-base">${pFlag}</span>
+          <span class="inline-flex shrink-0">${pFlag}</span>
           <div>
-            <strong>Filière respectée (${originConstraint.label}) :</strong> L'arrivée de <strong>${matchingOriginPlayer.name}</strong> cadre parfaitement avec les exigences géographiques du coach (+3 pts synergie tactique).
+            <strong>Réseau ciblé respecté (${originConstraint.label}) :</strong> L'arrivée de <strong>${matchingOriginPlayer.name}</strong> cadre parfaitement avec les orientations de recrutement du club (+3 pts synergie tactique).
           </div>
         </div>
       `;
@@ -4295,7 +4322,7 @@ function showRecapScreen(points, finalRank, filledCount, totalNeeded, simMeta = 
         <div class="mt-2.5 p-2.5 bg-amber-500/15 border border-amber-500/30 rounded-xl text-amber-300 text-xs flex items-center gap-2">
           <span class="text-base">⚠️</span>
           <div>
-            <strong>Filière délaissée (${originConstraint.label}) :</strong> Aucune recrue issue de la filière réclamée par le coach (${originConstraint.hint}). Un léger déficit d'alchimie tactique (-2 pts synergie).
+            <strong>Réseau ciblé non exploité (${originConstraint.label}) :</strong> Aucune recrue issue du réseau recommandé (${originConstraint.hint}). Un léger déficit d'alchimie tactique (-2 pts synergie).
           </div>
         </div>
       `;

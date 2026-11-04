@@ -66,7 +66,7 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -84,7 +84,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -134,9 +134,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -165,7 +165,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Vision laser",
@@ -200,10 +200,10 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -231,7 +231,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "ATT": [
         "Pivot solide",
@@ -267,9 +267,9 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -295,7 +295,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -335,10 +335,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -402,7 +402,7 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -469,7 +469,7 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -487,7 +487,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -537,9 +537,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -568,7 +568,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -604,10 +604,10 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -635,7 +635,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -672,9 +672,9 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -700,7 +700,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -740,10 +740,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -807,7 +807,7 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -875,7 +875,7 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -893,7 +893,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -943,9 +943,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -974,7 +974,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -1010,10 +1010,10 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -1041,7 +1041,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -1077,9 +1077,9 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -1105,7 +1105,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -1145,10 +1145,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -1212,7 +1212,7 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -1280,7 +1280,7 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -1298,7 +1298,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -1347,9 +1347,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -1378,7 +1378,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -1414,10 +1414,10 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -1445,7 +1445,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -1482,9 +1482,9 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -1510,7 +1510,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -1550,10 +1550,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -1617,7 +1617,7 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -1685,7 +1685,7 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -1703,7 +1703,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -1753,9 +1753,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -1784,7 +1784,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -1819,10 +1819,10 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -1850,7 +1850,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -1885,9 +1885,9 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -1913,7 +1913,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -1953,10 +1953,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -2020,7 +2020,7 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -2087,7 +2087,7 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -2105,7 +2105,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -2155,9 +2155,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -2186,7 +2186,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -2222,10 +2222,10 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -2253,7 +2253,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -2290,9 +2290,9 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -2318,7 +2318,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -2358,10 +2358,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -2492,7 +2492,7 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -2510,7 +2510,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -2560,9 +2560,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -2591,7 +2591,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -2627,10 +2627,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -2658,7 +2658,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -2694,9 +2694,9 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -2722,7 +2722,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -2762,10 +2762,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -2895,7 +2895,7 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -2913,7 +2913,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -2962,9 +2962,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -2993,7 +2993,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -3029,10 +3029,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -3060,7 +3060,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -3096,9 +3096,9 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -3124,7 +3124,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -3164,10 +3164,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -3297,7 +3297,7 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -3315,7 +3315,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -3365,9 +3365,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -3396,7 +3396,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -3430,10 +3430,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -3461,7 +3461,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -3497,9 +3497,9 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -3525,7 +3525,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -3565,10 +3565,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -3699,7 +3699,7 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -3717,7 +3717,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -3767,9 +3767,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -3798,7 +3798,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -3834,10 +3834,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -3865,7 +3865,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -3901,9 +3901,9 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -3929,7 +3929,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -3969,10 +3969,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -4103,7 +4103,7 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -4121,7 +4121,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -4171,9 +4171,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -4202,7 +4202,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -4238,10 +4238,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -4269,7 +4269,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -4305,9 +4305,9 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -4333,7 +4333,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -4373,10 +4373,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -4506,7 +4506,7 @@ const SCENARIOS = [
     "targetAgeRule": "u21",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -4524,7 +4524,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -4574,9 +4574,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -4605,7 +4605,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -4641,10 +4641,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -4672,7 +4672,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -4709,9 +4709,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -4737,7 +4737,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -4777,10 +4777,10 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -4911,7 +4911,7 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -4929,7 +4929,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -4978,9 +4978,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -5009,7 +5009,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -5043,10 +5043,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -5074,7 +5074,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -5111,9 +5111,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -5139,7 +5139,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -5179,10 +5179,10 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -5313,7 +5313,7 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -5331,7 +5331,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -5381,9 +5381,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -5412,7 +5412,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -5448,10 +5448,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -5479,7 +5479,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Un championnat se gagne par la défense. On cadenasse l'axe, on gagne les duels et on ne concède rien. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -5516,9 +5516,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -5544,7 +5544,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -5584,10 +5584,10 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -5718,7 +5718,7 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -5736,7 +5736,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -5786,9 +5786,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -5817,7 +5817,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -5853,10 +5853,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -5884,7 +5884,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Je préfère gagner 4-3 que 1-0. Apportez-moi de la percussion, du culot et des frappes chirurgicales. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -5921,9 +5921,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -5949,7 +5949,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Zéro touriste sur le pré ! Je veux du contre-pressing immédiat à la perte et des poumons d'acier. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -5988,10 +5988,10 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -6123,7 +6123,7 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -6141,7 +6141,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -6191,9 +6191,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -6222,7 +6222,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"Ici on joue avec les tripes. Je refuse catégoriquement les divas et les égos surdimensionnés. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "GAR": [
         "Arrêts miracles",
@@ -6258,10 +6258,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -6289,7 +6289,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Place à l'audace ! Je préfère un jeune mort de faim qu'un nom ronflant en préretraite. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Leader de vestiaire",
@@ -6326,9 +6326,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -6354,7 +6354,7 @@ const SCENARIOS = [
       {
         "code": "AD",
         "name": "Ailier Droit",
-        "icon": "⚡"
+        "icon": "🌍"
       }
     ],
     "coachDemand": "\"Chaque match est une guerre de tranchées pour la survie. Il me faut des guerriers taillés pour le combat. Nos 3 besoins prioritaires à pourvoir avant minuit : Gardien de But, Défenseur Central, Ailier Droit. Trouvez-moi au moins un combattant nordique ou de l'Est qui ne reculera devant rien.\"",
@@ -6394,10 +6394,10 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "NORDIC_EAST",
-      "name": "Guerriers Nordiques & Pays de l'Est",
-      "icon": "⚔️",
-      "shortDesc": "Au moins 1 combattant infatigable (Nordique / Est)",
-      "ruleDesc": "Le coach veut un profil dur au mal, discipliné et insensible à la pression."
+      "name": "Réseau Europe du Nord & de l'Est",
+      "icon": "🧭",
+      "shortDesc": "Au moins 1 joueur issu des ligues nordiques ou d'Europe de l'Est",
+      "ruleDesc": "Détection active sur les championnats scandinaves et d'Europe centrale/orientale."
     }
   },
   {
@@ -6528,7 +6528,7 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité locale du club et exige au moins un renfort national."
@@ -6546,7 +6546,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -6595,9 +6595,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la grinta, de la hargne et de la créativité sud-américaine."
     }
   },
@@ -6626,7 +6626,7 @@ const SCENARIOS = [
         "icon": "💎"
       }
     ],
-    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). Et je veux absolument un profil puissant issu de la filière africaine pour faire la différence physiquement.\"",
+    "coachDemand": "\"On attend le bon moment pour piquer à 200 km/h. Il me faut de la dynamite dans les couloirs et de la verticalité. Nos 3 besoins prioritaires à pourvoir avant minuit : Latéral Droit, Sentinelle (6), Pépite U21 (-21 ans). La cellule de recrutement exige au moins une recrue issue de notre réseau de détection africain.\"",
     "expectedTraitsByPos": {
       "MIL": [
         "Infatigable",
@@ -6660,10 +6660,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "AFRICA",
-      "name": "Filière Africaine & Explosivité",
-      "icon": "⚡",
-      "shortDesc": "Au moins 1 profil issu de la filière africaine",
-      "ruleDesc": "Le coach veut de l'impact athlétique, de l'explosivité et de la générosité physique."
+      "name": "Réseau Afrique (Partenariats CAF)",
+      "icon": "🌍",
+      "shortDesc": "Au moins 1 joueur issu des académies ou sélections africaines",
+      "ruleDesc": "Priorité accordée aux partenariats de scouting établis sur le continent africain."
     }
   },
   {
@@ -6691,7 +6691,7 @@ const SCENARIOS = [
         "icon": "⚽"
       }
     ],
-    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Rigueur tactique européenne non négociable pour s'adapter instantanément.\"",
+    "coachDemand": "\"Le ballon est notre meilleur allié. Ceux qui balancent des chandelles vont sur le banc, je veux de la vista et de la finesse. Nos 3 besoins prioritaires à pourvoir avant minuit : Défenseur Central, Meneur de Jeu (10), Buteur (9). Expérience requise au sein des championnats majeurs européens pour une adaptation immédiate.\"",
     "expectedTraitsByPos": {
       "DEF": [
         "Tacleur féroce",
@@ -6728,9 +6728,9 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach privilégie la rigueur tactique, le placement et la lecture de jeu européenne."
     }
   },
@@ -6793,7 +6793,7 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 recrue du même pays",
       "ruleDesc": "Le coach tient à l'identité britannique et exige au moins un renfort national."
@@ -6858,9 +6858,9 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach réclame de la créativité et de la virtuosité sud-américaine."
     }
   },
@@ -6923,9 +6923,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach exige des joueurs forgés dans la passion et les ambiances incandescentes."
     }
   },
@@ -6988,9 +6988,9 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
       "ruleDesc": "Le coach privilégie les manieurs de ballon et créateurs sud-américains."
     }
   },
@@ -7053,9 +7053,9 @@ const SCENARIOS = [
     "targetAgeRule": "star",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
-      "shortDesc": "Au moins 1 joueur formé dans les grands championnats européens",
+      "shortDesc": "Au moins 1 joueur formé ou aguerri dans les grands championnats européens",
       "ruleDesc": "Le coach recherche l'expérience des grands rendez-vous continentaux."
     }
   },
@@ -7071,7 +7071,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -7118,10 +7118,10 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "SOUTH_AMERICA",
-      "name": "Grinta Sud-Américaine",
-      "icon": "🔥",
-      "shortDesc": "Au moins 1 talent sud-américain (Brésil, Argentine, etc.)",
-      "ruleDesc": "Le coach veut de la virtuosité et de l'étincelle sud-américaine."
+      "name": "Réseau Amérique du Sud (CONMEBOL)",
+      "icon": "🌎",
+      "shortDesc": "Au moins 1 joueur issu du vivier sud-américain (Brésil, Argentine...)",
+      "ruleDesc": "La cellule de détection cible en priorité les championnats sud-américains."
     }
   },
   {
@@ -7183,7 +7183,7 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
       "shortDesc": "Au moins 1 joueur formé en Europe",
       "ruleDesc": "Le coach veut de la rigueur et du placement défensif."
@@ -7206,7 +7206,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "BU",
@@ -7247,7 +7247,7 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 joueur local",
       "ruleDesc": "Le coach veut des joueurs attachés à l'identité du club."
@@ -7311,7 +7311,7 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
       "shortDesc": "Au moins 1 profil européen discipliné",
       "ruleDesc": "Le coach veut de la discipline tactique."
@@ -7374,7 +7374,7 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 joueur néerlandais",
       "ruleDesc": "Le coach exige un joueur du cru."
@@ -7437,7 +7437,7 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
       "shortDesc": "Au moins 1 renfort européen aguerri",
       "ruleDesc": "Le coach veut de l'expérience sous pression."
@@ -7500,7 +7500,7 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 renfort turc",
       "ruleDesc": "Le coach tient à l'ADN combatif local."
@@ -7564,7 +7564,7 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 joueur britannique",
       "ruleDesc": "Le coach exige la culture du kick and rush."
@@ -7582,7 +7582,7 @@ const SCENARIOS = [
       {
         "code": "DG",
         "name": "Latéral Gauche",
-        "icon": "⚡"
+        "icon": "🌍"
       },
       {
         "code": "MC",
@@ -7627,7 +7627,7 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "DOMESTIC",
-      "name": "Filière Locale / Nationale",
+      "name": "Quota Formation Locale (Homegrown)",
       "icon": "📍",
       "shortDesc": "Au moins 1 joueur local",
       "ruleDesc": "Le coach veut des joueurs formés au pays."
@@ -7690,7 +7690,7 @@ const SCENARIOS = [
     "targetAgeRule": "mature",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
       "shortDesc": "Au moins 1 profil tactique européen",
       "ruleDesc": "Le coach veut du sérieux et de la rigueur tactique."
@@ -7753,7 +7753,7 @@ const SCENARIOS = [
     "targetAgeRule": "any",
     "originConstraint": {
       "code": "EURO_TACTICAL",
-      "name": "Rigueur Tactique Européenne",
+      "name": "Filière Championnats Majeurs (UEFA)",
       "icon": "🛡️",
       "shortDesc": "Au moins 1 joueur formé en Europe",
       "ruleDesc": "Le coach veut un collectif solidaire."
