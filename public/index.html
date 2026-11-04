@@ -1972,12 +1972,12 @@
 
   <!-- Load Data Files & App Logic with Cache Buster -->
   <script src="/socket.io/socket.io.js"></script>
-  <script src="icons.js?v=4.14"></script>
-  <script src="data/archetypes.js?v=4.14"></script>
-  <script src="data/generator.js?v=4.14"></script>
-  <script src="data/scenarios.js?v=4.14"></script>
-  <script src="duel.js?v=4.14"></script>
-  <script src="app.js?v=4.14"></script>
+  <script src="icons.js?v=5.0"></script>
+  <script src="data/archetypes.js?v=5.0"></script>
+  <script src="data/generator.js?v=5.0"></script>
+  <script src="data/scenarios.js?v=5.0"></script>
+  <script src="duel.js?v=5.0"></script>
+  <script src="app.js?v=5.0"></script>
 
   <!-- PWA, Theme & Modal Scroll Lock System -->
   <script>
@@ -2033,7 +2033,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
-          .then(reg => console.log('[PWA] Service Worker actif:', reg.scope))
+          .then(reg => { reg.update(); console.log('[PWA] Service Worker actif (v5.0): ', reg.scope); })
           .catch(err => console.warn('[PWA] Erreur SW:', err));
       });
     }
