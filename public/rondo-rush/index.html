@@ -1,0 +1,2821 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Rondo Rush</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <meta name="theme-color" content="#4ade80">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==============================================================
+       PLAYFUL FLAT PALETTE & TOKENS (Strictement conforme au brief)
+       ============================================================== */
+    :root {
+      --font-ui: 'Varela Round', system-ui, sans-serif;
+      --bg-main: #f0fdf4; /* Vert très clair */
+      --text-main: #0f172a;
+      
+      --bg-panel: #ffffff;
+      --panel-border: 3px solid #0f172a;
+      --hard-shadow: 0 6px 0px #0f172a; /* Ombre solide noire */
+      --hard-shadow-sm: 0 4px 0px #0f172a;
+      --hard-shadow-xs: 0 2px 0px #0f172a;
+      --hard-shadow-active: 0 0px 0px #0f172a;
+      
+      --pitch-bg: #4ade80; /* Vert herbe mat */
+      --pitch-border: 4px solid #166534;
+      --pitch-lines: 3px solid #bbf7d0;
+      
+      --player-attacker-bg: #38bdf8; /* Bleu vif */
+      --player-attacker-border: 3px solid #0f172a;
+      
+      --player-defender-bg: #fb7185; /* Corail vif (Taureau) */
+      --player-defender-border: 3px solid #0f172a;
+      
+      --ball-bg: #ffffff;
+      --ball-border: 3px solid #0f172a;
+      
+      --btn-accent-bg: #fbbf24; /* Jaune moutarde */
+      --btn-play-bg: #4ade80;
+      --star-gold: #f59e0b;
+    }
+
+    body.dark-mode {
+      --bg-main: #0f172a; /* Slate 900 */
+      --text-main: #f8fafc;
+      
+      --bg-panel: #1e293b; /* Slate 800 */
+      --panel-border: 3px solid #020617;
+      --hard-shadow: 0 6px 0px #020617; /* Ombre extra sombre */
+      --hard-shadow-sm: 0 4px 0px #020617;
+      --hard-shadow-xs: 0 2px 0px #020617;
+      --hard-shadow-active: 0 0px 0px #020617;
+      
+      --pitch-bg: #166534; /* Vert forêt foncé */
+      --pitch-border: 4px solid #14532d;
+      --pitch-lines: 3px solid #22c55e;
+      
+      --player-attacker-bg: #38bdf8; /* Reste vif pour le contraste */
+      --player-attacker-border: 3px solid #020617;
+      
+      --player-defender-bg: #fb7185;
+      --player-defender-border: 3px solid #020617;
+      
+      --ball-bg: #e2e8f0;
+      --ball-border: 3px solid #020617;
+      
+      --btn-accent-bg: #22c55e;
+      --btn-play-bg: #22c55e;
+      --star-gold: #fbbf24;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    #game-container {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      height: 100%;
+      max-height: 880px;
+      background-color: var(--pitch-bg);
+      border: var(--pitch-border);
+      box-shadow: var(--hard-shadow);
+      overflow: hidden;
+      touch-action: none;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    @media (min-width: 540px) {
+      #game-container {
+        height: 92vh;
+        border-radius: 28px;
+      }
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+
+    /* SVG Utility (Flat & Sharp) */
+    .svg-icon {
+      display: inline-block;
+      width: 1.25em;
+      height: 1.25em;
+      vertical-align: -0.2em;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .svg-icon.star-filled {
+      fill: var(--star-gold);
+      stroke: #0f172a;
+      stroke-width: 2.2;
+    }
+
+    /* TOP HUD */
+    .hud-top {
+      position: absolute;
+      top: env(safe-area-inset-top, 10px);
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      pointer-events: none;
+      z-index: 60;
+      gap: 6px;
+    }
+
+    .badge-card {
+      background: var(--bg-panel);
+      border: var(--panel-border);
+      box-shadow: var(--hard-shadow-sm);
+      border-radius: 14px;
+      padding: 4px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+      min-width: 54px;
+    }
+
+    .badge-label {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-main);
+      opacity: 0.85;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .badge-value {
+      font-size: 20px;
+      line-height: 1.1;
+      font-weight: 800;
+      color: var(--text-main);
+      transition: transform 0.12s ease;
+    }
+
+    .badge-value.pop {
+      transform: scale(1.3);
+    }
+
+    .stars-badge {
+      background: #fef08a;
+      border-color: #0f172a;
+    }
+
+    body.dark-mode .stars-badge {
+      background: #854d0e;
+      color: #fef08a;
+    }
+
+    .stars-badge .badge-label {
+      color: #854d0e;
+    }
+
+    body.dark-mode .stars-badge .badge-label {
+      color: #fef08a;
+    }
+
+    .stars-badge .badge-value {
+      color: #713f12;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    body.dark-mode .stars-badge .badge-value {
+      color: #fef08a;
+    }
+
+    .hud-actions {
+      display: flex;
+      gap: 6px;
+      pointer-events: auto;
+    }
+
+    /* PLAYFUL FLAT CHUNKY BUTTONS */
+    .btn-chunky {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--bg-panel);
+      color: var(--text-main);
+      border: var(--panel-border);
+      box-shadow: var(--hard-shadow-sm);
+      border-radius: 14px;
+      padding: 8px 12px;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+
+    .btn-chunky:active {
+      transform: translateY(4px);
+      box-shadow: var(--hard-shadow-active);
+    }
+
+    .btn-icon-only {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border-radius: 12px;
+    }
+
+    /* OVERLAYS (START / GAME OVER / BOUTIQUE) */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.45);
+      z-index: 50;
+      transition: opacity 0.2s ease, visibility 0.2s;
+    }
+
+    body.dark-mode .overlay {
+      background: rgba(2, 6, 23, 0.65);
+    }
+
+    .overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 400px;
+      background: var(--bg-panel);
+      border: var(--panel-border);
+      box-shadow: var(--hard-shadow);
+      border-radius: 24px;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: modalPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(0.9) translateY(12px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .modal-title-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--btn-accent-bg);
+      color: #0f172a;
+      border: var(--panel-border);
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .modal-h1 {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-main);
+      opacity: 0.8;
+      margin-bottom: 14px;
+    }
+
+    .how-to-card {
+      width: 100%;
+      background: var(--bg-main);
+      border: var(--panel-border);
+      border-radius: 16px;
+      padding: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .how-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .how-icon-chip {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: var(--panel-border);
+      flex-shrink: 0;
+      color: #0f172a;
+    }
+
+    .how-icon-chip.blue { background: var(--player-attacker-bg); }
+    .how-icon-chip.yellow { background: var(--btn-accent-bg); }
+    .how-icon-chip.coral { background: var(--player-defender-bg); }
+
+    .how-text {
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .how-text strong {
+      font-weight: 800;
+    }
+
+    .start-buttons-stack {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-action-large {
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 20px;
+      border-radius: 16px;
+      background: var(--btn-play-bg);
+      color: #0f172a;
+      box-shadow: var(--hard-shadow);
+      border: var(--panel-border);
+    }
+
+    .btn-action-large:active {
+      transform: translateY(6px);
+      box-shadow: var(--hard-shadow-active);
+    }
+
+    .btn-shop-open {
+      background: #fde047;
+      color: #0f172a;
+      font-size: 18px;
+      padding: 12px 20px;
+      box-shadow: var(--hard-shadow-sm);
+    }
+
+    /* GAME OVER SPECIFIC MODAL */
+    .over-reason-pill {
+      background: var(--player-defender-bg);
+      color: #0f172a;
+      border: var(--panel-border);
+      border-radius: 999px;
+      padding: 5px 16px;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .over-scores-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    .over-score-item {
+      background: var(--bg-main);
+      border: var(--panel-border);
+      border-radius: 14px;
+      padding: 8px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .over-score-item.gold {
+      background: #fef08a;
+      color: #0f172a;
+    }
+
+    .over-score-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .over-score-val {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    /* Décompte étoiles Game Over */
+    .over-stars-box {
+      width: 100%;
+      background: #fef9c3;
+      color: #713f12;
+      border: var(--panel-border);
+      box-shadow: var(--hard-shadow-sm);
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    body.dark-mode .over-stars-box {
+      background: #422006;
+      color: #fef08a;
+    }
+
+    .over-stars-calc {
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .over-stars-total {
+      font-size: 12px;
+      font-weight: 700;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Floating feedback text */
+    .float-text {
+      position: absolute;
+      pointer-events: none;
+      font-family: var(--font-ui);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-main);
+      background: var(--btn-accent-bg);
+      border: var(--panel-border);
+      box-shadow: var(--hard-shadow-sm);
+      border-radius: 12px;
+      padding: 4px 10px;
+      z-index: 30;
+      transform: translate(-50%, -50%);
+      animation: floatPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes floatPop {
+      0% { opacity: 0; transform: translate(-50%, 0%) scale(0.6); }
+      30% { opacity: 1; transform: translate(-50%, -20%) scale(1.15); }
+      100% { opacity: 0; transform: translate(-50%, -60%) scale(1); }
+    }
+
+    .over-buttons-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn-home-action {
+      background: var(--bg-panel);
+      color: var(--text-main);
+      font-size: 18px;
+      padding: 12px 20px;
+    }
+
+    /* COUNTDOWN OVERLAY */
+    .countdown-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 45;
+      transition: opacity 0.15s ease;
+    }
+
+    .countdown-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .countdown-text {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 130px;
+      padding: 12px 32px;
+      font-family: var(--font-ui);
+      font-size: 68px;
+      font-weight: 800;
+      color: #0f172a;
+      background: var(--btn-accent-bg);
+      border: var(--panel-border);
+      box-shadow: var(--hard-shadow);
+      border-radius: 28px;
+      line-height: 1;
+      text-transform: uppercase;
+      transform-origin: center;
+    }
+
+    .countdown-pop {
+      animation: countPulse 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes countPulse {
+      0% { transform: scale(0.35); opacity: 0.2; }
+      60% { transform: scale(1.18); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ==============================================================
+       MODALE BOUTIQUE COSMÉTIQUE ÉTENDUE (Playful Flat)
+       ============================================================== */
+    .shop-modal {
+      width: 100%;
+      max-width: 440px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      padding: 16px 14px;
+    }
+
+    .shop-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--text-main);
+    }
+
+    .shop-title-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .shop-h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1;
+    }
+
+    .shop-stars-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #fef08a;
+      color: #713f12;
+      border: var(--panel-border);
+      border-radius: 12px;
+      padding: 4px 10px;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: var(--hard-shadow-xs);
+    }
+
+    body.dark-mode .shop-stars-badge {
+      background: #854d0e;
+      color: #fef08a;
+    }
+
+    .btn-shop-close {
+      padding: 6px 12px;
+      font-size: 13px;
+      background: var(--player-defender-bg);
+      color: #0f172a;
+    }
+
+    /* Onglets de la boutique */
+    .shop-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    .shop-tab-btn {
+      background: var(--bg-main);
+      color: var(--text-main);
+      border: var(--panel-border);
+      border-radius: 12px;
+      padding: 8px 4px;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: var(--hard-shadow-xs);
+      transition: all 0.1s ease;
+    }
+
+    .shop-tab-btn.active {
+      background: var(--btn-accent-bg);
+      color: #0f172a;
+      transform: translateY(2px);
+      box-shadow: var(--hard-shadow-active);
+    }
+
+    /* Grille et défilement fluide des 10 articles */
+    .shop-items-container {
+      width: 100%;
+      max-height: 55vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 2px 4px 8px 2px;
+      margin-bottom: 6px;
+    }
+
+    /* Scrollbar discrète et propre */
+    .shop-items-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    .shop-items-container::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 4px;
+    }
+    .shop-items-container::-webkit-scrollbar-thumb {
+      background: var(--text-main);
+      opacity: 0.35;
+      border-radius: 4px;
+    }
+
+    .shop-item-card {
+      position: relative;
+      background: var(--bg-main);
+      border: var(--panel-border);
+      box-shadow: var(--hard-shadow-xs);
+      border-radius: 14px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: transform 0.08s ease;
+    }
+
+    .shop-item-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      min-width: 0;
+      flex: 1;
+    }
+
+    /* Pastille visuelle circulaire */
+    .cosmetic-preview {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: var(--panel-border);
+      box-shadow: 0 2px 0 #0f172a;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .cosmetic-text-wrap {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cosmetic-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cosmetic-sub {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-main);
+      opacity: 0.75;
+      line-height: 1.2;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Badge textuel ANIMÉ sur bordure de carte */
+    .animated-skin-badge {
+      position: absolute;
+      top: -6px;
+      right: 12px;
+      background: var(--btn-accent-bg);
+      color: #0f172a;
+      border: 2px solid #0f172a;
+      border-radius: 6px;
+      padding: 1px 6px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 0 #0f172a;
+      z-index: 5;
+    }
+
+    /* Boutons d'action des articles */
+    .btn-item-action {
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      border-radius: 12px;
+      border: var(--panel-border);
+      box-shadow: var(--hard-shadow-xs);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      white-space: nowrap;
+      font-family: var(--font-ui);
+      flex-shrink: 0;
+      min-width: 74px;
+    }
+
+    .btn-item-action:active {
+      transform: translateY(2px);
+      box-shadow: var(--hard-shadow-active);
+    }
+
+    /* État 1 : Achat / Non possédé */
+    .btn-item-buy {
+      background: #fde047;
+      color: #0f172a;
+    }
+
+    .btn-item-buy:disabled,
+    .btn-item-buy.disabled {
+      background: #cbd5e1;
+      color: #64748b;
+      cursor: not-allowed;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .btn-item-buy:disabled:active,
+    .btn-item-buy.disabled:active {
+      transform: none;
+      box-shadow: var(--hard-shadow-xs);
+    }
+
+    /* État 2 : Possédé mais inactif */
+    .btn-item-equip {
+      background: #38bdf8;
+      color: #0f172a;
+    }
+
+    /* État 3 : Actif / Équipé */
+    .btn-item-equipped {
+      background: #22c55e;
+      color: #ffffff;
+      cursor: default;
+    }
+
+    .btn-item-equipped:active {
+      transform: none;
+      box-shadow: var(--hard-shadow-xs);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="game-container">
+    <!-- Top HUD -->
+    <div class="hud-top">
+      <!-- Passes -->
+      <div class="badge-card" title="Passes réussies">
+        <span class="badge-label">Passes</span>
+        <span class="badge-value" id="hud-score">0</span>
+      </div>
+
+      <!-- Solde d'Étoiles (Visible Partout) -->
+      <div class="badge-card stars-badge" id="hud-stars-card" title="Étoiles collectées">
+        <span class="badge-label">
+          <svg class="svg-icon star-filled" viewBox="0 0 24 24" style="width: 12px; height: 12px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Étoiles
+        </span>
+        <span class="badge-value" id="hud-stars">0</span>
+      </div>
+
+      <!-- Actions -->
+      <div class="hud-actions">
+        <!-- Bouton Bascule Thème Nuit / Jour -->
+        <button class="btn-chunky btn-icon-only" id="btn-theme" title="Basculer Mode Jour / Nuit" aria-label="Mode Nuit">
+          <svg class="svg-icon" id="icon-theme-sun" viewBox="0 0 24 24" style="display: none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="svg-icon" id="icon-theme-moon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Bouton Son -->
+        <button class="btn-chunky btn-icon-only" id="btn-sound" title="Son" aria-label="Son">
+          <svg class="svg-icon" id="icon-sound-on" viewBox="0 0 24 24">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+          <svg class="svg-icon" id="icon-sound-off" viewBox="0 0 24 24" style="display: none;">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Record -->
+      <div class="badge-card" title="Meilleur score">
+        <span class="badge-label">Record</span>
+        <span class="badge-value" id="hud-best">0</span>
+      </div>
+    </div>
+
+    <!-- Canvas principal -->
+    <canvas id="rondoCanvas"></canvas>
+
+    <!-- Overlay Compte à Rebours (3... 2... 1... GO !) -->
+    <div class="countdown-overlay hidden" id="countdown-overlay">
+      <div class="countdown-text" id="countdown-text">3</div>
+    </div>
+
+    <!-- Overlay Accueil -->
+    <div class="overlay" id="start-overlay">
+      <div class="modal-box">
+        <span class="modal-title-pill">
+          <svg class="svg-icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Playful Flat Edition
+        </span>
+        <h1 class="modal-h1">RONDO RUSH</h1>
+        <p class="modal-desc">Jeu de passes en mode réflexe</p>
+
+        <div class="how-to-card">
+          <div class="how-row">
+            <div class="how-icon-chip blue">
+              <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+            </div>
+            <div class="how-text"><strong>Touche le porteur</strong> et glisse pour viser un coéquipier.</div>
+          </div>
+          <div class="how-row">
+            <div class="how-icon-chip yellow">
+              <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <div class="how-text"><strong>Gagne des étoiles</strong> : chaque passe rapporte +1 étoile pour la boutique !</div>
+          </div>
+          <div class="how-row">
+            <div class="how-icon-chip coral">
+              <svg class="svg-icon" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+            </div>
+            <div class="how-text"><strong>Attention au Taureau !</strong> Il accélère à chaque passe.</div>
+          </div>
+        </div>
+
+        <div class="start-buttons-stack">
+          <button class="btn-chunky btn-action-large" id="btn-play">
+            <span>JOUER !</span>
+            <svg class="svg-icon" viewBox="0 0 24 24" style="stroke-width: 3;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </button>
+
+          <!-- Bouton Boutique sur l'écran d'accueil -->
+          <button class="btn-chunky btn-action-large btn-shop-open" id="btn-open-shop">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="stroke-width: 2.8;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <span>BOUTIQUE</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay Boutique Cosmetique Étendue -->
+    <div class="overlay hidden" id="shop-overlay">
+      <div class="modal-box shop-modal">
+        <div class="shop-header">
+          <div class="shop-title-group">
+            <h2 class="shop-h1">BOUTIQUE</h2>
+            <div class="shop-stars-badge" title="Votre solde d'étoiles">
+              <svg class="svg-icon star-filled" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <span id="shop-stars-count">0</span>
+            </div>
+          </div>
+          <button class="btn-chunky btn-shop-close" id="btn-close-shop">FERMER</button>
+        </div>
+
+        <!-- Onglets -->
+        <div class="shop-tabs">
+          <button class="shop-tab-btn active" data-tab="bull">Taureau</button>
+          <button class="shop-tab-btn" data-tab="team">Équipe</button>
+          <button class="shop-tab-btn" data-tab="pitch">Terrain</button>
+        </div>
+
+        <!-- Liste des 10 articles scrollable -->
+        <div class="shop-items-container" id="shop-items-list">
+          <!-- Injecté dynamiquement par JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay Game Over -->
+    <div class="overlay hidden" id="gameover-overlay">
+      <div class="modal-box">
+        <span class="over-reason-pill" id="over-reason">Interception !</span>
+        <h2 class="modal-h1" style="font-size: 28px; margin-bottom: 12px;">PARTIE TERMINÉE</h2>
+
+        <div class="over-scores-grid">
+          <div class="over-score-item">
+            <span class="over-score-label">Passes</span>
+            <span class="over-score-val" id="over-score">0</span>
+          </div>
+          <div class="over-score-item gold">
+            <span class="over-score-label">Record</span>
+            <span class="over-score-val" id="over-best">0</span>
+          </div>
+        </div>
+
+        <!-- Ligne de décompte d'étoiles conforme au cahier des charges -->
+        <div class="over-stars-box">
+          <div class="over-stars-calc" id="over-stars-calc">
+            <span id="over-passes-text">0</span> passes = +<span id="over-stars-earned">0</span>
+            <svg class="svg-icon star-filled" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+          <div class="over-stars-total">
+            <span>Solde total :</span>
+            <strong id="over-total-stars">0</strong>
+            <svg class="svg-icon star-filled" viewBox="0 0 24 24" style="width: 12px; height: 12px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+        </div>
+
+        <div class="over-buttons-group">
+          <button class="btn-chunky btn-action-large" id="btn-restart" style="background: var(--btn-accent-bg);">
+            <span>REJOUER</span>
+            <svg class="svg-icon" viewBox="0 0 24 24" style="stroke-width: 3;"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          </button>
+          <button class="btn-chunky btn-action-large btn-home-action" id="btn-home">
+            <span>ACCUEIL</span>
+            <svg class="svg-icon" viewBox="0 0 24 24" style="stroke-width: 2.8;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ==============================================================
+       RONDO RUSH - PLAYFUL FLAT ENGINE + BOUTIQUE 10 ARTICLES / ONGLET
+       ============================================================== */
+
+    // Helper de formattage des nombres (ex: 1 000, 4 500)
+    function formatNumber(n) {
+      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
+
+    // --- REGISTRE CENTRAL DES SKINS (SKINS_CONFIG - 30 SKINS PROCÉDURAUX) ---
+    const SKINS_CONFIG = {
+      bull: [
+        {
+          id: 'bull_red',
+          name: 'Classique Corail',
+          category: 'bull',
+          price: 0,
+          bodyColor: '#fb7185',
+          hornColor: '#fbbf24',
+          sub: 'Gratuit • Chasseur Officiel'
+        },
+        {
+          id: 'bull_bronze',
+          name: 'Taureau Bronze',
+          category: 'bull',
+          price: 30,
+          bodyColor: '#b45309',
+          hornColor: '#d97706',
+          sub: 'Cuivre Bruni'
+        },
+        {
+          id: 'bull_gold',
+          name: 'Taureau Doré',
+          category: 'bull',
+          price: 60,
+          bodyColor: '#facc15',
+          hornColor: '#f59e0b',
+          sub: 'Or Mercato Prestige'
+        },
+        {
+          id: 'bull_stealth',
+          name: 'Taureau Furtif',
+          category: 'bull',
+          price: 120,
+          bodyColor: '#1e293b',
+          hornColor: '#64748b',
+          sub: 'Opérations Nocturnes'
+        },
+        {
+          id: 'bull_cyborg',
+          name: 'Taureau Cyborg',
+          category: 'bull',
+          price: 220,
+          bodyColor: '#0284c7',
+          hornColor: '#38bdf8',
+          sub: 'Châssis Renforcé'
+        },
+        {
+          id: 'bull_toxic',
+          name: 'Taureau Toxique',
+          category: 'bull',
+          price: 380,
+          bodyColor: '#84cc16',
+          hornColor: '#4d7c0f',
+          sub: 'Venin Vert Fluo'
+        },
+        {
+          id: 'bull_ghost',
+          name: 'Taureau Spectre',
+          category: 'bull',
+          price: 600,
+          bodyColor: '#93c5fd',
+          hornColor: '#67e8f9',
+          sub: 'Oscillation Spectrale',
+          isAnimated: true
+        },
+        {
+          id: 'bull_magma',
+          name: 'Taureau Magma',
+          category: 'bull',
+          price: 1000,
+          bodyColor: '#ea580c',
+          hornColor: '#fef08a',
+          sub: 'Lave en Fusion',
+          isAnimated: true
+        },
+        {
+          id: 'bull_blackhole',
+          name: 'Taureau Trou Noir',
+          category: 'bull',
+          price: 1800,
+          bodyColor: '#000000',
+          hornColor: '#a855f7',
+          sub: 'Singularité Gravitationnelle',
+          isAnimated: true
+        },
+        {
+          id: 'bull_solar',
+          name: 'Le Démiurge Solaire',
+          category: 'bull',
+          price: 4000,
+          bodyColor: '#eab308',
+          hornColor: '#fbbf24',
+          sub: 'Couronne & 8 Rayons',
+          isAnimated: true
+        }
+      ],
+      team: [
+        {
+          id: 'team_blue',
+          name: 'Bleu Ciel',
+          category: 'team',
+          price: 0,
+          primaryColor: '#38bdf8',
+          accentColor: '#bae6fd',
+          numberColor: '#ffffff',
+          sub: 'Gratuit • Tenue Domicile'
+        },
+        {
+          id: 'team_cardinal',
+          name: 'Rouge Cardinal',
+          category: 'team',
+          price: 30,
+          primaryColor: '#dc2626',
+          accentColor: '#fecaca',
+          numberColor: '#ffffff',
+          sub: 'Ferveur Ardente'
+        },
+        {
+          id: 'team_selecao',
+          name: 'Seleção',
+          category: 'team',
+          price: 70,
+          primaryColor: '#fde047',
+          accentColor: '#16a34a',
+          numberColor: '#0f172a',
+          sub: 'Samba & Joga Bonito'
+        },
+        {
+          id: 'team_galactic',
+          name: 'Galactique',
+          category: 'team',
+          price: 140,
+          primaryColor: '#ffffff',
+          accentColor: '#facc15',
+          numberColor: '#0f172a',
+          sub: 'Blanc Royal & Or'
+        },
+        {
+          id: 'team_referee',
+          name: 'Arbitres Rayés',
+          category: 'team',
+          price: 240,
+          primaryColor: '#334155',
+          accentColor: '#f8fafc',
+          numberColor: '#ffffff',
+          sub: 'Noir & Blanc Strict'
+        },
+        {
+          id: 'team_bubblegum',
+          name: 'Bubblegum',
+          category: 'team',
+          price: 400,
+          primaryColor: '#f472b6',
+          accentColor: '#38bdf8',
+          numberColor: '#ffffff',
+          sub: 'Pop & Acidulé'
+        },
+        {
+          id: 'team_mariniere',
+          name: 'Marinière',
+          category: 'team',
+          price: 650,
+          primaryColor: '#1e3a8a',
+          accentColor: '#ffffff',
+          numberColor: '#fde047',
+          sub: 'Rétro Côtier'
+        },
+        {
+          id: 'team_circuit',
+          name: 'Circuit Imprimé',
+          category: 'team',
+          price: 1100,
+          primaryColor: '#0f172a',
+          accentColor: '#34d399',
+          numberColor: '#38bdf8',
+          sub: 'Tracés Électroniques',
+          isAnimated: true
+        },
+        {
+          id: 'team_prism',
+          name: 'Prisme Chromatique',
+          category: 'team',
+          price: 1900,
+          primaryColor: '#8b5cf6',
+          accentColor: '#ec4899',
+          numberColor: '#ffffff',
+          sub: 'Spectre Irisé',
+          isAnimated: true
+        },
+        {
+          id: 'team_diamond',
+          name: 'Les Intouchables Diamant',
+          category: 'team',
+          price: 4500,
+          primaryColor: '#67e8f9',
+          accentColor: '#e0e7ff',
+          numberColor: '#0f172a',
+          sub: 'Reflet Balayant',
+          isAnimated: true
+        }
+      ],
+      pitch: [
+        {
+          id: 'pitch_green',
+          name: 'Pelouse Classique',
+          category: 'pitch',
+          price: 0,
+          lightBg: '#4ade80',
+          darkBg: '#166534',
+          lightLines: '#bbf7d0',
+          darkLines: '#22c55e',
+          lightBorder: '#166534',
+          darkBorder: '#14532d',
+          sub: 'Gratuit • Terrain Officiel'
+        },
+        {
+          id: 'pitch_clay',
+          name: 'Terre Battue',
+          category: 'pitch',
+          price: 40,
+          lightBg: '#ea580c',
+          darkBg: '#9a3412',
+          lightLines: '#fed7aa',
+          darkLines: '#fdba74',
+          lightBorder: '#c2410c',
+          darkBorder: '#7c2d12',
+          sub: 'Style Roland-Garros'
+        },
+        {
+          id: 'pitch_sand',
+          name: 'Plage de Sable',
+          category: 'pitch',
+          price: 90,
+          lightBg: '#fde68a',
+          darkBg: '#b45309',
+          lightLines: '#f59e0b',
+          darkLines: '#fef3c7',
+          lightBorder: '#d97706',
+          darkBorder: '#78350f',
+          sub: 'Beach Soccer Doré'
+        },
+        {
+          id: 'pitch_urban',
+          name: 'City Stade Bitume',
+          category: 'pitch',
+          price: 160,
+          lightBg: '#64748b',
+          darkBg: '#334155',
+          lightLines: '#f8fafc',
+          darkLines: '#cbd5e1',
+          lightBorder: '#1e293b',
+          darkBorder: '#0f172a',
+          sub: 'Street Foot Urbain'
+        },
+        {
+          id: 'pitch_winter',
+          name: 'Pelouse Hivernale',
+          category: 'pitch',
+          price: 260,
+          lightBg: '#e2e8f0',
+          darkBg: '#334155',
+          lightLines: '#f43f5e',
+          darkLines: '#fb7185',
+          lightBorder: '#475569',
+          darkBorder: '#1e293b',
+          sub: 'Neige & Lignes Rouges'
+        },
+        {
+          id: 'pitch_checker',
+          name: 'Damier Professionnel',
+          category: 'pitch',
+          price: 420,
+          lightBg: '#22c55e',
+          darkBg: '#15803d',
+          lightLines: '#86efac',
+          darkLines: '#bbf7d0',
+          lightBorder: '#14532d',
+          darkBorder: '#052e16',
+          sub: 'Tonte Pro en Damier'
+        },
+        {
+          id: 'pitch_night',
+          name: 'Terrain de Nuit',
+          category: 'pitch',
+          price: 700,
+          lightBg: '#1e1b4b',
+          darkBg: '#0f0d2e',
+          lightLines: '#818cf8',
+          darkLines: '#a5b4fc',
+          lightBorder: '#312e81',
+          darkBorder: '#03001e',
+          sub: 'Projecteurs Nocturnes'
+        },
+        {
+          id: 'pitch_grid',
+          name: 'Matrice Cyber',
+          category: 'pitch',
+          price: 1200,
+          lightBg: '#0f172a',
+          darkBg: '#020617',
+          lightLines: '#38bdf8',
+          darkLines: '#06b6d4',
+          lightBorder: '#1e293b',
+          darkBorder: '#0f172a',
+          sub: 'Grille Vectorielle Réactive',
+          isAnimated: true
+        },
+        {
+          id: 'pitch_volcano',
+          name: "L'Arène Magmatique",
+          category: 'pitch',
+          price: 2000,
+          lightBg: '#450a0a',
+          darkBg: '#2a0606',
+          lightLines: '#f97316',
+          darkLines: '#ea580c',
+          lightBorder: '#7f1d1d',
+          darkBorder: '#450a0a',
+          sub: 'Failles Volcaniques',
+          isAnimated: true
+        },
+        {
+          id: 'pitch_space',
+          name: 'Le Vide Cosmique',
+          category: 'pitch',
+          price: 5000,
+          lightBg: '#050713',
+          darkBg: '#02030a',
+          lightLines: '#818cf8',
+          darkLines: '#6366f1',
+          lightBorder: '#1e1b4b',
+          darkBorder: '#0f0e26',
+          sub: 'Défilement Spatial Infini',
+          isAnimated: true
+        }
+      ]
+    };
+    const COSMETICS = SKINS_CONFIG;
+
+    // Table de migration d'anciens IDs pour une rétrocompatibilité absolue
+    const ID_ALIASES = {
+      bull_specter: 'bull_ghost',
+      bull_solardemiurge: 'bull_solar',
+      pitch_cybergrid: 'pitch_grid',
+      pitch_magma: 'pitch_volcano',
+      pitch_void: 'pitch_space'
+    };
+
+    // --- GESTION DE LA PERSISTANCE (ÉTOILES, INVENTAIRE & ÉQUIPEMENT) ---
+    let playerStars = parseInt(localStorage.getItem('rondo_stars') || '0', 10);
+    if (isNaN(playerStars)) playerStars = 0;
+
+    let playerInventory = [];
+    try {
+      playerInventory = JSON.parse(localStorage.getItem('rondo_inventory') || '[]');
+    } catch(e) {
+      playerInventory = [];
+    }
+    // Assurer la présence des cosmétiques de base gratuits
+    ['bull_red', 'team_blue', 'pitch_green'].forEach(id => {
+      if (!playerInventory.includes(id)) playerInventory.push(id);
+    });
+
+    let playerEquipped = {
+      bull: 'bull_red',
+      team: 'team_blue',
+      pitch: 'pitch_green'
+    };
+    try {
+      const savedEquipped = JSON.parse(localStorage.getItem('rondo_equipped') || '{}');
+      if (savedEquipped.bull) playerEquipped.bull = ID_ALIASES[savedEquipped.bull] || savedEquipped.bull;
+      if (savedEquipped.team) playerEquipped.team = ID_ALIASES[savedEquipped.team] || savedEquipped.team;
+      if (savedEquipped.pitch) playerEquipped.pitch = ID_ALIASES[savedEquipped.pitch] || savedEquipped.pitch;
+    } catch(e) {}
+
+    // Migration immédiate de l'inventaire en cas d'anciens identifiants
+    playerInventory = playerInventory.map(id => ID_ALIASES[id] || id);
+
+    function savePlayerData() {
+      localStorage.setItem('rondo_stars', playerStars.toString());
+      localStorage.setItem('rondo_inventory', JSON.stringify(playerInventory));
+      localStorage.setItem('rondo_equipped', JSON.stringify(playerEquipped));
+    }
+
+    function updateStarsDisplay() {
+      document.getElementById('hud-stars').textContent = formatNumber(playerStars);
+      document.getElementById('shop-stars-count').textContent = formatNumber(playerStars);
+      const overTotalEl = document.getElementById('over-total-stars');
+      if (overTotalEl) overTotalEl.textContent = formatNumber(playerStars);
+    }
+
+    // --- COMMANDE DE TEST : DÉBLOCAGE COMPLET DES 30 SKINS ---
+    window.unlockAllSkins = function() {
+      const allIds = [
+        ...SKINS_CONFIG.bull.map(s => s.id),
+        ...SKINS_CONFIG.team.map(s => s.id),
+        ...SKINS_CONFIG.pitch.map(s => s.id)
+      ];
+      playerInventory = Array.from(new Set([...playerInventory, ...allIds]));
+      playerStars = 99999;
+      savePlayerData();
+      updateStarsDisplay();
+      if (typeof renderShopItems === 'function') renderShopItems();
+    };
+
+    window.resetSkins = function() {
+      playerInventory = ['bull_red', 'team_blue', 'pitch_green'];
+      playerEquipped = { bull: 'bull_red', team: 'team_blue', pitch: 'pitch_green' };
+      playerStars = 0;
+      savePlayerData();
+      updateStarsDisplay();
+      if (typeof applyEquippedCosmetics === 'function') applyEquippedCosmetics();
+      if (typeof renderShopItems === 'function') renderShopItems();
+    };
+
+    // --- AUDIO SYNTHESIZER ---
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.muted = false;
+        this.pitches = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99];
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      playPass(streak) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const pitch = this.pitches[streak % this.pitches.length];
+        
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(pitch, now);
+        osc.frequency.exponentialRampToValueAtTime(pitch * 0.8, now + 0.12);
+
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.15);
+      }
+
+      playFlick() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(240, now);
+        osc.frequency.exponentialRampToValueAtTime(440, now + 0.06);
+
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.07);
+      }
+
+      playFail() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.35);
+
+        gain.gain.setValueAtTime(0.38, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.36);
+      }
+
+      playCountdown(isGo = false) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        const freq = isGo ? 659.25 : 440.00;
+        osc.frequency.setValueAtTime(freq, now);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.05, now + (isGo ? 0.18 : 0.09));
+
+        gain.gain.setValueAtTime(0.28, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + (isGo ? 0.20 : 0.11));
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + (isGo ? 0.22 : 0.12));
+      }
+
+      playPurchase() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.08);
+        osc.frequency.setValueAtTime(783.99, now + 0.16);
+
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.28);
+      }
+    }
+
+    const audio = new SoundEngine();
+
+    // --- SETUP DU CANEVAS & DOM ---
+    const canvas = document.getElementById('rondoCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('game-container');
+
+    const hudScore = document.getElementById('hud-score');
+    const hudBest = document.getElementById('hud-best');
+    const startOverlay = document.getElementById('start-overlay');
+    const gameoverOverlay = document.getElementById('gameover-overlay');
+    const shopOverlay = document.getElementById('shop-overlay');
+    const countdownOverlay = document.getElementById('countdown-overlay');
+    const countdownText = document.getElementById('countdown-text');
+    const overReason = document.getElementById('over-reason');
+    const overScore = document.getElementById('over-score');
+    const overBest = document.getElementById('over-best');
+    const btnPlay = document.getElementById('btn-play');
+    const btnRestart = document.getElementById('btn-restart');
+    const btnHome = document.getElementById('btn-home');
+    const btnOpenShop = document.getElementById('btn-open-shop');
+    const btnCloseShop = document.getElementById('btn-close-shop');
+    const btnSound = document.getElementById('btn-sound');
+    const iconSoundOn = document.getElementById('icon-sound-on');
+    const iconSoundOff = document.getElementById('icon-sound-off');
+    const btnTheme = document.getElementById('btn-theme');
+    const iconThemeSun = document.getElementById('icon-theme-sun');
+    const iconThemeMoon = document.getElementById('icon-theme-moon');
+
+    let highScore = parseInt(localStorage.getItem('rondo_rush_highscore') || '0', 10);
+    hudBest.textContent = highScore;
+    overBest.textContent = highScore;
+    updateStarsDisplay();
+
+    // --- THÈME DARK / LIGHT (BASCULE NATIVE) ---
+    let isDarkMode = false;
+    function applyTheme(dark) {
+      isDarkMode = dark;
+      if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        iconThemeSun.style.display = 'block';
+        iconThemeMoon.style.display = 'none';
+      } else {
+        document.body.classList.remove('dark-mode');
+        iconThemeSun.style.display = 'none';
+        iconThemeMoon.style.display = 'block';
+      }
+      localStorage.setItem('rondo_flat_theme', isDarkMode ? 'dark' : 'light');
+      applyEquippedPitchSkin();
+    }
+
+    const savedTheme = localStorage.getItem('rondo_flat_theme');
+    applyTheme(savedTheme === 'dark');
+
+    btnTheme.addEventListener('click', () => {
+      applyTheme(!isDarkMode);
+    });
+
+    btnSound.addEventListener('click', () => {
+      audio.muted = !audio.muted;
+      iconSoundOn.style.display = audio.muted ? 'none' : 'block';
+      iconSoundOff.style.display = audio.muted ? 'block' : 'none';
+    });
+
+    // Appliquer la couleur de terrain sur le container
+    function applyEquippedPitchSkin() {
+      const pitchCosmetic = COSMETICS.pitch.find(p => p.id === playerEquipped.pitch) || COSMETICS.pitch[0];
+      const bgColor = isDarkMode ? pitchCosmetic.darkBg : pitchCosmetic.lightBg;
+      const borderColor = isDarkMode ? pitchCosmetic.darkBorder : pitchCosmetic.lightBorder;
+      container.style.backgroundColor = bgColor;
+      container.style.borderColor = borderColor;
+    }
+    applyEquippedPitchSkin();
+
+    // Viewport & Dimensions
+    let width = 0;
+    let height = 0;
+    let centerX = 0;
+    let centerY = 0;
+    let rondoRadius = 140;
+
+    function resize() {
+      const rect = container.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = rect.width;
+      height = rect.height;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      centerX = width / 2;
+      centerY = height / 2 + 10;
+      rondoRadius = Math.min(width * 0.38, 165);
+    }
+    window.addEventListener('resize', resize);
+    window.addEventListener('orientationchange', () => setTimeout(resize, 100));
+
+    // --- ÉTAT DU JEU ---
+    const STATE = { MENU: 0, COUNTDOWN: 1, PLAYING: 2, GAMEOVER: 3 };
+    let currentState = STATE.MENU;
+    let score = 0;
+
+    // Joueurs (5 passeurs)
+    const PLAYER_COUNT = 5;
+    let players = [];
+    let currentCarrierIdx = 0;
+
+    // Le Taureau
+    let bull = {
+      x: 0,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      angle: 0,
+      radius: 22,
+      baseSpeed: 1.85,
+      speed: 1.85
+    };
+
+    // La Balle
+    let ball = {
+      x: 0,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      radius: 9,
+      rotation: 0,
+      inFlight: false,
+      friction: 0.985
+    };
+
+    let isDragging = false;
+    let dragStart = { x: 0, y: 0 };
+    let dragCurrent = { x: 0, y: 0 };
+    let carrierTimeLeft = 1.35;
+    let carrierMaxTime = 1.35;
+
+    let flatPuffs = [];
+
+    function initGame() {
+      score = 0;
+      hudScore.textContent = '0';
+      carrierMaxTime = 1.4;
+      carrierTimeLeft = carrierMaxTime;
+
+      players = [];
+      for (let i = 0; i < PLAYER_COUNT; i++) {
+        const baseAngle = (i * 2 * Math.PI) / PLAYER_COUNT - Math.PI / 2;
+        players.push({
+          id: i,
+          baseAngle: baseAngle,
+          currentAngle: baseAngle,
+          oscSpeed: 0.0016 + Math.random() * 0.001,
+          oscAmp: 0.12 + Math.random() * 0.06,
+          oscPhase: Math.random() * Math.PI * 2,
+          radius: 22,
+          x: 0,
+          y: 0,
+          bounceY: 0,
+          eyeX: 0,
+          eyeY: 0
+        });
+      }
+
+      currentCarrierIdx = Math.floor(Math.random() * PLAYER_COUNT);
+      updatePlayerPositions(0);
+
+      bull.x = centerX;
+      bull.y = centerY;
+      bull.vx = 0;
+      bull.vy = 0;
+      bull.angle = 0;
+      bull.speed = bull.baseSpeed;
+
+      const carrier = players[currentCarrierIdx];
+      ball.x = carrier.x;
+      ball.y = carrier.y;
+      ball.vx = 0;
+      ball.vy = 0;
+      ball.rotation = 0;
+      ball.inFlight = false;
+
+      flatPuffs = [];
+      isDragging = false;
+    }
+
+    function updatePlayerPositions(time) {
+      players.forEach((p, i) => {
+        const offset = Math.sin(time * p.oscSpeed + p.oscPhase) * p.oscAmp;
+        p.currentAngle = p.baseAngle + offset;
+        p.x = centerX + Math.cos(p.currentAngle) * rondoRadius;
+        p.y = centerY + Math.sin(p.currentAngle) * rondoRadius;
+
+        if (p.bounceY > 0) {
+          p.bounceY = Math.max(0, p.bounceY - 0.4);
+        }
+
+        const targetX = ball.inFlight ? ball.x : bull.x;
+        const targetY = ball.inFlight ? ball.y : bull.y;
+        const dx = targetX - p.x;
+        const dy = targetY - p.y;
+        const dist = Math.hypot(dx, dy) || 1;
+        p.eyeX = (dx / dist) * 2.8;
+        p.eyeY = (dy / dist) * 2.8;
+      });
+    }
+
+    // --- GAME OVER & ATTRIBUTION DES ÉTOILES ---
+    function triggerGameOver(reason) {
+      if (currentState === STATE.GAMEOVER) return;
+      currentState = STATE.GAMEOVER;
+      audio.playFail();
+
+      for (let i = 0; i < 10; i++) {
+        flatPuffs.push({
+          x: bull.x,
+          y: bull.y,
+          vx: (Math.random() - 0.5) * 5,
+          vy: (Math.random() - 0.5) * 5,
+          size: Math.random() * 6 + 4,
+          life: 1.0,
+          color: isDarkMode ? '#020617' : '#0f172a'
+        });
+      }
+
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('rondo_rush_highscore', highScore.toString());
+        hudBest.textContent = highScore;
+      }
+
+      const starsEarned = score;
+      playerStars += starsEarned;
+      savePlayerData();
+      updateStarsDisplay();
+
+      overReason.textContent = reason;
+      overScore.textContent = score;
+      overBest.textContent = highScore;
+
+      const passLabel = score > 1 ? `${score} passes` : `${score} passe`;
+      const starLabel = starsEarned > 1 ? `+${starsEarned} étoiles` : `+${starsEarned} étoile`;
+      const calcEl = document.getElementById('over-stars-calc');
+      if (calcEl) {
+        calcEl.innerHTML = `
+          <span>${passLabel} = ${starLabel}</span>
+          <svg class="svg-icon star-filled" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        `;
+      }
+      const totalStarsEl = document.getElementById('over-total-stars');
+      if (totalStarsEl) totalStarsEl.textContent = formatNumber(playerStars);
+
+      gameoverOverlay.classList.remove('hidden');
+    }
+
+    function createFloatText(x, y, text) {
+      const el = document.createElement('div');
+      el.className = 'float-text';
+      el.textContent = text;
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      container.appendChild(el);
+      setTimeout(() => el.remove(), 600);
+    }
+
+    // --- GESTES TACTILES & SOURIS ---
+    function getPointerPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+      const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function onPointerDown(e) {
+      if (currentState !== STATE.PLAYING) return;
+      if (ball.inFlight) return;
+
+      audio.init();
+      const pos = getPointerPos(e);
+      const carrier = players[currentCarrierIdx];
+
+      const dist = Math.hypot(pos.x - carrier.x, pos.y - carrier.y);
+      if (dist < carrier.radius * 2.5) {
+        isDragging = true;
+        dragStart = { x: carrier.x, y: carrier.y };
+        dragCurrent = { x: pos.x, y: pos.y };
+        audio.playFlick();
+        e.preventDefault();
+      }
+    }
+
+    function onPointerMove(e) {
+      if (!isDragging || currentState !== STATE.PLAYING) return;
+      dragCurrent = getPointerPos(e);
+      e.preventDefault();
+    }
+
+    function onPointerUp(e) {
+      if (!isDragging || currentState !== STATE.PLAYING) return;
+      isDragging = false;
+
+      const dx = dragCurrent.x - dragStart.x;
+      const dy = dragCurrent.y - dragStart.y;
+      const dragDist = Math.hypot(dx, dy);
+
+      if (dragDist < 14) return;
+
+      const angle = Math.atan2(dy, dx);
+      const powerRatio = Math.min(dragDist / 120, 1.8);
+      const baseSpeed = 9.5 + powerRatio * 11;
+
+      ball.vx = Math.cos(angle) * baseSpeed;
+      ball.vy = Math.sin(angle) * baseSpeed;
+      ball.inFlight = true;
+
+      for (let i = 0; i < 6; i++) {
+        flatPuffs.push({
+          x: ball.x,
+          y: ball.y,
+          vx: (Math.random() - 0.5) * 4 - ball.vx * 0.1,
+          vy: (Math.random() - 0.5) * 4 - ball.vy * 0.1,
+          size: Math.random() * 4 + 3,
+          life: 1.0,
+          color: '#ffffff'
+        });
+      }
+
+      e.preventDefault();
+    }
+
+    canvas.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', () => { isDragging = false; });
+
+    // --- GAME LOOP ---
+    let lastTime = performance.now();
+
+    function loop(now) {
+      now = now || performance.now();
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+
+      update(now, dt);
+      render(now);
+
+      requestAnimationFrame(loop);
+    }
+
+    function update(time, dt) {
+      if (currentState !== STATE.PLAYING) return;
+
+      updatePlayerPositions(time);
+      const carrier = players[currentCarrierIdx];
+
+      if (!ball.inFlight) {
+        ball.x = carrier.x;
+        ball.y = carrier.y;
+
+        carrierTimeLeft -= dt;
+        if (carrierTimeLeft <= 0) {
+          triggerGameOver('Pressé par le Taureau !');
+          return;
+        }
+
+        const toCarrierX = carrier.x - bull.x;
+        const toCarrierY = carrier.y - bull.y;
+        const distToCarrier = Math.hypot(toCarrierX, toCarrierY);
+
+        if (distToCarrier < bull.radius + carrier.radius * 0.8) {
+          triggerGameOver('Tacle du Taureau !');
+          return;
+        }
+
+        bull.vx = (toCarrierX / distToCarrier) * bull.speed;
+        bull.vy = (toCarrierY / distToCarrier) * bull.speed;
+        bull.x += bull.vx;
+        bull.y += bull.vy;
+        bull.angle = Math.atan2(bull.vy, bull.vx);
+      } else {
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        ball.vx *= ball.friction;
+        ball.vy *= ball.friction;
+        const currentSpeed = Math.hypot(ball.vx, ball.vy);
+        ball.rotation += currentSpeed * 0.1;
+
+        const toBallX = ball.x - bull.x;
+        const toBallY = ball.y - bull.y;
+        const distToBall = Math.hypot(toBallX, toBallY);
+
+        const chaseSpeed = bull.speed * 1.15;
+        bull.vx = (toBallX / distToBall) * chaseSpeed;
+        bull.vy = (toBallY / distToBall) * chaseSpeed;
+        bull.x += bull.vx;
+        bull.y += bull.vy;
+        bull.angle = Math.atan2(bull.vy, bull.vx);
+
+        if (distToBall < bull.radius + ball.radius) {
+          triggerGameOver('Passe interceptée !');
+          return;
+        }
+
+        const distFromCenter = Math.hypot(ball.x - centerX, ball.y - centerY);
+        if (distFromCenter > rondoRadius + 60) {
+          triggerGameOver('Passe hors des limites !');
+          return;
+        }
+
+        if (currentSpeed < 1.0) {
+          triggerGameOver('Passe trop molle !');
+          return;
+        }
+
+        for (let i = 0; i < players.length; i++) {
+          if (i === currentCarrierIdx) continue;
+          const p = players[i];
+          const distToP = Math.hypot(ball.x - p.x, ball.y - p.y);
+
+          if (distToP < p.radius + ball.radius + 8) {
+            currentCarrierIdx = i;
+            ball.inFlight = false;
+            p.bounceY = 6;
+
+            score++;
+            hudScore.textContent = score;
+
+            hudScore.classList.add('pop');
+            setTimeout(() => hudScore.classList.remove('pop'), 150);
+
+            audio.playPass(score);
+            createFloatText(p.x, p.y, `+1`);
+
+            bull.speed = bull.baseSpeed + Math.min(score * 0.08, 3.2);
+            carrierMaxTime = Math.max(0.65, 1.4 - score * 0.02);
+            carrierTimeLeft = carrierMaxTime;
+
+            for (let k = 0; k < 6; k++) {
+              flatPuffs.push({
+                x: p.x,
+                y: p.y,
+                vx: (Math.random() - 0.5) * 5,
+                vy: (Math.random() - 0.5) * 5,
+                size: Math.random() * 4 + 3,
+                life: 1.0,
+                color: '#38bdf8'
+              });
+            }
+            break;
+          }
+        }
+      }
+
+      for (let i = flatPuffs.length - 1; i >= 0; i--) {
+        const pf = flatPuffs[i];
+        pf.x += pf.vx;
+        pf.y += pf.vy;
+        pf.life -= 0.05;
+        if (pf.life <= 0) flatPuffs.splice(i, 1);
+      }
+    }
+
+    // --- PARTICULES & DONNÉES GÉOMÉTRIQUES STATIQUES (ZÉRO ALLOCATION DANS LA BOUCLE) ---
+    const SPACE_STARS = [];
+    for (let i = 0; i < 20; i++) {
+      SPACE_STARS.push({
+        xRatio: ((i * 37 + 13) % 100) / 100,
+        yBase: (i * 47) % 800,
+        size: 1.2 + (i % 3) * 0.6,
+        speed: 0.18 + (i % 4) * 0.05,
+        alpha: 0.45 + (i % 5) * 0.12
+      });
+    }
+
+    const VOLCANO_FRACTURES = [
+      [{ x: 0, y: 0 }, { x: -35, y: -45 }, { x: -80, y: -90 }, { x: -120, y: -110 }],
+      [{ x: 0, y: 0 }, { x: 45, y: -30 }, { x: 95, y: -65 }, { x: 135, y: -75 }],
+      [{ x: 0, y: 0 }, { x: 50, y: 35 }, { x: 100, y: 70 }, { x: 130, y: 115 }],
+      [{ x: 0, y: 0 }, { x: -30, y: 50 }, { x: -75, y: 95 }, { x: -110, y: 130 }],
+      [{ x: 0, y: 0 }, { x: -55, y: -10 }, { x: -105, y: -20 }, { x: -145, y: -15 }],
+      [{ x: 0, y: 0 }, { x: 20, y: -60 }, { x: 35, y: -110 }, { x: 40, y: -140 }]
+    ];
+
+    // --- RENDERING CANVAS STRICTEMENT PLAYFUL FLAT & MOTEUR PROCÉDURAL ---
+    function render(time) {
+      time = time || performance.now();
+      ctx.clearRect(0, 0, width, height);
+
+      const strokeColor = isDarkMode ? '#020617' : '#0f172a';
+
+      const pitchCosmetic = COSMETICS.pitch.find(p => p.id === playerEquipped.pitch) || COSMETICS.pitch[0];
+      const linesColor = isDarkMode ? pitchCosmetic.darkLines : pitchCosmetic.lightLines;
+
+      renderPitch(strokeColor, linesColor, pitchCosmetic, time);
+
+      if (isDragging && !ball.inFlight && currentState === STATE.PLAYING) {
+        renderAimArrow(strokeColor);
+      }
+
+      const teamCosmetic = COSMETICS.team.find(t => t.id === playerEquipped.team) || COSMETICS.team[0];
+      players.forEach((p, idx) => {
+        const isCarrier = (idx === currentCarrierIdx && !ball.inFlight);
+        renderPlayer(p, isCarrier, strokeColor, teamCosmetic, time);
+      });
+
+      const bullCosmetic = COSMETICS.bull.find(b => b.id === playerEquipped.bull) || COSMETICS.bull[0];
+      renderBull(strokeColor, bullCosmetic, time);
+
+      renderBall(strokeColor);
+
+      flatPuffs.forEach(pf => {
+        ctx.beginPath();
+        ctx.arc(pf.x, pf.y, pf.size * pf.life, 0, Math.PI * 2);
+        ctx.fillStyle = pf.color;
+        ctx.fill();
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = strokeColor;
+        ctx.stroke();
+      });
+    }
+
+    // 1. Pelouse & Lignes plates + Skins de Terrain Animés
+    function renderPitch(strokeColor, linesColor, pitchCosmetic, time) {
+      // C.3 pitch_space (Vide Cosmique) : Rendu d'un fond noir constellé de 20 micro-points blancs se déplaçant verticalement à vitesse lente (0.2 px/frame)
+      if (pitchCosmetic.id === 'pitch_space') {
+        ctx.save();
+        ctx.fillStyle = '#050713';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#ffffff';
+        for (let i = 0; i < 20; i++) {
+          const star = SPACE_STARS[i];
+          const sx = star.xRatio * width;
+          const sy = (star.yBase + time * 0.012 * (star.speed / 0.2)) % height;
+          ctx.globalAlpha = star.alpha;
+          ctx.beginPath();
+          ctx.arc(sx, sy, star.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      // C.1 pitch_grid (Cyber) : Tracer une grille vectorielle dont les lignes centrales oscillent subtilement au passage du ballon
+      if (pitchCosmetic.id === 'pitch_grid') {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, rondoRadius + 20, 0, Math.PI * 2);
+        ctx.clip();
+
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
+        ctx.lineWidth = 1.5;
+
+        const step = 32;
+        const distBall = Math.hypot(ball.x - centerX, ball.y - centerY);
+        const ballInfluence = Math.max(0, 1 - distBall / 140);
+
+        // Lignes verticales
+        for (let gx = centerX - rondoRadius - 20; gx <= centerX + rondoRadius + 20; gx += step) {
+          ctx.beginPath();
+          const isCenter = Math.abs(gx - centerX) < step * 0.8;
+          for (let gy = centerY - rondoRadius - 20; gy <= centerY + rondoRadius + 20; gy += 16) {
+            let wave = 0;
+            if (isCenter) {
+              wave = Math.sin(time * 0.006 + gy * 0.04) * (2.5 + ballInfluence * 5);
+            }
+            if (gy === centerY - rondoRadius - 20) ctx.moveTo(gx + wave, gy);
+            else ctx.lineTo(gx + wave, gy);
+          }
+          ctx.stroke();
+        }
+
+        // Lignes horizontales
+        for (let gy = centerY - rondoRadius - 20; gy <= centerY + rondoRadius + 20; gy += step) {
+          ctx.beginPath();
+          const isCenter = Math.abs(gy - centerY) < step * 0.8;
+          for (let gx = centerX - rondoRadius - 20; gx <= centerX + rondoRadius + 20; gx += 16) {
+            let wave = 0;
+            if (isCenter) {
+              wave = Math.sin(time * 0.006 + gx * 0.04) * (2.5 + ballInfluence * 5);
+            }
+            if (gx === centerX - rondoRadius - 20) ctx.moveTo(gx, gy + wave);
+            else ctx.lineTo(gx, gy + wave);
+          }
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // C.2 pitch_volcano (Magmatique) : Lignes de fracture partant du centre dont l'épaisseur et l'intensité de l'orange pulsent selon Math.sin(time * 0.003)
+      if (pitchCosmetic.id === 'pitch_volcano') {
+        const pulse = (Math.sin(time * 0.003) + 1) * 0.5; // 0 à 1
+        const fWidth = 2 + pulse * 2.5;
+        const rVal = Math.round(234 + pulse * 21);
+        const gVal = Math.round(88 + pulse * 50);
+        const fColor = `rgb(${rVal}, ${gVal}, 12)`;
+
+        ctx.save();
+        ctx.strokeStyle = fColor;
+        ctx.lineWidth = fWidth;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        for (let f = 0; f < VOLCANO_FRACTURES.length; f++) {
+          const path = VOLCANO_FRACTURES[f];
+          ctx.beginPath();
+          ctx.moveTo(centerX + path[0].x, centerY + path[0].y);
+          for (let p = 1; p < path.length; p++) {
+            ctx.lineTo(centerX + path[p].x, centerY + path[p].y);
+          }
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // Grand cercle du rondo
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, rondoRadius, 0, Math.PI * 2);
+      ctx.strokeStyle = linesColor;
+      ctx.lineWidth = 4;
+      ctx.setLineDash([]);
+      ctx.stroke();
+
+      // Point central
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 6, 0, Math.PI * 2);
+      ctx.fillStyle = linesColor;
+      ctx.fill();
+
+      // Cercle central technique
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 28, 0, Math.PI * 2);
+      ctx.strokeStyle = linesColor;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+
+    // 2. Trajectoire de visée
+    function renderAimArrow(strokeColor) {
+      const carrier = players[currentCarrierIdx];
+      const dx = dragCurrent.x - dragStart.x;
+      const dy = dragCurrent.y - dragStart.y;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < 12) return;
+
+      const angle = Math.atan2(dy, dx);
+      const powerPct = Math.min(dist / 110, 1.0);
+      const targetLength = Math.min(dist * 1.5, rondoRadius * 1.5);
+      const endX = carrier.x + Math.cos(angle) * targetLength;
+      const endY = carrier.y + Math.sin(angle) * targetLength;
+
+      let dotColor = '#ffffff';
+      if (powerPct > 0.85) dotColor = '#fb7185';
+      else if (powerPct < 0.25) dotColor = '#fbbf24';
+
+      const dotCount = 7;
+      for (let i = 1; i <= dotCount; i++) {
+        const t = i / (dotCount + 1);
+        const px = carrier.x + Math.cos(angle) * (carrier.radius + (targetLength - carrier.radius) * t);
+        const py = carrier.y + Math.sin(angle) * (carrier.radius + (targetLength - carrier.radius) * t);
+
+        ctx.beginPath();
+        ctx.arc(px, py + 3, 4, 0, Math.PI * 2);
+        ctx.fillStyle = strokeColor;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(px, py, 4, 0, Math.PI * 2);
+        ctx.fillStyle = dotColor;
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = strokeColor;
+        ctx.stroke();
+      }
+
+      ctx.beginPath();
+      ctx.arc(endX, endY + 4, 8, 0, Math.PI * 2);
+      ctx.fillStyle = strokeColor;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(endX, endY, 8, 0, Math.PI * 2);
+      ctx.fillStyle = dotColor;
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = strokeColor;
+      ctx.stroke();
+    }
+
+    // 3. Passeur Playful Flat + Skins de Passeurs Animés
+    function renderPlayer(p, isCarrier, strokeColor, teamCosmetic, time) {
+      const drawY = p.y + p.bounceY;
+
+      // Ombre solide
+      ctx.beginPath();
+      ctx.arc(p.x, drawY + 6, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = strokeColor;
+      ctx.fill();
+
+      // Jauge d'urgence si porteur
+      if (isCarrier) {
+        const pct = Math.max(0, carrierTimeLeft / carrierMaxTime);
+        const gaugeColor = pct > 0.4 ? '#fbbf24' : '#fb7185';
+
+        ctx.beginPath();
+        ctx.arc(p.x, drawY, p.radius + 8, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * pct);
+        ctx.strokeStyle = gaugeColor;
+        ctx.lineWidth = 5;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(p.x, drawY, p.radius + 8, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * pct);
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      // Couleur de base du maillot
+      let playerFill = teamCosmetic.primaryColor;
+
+      // B.2 team_prism (Prisme) : Calcul dynamique de la couleur de remplissage via hsl(${(time * 0.05) % 360}, 85%, 60%)
+      if (teamCosmetic.id === 'team_prism') {
+        playerFill = `hsl(${(time * 0.05) % 360}, 85%, 60%)`;
+      }
+
+      // Corps du joueur
+      ctx.beginPath();
+      ctx.arc(p.x, drawY, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = playerFill;
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = strokeColor;
+      ctx.stroke();
+
+      // B.1 team_circuit (Circuit) : Tracer des segments fins blancs sur le maillot avec flash de luminosité d'un segment sur deux selon Math.floor(now / 200) % 3
+      if (teamCosmetic.id === 'team_circuit') {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(p.x, drawY, p.radius - 2, 0, Math.PI * 2);
+        ctx.clip();
+
+        const flashIndex = Math.floor(time / 200) % 3;
+
+        // Tracé segment 0
+        ctx.beginPath();
+        ctx.moveTo(p.x - 14, drawY);
+        ctx.lineTo(p.x - 4, drawY);
+        ctx.lineTo(p.x - 4, drawY - 8);
+        ctx.strokeStyle = (flashIndex === 0) ? '#ffffff' : 'rgba(255, 255, 255, 0.35)';
+        ctx.lineWidth = (flashIndex === 0) ? 2.5 : 1.5;
+        ctx.stroke();
+
+        // Tracé segment 1
+        ctx.beginPath();
+        ctx.moveTo(p.x, drawY + 14);
+        ctx.lineTo(p.x, drawY + 4);
+        ctx.lineTo(p.x + 8, drawY + 4);
+        ctx.strokeStyle = (flashIndex === 1) ? '#ffffff' : 'rgba(255, 255, 255, 0.35)';
+        ctx.lineWidth = (flashIndex === 1) ? 2.5 : 1.5;
+        ctx.stroke();
+
+        // Tracé segment 2
+        ctx.beginPath();
+        ctx.moveTo(p.x + 14, drawY - 2);
+        ctx.lineTo(p.x + 6, drawY - 2);
+        ctx.lineTo(p.x + 2, drawY - 10);
+        ctx.strokeStyle = (flashIndex === 2) ? '#ffffff' : 'rgba(255, 255, 255, 0.35)';
+        ctx.lineWidth = (flashIndex === 2) ? 2.5 : 1.5;
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      // B.3 team_diamond (Diamant) : Rendu d'un reflet oblique blanc semi-transparent balayant les joueurs d'un côté à l'autre selon une période de 2 secondes
+      if (teamCosmetic.id === 'team_diamond') {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(p.x, drawY, p.radius - 2, 0, Math.PI * 2);
+        ctx.clip();
+
+        const phase = (time % 2000) / 2000; // 0 à 1 en 2 secondes
+        const sweepX = p.x - p.radius * 2.2 + phase * (p.radius * 4.4);
+
+        ctx.save();
+        ctx.translate(sweepX, drawY);
+        ctx.rotate(Math.PI / 4); // Oblique à 45°
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+        ctx.fillRect(-5, -p.radius * 2, 10, p.radius * 4);
+        ctx.restore();
+
+        ctx.restore();
+      }
+
+      // Col ou liseré
+      if (teamCosmetic.accentColor && teamCosmetic.id !== 'team_circuit' && teamCosmetic.id !== 'team_prism') {
+        ctx.beginPath();
+        ctx.arc(p.x, drawY - p.radius * 0.4, p.radius * 0.45, 0, Math.PI);
+        ctx.strokeStyle = teamCosmetic.accentColor;
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+      }
+
+      // Yeux cartoon
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(p.x - 6 + p.eyeX, drawY - 3 + p.eyeY, 4, 0, Math.PI * 2);
+      ctx.arc(p.x + 6 + p.eyeX, drawY - 3 + p.eyeY, 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = strokeColor;
+      ctx.stroke();
+
+      ctx.fillStyle = strokeColor;
+      ctx.beginPath();
+      ctx.arc(p.x - 6 + p.eyeX * 1.3, drawY - 3 + p.eyeY * 1.3, 2, 0, Math.PI * 2);
+      ctx.arc(p.x + 6 + p.eyeX * 1.3, drawY - 3 + p.eyeY * 1.3, 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Numéro de maillot
+      ctx.fillStyle = teamCosmetic.numberColor || '#ffffff';
+      ctx.font = '800 13px "Varela Round", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText((p.id + 1).toString(), p.x, drawY + 8);
+    }
+
+    // 4. Le Taureau Playful Flat + Skins de Taureau Animés
+    function renderBull(strokeColor, bullCosmetic, time) {
+      ctx.save();
+      ctx.translate(bull.x, bull.y);
+
+      // A.1 bull_ghost (Spectre) : Opacité sinusoïdale 0.5 + Math.sin(time * 0.004) * 0.25
+      if (bullCosmetic.id === 'bull_ghost') {
+        ctx.globalAlpha = 0.5 + Math.sin(time * 0.004) * 0.25;
+      }
+
+      // Ombre solide décalée dure
+      ctx.beginPath();
+      ctx.arc(0, 6, bull.radius, 0, Math.PI * 2);
+      ctx.fillStyle = strokeColor;
+      ctx.fill();
+
+      // A.4 bull_solar (Démiurge Solaire) : Dessiner 8 rayons triangulaires d'or autour du taureau tournant en continu (ctx.rotate(now * 0.0015))
+      if (bullCosmetic.id === 'bull_solar') {
+        ctx.save();
+        ctx.rotate(time * 0.0015);
+        ctx.fillStyle = '#fbbf24';
+        for (let i = 0; i < 8; i++) {
+          const a = (i * Math.PI * 2) / 8;
+          const cosA = Math.cos(a);
+          const sinA = Math.sin(a);
+          const perpCos = -sinA;
+          const perpSin = cosA;
+          const baseR = bull.radius + 1;
+          const tipR = bull.radius + 10;
+          const halfW = 4;
+          ctx.beginPath();
+          ctx.moveTo(cosA * tipR, sinA * tipR);
+          ctx.lineTo(cosA * baseR + perpCos * halfW, sinA * baseR + perpSin * halfW);
+          ctx.lineTo(cosA * baseR - perpCos * halfW, sinA * baseR - perpSin * halfW);
+          ctx.closePath();
+          ctx.fill();
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = strokeColor;
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // A.3 bull_blackhole (Trou Noir) : Disque noir pur entouré d'un anneau violet en rotation avec 2 micro-satellites
+      if (bullCosmetic.id === 'bull_blackhole') {
+        ctx.save();
+        ctx.rotate(time * 0.002);
+
+        // Anneau violet
+        ctx.beginPath();
+        ctx.arc(0, 0, bull.radius + 6, 0, Math.PI * 2);
+        ctx.strokeStyle = '#a855f7';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // 2 micro-satellites orbitant à vitesse constante
+        for (let k = 0; k < 2; k++) {
+          const pAngle = k * Math.PI;
+          const px = Math.cos(pAngle) * (bull.radius + 6);
+          const py = Math.sin(pAngle) * (bull.radius + 6);
+          ctx.beginPath();
+          ctx.arc(px, py, 3, 0, Math.PI * 2);
+          ctx.fillStyle = '#e879f9';
+          ctx.fill();
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = strokeColor;
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // Couleur du corps du taureau
+      let bodyFill = bullCosmetic.bodyColor;
+
+      // A.2 bull_magma (Magma) : Impulsion de couleur cyclique entre rouge sombre #7f1d1d et orange lave #ea580c
+      if (bullCosmetic.id === 'bull_magma') {
+        const t = (Math.sin(time * 0.004) + 1) * 0.5; // 0 à 1
+        const r = Math.round(127 + (234 - 127) * t);
+        const g = Math.round(29 + (88 - 29) * t);
+        const b = Math.round(29 + (12 - 29) * t);
+        bodyFill = `rgb(${r},${g},${b})`;
+      } else if (bullCosmetic.id === 'bull_blackhole') {
+        bodyFill = '#000000'; // Disque noir pur
+      }
+
+      // Corps du taureau
+      ctx.beginPath();
+      ctx.arc(0, 0, bull.radius, 0, Math.PI * 2);
+      ctx.fillStyle = bodyFill;
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = strokeColor;
+      ctx.stroke();
+
+      // Cornes géométriques
+      ctx.fillStyle = bullCosmetic.hornColor;
+      // Corne gauche
+      ctx.beginPath();
+      ctx.moveTo(-8, -bull.radius * 0.4);
+      ctx.lineTo(-18, -bull.radius * 0.9);
+      ctx.lineTo(-4, -bull.radius * 0.9);
+      ctx.closePath();
+      ctx.fill();
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = strokeColor;
+      ctx.stroke();
+
+      // Corne droite
+      ctx.beginPath();
+      ctx.moveTo(8, -bull.radius * 0.4);
+      ctx.lineTo(18, -bull.radius * 0.9);
+      ctx.lineTo(4, -bull.radius * 0.9);
+      ctx.closePath();
+      ctx.fill();
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = strokeColor;
+      ctx.stroke();
+
+      // Yeux cartoon
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(-6, -1, 4.5, 0, Math.PI * 2);
+      ctx.arc(6, -1, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = strokeColor;
+      ctx.stroke();
+
+      ctx.fillStyle = strokeColor;
+      ctx.beginPath();
+      ctx.arc(-5, -1, 2, 0, Math.PI * 2);
+      ctx.arc(7, -1, 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Anneau au nez
+      ctx.beginPath();
+      ctx.arc(0, 8, 4, 0, Math.PI);
+      ctx.strokeStyle = bullCosmetic.hornColor;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    // 5. La Balle Playful Flat
+    function renderBall(strokeColor) {
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y + 4, ball.radius, 0, Math.PI * 2);
+      ctx.fillStyle = strokeColor;
+      ctx.fill();
+
+      ctx.save();
+      ctx.translate(ball.x, ball.y);
+      ctx.rotate(ball.rotation);
+
+      ctx.beginPath();
+      ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
+      ctx.fillStyle = isDarkMode ? '#e2e8f0' : '#ffffff';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = strokeColor;
+      ctx.stroke();
+
+      ctx.fillStyle = strokeColor;
+      ctx.beginPath();
+      const pR = ball.radius * 0.45;
+      for (let i = 0; i < 5; i++) {
+        const a = (i * 2 * Math.PI) / 5 - Math.PI / 2;
+        const px = Math.cos(a) * pR;
+        const py = Math.sin(a) * pR;
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    // --- LOGIQUE COMPTE À REBOURS ---
+    let countdownTimeouts = [];
+
+    function clearCountdownTimers() {
+      countdownTimeouts.forEach(t => clearTimeout(t));
+      countdownTimeouts = [];
+      if (countdownOverlay) countdownOverlay.classList.add('hidden');
+    }
+
+    function setCountdownNumber(text, isGo) {
+      countdownText.textContent = text;
+      countdownText.style.background = isGo ? 'var(--btn-play-bg)' : 'var(--btn-accent-bg)';
+      countdownText.classList.remove('countdown-pop');
+      void countdownText.offsetWidth;
+      countdownText.classList.add('countdown-pop');
+      audio.playCountdown(isGo);
+    }
+
+    function startLaunchCountdown() {
+      clearCountdownTimers();
+      initGame();
+      currentState = STATE.COUNTDOWN;
+
+      startOverlay.classList.add('hidden');
+      gameoverOverlay.classList.add('hidden');
+      shopOverlay.classList.add('hidden');
+      countdownOverlay.classList.remove('hidden');
+
+      setCountdownNumber('3', false);
+
+      countdownTimeouts.push(setTimeout(() => {
+        setCountdownNumber('2', false);
+      }, 400));
+
+      countdownTimeouts.push(setTimeout(() => {
+        setCountdownNumber('1', false);
+      }, 800));
+
+      countdownTimeouts.push(setTimeout(() => {
+        setCountdownNumber('GO !', true);
+      }, 1200));
+
+      countdownTimeouts.push(setTimeout(() => {
+        countdownOverlay.classList.add('hidden');
+        carrierTimeLeft = carrierMaxTime;
+        currentState = STATE.PLAYING;
+      }, 1550));
+    }
+
+    // --- INTERFACE DE LA BOUTIQUE COSMÉTIQUE ÉTENDUE ---
+    let currentShopTab = 'bull';
+
+    function renderShopItems() {
+      const listEl = document.getElementById('shop-items-list');
+      listEl.innerHTML = '';
+
+      const items = COSMETICS[currentShopTab] || [];
+
+      items.forEach(item => {
+        const isOwned = playerInventory.includes(item.id);
+        const isEquipped = (playerEquipped[currentShopTab] === item.id);
+        const canAfford = (playerStars >= item.price);
+
+        const card = document.createElement('div');
+        card.className = 'shop-item-card';
+
+        // Badge ANIMÉ si applicable
+        let animatedBadgeHtml = '';
+        if (item.isAnimated) {
+          animatedBadgeHtml = `<span class="animated-skin-badge">ANIMÉ</span>`;
+        }
+
+        // Pastille visuelle circulaire représentative du skin
+        let previewHtml = '';
+        if (currentShopTab === 'bull') {
+          previewHtml = `<div class="cosmetic-preview" style="background: ${item.bodyColor};">
+            <span style="font-size: 11px; font-weight: 800; color: ${item.hornColor};">▲▲</span>
+          </div>`;
+        } else if (currentShopTab === 'team') {
+          previewHtml = `<div class="cosmetic-preview" style="background: ${item.primaryColor};">
+            <span style="font-size: 11px; font-weight: 800; color: ${item.numberColor};">10</span>
+          </div>`;
+        } else {
+          previewHtml = `<div class="cosmetic-preview" style="background: ${item.lightBg}; border-color: ${item.lightBorder};">
+            <div style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid ${item.lightLines};"></div>
+          </div>`;
+        }
+
+        // Bouton d'action dynamique (Verrouillé insuffisant, Verrouillé achetable, Débloqué, Équipé)
+        let actionBtnHtml = '';
+        if (isEquipped) {
+          actionBtnHtml = `<button class="btn-item-action btn-item-equipped">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="width: 13px; height: 13px; stroke-width: 3;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>ÉQUIPÉ</span>
+          </button>`;
+        } else if (isOwned) {
+          actionBtnHtml = `<button class="btn-item-action btn-item-equip" onclick="equipCosmetic('${currentShopTab}', '${item.id}')">
+            <span>ÉQUIPER</span>
+          </button>`;
+        } else {
+          if (!canAfford) {
+            actionBtnHtml = `<button class="btn-item-action btn-item-buy disabled" disabled title="Solde insuffisant (${formatNumber(item.price)} étoiles requises)">
+              <span>${formatNumber(item.price)}</span>
+              <svg class="svg-icon star-filled" viewBox="0 0 24 24" style="width: 11px; height: 11px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </button>`;
+          } else {
+            actionBtnHtml = `<button class="btn-item-action btn-item-buy" onclick="buyCosmetic('${currentShopTab}', '${item.id}', ${item.price})">
+              <span>${formatNumber(item.price)}</span>
+              <svg class="svg-icon star-filled" viewBox="0 0 24 24" style="width: 11px; height: 11px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </button>`;
+          }
+        }
+
+        // Prix affiché sous le libellé si non possédé
+        const priceSubText = (!isOwned && item.price > 0)
+          ? ` • ${formatNumber(item.price)} ⭐`
+          : '';
+
+        card.innerHTML = `
+          ${animatedBadgeHtml}
+          <div class="shop-item-info">
+            ${previewHtml}
+            <div class="cosmetic-text-wrap">
+              <div class="cosmetic-name">${item.name}</div>
+              <div class="cosmetic-sub">${item.sub}${priceSubText}</div>
+            </div>
+          </div>
+          ${actionBtnHtml}
+        `;
+
+        listEl.appendChild(card);
+      });
+    }
+
+    // Achat d'un cosmétique
+    window.buyCosmetic = function(category, itemId, price) {
+      if (playerStars < price) {
+        audio.playFail();
+        return;
+      }
+
+      audio.init();
+      audio.playPurchase();
+      playerStars -= price;
+      playerInventory.push(itemId);
+      playerEquipped[category] = itemId;
+
+      savePlayerData();
+      updateStarsDisplay();
+      if (category === 'pitch') applyEquippedPitchSkin();
+      renderShopItems();
+    };
+
+    // Équiper un cosmétique possédé
+    window.equipCosmetic = function(category, itemId) {
+      audio.init();
+      audio.playFlick();
+      playerEquipped[category] = itemId;
+
+      savePlayerData();
+      if (category === 'pitch') applyEquippedPitchSkin();
+      renderShopItems();
+    };
+
+    // Gestion des onglets
+    document.querySelectorAll('.shop-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.shop-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentShopTab = btn.getAttribute('data-tab');
+        renderShopItems();
+      });
+    });
+
+    btnOpenShop.addEventListener('click', () => {
+      audio.init();
+      audio.playFlick();
+      updateStarsDisplay();
+      renderShopItems();
+      shopOverlay.classList.remove('hidden');
+    });
+
+    btnCloseShop.addEventListener('click', () => {
+      audio.init();
+      shopOverlay.classList.add('hidden');
+    });
+
+    // --- BOUTONS D'ACTION PRINCIPAUX ---
+    btnPlay.addEventListener('click', () => {
+      audio.init();
+      startLaunchCountdown();
+    });
+
+    btnRestart.addEventListener('click', () => {
+      audio.init();
+      startLaunchCountdown();
+    });
+
+    btnHome.addEventListener('click', () => {
+      audio.init();
+      clearCountdownTimers();
+      gameoverOverlay.classList.add('hidden');
+      startOverlay.classList.remove('hidden');
+      currentState = STATE.MENU;
+      initGame();
+    });
+
+    // Lancement
+    resize();
+    initGame();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
