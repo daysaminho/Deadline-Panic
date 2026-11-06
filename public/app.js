@@ -716,6 +716,13 @@ function showScreen(screenId) {
     target.style.display = '';
   }
 
+  // Carrousels interactifs de la page d'accueil (lecture optimisée sur screen-portal uniquement)
+  if (screenId === 'screen-portal') {
+    if (typeof initHomeCarousels === 'function') initHomeCarousels();
+  } else {
+    if (typeof pauseHomeCarousels === 'function') pauseHomeCarousels();
+  }
+
   // Gestion responsive de la classe body.in-mercato pour masquer le header global sur mobile
   if (screenId === 'screen-mercato') {
     document.body.classList.add('in-mercato');
@@ -5911,4 +5918,270 @@ document.addEventListener('DOMContentLoaded', () => {
     tabSolo.addEventListener('click', triggerSolo);
     tabSolo.addEventListener('touchend', triggerSolo, { passive: false });
   }
+
+  // Démarrage des carrousels au chargement initial
+  initHomeCarousels();
 });
+
+// ==============================================================
+// GESTIONNAIRE DES CARROUSELS INTERACTIFS DE LA PAGE D'ACCUEIL
+// 1. Carrousel Marché / Hero (Haut-Droit)
+// 2. Carrousel Présentation / Highlights (Bas)
+// Défilement automatique, indicateurs cliquables & support Touch/Swipe
+// ==============================================================
+
+let heroCarouselTimer = null;
+let currentHeroSlideIndex = 0;
+const HERO_CAPTIONS = [
+  'Aperçu du Marché · Négociation Directe',
+  'Visite Médicale · Risque & Décision',
+  'Flash Braderie · Opportunité DNCG',
+  'Duel 1v1 · Multijoueur en Direct'
+];
+
+function goToHeroSlide(index) {
+  const slides = document.querySelectorAll('#hero-carousel-slides .carousel-slide');
+  const dots = document.querySelectorAll('#hero-carousel-dots button');
+  const captionEl = document.getElementById('hero-carousel-caption');
+  if (!slides || slides.length === 0) return;
+
+  const total = slides.length;
+  currentHeroSlideIndex = ((index % total) + total) % total;
+
+  slides.forEach((slide, i) => {
+    if (i === currentHeroSlideIndex) {
+      slide.classList.add('active');
+      slide.setAttribute('aria-hidden', 'false');
+    } else {
+      slide.classList.remove('active');
+      slide.setAttribute('aria-hidden', 'true');
+    }
+  });
+
+  if (dots && dots.length > 0) {
+    dots.forEach((dot, i) => {
+      if (i === currentHeroSlideIndex) {
+        dot.className = 'w-3 h-3 rounded-full bg-blue-600 transition-all cursor-pointer scale-110 shadow-xs';
+        dot.setAttribute('aria-current', 'true');
+      } else {
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 dark:hover:bg-slate-600 transition-all cursor-pointer opacity-70 hover:opacity-100';
+        dot.removeAttribute('aria-current');
+      }
+    });
+  }
+
+  if (captionEl && HERO_CAPTIONS[currentHeroSlideIndex]) {
+    captionEl.textContent = HERO_CAPTIONS[currentHeroSlideIndex];
+  }
+
+  resetHeroCarouselTimer();
+}
+window.goToHeroSlide = goToHeroSlide;
+
+function startHeroCarouselTimer() {
+  stopHeroCarouselTimer();
+  heroCarouselTimer = setInterval(() => {
+    const slides = document.querySelectorAll('#hero-carousel-slides .carousel-slide');
+    if (slides && slides.length > 0) {
+      goToHeroSlide((currentHeroSlideIndex + 1) % slides.length);
+    }
+  }, 4500);
+}
+
+function stopHeroCarouselTimer() {
+  if (heroCarouselTimer) {
+    clearInterval(heroCarouselTimer);
+    heroCarouselTimer = null;
+  }
+}
+
+function resetHeroCarouselTimer() {
+  stopHeroCarouselTimer();
+  startHeroCarouselTimer();
+}
+
+// 2. Carrousel Présentation en Bas de Page
+let bottomCarouselTimer = null;
+let currentBottomSlideIndex = 0;
+
+function goToBottomSlide(index) {
+  const slides = document.querySelectorAll('#bottom-carousel-slides .carousel-slide');
+  const dots = document.querySelectorAll('#bottom-carousel-dots button');
+  if (!slides || slides.length === 0) return;
+
+  const total = slides.length;
+  currentBottomSlideIndex = ((index % total) + total) % total;
+
+  slides.forEach((slide, i) => {
+    if (i === currentBottomSlideIndex) {
+      slide.classList.add('active');
+      slide.setAttribute('aria-hidden', 'false');
+    } else {
+      slide.classList.remove('active');
+      slide.setAttribute('aria-hidden', 'true');
+    }
+  });
+
+  if (dots && dots.length > 0) {
+    dots.forEach((dot, i) => {
+      if (i === currentBottomSlideIndex) {
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-blue-600 transition-all cursor-pointer scale-110 shadow-xs';
+        dot.setAttribute('aria-current', 'true');
+      } else {
+        dot.className = 'w-2 h-2 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 dark:hover:bg-slate-600 transition-all cursor-pointer opacity-70 hover:opacity-100';
+        dot.removeAttribute('aria-current');
+      }
+    });
+  }
+
+  resetBottomCarouselTimer();
+}
+window.goToBottomSlide = goToBottomSlide;
+
+function startBottomCarouselTimer() {
+  stopBottomCarouselTimer();
+  bottomCarouselTimer = setInterval(() => {
+    const slides = document.querySelectorAll('#bottom-carousel-slides .carousel-slide');
+    if (slides && slides.length > 0) {
+      goToBottomSlide((currentBottomSlideIndex + 1) % slides.length);
+    }
+  }, 5500);
+}
+
+function stopBottomCarouselTimer() {
+  if (bottomCarouselTimer) {
+    clearInterval(bottomCarouselTimer);
+    bottomCarouselTimer = null;
+  }
+}
+
+function resetBottomCarouselTimer() {
+  stopBottomCarouselTimer();
+  startBottomCarouselTimer();
+}
+
+// Helper swipe tactile
+function setupCarouselSwipe(wrapperId, onNext, onPrev) {
+  const wrapper = document.getElementById(wrapperId);
+  if (!wrapper || wrapper._hasSwipeAttached) return;
+  wrapper._hasSwipeAttached = true;
+
+  let startX = 0;
+  let startY = 0;
+  let isSwiping = false;
+
+  wrapper.addEventListener('touchstart', (e) => {
+    if (e.touches && e.touches[0]) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isSwiping = true;
+    }
+  }, { passive: true });
+
+  wrapper.addEventListener('touchend', (e) => {
+    if (!isSwiping || !e.changedTouches || !e.changedTouches[0]) return;
+    isSwiping = false;
+    const diffX = e.changedTouches[0].clientX - startX;
+    const diffY = e.changedTouches[0].clientY - startY;
+
+    if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX < 0) {
+        onNext();
+      } else {
+        onPrev();
+      }
+    }
+  }, { passive: true });
+}
+
+// Initialisation globale et attachement des écouteurs d'événements
+function initHomeCarousels() {
+  // Attachement strict des écouteurs click & touch sur les puces du Hero Carousel
+  const heroDots = document.querySelectorAll('#hero-carousel-dots button');
+  heroDots.forEach((dot, idx) => {
+    dot.onclick = (e) => {
+      if (e) e.preventDefault();
+      goToHeroSlide(idx);
+    };
+    dot.addEventListener('click', (e) => {
+      e.preventDefault();
+      goToHeroSlide(idx);
+    });
+    dot.addEventListener('touchend', (e) => {
+      if (e.cancelable) e.preventDefault();
+      goToHeroSlide(idx);
+    }, { passive: false });
+  });
+
+  // Attachement strict des écouteurs click & touch sur les puces du Bottom Carousel
+  const bottomDots = document.querySelectorAll('#bottom-carousel-dots button');
+  bottomDots.forEach((dot, idx) => {
+    dot.onclick = (e) => {
+      if (e) e.preventDefault();
+      goToBottomSlide(idx);
+    };
+    dot.addEventListener('click', (e) => {
+      e.preventDefault();
+      goToBottomSlide(idx);
+    });
+    dot.addEventListener('touchend', (e) => {
+      if (e.cancelable) e.preventDefault();
+      goToBottomSlide(idx);
+    }, { passive: false });
+  });
+
+  // Pause au survol de la souris
+  const heroWrapper = document.getElementById('hero-carousel-wrapper');
+  if (heroWrapper && !heroWrapper._hasHoverAttached) {
+    heroWrapper._hasHoverAttached = true;
+    heroWrapper.addEventListener('mouseenter', stopHeroCarouselTimer);
+    heroWrapper.addEventListener('mouseleave', startHeroCarouselTimer);
+  }
+
+  const bottomWrapper = document.getElementById('bottom-carousel-wrapper');
+  if (bottomWrapper && !bottomWrapper._hasHoverAttached) {
+    bottomWrapper._hasHoverAttached = true;
+    bottomWrapper.addEventListener('mouseenter', stopBottomCarouselTimer);
+    bottomWrapper.addEventListener('mouseleave', startBottomCarouselTimer);
+  }
+
+  // Support du balayage mobile (Swipe Left/Right)
+  setupCarouselSwipe(
+    'hero-carousel-wrapper',
+    () => {
+      const slides = document.querySelectorAll('#hero-carousel-slides .carousel-slide');
+      if (slides.length) goToHeroSlide((currentHeroSlideIndex + 1) % slides.length);
+    },
+    () => {
+      const slides = document.querySelectorAll('#hero-carousel-slides .carousel-slide');
+      if (slides.length) goToHeroSlide((currentHeroSlideIndex - 1 + slides.length) % slides.length);
+    }
+  );
+
+  setupCarouselSwipe(
+    'bottom-carousel-wrapper',
+    () => {
+      const slides = document.querySelectorAll('#bottom-carousel-slides .carousel-slide');
+      if (slides.length) goToBottomSlide((currentBottomSlideIndex + 1) % slides.length);
+    },
+    () => {
+      const slides = document.querySelectorAll('#bottom-carousel-slides .carousel-slide');
+      if (slides.length) goToBottomSlide((currentBottomSlideIndex - 1 + slides.length) % slides.length);
+    }
+  );
+
+  // Synchronisation initiale des affichages
+  goToHeroSlide(0);
+  goToBottomSlide(0);
+
+  // Lancement des timers de défilement automatique
+  startHeroCarouselTimer();
+  startBottomCarouselTimer();
+}
+window.initHomeCarousels = initHomeCarousels;
+
+function pauseHomeCarousels() {
+  stopHeroCarouselTimer();
+  stopBottomCarouselTimer();
+}
+window.pauseHomeCarousels = pauseHomeCarousels;

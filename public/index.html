@@ -546,10 +546,10 @@
 
             <div class="flex items-center justify-between border-t border-gray-100 dark:border-slate-800 pt-3 mt-2">
               <div id="hero-carousel-dots" class="flex items-center gap-1.5">
-                <button onclick="goToHeroSlide(0)" class="w-3 h-3 rounded-full bg-blue-600 transition-all cursor-pointer" aria-label="Slide 1"></button>
-                <button onclick="goToHeroSlide(1)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 transition-all cursor-pointer" aria-label="Slide 2"></button>
-                <button onclick="goToHeroSlide(2)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 transition-all cursor-pointer" aria-label="Slide 3"></button>
-                <button onclick="goToHeroSlide(3)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 transition-all cursor-pointer" aria-label="Slide 4"></button>
+                <button type="button" onclick="goToHeroSlide(0)" class="w-3 h-3 rounded-full bg-blue-600 transition-all cursor-pointer" aria-label="Slide 1"></button>
+                <button type="button" onclick="goToHeroSlide(1)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 transition-all cursor-pointer" aria-label="Slide 2"></button>
+                <button type="button" onclick="goToHeroSlide(2)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 transition-all cursor-pointer" aria-label="Slide 3"></button>
+                <button type="button" onclick="goToHeroSlide(3)" class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 transition-all cursor-pointer" aria-label="Slide 4"></button>
               </div>
               <span id="hero-carousel-caption" class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Aperçu du Marché</span>
             </div>
@@ -605,10 +605,10 @@
         </div>
 
         <!-- Dots indicator for bottom carousel -->
-        <div class="flex items-center justify-center gap-2 pt-2 border-t border-gray-100 dark:border-slate-800/80">
-          <button onclick="goToBottomSlide(0)" class="w-2.5 h-2.5 rounded-full bg-blue-600 transition-all cursor-pointer" aria-label="Highlight 1"></button>
-          <button onclick="goToBottomSlide(1)" class="w-2 h-2 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 transition-all cursor-pointer" aria-label="Highlight 2"></button>
-          <button onclick="goToBottomSlide(2)" class="w-2 h-2 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 transition-all cursor-pointer" aria-label="Highlight 3"></button>
+        <div id="bottom-carousel-dots" class="flex items-center justify-center gap-2 pt-2 border-t border-gray-100 dark:border-slate-800/80">
+          <button type="button" onclick="goToBottomSlide(0)" class="w-2.5 h-2.5 rounded-full bg-blue-600 transition-all cursor-pointer" aria-label="Highlight 1"></button>
+          <button type="button" onclick="goToBottomSlide(1)" class="w-2 h-2 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 transition-all cursor-pointer" aria-label="Highlight 2"></button>
+          <button type="button" onclick="goToBottomSlide(2)" class="w-2 h-2 rounded-full bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 transition-all cursor-pointer" aria-label="Highlight 3"></button>
         </div>
 
       </div>
@@ -1972,12 +1972,12 @@
 
   <!-- Load Data Files & App Logic with Cache Buster -->
   <script src="/socket.io/socket.io.js"></script>
-  <script src="icons.js?v=5.6"></script>
-  <script src="data/archetypes.js?v=5.6"></script>
-  <script src="data/generator.js?v=5.6"></script>
-  <script src="data/scenarios.js?v=5.6"></script>
-  <script src="duel.js?v=5.6"></script>
-  <script src="app.js?v=5.6"></script>
+  <script src="icons.js?v=5.7"></script>
+  <script src="data/archetypes.js?v=5.7"></script>
+  <script src="data/generator.js?v=5.7"></script>
+  <script src="data/scenarios.js?v=5.7"></script>
+  <script src="duel.js?v=5.7"></script>
+  <script src="app.js?v=5.7"></script>
 
   <!-- PWA, Theme & Modal Scroll Lock System -->
   <script>
