@@ -5754,10 +5754,20 @@ function shareRecapWithFriends() {
 }
 
 function initAppStartup() {
-  updateHeaderStats();
+  try {
+    updateHeaderStats();
+  } catch (e) {
+    console.warn('updateHeaderStats warning:', e);
+  }
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const duelCode = urlParams.get('duel');
+  let duelCode = null;
+  try {
+    if (typeof URLSearchParams !== 'undefined' && window.location && window.location.search) {
+      const urlParams = new URLSearchParams(window.location.search);
+      duelCode = urlParams.get('duel');
+    }
+  } catch (e) {}
+
   if (duelCode) {
     openDuelPortal();
     const codeInput = document.getElementById('duel-code-input');
