@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const path = require('path');
-const { SCENARIOS } = require('./public/data/scenarios.js');
+const { SCENARIOS, enrichScenarioTacticalDemands, checkPlayerFulfillsNeed, checkPlayerFulfillsOrigin } = require('./public/data/scenarios.js');
 const { generateProceduralMarket } = require('./public/data/generator.js');
 const { checkPhilosophyMatch } = require('./public/data/archetypes.js');
 
@@ -67,6 +67,10 @@ function selectRivalClubDuo() {
   const commonBudget = Math.round((7.0 + Math.random() * 4.0) * 10) / 10;
   clubA.budget = commonBudget;
   clubB.budget = commonBudget;
+
+  // Parité stricte avec Solo Difficile : enrichissement des exigences tactiques et consignes du coach
+  enrichScenarioTacticalDemands(clubA);
+  enrichScenarioTacticalDemands(clubB);
 
   return {
     league: leagueKey,
@@ -336,7 +340,7 @@ function generateDuelAnalysis(p1, p2, pts1, pts2, rank1, rank2, h2hMatches, dncg
 
   if (isDraw) {
     points.push({
-      icon: '🤝',
+      icon: 'draw',
       title: 'Duel au cordeau',
       desc: `Les deux managers terminent avec exactement ${pts1} points. Une résistance héroïque de part et d'autre où chaque recrue a pesé pour arracher le maintien ensemble.`
     });
@@ -355,21 +359,41 @@ function generateDuelAnalysis(p1, p2, pts1, pts2, rank1, rank2, h2hMatches, dncg
 
   if (topTarget) {
     points.push({
-      icon: '🎯',
+      icon: 'target',
       title: `Le flair au Mercato (${winner.name})`,
       desc: `La signature de ${topTarget.name} (${topTarget.caliberLabel || 'Cadre Prioritaire'}${topTarget.archetype ? ' • ' + topTarget.archetype.name : ''}) a tout changé : il a stabilisé ${winner.club.club} et apporté le surplus de points indispensable pour la survie.`
     });
   } else if (winnerSignings.length > loserSignings.length) {
     points.push({
-      icon: '🛒',
+      icon: 'cart',
       title: `Banc plus fourni (${winner.name})`,
       desc: `${winner.name} a signé ${winnerSignings.length} renfort(s) contre seulement ${loserSignings.length} pour ${loser.name}, offrant plus de profondeur dans les moments décisifs de la saison.`
     });
   } else {
     points.push({
-      icon: '🛡️',
+      icon: 'clean',
       title: `Solidité collective (${winner.name})`,
       desc: `L'alchimie tactique de ${winner.club.club} a compensé le manque de gros noms grâce à une discipline de fer dans les duels.`
+    });
+  }
+
+  // 1a. Exigences et Consignes du Coach (Parité Solo Difficile)
+  const winnerNeedsMissing = (winner.club.needs || []).length - (winner.tacticalNeedsFulfilled || 0);
+  const loserNeedsMissing = (loser.club.needs || []).length - (loser.tacticalNeedsFulfilled || 0);
+
+  if (winnerNeedsMissing === 0 && loserNeedsMissing > 0) {
+    points.push({
+      icon: 'tactics',
+      title: `Plan du coach respecté à 100% (${winner.name})`,
+      desc: `${winner.name} a signé exactement les profils tactiques réclamés par le coach (+15 pts d'impact), alors que ${loser.name} a laissé ${loserNeedsMissing} poste(s) clé(s) sans renfort adapté (-${loserNeedsMissing * 5} pts).`
+    });
+  }
+
+  if (winner.hasFulfilledOrigin && !loser.hasFulfilledOrigin && loser.club.originConstraint && loser.club.originConstraint.code !== 'FREE') {
+    points.push({
+      icon: 'target',
+      title: `Consigne de filière respectée (${winner.name})`,
+      desc: `${winner.name} a déniché un renfort conforme à la filière prioritaire du club (${winner.club.originConstraint.name}), contrairement à ${loser.name} pénalisé par son conseil d'administration.`
     });
   }
 
@@ -377,7 +401,7 @@ function generateDuelAnalysis(p1, p2, pts1, pts2, rank1, rank2, h2hMatches, dncg
   const fitPlayer = winnerSignings.find(p => p.isArchetypeFit);
   if (fitPlayer && fitPlayer.archetype) {
     points.push({
-      icon: '♟️',
+      icon: 'tactics',
       title: `Synergie d'archétype (${winner.name})`,
       desc: `Le choix de ${fitPlayer.name} (${fitPlayer.archetype.name}) a sublimé le projet de jeu : son atout majeur '${fitPlayer.archetype.strength}' a rapporté des points cruciaux.`
     });
@@ -386,7 +410,7 @@ function generateDuelAnalysis(p1, p2, pts1, pts2, rank1, rank2, h2hMatches, dncg
   const misfitPlayer = loserSignings.find(p => p.isArchetypeMisfit);
   if (misfitPlayer && misfitPlayer.archetype) {
     points.push({
-      icon: '🧩',
+      icon: 'puzzle',
       title: `Dissonance tactique fatale (${loser.name})`,
       desc: `Le profil de ${misfitPlayer.name} (${misfitPlayer.archetype.name}) a exposé le club à sa faille congénitale : '${misfitPlayer.archetype.sacrifice}' (-3 pts de pénalité).`
     });
@@ -396,7 +420,7 @@ function generateDuelAnalysis(p1, p2, pts1, pts2, rank1, rank2, h2hMatches, dncg
   const psychProblem = loserSignings.find(p => p.hasPsychProblem);
   if (psychProblem && psychProblem.psychology) {
     points.push({
-      icon: '🧠',
+      icon: 'brain',
       title: `Fracture psychologique (${loser.name})`,
       desc: `${psychProblem.name} (${psychProblem.psychology.label}) : ${psychProblem.hasPsychProblem}. Le vestiaire a vacillé au plus mauvais moment.`
     });
@@ -405,7 +429,7 @@ function generateDuelAnalysis(p1, p2, pts1, pts2, rank1, rank2, h2hMatches, dncg
   const leaderPlayer = winnerSignings.find(p => p.psychology && ['LEADER_EXEMPLAIRE', 'SOLDAT_COLLECTIF'].includes(p.psychology.code));
   if (leaderPlayer && leaderPlayer.psychology) {
     points.push({
-      icon: '👑',
+      icon: 'crown',
       title: `Force mentale & Vestiaire (${winner.name})`,
       desc: `L'abnégation de ${leaderPlayer.name} (${leaderPlayer.psychology.label}) a maintenu le groupe sous pression positive pour sauver la place du club.`
     });
@@ -415,20 +439,20 @@ function generateDuelAnalysis(p1, p2, pts1, pts2, rank1, rank2, h2hMatches, dncg
   if (flopSigning) {
     if (flopSigning.traits && flopSigning.traits.includes('Genou en cristal')) {
       points.push({
-        icon: '🩹',
+        icon: 'medical',
         title: `La roulette médicale (${loser.name})`,
         desc: `Le pari risqué sur ${flopSigning.name} ('Genou en cristal') a coûté 4 points après une rechute physique à l'entraînement, un coup dur fatal pour le maintien.`
       });
     } else {
       points.push({
-        icon: '📉',
+        icon: 'penalty',
         title: `Erreur de casting (${loser.name})`,
         desc: `Le recrutement au rabais de ${flopSigning.name} a désorganisé le collectif de ${loser.club.club} (-3 pts de pénalité de vestiaire).`
       });
     }
   } else if (loserSignings.length === 0) {
     points.push({
-      icon: '⚠️',
+      icon: 'warning',
       title: `Mercato blanc (${loser.name})`,
       desc: `Zéro recrue signée avant la deadline ! Jouer le maintien avec un effectif essoufflé et sans sang neuf s'est révélé insurmontable.`
     });
@@ -460,19 +484,19 @@ function generateDuelAnalysis(p1, p2, pts1, pts2, rank1, rank2, h2hMatches, dncg
 
   if (winnerH2HPts > loserH2HPts) {
     points.push({
-      icon: '⚔️',
+      icon: 'h2h_win',
       title: `Ascendant direct (${winnerH2HPts} pts pris sur 6)`,
       desc: `${winner.name} a pris le dessus lors des confrontations directes entre les deux managers, privant son rival de points charnières dans la course au maintien.`
     });
   } else if (winnerH2HPts === loserH2HPts) {
     points.push({
-      icon: '⚖️',
+      icon: 'balance',
       title: `Confrontations directes neutralisées`,
       desc: `Égalité parfaite sur les deux matchs directs. Le salut de ${winner.name} s'est joué sur sa régularité face aux autres équipes du championnat.`
     });
   } else {
     points.push({
-      icon: '⚡',
+      icon: 'bolt',
       title: `Résilience face au rival`,
       desc: `Même si ${loser.name} a pris des points dans le derby, ${winner.name} a su compenser en réalisant des exploits face aux cadors de la division.`
     });
@@ -481,19 +505,19 @@ function generateDuelAnalysis(p1, p2, pts1, pts2, rank1, rank2, h2hMatches, dncg
   // 3. Impact DNCG
   if (loserDncg && loserDncg.status === 'penalty') {
     points.push({
-      icon: '📉',
+      icon: 'penalty',
       title: `Sanction DNCG fatale (${loser.name})`,
       desc: `Le retrait de ${loserDncg.ptsLost} points infligé par la DNCG pour irrégularités financières a lourdement pénalisé ${loser.club.club} au pire moment.`
     });
   } else if (loserDncg && loserDncg.status === 'relegation') {
     points.push({
-      icon: '🚨',
+      icon: 'warning',
       title: `Relégation administrative immédiate`,
       desc: `Exclusion d'office par la DNCG pour ${loser.club.club} suite à une falsification de bilans comptables. Victoire sur tapis vert pour ${winner.name} !`
     });
   } else if (dncgData) {
     points.push({
-      icon: '🟢',
+      icon: 'clean',
       title: `Finances saines`,
       desc: `Les deux clubs ont passé l'audit financier sans pénalité, tout s'est réglé sportivement sur la pelouse.`
     });
@@ -606,12 +630,53 @@ function simulateFullDuelSeason(room) {
       }
     });
 
-    // Pénalité pour besoins prioritaires du club non satisfaits
+    // 1. Couverture stricte des 3 besoins tactiques exigés par le coach (Parité Solo Difficile)
     const needed = p.club.needs || [];
-    needed.forEach(n => {
-      const match = (p.signedPlayers || []).some(sp => (sp.subPos === n.subPos || sp.pos === n.pos));
-      if (!match) {
-        pts -= 4; // Poste manquant pénalisé
+    const usedPlayerIds = new Set();
+    p.tacticalNeedsFulfilled = 0;
+    needed.forEach(need => {
+      const match = (p.signedPlayers || []).find(sp => !usedPlayerIds.has(sp.id) && checkPlayerFulfillsNeed(sp, need));
+      if (match) {
+        usedPlayerIds.add(match.id);
+        p.tacticalNeedsFulfilled++;
+      } else {
+        pts -= 5; // Déficit de profil tactique exigé (-5 pts par poste manqué, identique au Solo Difficile)
+      }
+    });
+
+    // 2. Respect de la consigne de filière prioritaire (originConstraint)
+    const originConstraint = p.club.originConstraint;
+    p.hasFulfilledOrigin = true;
+    if (originConstraint && originConstraint.code !== 'FREE' && (p.signedPlayers || []).length > 0) {
+      const matchOrigin = (p.signedPlayers || []).some(sp => checkPlayerFulfillsOrigin(sp, originConstraint, p.club));
+      if (matchOrigin) {
+        pts += 3; // Bonus respect scrupuleux de la filière prioritaire (+3 pts)
+        p.hasFulfilledOrigin = true;
+      } else {
+        pts -= 2; // Pénalité non-respect de la consigne de filière (-2 pts)
+        p.hasFulfilledOrigin = false;
+      }
+    }
+
+    // 3. Trait toxique proscrit par le coach (forbiddenTraits)
+    const forbidden = p.club.forbiddenTraits || [];
+    (p.signedPlayers || []).forEach(pl => {
+      if (pl.traits && Array.isArray(pl.traits)) {
+        const toxicTrait = pl.traits.find(t => forbidden.includes(t));
+        if (toxicTrait) {
+          pts -= 3; // Sanction interne : recrue avec trait toxique proscrit (-3 pts)
+          pl.hasForbiddenTraitProblem = toxicTrait;
+        }
+      }
+    });
+
+    // 4. Synergie avec les traits préférés du coach (preferredTraits)
+    const preferred = p.club.preferredTraits || [];
+    (p.signedPlayers || []).forEach(pl => {
+      if (pl.traits && Array.isArray(pl.traits)) {
+        if (pl.traits.some(t => preferred.includes(t))) {
+          pts += 1; // +1 pt pour profil en adéquation avec la mentalité
+        }
       }
     });
 

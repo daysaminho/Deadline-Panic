@@ -7761,6 +7761,461 @@ const SCENARIOS = [
   }
 ];
 
-if (typeof module !== 'undefined') {
-  module.exports = { SCENARIOS };
+
+// ==============================================================
+// MOTEUR TACTIQUE UNIFIÉ & VÉRIFICATION DES CONSIGNES DU COACH
+// Partagé de manière strictly identique entre Mode Solo et Mode 1V1
+// ==============================================================
+
+function checkPlayerFulfillsOrigin(player, originConstraint, scenario) {
+  if (!originConstraint || originConstraint.code === 'FREE') return true;
+  if (!player || !player.nationality) return false;
+
+  const nat = player.nationality;
+  const clubCountry = scenario ? (scenario.country || '') : '';
+
+  if (originConstraint.code === 'DOMESTIC') {
+    if (clubCountry.includes('France') && nat.name === 'France') return true;
+    if (clubCountry.includes('Espagne') && nat.name === 'Espagne') return true;
+    if (clubCountry.includes('Angleterre') && (nat.name === 'Angleterre' || nat.name === 'Écosse' || nat.name === 'Pays de Galles')) return true;
+    if (clubCountry.includes('Italie') && nat.name === 'Italie') return true;
+    if (clubCountry.includes('Allemagne') && (nat.name === 'Allemagne' || nat.name === 'Autriche')) return true;
+    if (clubCountry.includes('Portugal') && nat.name === 'Portugal') return true;
+    if (clubCountry.includes('Pays-Bas') && nat.name === 'Pays-Bas') return true;
+    return false;
+  }
+
+  if (originConstraint.code === 'SOUTH_AMERICA') {
+    return nat.continent === 'Amérique du Sud' || nat.region === 'SOUTH_AMERICA';
+  }
+
+  if (originConstraint.code === 'AFRICA') {
+    return nat.continent === 'Afrique' || nat.region === 'AFRICA';
+  }
+
+  if (originConstraint.code === 'EURO_TACTICAL') {
+    return nat.continent === 'Europe';
+  }
+
+  if (originConstraint.code === 'NORDIC_EAST') {
+    return nat.region === 'NORDIC_EAST';
+  }
+
+  if (originConstraint.code === 'EXPATRIATE') {
+    if (clubCountry.includes('France') && nat.name === 'France') return false;
+    if (clubCountry.includes('Espagne') && nat.name === 'Espagne') return false;
+    if (clubCountry.includes('Angleterre') && nat.name === 'Angleterre') return false;
+    if (clubCountry.includes('Italie') && nat.name === 'Italie') return false;
+    if (clubCountry.includes('Allemagne') && nat.name === 'Allemagne') return false;
+    return true;
+  }
+
+  return true;
 }
+
+// ==============================================================
+
+function formatNeedPositionLabels(need) {
+  if (!need) return { fullPos: '', shortPos: '', profile: '', fullConcatenated: '', shortConcatenated: '' };
+  const code = (typeof need === 'object' ? (need.code || '') : need).toUpperCase();
+  let fullPos = '';
+  let shortPos = '';
+
+  if (code === 'DC') {
+    fullPos = 'Défenseur Central (DC)';
+    shortPos = 'DC';
+  } else if (code === 'DD') {
+    fullPos = 'Latéral Droit (DD)';
+    shortPos = 'DD';
+  } else if (code === 'DG') {
+    fullPos = 'Latéral Gauche (DG)';
+    shortPos = 'DG';
+  } else if (code === 'MDF') {
+    fullPos = 'Sentinelle (MDF)';
+    shortPos = 'MDF';
+  } else if (code === 'MC') {
+    fullPos = 'Milieu Relayeur (MC)';
+    shortPos = 'MC';
+  } else if (code === 'MO') {
+    fullPos = 'Meneur de Jeu (MO)';
+    shortPos = 'MO';
+  } else if (code === 'BU') {
+    fullPos = 'Buteur (BU)';
+    shortPos = 'BU';
+  } else if (code === 'AG') {
+    fullPos = 'Ailier Gauche (AG)';
+    shortPos = 'AG';
+  } else if (code === 'AD') {
+    fullPos = 'Ailier Droit (AD)';
+    shortPos = 'AD';
+  } else if (code === 'GAR' || code === 'GB') {
+    fullPos = 'Gardien de But (GB)';
+    shortPos = 'GB';
+  } else if (code.includes('6_DC')) {
+    fullPos = 'Polyvalent (6 / DC)';
+    shortPos = '6 / DC';
+  } else if (code.includes('DG_DD') || code === 'LATERAL' || code.includes('LATERAUX')) {
+    fullPos = 'Latéral Deux Côtés (DG / DD)';
+    shortPos = 'DG / DD';
+  } else if (code.includes('PISTON')) {
+    fullPos = 'Piston / Ailier';
+    shortPos = 'Piston';
+  } else if (code.includes('6_8')) {
+    fullPos = 'Polyvalent (6 & 8)';
+    shortPos = '6 / 8';
+  } else if (code.includes('8_10')) {
+    fullPos = 'Polyvalent (8 & 10)';
+    shortPos = '8 / 10';
+  } else if (code.includes('10_AILIER')) {
+    fullPos = 'Polyvalent (10 / Ailier)';
+    shortPos = '10 / Ailier';
+  } else if (code.includes('DEUX_AILES')) {
+    fullPos = 'Polyvalent (Deux Ailes)';
+    shortPos = 'AG / AD';
+  } else if (code.includes('ATTAQUE') || code.includes('BU_AILIER')) {
+    fullPos = 'Polyvalent (Buteur / Ailier)';
+    shortPos = 'BU / Ailier';
+  } else if (code.includes('U21')) {
+    fullPos = 'Pépite U21 (-21 ans)';
+    shortPos = 'U21';
+  } else {
+    fullPos = need.name || code;
+    shortPos = code;
+  }
+
+  const profile = need.tacticalTitle || need.name || code;
+  let fullConcatenated = profile;
+  let shortConcatenated = profile;
+
+  if (profile && fullPos && !profile.toLowerCase().includes(shortPos.toLowerCase())) {
+    fullConcatenated = `${fullPos} - ${profile}`;
+    shortConcatenated = `${shortPos} - ${profile}`;
+  } else {
+    fullConcatenated = profile || fullPos;
+    shortConcatenated = profile || shortPos;
+  }
+
+  return { fullPos, shortPos, profile, fullConcatenated, shortConcatenated };
+}
+
+// VÉRIFICATION DE CORRESPONDANCE DES 3 BESOINS (POSTES, RÔLES, POLYVALENCE)
+// ==============================================================
+
+// ==============================================================
+// BASE DE DONNÉES DES PROFILS TACTIQUES & INDICES DU COACH
+// ==============================================================
+const TACTICAL_PROFILES_BY_POS = {
+  GAR: [
+    {
+      tacticalTitle: "Gardien Relanceur",
+      archetypeCode: "GAR_SWEEPER",
+      clue: "Il me faut un gardien moderne capable de relancer court sous pression pour faire monter notre bloc."
+    },
+    {
+      tacticalTitle: "Mur sur sa Ligne",
+      archetypeCode: "GAR_MUR",
+      clue: "Je veux un mur sur sa ligne, imbattable à bout portant sur les tirs réflexes."
+    },
+    {
+      tacticalTitle: "Colosse Aérien",
+      archetypeCode: "GAR_COLOSSE",
+      clue: "Il nous faut un gardien géant dominant dans les airs pour sécuriser tous les centres."
+    }
+  ],
+  DC: [
+    {
+      tacticalTitle: "Défenseur Relanceur",
+      archetypeCode: "DC_LIBERO_RELANCEUR",
+      clue: "Un libéro technique avec une relance laser pour ressortir proprement de nos 30 mètres."
+    },
+    {
+      tacticalTitle: "Stoppeur Rugueux",
+      archetypeCode: "DC_STOPPEUR_BRUTAL",
+      clue: "Un stoppeur viril intraitable au duel physique au corps-à-corps et dans le combat."
+    },
+    {
+      tacticalTitle: "Défenseur Couvreur",
+      archetypeCode: "DC_COUVREUR_RAPIDE",
+      clue: "Un défenseur rapide pour couvrir la profondeur et rattraper les attaquants lancés."
+    },
+    {
+      tacticalTitle: "Leader de Ligne",
+      archetypeCode: "DC_LEADER_VOCAL",
+      clue: "Un patron vocal pour commander notre arrière-garde avec une rigueur tactique totale."
+    }
+  ],
+  LATERAL: [
+    {
+      tacticalTitle: "Piston TGV",
+      archetypeCode: "LAT_PISTON_TGV",
+      clue: "Un piston supersonique qui déboule dans son couloir pour multiplier les centres tranchants."
+    },
+    {
+      tacticalTitle: "Latéral Cadenas",
+      archetypeCode: "LAT_CADENAS_DEF",
+      clue: "Un latéral cadenas pour museler l'ailier vedette adverse et verrouiller le couloir."
+    },
+    {
+      tacticalTitle: "Latéral Intérieur",
+      archetypeCode: "LAT_INVERTED",
+      clue: "Un faux latéral intelligent pour repiquer dans le demi-espace et densifier l'entrejeu."
+    }
+  ],
+  MDF: [
+    {
+      tacticalTitle: "Sentinelle Râtisseur",
+      archetypeCode: "MDF_RATISSEUR",
+      clue: "Un râtisseur infatigable qui coupe les trajectoires et presse haut pour étouffer l'adversaire."
+    },
+    {
+      tacticalTitle: "Regista / Maestro",
+      archetypeCode: "MDF_REGISTA",
+      clue: "Une plaque tournante capable d'orienter le tempo par des transversales millimétrées."
+    },
+    {
+      tacticalTitle: "Sentinelle Physique",
+      archetypeCode: "MDF_COLOSSE",
+      clue: "Un colosse aérien intimidant pour régner dans les airs et poser un verrou dans l'axe."
+    }
+  ],
+  MC: [
+    {
+      tacticalTitle: "Milieu Box-to-Box",
+      archetypeCode: "MC_BOX_TO_BOX",
+      clue: "Un milieu infatigable avec un gros volume de jeu, capable d'attaquer la surface et de se replier."
+    },
+    {
+      tacticalTitle: "Métronome de Possession",
+      archetypeCode: "MC_METRONOME",
+      clue: "Un métronome technique pour temporiser, conserver le cuir et fluidifier nos circuits."
+    },
+    {
+      tacticalTitle: "Percuteur Balle au Pied",
+      archetypeCode: "MC_PERCUTEUR",
+      clue: "Un milieu percutant capable de casser les lignes par ses accélérations dévastatrices."
+    }
+  ],
+  MO: [
+    {
+      tacticalTitle: "Meneur Magicien (10)",
+      archetypeCode: "MO_MAGICIEN",
+      clue: "Un 10 pur créatif capable de débloquer les défenses regroupées par une passe d'anthologie."
+    },
+    {
+      tacticalTitle: "Meneur Pressant",
+      archetypeCode: "MO_PRESSING",
+      clue: "Un meneur travailleur qui griffe des ballons hauts et joue vite pour ses partenaires."
+    },
+    {
+      tacticalTitle: "Sniper des 25m",
+      archetypeCode: "MO_SNIPER",
+      clue: "Un sniper capable de faire basculer une rencontre fermée d'un missile de loin."
+    }
+  ],
+  AILIER: [
+    {
+      tacticalTitle: "Flèche de Débordement",
+      archetypeCode: "AIL_FLECHE_LIGNE",
+      clue: "Une flèche supersonique qui prend la profondeur et dépose son vis-à-vis en un contre un."
+    },
+    {
+      tacticalTitle: "Ailier Intérieur Buteur",
+      archetypeCode: "AIL_INTERIEUR_BUTEUR",
+      clue: "Un ailier percutant qui repique vers l'axe pour enrouler et empiler les buts."
+    },
+    {
+      tacticalTitle: "Dribbleur Provocateur",
+      archetypeCode: "AIL_SOLISTE_DRIBBLEUR",
+      clue: "Un soliste imprévisible qui déséquilibre les blocs compacts et provoque fautes et cartons."
+    }
+  ],
+  BU: [
+    {
+      tacticalTitle: "Renard des Surfaces",
+      archetypeCode: "BU_RENARD_CLINIQUE",
+      clue: "Un renard clinique qui transforme la moindre demi-occasion en but au fond des filets."
+    },
+    {
+      tacticalTitle: "Pivot Athlétique",
+      archetypeCode: "BU_PIVOT_ATHLETIQUE",
+      clue: "Un pivot athlétique pour gagner tous les dégagements aériens et faire monter notre bloc."
+    },
+    {
+      tacticalTitle: "Faux 9 Décrocheur",
+      archetypeCode: "BU_FAUX_NEUF",
+      clue: "Un faux 9 combinatoire qui décroche entre les lignes pour ouvrir des boulevards aux ailiers."
+    }
+  ]
+};
+
+function enrichScenarioTacticalDemands(scenario) {
+  if (!scenario || !scenario.needs) return;
+
+  const scId = typeof scenario.id === 'number' ? scenario.id : 42;
+
+  scenario.needs.forEach((need, idx) => {
+    if (need.tacticalTitle && need.tacticalClue) return;
+
+    const code = (need.code || '').toUpperCase();
+    let posKey = null;
+
+    if (code === 'GAR') posKey = 'GAR';
+    else if (code === 'DC') posKey = 'DC';
+    else if (['DG', 'DD', 'LATERAL'].includes(code)) posKey = 'LATERAL';
+    else if (code === 'MDF') posKey = 'MDF';
+    else if (code === 'MC') posKey = 'MC';
+    else if (code === 'MO') posKey = 'MO';
+    else if (['AG', 'AD', 'AILIER'].includes(code)) posKey = 'AILIER';
+    else if (code === 'BU' || code === 'ATT') posKey = 'BU';
+
+    if (posKey && TACTICAL_PROFILES_BY_POS[posKey]) {
+      const list = TACTICAL_PROFILES_BY_POS[posKey];
+      const pickIdx = Math.abs((scId * 7 + idx * 11) % list.length);
+      const chosen = list[pickIdx];
+      need.tacticalTitle = chosen.tacticalTitle;
+      need.archetypeCode = chosen.archetypeCode;
+      need.tacticalClue = chosen.clue;
+    } else if (code.includes('6_DC')) {
+      need.tacticalTitle = "Polyvalent 6 / DC";
+      need.tacticalClue = "Un profil hybride capable d'évoluer en Sentinelle (6) et de dépanner en Défenseur Central.";
+      need.allowedArchetypes = ['MDF_RATISSEUR', 'MDF_COLOSSE', 'DC_STOPPEUR_BRUTAL', 'DC_LIBERO_RELANCEUR'];
+    } else if (code.includes('DG_DD') || code.includes('LATERAUX')) {
+      need.tacticalTitle = "Polyvalent Deux Côtés";
+      need.tacticalClue = "Un latéral polyvalent capable d'occuper les couloirs gauche (DG) et droit (DD).";
+      need.allowedArchetypes = ['LAT_PISTON_TGV', 'LAT_CADENAS_DEF', 'LAT_INVERTED'];
+    } else if (code.includes('ATTAQUE') || code.includes('BU_AILIER')) {
+      need.tacticalTitle = "Polyvalent Buteur / Ailier";
+      need.tacticalClue = "Un attaquant polyvalent à l'aise aussi bien en pointe axiale (9) que sur les ailes.";
+      need.allowedArchetypes = ['BU_RENARD_CLINIQUE', 'BU_FAUX_NEUF', 'AIL_INTERIEUR_BUTEUR', 'AIL_FLECHE_LIGNE'];
+    } else if (code.includes('6_8')) {
+      need.tacticalTitle = "Polyvalent 6 & 8";
+      need.tacticalClue = "Un milieu complet capable d'assurer en Sentinelle défensive et en Relayeur box-to-box.";
+      need.allowedArchetypes = ['MDF_RATISSEUR', 'MC_BOX_TO_BOX', 'MC_METRONOME'];
+    } else if (code.includes('8_10')) {
+      need.tacticalTitle = "Polyvalent 8 & 10";
+      need.tacticalClue = "Un milieu créatif capable de jouer en Relayeur et de monter d'un cran en Meneur.";
+      need.allowedArchetypes = ['MC_METRONOME', 'MC_PERCUTEUR', 'MO_MAGICIEN', 'MO_PRESSING'];
+    } else if (code.includes('PISTON')) {
+      need.tacticalTitle = "Piston / Ailier";
+      need.tacticalClue = "Un coureur de couloir polyvalent capable de jouer Piston et Ailier de débordement.";
+      need.allowedArchetypes = ['LAT_PISTON_TGV', 'AIL_FLECHE_LIGNE'];
+    } else if (code.includes('U21')) {
+      need.tacticalTitle = "Pépite U21";
+      need.tacticalClue = "Un jeune diamant brut de moins de 21 ans (U21) avec un fort potentiel de progression.";
+    } else {
+      need.tacticalTitle = need.name || code;
+      need.tacticalClue = `Un profil solide au poste de ${need.name || code}.`;
+    }
+  });
+
+  // Re-génère la consigne de présentation du coach comme UNIQUE INDICE
+  const cluesList = scenario.needs.map((n, i) => {
+    const posInfo = formatNeedPositionLabels(n);
+    return `${i + 1}. [${posInfo.fullConcatenated}] : ${n.tacticalClue}`;
+  }).join(' ');
+  scenario.coachDemand = `"Notre plan de jeu est strict. Voici mes exigences tactiques impératives : ${cluesList}"`;
+}
+
+// ==============================================================
+// VÉRIFICATION DE CORRESPONDANCE DES 3 BESOINS (PROFIL TACTIQUE & RÔLE)
+// ==============================================================
+function checkPlayerFulfillsNeed(player, need) {
+  if (!player || !need) return false;
+
+  // 1. Exigence stricte par Archétype / Rôle précis demandé par le coach
+  // Si le coach exige un profil tactique précis (ex: LAT_PISTON_TGV), un autre profil (ex: LAT_INVERTED) NE DOIT PAS être validé
+  if (need.archetypeCode) {
+    return !!(player.archetype && player.archetype.code === need.archetypeCode);
+  }
+
+  // 2. Si le besoin autorise une liste précise d'archétypes (ex: profils polyvalents)
+  if (need.allowedArchetypes && Array.isArray(need.allowedArchetypes) && need.allowedArchetypes.length > 0) {
+    return !!(player.archetype && need.allowedArchetypes.includes(player.archetype.code));
+  }
+
+  // 3. Critère spécial U21
+  const needCode = typeof need === 'object' ? need.code : need;
+  if (needCode === 'PEPITE_U21' || (need.tacticalTitle && need.tacticalTitle.includes('U21'))) {
+    return player.age <= 21;
+  }
+
+  // 4. Polyvalences tactiques sans liste d'archétypes stricte
+  const v = (player.versatility || '').toUpperCase();
+  const sub = player.subPos || player.pos || '';
+
+  if (needCode === 'POLYVALENT_6_DC') {
+    return (v.includes('6') && v.includes('DC')) ||
+           (sub === 'DC' && (v.includes('6') || v.includes('MDF') || v.includes('SENTINELLE'))) ||
+           (sub === 'MDF' && v.includes('DC'));
+  }
+  if (needCode === 'POLYVALENT_DG_DD' || needCode === 'LATERAL' || needCode === 'POLYVALENT_LATERAUX') {
+    return (v.includes('DG') && v.includes('DD')) ||
+           (sub === 'DG' && v.includes('DD')) ||
+           (sub === 'DD' && v.includes('DG')) ||
+           v.includes('DEUX CÔTÉS') || v.includes('DEUX COTES');
+  }
+  if (needCode === 'POLYVALENT_PISTON_AILIER') {
+    return v.includes('PISTON') || 
+           ((sub === 'DG' || sub === 'DD') && (v.includes('AILIER') || v.includes('AG') || v.includes('AD'))) ||
+           ((sub === 'AG' || sub === 'AD') && v.includes('PISTON'));
+  }
+  if (needCode === 'POLYVALENT_6_8') {
+    return (v.includes('6') && v.includes('8')) ||
+           (sub === 'MDF' && v.includes('8')) ||
+           (sub === 'MC' && (v.includes('6') || v.includes('BOX-TO-BOX')));
+  }
+  if (needCode === 'POLYVALENT_8_10') {
+    return (v.includes('8') && v.includes('10')) ||
+           (sub === 'MC' && v.includes('10')) ||
+           (sub === 'MO' && v.includes('8'));
+  }
+  if (needCode === 'POLYVALENT_10_AILIER') {
+    return (v.includes('10') && (v.includes('AILIER') || v.includes('AG') || v.includes('AD') || v.includes('FAUX 9'))) ||
+           (sub === 'MO' && (v.includes('AILIER') || v.includes('AG') || v.includes('AD'))) ||
+           ((sub === 'AG' || sub === 'AD') && v.includes('10'));
+  }
+  if (needCode === 'POLYVALENT_DEUX_AILES') {
+    return (v.includes('AG') && v.includes('AD')) ||
+           v.includes('DEUX AILES') ||
+           (sub === 'AG' && v.includes('AD')) ||
+           (sub === 'AD' && v.includes('AG'));
+  }
+  if (needCode === 'POLYVALENT_ATTAQUE') {
+    return (v.includes('BU') && (v.includes('AILIER') || v.includes('AG') || v.includes('AD'))) ||
+           (sub === 'BU' && (v.includes('AILIER') || v.includes('AG') || v.includes('AD'))) ||
+           ((sub === 'AG' || sub === 'AD') && (v.includes('BU') || v.includes('BUTEUR')));
+  }
+  if (needCode === 'POLYVALENT_DC_LATERAL') {
+    return (sub === 'DC' && (v.includes('DG') || v.includes('DD') || v.includes('LATÉRAL') || v.includes('LATERAL'))) ||
+           ((sub === 'DG' || sub === 'DD') && v.includes('DC'));
+  }
+
+  // 5. Fallback uniquement si aucun archétype précis n'était exigé
+  if (needCode === 'DC') return sub === 'DC';
+  if (needCode === 'DG') return sub === 'DG';
+  if (needCode === 'DD') return sub === 'DD';
+  if (needCode === 'MDF') return sub === 'MDF';
+  if (needCode === 'MC') return sub === 'MC';
+  if (needCode === 'MO') return sub === 'MO';
+  if (needCode === 'BU') return sub === 'BU';
+  if (needCode === 'AG') return sub === 'AG';
+  if (needCode === 'AD') return sub === 'AD';
+  if (needCode === 'GAR') return sub === 'GAR' || player.pos === 'GAR';
+
+  return false;
+}
+
+
+
+
+if (typeof module !== 'undefined') {
+  module.exports = {
+    SCENARIOS,
+    TACTICAL_PROFILES_BY_POS,
+    checkPlayerFulfillsOrigin,
+    formatNeedPositionLabels,
+    enrichScenarioTacticalDemands,
+    checkPlayerFulfillsNeed
+  };
+}
+

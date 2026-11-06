@@ -614,6 +614,33 @@
       </div>
     </div>
 
+    <!-- SCRIPT D'INITIALISATION IMMÉDIATE DES CARROUSELS DE L'ACCUEIL -->
+    <script>
+      (function() {
+        function setupInstantCarousels() {
+          const heroDots = document.querySelectorAll('#hero-carousel-dots button');
+          heroDots.forEach((btn, i) => {
+            btn.onclick = function(e) { 
+              if (e) e.preventDefault(); 
+              if (typeof window.goToHeroSlide === 'function') window.goToHeroSlide(i); 
+            };
+          });
+          const bottomDots = document.querySelectorAll('#bottom-carousel-dots button');
+          bottomDots.forEach((btn, i) => {
+            btn.onclick = function(e) { 
+              if (e) e.preventDefault(); 
+              if (typeof window.goToBottomSlide === 'function') window.goToBottomSlide(i); 
+            };
+          });
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', setupInstantCarousels);
+        } else {
+          setupInstantCarousels();
+        }
+      })();
+    </script>
+
     <!-- GALLERY SHORTCUT & PWA INSTALL -->
     <div class="flex flex-wrap items-center justify-center gap-3 text-center">
       <button onclick="showScreen('screen-gallery')" class="px-5 py-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-800 dark:text-gray-200 border border-gray-200 dark:border-slate-700 text-xs font-bold hover:bg-gray-50 dark:hover:bg-slate-700 transition flex items-center gap-2">
@@ -1972,12 +1999,12 @@
 
   <!-- Load Data Files & App Logic with Cache Buster -->
   <script src="/socket.io/socket.io.js"></script>
-  <script src="icons.js?v=5.7"></script>
-  <script src="data/archetypes.js?v=5.7"></script>
-  <script src="data/generator.js?v=5.7"></script>
-  <script src="data/scenarios.js?v=5.7"></script>
-  <script src="duel.js?v=5.7"></script>
-  <script src="app.js?v=5.7"></script>
+  <script src="icons.js?v=5.8"></script>
+  <script src="data/archetypes.js?v=5.8"></script>
+  <script src="data/generator.js?v=5.8"></script>
+  <script src="data/scenarios.js?v=5.8"></script>
+  <script src="duel.js?v=5.8"></script>
+  <script src="app.js?v=5.8"></script>
 
   <!-- PWA, Theme & Modal Scroll Lock System -->
   <script>

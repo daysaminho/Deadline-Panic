@@ -199,11 +199,25 @@ function initDuelSocket() {
     const titleEl = document.getElementById('mercato-club-title');
     if (titleEl) titleEl.textContent = activeScenario.club;
 
+    // Enrichissement tactique impératif (Parité Solo Difficile)
+    if (typeof enrichScenarioTacticalDemands === 'function') {
+      enrichScenarioTacticalDemands(activeScenario);
+    }
+
     const originNote = (activeScenario.originConstraint && activeScenario.originConstraint.code !== 'FREE')
-      ? `<span class="block mt-1 font-bold text-amber-300 not-italic"> Filière exigée : ${activeScenario.originConstraint.name || activeScenario.originConstraint.label} (${activeScenario.originConstraint.shortDesc || activeScenario.originConstraint.hint || ''})</span>`
+      ? `<span class="block mt-1 font-bold text-amber-300 not-italic">Réseau prioritaire : ${activeScenario.originConstraint.name} (${activeScenario.originConstraint.shortDesc})</span>`
       : '';
+    const tacticalClues = (activeScenario.needs && activeScenario.needs.length > 0)
+      ? activeScenario.needs.map((n, i) => {
+          const posInfo = (typeof formatNeedPositionLabels === 'function') ? formatNeedPositionLabels(n) : { fullConcatenated: n.name || n.code };
+          return `<span class="block mt-1 font-normal text-blue-100 text-xs sm:text-[13px] leading-relaxed">• <strong>${posInfo.fullConcatenated}</strong> : ${n.tacticalClue || n.name}</span>`;
+        }).join('')
+      : activeScenario.coachDemand;
+
     const coachRem = document.getElementById('mercato-coach-reminder');
-    if (coachRem) coachRem.innerHTML = `"${activeScenario.coachDemand}"${originNote}`;
+    if (coachRem) {
+      coachRem.innerHTML = `<span class="font-extrabold text-white block mb-1">"Voici mes exigences tactiques impératives :"</span>${tacticalClues}${originNote}`;
+    }
 
     // Rendre les éléments de marché et le HUD
     updateMercatoHUD();

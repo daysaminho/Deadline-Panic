@@ -5951,9 +5951,15 @@ function goToHeroSlide(index) {
   slides.forEach((slide, i) => {
     if (i === currentHeroSlideIndex) {
       slide.classList.add('active');
+      slide.style.opacity = '1';
+      slide.style.pointerEvents = 'auto';
+      slide.style.transform = 'scale(1)';
       slide.setAttribute('aria-hidden', 'false');
     } else {
       slide.classList.remove('active');
+      slide.style.opacity = '0';
+      slide.style.pointerEvents = 'none';
+      slide.style.transform = 'scale(0.98)';
       slide.setAttribute('aria-hidden', 'true');
     }
   });
@@ -6015,9 +6021,15 @@ function goToBottomSlide(index) {
   slides.forEach((slide, i) => {
     if (i === currentBottomSlideIndex) {
       slide.classList.add('active');
+      slide.style.opacity = '1';
+      slide.style.pointerEvents = 'auto';
+      slide.style.transform = 'scale(1)';
       slide.setAttribute('aria-hidden', 'false');
     } else {
       slide.classList.remove('active');
+      slide.style.opacity = '0';
+      slide.style.pointerEvents = 'none';
+      slide.style.transform = 'scale(0.98)';
       slide.setAttribute('aria-hidden', 'true');
     }
   });
@@ -6185,3 +6197,12 @@ function pauseHomeCarousels() {
   stopBottomCarouselTimer();
 }
 window.pauseHomeCarousels = pauseHomeCarousels;
+
+// Déclenchement garanti immédiat ou sur DOMContentLoaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    initHomeCarousels();
+  });
+} else {
+  initHomeCarousels();
+}
