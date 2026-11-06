@@ -6198,11 +6198,53 @@ function pauseHomeCarousels() {
 }
 window.pauseHomeCarousels = pauseHomeCarousels;
 
+// ==============================================================
+// GESTIONNAIRE DU POP-UP DE PATCH NOTES (v5.8)
+// Ne s'affiche qu'une seule fois grâce au localStorage
+// ==============================================================
+const PATCH_NOTES_KEY = 'ddp_patch_notes_v58';
+
+function checkAndShowPatchNotes() {
+  try {
+    const seen = localStorage.getItem(PATCH_NOTES_KEY);
+    if (!seen) {
+      setTimeout(() => {
+        openPatchNotesModal();
+      }, 700);
+    }
+  } catch (e) {
+    // LocalStorage inaccessible
+  }
+}
+
+function openPatchNotesModal() {
+  const modal = document.getElementById('modal-patch-notes');
+  if (modal) {
+    modal.classList.remove('hidden');
+  }
+}
+
+function closePatchNotesModal() {
+  const modal = document.getElementById('modal-patch-notes');
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+  try {
+    localStorage.setItem(PATCH_NOTES_KEY, 'seen');
+  } catch (e) {}
+}
+
+window.checkAndShowPatchNotes = checkAndShowPatchNotes;
+window.openPatchNotesModal = openPatchNotesModal;
+window.closePatchNotesModal = closePatchNotesModal;
+
 // Déclenchement garanti immédiat ou sur DOMContentLoaded
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     initHomeCarousels();
+    checkAndShowPatchNotes();
   });
 } else {
   initHomeCarousels();
+  checkAndShowPatchNotes();
 }

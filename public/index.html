@@ -1678,6 +1678,77 @@
     </div>
   </div>
 
+  <!-- MODAL: PATCH NOTES v5.8 (POP-UP NOUVEAUTÉS DU JEU) -->
+  <div id="modal-patch-notes" class="modal-overlay fixed inset-0 bg-slate-900/70 dark:bg-black/85 backdrop-blur-xs z-[100] flex items-center justify-center p-3 sm:p-4 hidden" onclick="if(event.target === this) closePatchNotesModal()">
+    <div class="bg-white dark:bg-[#121826] border border-gray-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl relative overflow-y-auto max-h-[90vh] transition-colors select-none" onclick="event.stopPropagation()">
+      <button onclick="closePatchNotesModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 dark:hover:text-white p-1 rounded-xl transition cursor-pointer" aria-label="Fermer">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <!-- Badge de Version -->
+      <div class="flex items-center gap-2 mb-3">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span>Mise à Jour · v5.8</span>
+        </span>
+        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Patch Note</span>
+      </div>
+
+      <h3 class="text-xl sm:text-2xl font-display font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">
+        Négociations Réalistes & Parité 1V1
+      </h3>
+      <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-5">
+        Découvrez les dernières améliorations apportées au mercato, à l'intelligence des agents et au mode multijoueur.
+      </p>
+
+      <!-- Liste des nouveautés -->
+      <div class="space-y-3 mb-6">
+        
+        <div class="flex items-start gap-3 p-3 rounded-2xl bg-gray-50 dark:bg-slate-900/60 border border-gray-100 dark:border-slate-800">
+          <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0 mt-0.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-0.5">Négociations & Agents Asymétriques</h4>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">
+              Profils de directeurs sportifs (Club aux abois, Financier intraitable...), fin des boucles infinies de dialogue et verrouillage strict des promesses refusées.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 p-3 rounded-2xl bg-gray-50 dark:bg-slate-900/60 border border-gray-100 dark:border-slate-800">
+          <div class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 mt-0.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 17.5 3 6V3h3l11.5 11.5"/><path d="m13 19 6 2-2-6"/><path d="M9.5 17.5 21 6V3h-3L6.5 14.5"/><path d="m11 19-6 2 2-6"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-0.5">Parité Stricte 1V1 (Multijoueur)</h4>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">
+              Le duel applique la même exigence que le Solo Difficile : consignes tactiques impératives du coach (-5 pts par poste manqué), filières de détection et gestion des traits toxiques.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 p-3 rounded-2xl bg-gray-50 dark:bg-slate-900/60 border border-gray-100 dark:border-slate-800">
+          <div class="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center shrink-0 mt-0.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          </div>
+          <div>
+            <h4 class="font-bold text-xs text-slate-900 dark:text-white mb-0.5">Carrousels & Ergonomie Mobile</h4>
+            <p class="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">
+              Navigation fluide par balayage tactile (swipe) ou clic sur les indicateurs de pagination, et affichage optimisé du budget mercato sur smartphone.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bouton d'action -->
+      <button onclick="closePatchNotesModal()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-display font-extrabold text-xs sm:text-sm rounded-2xl shadow-lg shadow-blue-500/25 transition cursor-pointer">
+        C'est parti !
+      </button>
+    </div>
+  </div>
+
   <!-- SCREEN 5: FAST-FORWARD SEASON SIMULATION -->
   <!-- SCREEN 5: SIMULATION DE LA SAISON (FLAT MODERNE SANS SURCHARGE) -->
   <main id="screen-simulation" class="max-w-2xl mx-auto px-4 py-6 sm:py-10 hidden">
