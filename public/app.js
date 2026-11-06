@@ -2777,8 +2777,9 @@ function renderSignedPlayers() {
 }
 
 // ==============================================================
-// MOTEUR DE NÉGOCIATION PROFONDE & DRAMATURGIE REALISTE (v5.5)
+// MOTEUR DE NÉGOCIATION PROFONDE & DRAMATURGIE REALISTE (v5.6)
 // Directeurs Sportifs asymétriques • Profils d'Agents • Surenchères en Direct
+// Anti-répétition stricte • Zéro bulle vide • Remplacement garanti de {NAME}
 // ==============================================================
 
 const RIVAL_CLUBS_POOL = [
@@ -2950,23 +2951,23 @@ const NEGO_DIALOGUES = {
     "Ne tentez pas d'édulcorer l'indemnité avec des bonus hasardeux. C'est non pour cette formule."
   ],
   bluffSuccess: [
-    "Vous avez des nerfs d'acier... Le board ne peut pas se permettre de repartir bredouille. On accepte votre prix !",
-    "Impressionnant coup de poker... Vos conditions sont acceptées, vous avez remporté votre bras de fer.",
-    "Le président craint de voir la transaction capoter à la dernière seconde. Deal accepté à votre prix !",
+    "Vous avez des nerfs d'acier... Le board ne peut pas se permettre de repartir bredouille. On accepte votre prix pour {NAME} !",
+    "Impressionnant coup de poker... Vos conditions sont acceptées, vous avez remporté votre bras de fer pour {NAME}.",
+    "Le président craint de voir la transaction capoter à la dernière seconde. Deal accepté à votre prix pour {NAME} !",
     "C'est un pari risqué qui paie pour vous... Nous cédons sur votre montant pour éviter le fiasco à minuit."
   ],
   bluffFail: [
-    "Votre tentative d'intimidation est pathétique. On ne menace pas notre institution ! Fin des discussions.",
+    "Votre tentative d'intimidation est pathétique. On ne menace pas notre institution ! Fin des discussions pour {NAME}.",
     "Le bluff ne prend pas avec nous. Vous vouliez jouer au plus fin ? Vous repartez les mains vides !",
-    "Vous avez surestimé votre force de persuasion. Les négociations sont immédiatement stoppées !",
-    "Nous ne cédons jamais au chantage de dernière minute. Prenez la porte, le dossier est définitivement clos."
+    "Vous avez surestimé votre force de persuasion. Les négociations pour {NAME} sont immédiatement stoppées !",
+    "Nous ne cédons jamais au chantage de dernière minute. Prenez la porte, le dossier de {NAME} est définitivement clos."
   ],
 
   // --- 7. AGENT DEALS SELON agentProfile ---
   agentDemand_shark_agent: [
     "[Agent] Mon cabinet gère les intérêts des plus grands talents européens. J'exige une prime d'installation de {BONUS} M€ pour débloquer le contrat de {NAME}.",
-    "[Agent] Soyons pragmatiques : {NAME} a des propositions en Angleterre. Si vous voulez son paraphe ce soir, alignez {BONUS} M€ de prime ou nous étudions l'autre offre.",
-    "[Agent] Les honoraires de mon agence sont non négociables sur ce calibre de joueur : versez {BONUS} M€ ou le transfert ne se fera pas."
+    "[Agent] Soyons pragmatiques : {NAME} a des touches en Angleterre. Si vous voulez son paraphe ce soir, alignez {BONUS} M€ de prime ou nous étudions l'autre offre.",
+    "[Agent] Les honoraires de mon agence sont non négociables sur ce calibre de joueur : versez {BONUS} M€ ou le transfert de {NAME} ne se fera pas."
   ],
   agentDemand_pro_player: [
     "[Agent] Mon rôle est avant tout de protéger l'épanouissement sportif de {NAME}. Nous demandons une prime d'entrée de {BONUS} M€ pour valider le bail.",
@@ -2974,33 +2975,33 @@ const NEGO_DIALOGUES = {
     "[Agent] Pour finaliser sereinement l'arrivée de {NAME}, une prime de {BONUS} M€ est demandée par sa famille et son entourage."
   ],
   agentDemand_opportunist: [
-    "[Agent] Accord trouvé entre les clubs, parfait ! Pour finaliser les conditions personnelles, nous sollicitons un bonus contractuel de {BONUS} M€.",
-    "[Agent] Dans le football moderne, la signature se valide avec une commission d'intermédiaire : {BONUS} M€ et nous scellons l'accord.",
-    "[Agent] Le joueur veut franchir un palier chez vous. Alignez {BONUS} M€ de prime et nous finalisons les papiers dans l'instant."
+    "[Agent] Accord trouvé entre les clubs, parfait ! Pour finaliser les conditions personnelles de {NAME}, nous sollicitons un bonus contractuel de {BONUS} M€.",
+    "[Agent] Dans le football moderne, la signature se valide avec une commission d'intermédiaire : {BONUS} M€ et nous scellons l'accord pour {NAME}.",
+    "[Agent] Le joueur veut franchir un palier chez vous. Alignez {BONUS} M€ de prime et nous finalisons les papiers de {NAME} dans l'instant."
   ],
 
   // Réactions Promesse Sportive ("Rôle de Titulaire Indispensable")
   agentPromiseAccepted: [
     "[Agent] C'est exactement ce que nous voulions entendre ! Pour la progression de {NAME}, le statut de cadre indiscutable vaut tout l'or du monde. Nous renonçons à la prime !",
-    "[Agent] Vous avez les mots justes. Mon joueur veut du temps de jeu et des responsabilités. Marché conclu sans prime d'agent !",
+    "[Agent] Vous avez les mots justes. {NAME} veut du temps de jeu et des responsabilités. Marché conclu sans prime d'agent !",
     "[Agent] Si le coach s'engage à faire de {NAME} un titulaire indiscutable, nous abandonnons toute revendication financière. On signe !"
   ],
   agentPromiseRefused: [
-    "[Agent] Des promesses sportives ? Vous plaisantez ? Les belles paroles ne paient pas les charges de mon agence ! C'est la prime en cash ou rien du tout !",
-    "[Agent] Mon client mérite ce statut de toute façon, ça ne compense pas mes honoraires. Refus catégorique de votre promesse.",
-    "[Agent] Vous essayez de négocier du vent. Nous exigeons du cash sonnant et trébuchant, pas des promesses de vestiaire !"
+    "[Agent] Des promesses sportives pour {NAME} ? Vous plaisantez ? Les belles paroles ne paient pas les charges de mon agence ! C'est la prime en cash ou rien du tout !",
+    "[Agent] {NAME} mérite ce statut de toute façon, ça ne compense pas mes honoraires. Refus catégorique de votre promesse.",
+    "[Agent] Vous essayez de négocier du vent pour {NAME}. Nous exigeons du cash sonnant et trébuchant, pas des promesses de vestiaire !"
   ],
 
   // Réactions Refus de Prime Sec (Bras de fer)
   agentRefusalAccepted: [
-    "[Agent] Le joueur a mis son veto pour venir chez vous. Je renonce exceptionnellement à ma prime pour ne pas ruiner sa carrière.",
-    "[Agent] Vous êtes redoutable en affaires... Pour l'amour du jeu et du projet, j'accepte le contrat sans prime.",
-    "[Agent] Mon joueur insiste tellement pour signer chez vous que je consens à faire une croix sur ma commission. On signe !"
+    "[Agent] {NAME} a mis son veto pour venir chez vous. Je renonce exceptionnellement à ma prime pour ne pas ruiner sa carrière.",
+    "[Agent] Vous êtes redoutable en affaires... Pour l'amour du jeu et du projet, j'accepte le contrat de {NAME} sans prime.",
+    "[Agent] {NAME} insiste tellement pour signer chez vous que je consens à faire une croix sur ma commission. On signe !"
   ],
   agentRefusalRejected: [
-    "[Agent] Vous refusez ma commission ? Dans ce cas, mon joueur reste bien au chaud où il est. Transfert annulé !",
-    "[Agent] Sans respect pour le travail de mon cabinet, aucune signature n'aura lieu. Fin des pourparlers !",
-    "[Agent] Ce refus est un manque de considération inacceptable. Je bloque la délivrance du certificat, adieu !"
+    "[Agent] Vous refusez ma commission ? Dans ce cas, {NAME} reste bien au chaud où il est. Transfert annulé !",
+    "[Agent] Sans respect pour le travail de mon cabinet, aucune signature n'aura lieu pour {NAME}. Fin des pourparlers !",
+    "[Agent] Ce refus est un manque de considération inacceptable pour {NAME}. Je bloque la délivrance du certificat, adieu !"
   ],
 
   declineTooExpensive: [
@@ -3009,18 +3010,42 @@ const NEGO_DIALOGUES = {
     "Nos caisses ne permettent pas une telle folie à cette heure-ci. Bonne continuation pour votre mercato."
   ],
   dealFailedPatience: [
-    "Trop de tergiversations ! Vous nous avez fait perdre un temps précieux. Négociations closes !",
-    "Notre patience a des limites. Vous n'avez pas les moyens de vos ambitions, dossier classé.",
-    "C'est terminé. Nous refusons de poursuivre ces échanges stériles, la piste est fermée."
+    "Trop de tergiversations ! Vous nous avez fait perdre un temps précieux pour {NAME}. Négociations closes !",
+    "Notre patience a des limites. Vous n'avez pas les moyens de vos ambitions pour {NAME}, dossier classé.",
+    "C'est terminé. Nous refusons de poursuivre ces échanges stériles, la piste {NAME} est définitivement fermée."
   ]
 };
 
+// Fonction d'interpolation ultra-sécurisée garantissant qu'aucune variable brute ne fuite
 function getNegoDialogue(category, params = {}) {
-  const list = NEGO_DIALOGUES[category];
-  if (!list || list.length === 0) return '';
+  let list = NEGO_DIALOGUES[category];
+  if (!list || list.length === 0) {
+    if (category.startsWith('sellerOpening_')) list = NEGO_DIALOGUES.sellerOpening_calculating;
+    else if (category.startsWith('offerTooLow_')) list = NEGO_DIALOGUES.offerTooLow_calculating;
+    else if (category.startsWith('counterOffer_')) list = NEGO_DIALOGUES.counterOffer_calculating;
+    else if (category.startsWith('clauseRefused_')) list = NEGO_DIALOGUES.clauseRefused_general;
+    else if (category.startsWith('agentDemand_')) list = NEGO_DIALOGUES.agentDemand_opportunist;
+  }
+  if (!list || list.length === 0) {
+    list = ["Nous avons bien pris note de votre position."];
+  }
+
+  const pName = (activeNegotiation && activeNegotiation.player && activeNegotiation.player.name) || 'le joueur';
+  const pPrice = (activeNegotiation && activeNegotiation.offeredPrice && activeNegotiation.offeredPrice.toFixed(1)) || '0.0';
+
+  const safeParams = {
+    NAME: pName,
+    PRICE: pPrice,
+    OFFER: pPrice,
+    BONUS: '0.8',
+    RIVAL: (activeNegotiation && activeNegotiation.rivalClub) || 'Un club concurrent',
+    RIVAL_OFFER: (activeNegotiation && activeNegotiation.rivalPrice && activeNegotiation.rivalPrice.toFixed(1)) || '0.0',
+    ...params
+  };
+
   const template = list[Math.floor(Math.random() * list.length)];
   return template.replace(/\{(\w+)\}/g, (match, key) => {
-    return params[key] !== undefined ? params[key] : match;
+    return safeParams[key] !== undefined ? safeParams[key] : match;
   });
 }
 
@@ -3064,7 +3089,7 @@ function startNegotiation(playerId) {
   const agentProfile = p.agentProfile || 'opportunist';
   const agentLabel = p.agentLabel || 'Agent Négociateur';
 
-  // 3. ÉCRASEMENT STRICT DE L'ÉTAT
+  // 3. ÉCRASEMENT STRICT DE L'ÉTAT AVEC VERROUILLAGE ANTI-RÉPÉTITION
   activeNegotiation = {
     player: p,
     patience: basePatience,
@@ -3080,7 +3105,12 @@ function startNegotiation(playerId) {
     promisedStarter: false,
     hasRivalBid: false,
     rivalClub: null,
-    rivalPrice: null
+    rivalPrice: null,
+    // Mécanismes de verrouillage anti-spam & anti-boucle
+    promiseStarterRefused: false,
+    sellOnClauseRefused: false,
+    bonusClauseRefused: false,
+    bluffRefused: false
   };
   window.currentNegotiation = activeNegotiation;
 
@@ -3104,7 +3134,7 @@ function startNegotiation(playerId) {
     stampOverlay.classList.remove('opacity-100');
   }
 
-  // En-tête épuré avec profil psychologique discret
+  // En-tête épuré avec étiquette de statut adaptative (anti-débordement)
   const natName = p.nationality ? p.nationality.name : '';
   const roleName = p.subPosName || p.subPos || p.pos || 'Joueur';
   const valText = `Valeur : ${p.estimatedPrice} M€`;
@@ -3112,10 +3142,15 @@ function startNegotiation(playerId) {
 
   const elContact = document.getElementById('nego-contact-name');
   if (elContact) {
-    elContact.innerHTML = `<span>${activeNegotiation.sellerName}</span> <span class="text-[10px] font-bold text-amber-500/90 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">${dsLabel}</span>`;
+    elContact.innerHTML = `
+      <span class="truncate max-w-[170px] sm:max-w-[220px] text-slate-800 dark:text-slate-200" title="${activeNegotiation.sellerName}">${activeNegotiation.sellerName}</span>
+      <span class="inline-block px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold text-amber-500 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20 whitespace-nowrap shrink-0">${dsLabel}</span>
+    `;
   }
   const elContactSub = document.getElementById('nego-contact-sub');
-  if (elContactSub) elContactSub.innerHTML = `${typeof getSvgIcon === 'function' ? getSvgIcon('liveRadar', 'w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400') : '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block"></span>'} <span>En direct</span>`;
+  if (elContactSub) {
+    elContactSub.innerHTML = `${typeof getSvgIcon === 'function' ? getSvgIcon('liveRadar', 'w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400') : '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block"></span>'} <span>En direct</span>`;
+  }
 
   // Ligne 1 : Drapeau et Nom du joueur en gras
   const elPName = document.getElementById('nego-player-name');
@@ -3133,8 +3168,7 @@ function startNegotiation(playerId) {
 
   // Message d'ouverture adapté au tempérament du DS
   const openKey = `sellerOpening_${dsProfile}`;
-  const introMsg = getNegoDialogue(openKey, { NAME: p.name, PRICE: p.estimatedPrice }) ||
-                   getNegoDialogue('sellerOpening_calculating', { NAME: p.name, PRICE: p.estimatedPrice });
+  const introMsg = getNegoDialogue(openKey, { NAME: p.name, PRICE: p.estimatedPrice });
 
   addNegoMessage('seller', introMsg);
   audio.play('sms_in');
@@ -3160,6 +3194,7 @@ function startNegotiation(playerId) {
 }
 
 function addNegoMessage(sender, text) {
+  if (!text || typeof text !== 'string' || text.trim() === '') return;
   const container = document.getElementById('nego-chat-history');
   if (!container) return;
 
@@ -3168,8 +3203,8 @@ function addNegoMessage(sender, text) {
 
   const bubble = document.createElement('div');
   bubble.className = sender === 'me' 
-    ? 'bg-blue-600 text-white font-medium text-xs px-3.5 py-2.5 rounded-2xl rounded-tr-none max-w-[85%] shadow-xs leading-relaxed' 
-    : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-gray-100 font-medium text-xs px-3.5 py-2.5 rounded-2xl rounded-tl-none max-w-[85%] border border-slate-200/60 dark:border-slate-700/60 shadow-xs leading-relaxed';
+    ? 'bg-blue-600 text-white font-medium text-xs px-3.5 py-2.5 rounded-2xl rounded-tr-none max-w-[85%] shadow-xs leading-relaxed break-words' 
+    : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-gray-100 font-medium text-xs px-3.5 py-2.5 rounded-2xl rounded-tl-none max-w-[85%] border border-slate-200/60 dark:border-slate-700/60 shadow-xs leading-relaxed break-words';
 
   bubble.innerHTML = text;
   msgDiv.appendChild(bubble);
@@ -3207,7 +3242,7 @@ function updatePatience(delta) {
       addNegoMessage('seller', getNegoDialogue('dealFailedPatience', { NAME: pName }));
       audio.play('fail');
       document.getElementById('nego-choices-box').innerHTML = `
-        <button onclick="failAndLockNegotiation()" class="w-full py-3 bg-gray-800 text-rose-400 hover:bg-gray-700 font-display font-bold text-xs rounded-xl border border-rose-900/60">
+        <button onclick="failAndLockNegotiation()" class="w-full py-3 bg-gray-800 text-rose-400 hover:bg-gray-700 font-display font-bold text-xs rounded-xl border border-rose-900/60 cursor-pointer">
           Négociations rompues (Piste perdue)
         </button>
       `;
@@ -3243,6 +3278,7 @@ function failAndLockNegotiation() {
   renderMarketPlayers();
 }
 
+// BOUTONS DE PREMIÈRE OFFRE (Flexbox sécurisé & marges anti-débordement)
 function showNegoChoicesStep1() {
   const p = activeNegotiation.player;
   const choicesContainer = document.getElementById('nego-choices-box');
@@ -3256,11 +3292,16 @@ function showNegoChoicesStep1() {
       <div class="bg-rose-950/40 border border-rose-500/30 p-2.5 rounded-xl text-[11px] text-rose-300 mb-2">
         Valeur (${standardOffer} M€) très supérieure à vos fonds restants (${budget.toFixed(1)} M€).
       </div>
-      <button onclick="handleDesperateAllInOffer(${budget})" class="w-full text-left p-3 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition flex items-center justify-between text-xs mb-1.5">
-        <span>Tenter le coup de poker : poser tous nos fonds (<strong>${budget.toFixed(1)} M€</strong>)</span>
-        <span class="text-rose-400 font-bold">Chances infimes</span>
+      <button onclick="handleDesperateAllInOffer(${budget})" class="w-full text-left p-3 rounded-xl bg-gray-800/90 hover:bg-gray-700/90 border border-gray-700 transition flex items-center justify-between gap-3 text-xs mb-1.5 cursor-pointer">
+        <div class="min-w-0 flex-1 leading-snug">
+          <span class="font-bold text-white block">Coup de poker All-In</span>
+          <span class="text-[11px] text-gray-400 font-mono">Poser tous nos fonds (<strong>${budget.toFixed(1)} M€</strong>)</span>
+        </div>
+        <div class="shrink-0 text-right">
+          <span class="px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-400 text-[10px] font-bold border border-rose-500/30">Chances infimes</span>
+        </div>
       </button>
-      <button onclick="declineBecauseTooExpensive()" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 font-display font-bold text-xs rounded-xl border border-gray-700">
+      <button onclick="declineBecauseTooExpensive()" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 font-display font-bold text-xs rounded-xl border border-gray-700 cursor-pointer">
         Décliner : Hors de nos moyens financiers
       </button>
     `;
@@ -3271,31 +3312,46 @@ function showNegoChoicesStep1() {
 
   if (lowOffer <= budget) {
     buttons.push(`
-      <button onclick="handleOfferPrice(${lowOffer}, 'low')" class="w-full text-left p-3 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition flex items-center justify-between text-xs">
-        <span>Offre au rabais (<strong>${lowOffer} M€</strong>)</span>
-        <span class="text-rose-400 font-bold">Risqué</span>
+      <button onclick="handleOfferPrice(${lowOffer}, 'low')" class="w-full text-left p-3 rounded-xl bg-gray-800/90 hover:bg-gray-700/90 border border-gray-700 transition flex items-center justify-between gap-3 text-xs cursor-pointer">
+        <div class="min-w-0 flex-1 leading-snug">
+          <span class="font-bold text-white block">Offre au rabais</span>
+          <span class="text-[11px] text-gray-400 font-mono">Proposer <strong>${lowOffer.toFixed(1)} M€</strong> cash</span>
+        </div>
+        <div class="shrink-0 text-right">
+          <span class="px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-400 text-[10px] font-bold border border-rose-500/30">Risqué</span>
+        </div>
       </button>
     `);
   }
 
   if (standardOffer <= budget) {
     buttons.push(`
-      <button onclick="handleOfferPrice(${standardOffer}, 'standard')" class="w-full text-left p-3 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition flex items-center justify-between text-xs">
-        <span>Offrir la valeur marchande (<strong>${standardOffer} M€</strong>)</span>
-        <span class="text-amber-400 font-bold">Standard</span>
+      <button onclick="handleOfferPrice(${standardOffer}, 'standard')" class="w-full text-left p-3 rounded-xl bg-gray-800/90 hover:bg-gray-700/90 border border-gray-700 transition flex items-center justify-between gap-3 text-xs cursor-pointer">
+        <div class="min-w-0 flex-1 leading-snug">
+          <span class="font-bold text-white block">Valeur marchande</span>
+          <span class="text-[11px] text-gray-400 font-mono">Offrir <strong>${standardOffer.toFixed(1)} M€</strong></span>
+        </div>
+        <div class="shrink-0 text-right">
+          <span class="px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 text-[10px] font-bold border border-amber-500/30">Standard</span>
+        </div>
       </button>
     `);
   } else {
     buttons.push(`
-      <button onclick="handleOfferPrice(${budget}, 'max_budget')" class="w-full text-left p-3 rounded-xl bg-gray-800 hover:bg-gray-700 border border-gray-700 transition flex items-center justify-between text-xs">
-        <span>Offrir notre budget max disponible (<strong>${budget.toFixed(1)} M€</strong>)</span>
-        <span class="text-amber-400 font-bold">All-In</span>
+      <button onclick="handleOfferPrice(${budget}, 'max_budget')" class="w-full text-left p-3 rounded-xl bg-gray-800/90 hover:bg-gray-700/90 border border-gray-700 transition flex items-center justify-between gap-3 text-xs cursor-pointer">
+        <div class="min-w-0 flex-1 leading-snug">
+          <span class="font-bold text-white block">Offre maximum</span>
+          <span class="text-[11px] text-gray-400 font-mono">Poser tout notre budget (<strong>${budget.toFixed(1)} M€</strong>)</span>
+        </div>
+        <div class="shrink-0 text-right">
+          <span class="px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 text-[10px] font-bold border border-amber-500/30">All-In</span>
+        </div>
       </button>
     `);
   }
 
   buttons.push(`
-    <button onclick="failAndLockNegotiation()" class="w-full py-2 text-gray-500 hover:text-white text-xs">
+    <button onclick="failAndLockNegotiation()" class="w-full py-2 text-gray-500 hover:text-white text-xs cursor-pointer">
       Abandonner la piste (Verrouille ce joueur)
     </button>
   `);
@@ -3315,6 +3371,7 @@ function declineBecauseTooExpensive() {
 }
 
 function handleDesperateAllInOffer(budgetAmount) {
+  if (activeNegotiation.allInRefused) return;
   audio.play('sms_out');
   addNegoMessage('me', `Soyons honnêtes : voici l'intégralité de nos liquidités (${budgetAmount.toFixed(1)} M€). C'est tout ce que le club possède.`);
 
@@ -3329,14 +3386,15 @@ function handleDesperateAllInOffer(budgetAmount) {
       audio.play('sms_in');
       showAgentStep(budgetAmount);
     } else {
+      activeNegotiation.allInRefused = true;
       updatePatience(-50);
       const lowRejKey = `offerTooLow_${p.dsProfile || 'calculating'}`;
-      const msg = getNegoDialogue(lowRejKey, { OFFER: budgetAmount.toFixed(1) }) || getNegoDialogue('offerTooLow_calculating', { OFFER: budgetAmount.toFixed(1) });
+      const msg = getNegoDialogue(lowRejKey, { OFFER: budgetAmount.toFixed(1) });
       addNegoMessage('seller', msg);
       audio.play('sms_in');
 
       document.getElementById('nego-choices-box').innerHTML = `
-        <button onclick="failAndLockNegotiation()" class="w-full py-3 bg-gray-800 text-rose-400 hover:bg-gray-700 font-display font-bold text-xs rounded-xl border border-rose-900/60">
+        <button onclick="failAndLockNegotiation()" class="w-full py-3 bg-gray-800 text-rose-400 hover:bg-gray-700 font-display font-bold text-xs rounded-xl border border-rose-900/60 cursor-pointer">
           Clore la négociation (Piste perdue)
         </button>
       `;
@@ -3361,7 +3419,7 @@ function handleOfferPrice(amount, type) {
     const dsProfile = activeNegotiation.dsProfile || 'calculating';
 
     if (amount >= hiddenPrice) {
-      // ÉVÉNEMENT DRAMATIQUE : Surenchère d'un Club Rival (20% de chances sur les bons profils si pas encore eu de surenchère)
+      // ÉVÉNEMENT DRAMATIQUE : Surenchère d'un Club Rival (20% de chances sur les bons profils)
       const isHighCaliber = (p.caliberTier === 'TOP_TARGET' || p.caliberTier === 'SOLID' || p.estimatedPrice >= 6.0);
       const canTriggerRival = isHighCaliber && !activeNegotiation.hasRivalBid && realtimeRemainingSeconds > 25 && Math.random() < 0.22;
 
@@ -3375,7 +3433,6 @@ function handleOfferPrice(amount, type) {
       audio.play('sms_in');
       showAgentStep(amount);
     } else {
-      // Perte de patience asymétrique selon le tempérament du DS
       let diffLoss = -25;
       if (dsProfile === 'shark') diffLoss = -42;
       else if (dsProfile === 'calculating') diffLoss = -30;
@@ -3395,8 +3452,8 @@ function handleOfferPrice(amount, type) {
         const lowKey = `offerTooLow_${dsProfile}`;
         const counterKey = `counterOffer_${dsProfile}`;
 
-        const rejText = getNegoDialogue(lowKey, { OFFER: amount.toFixed(1) }) || getNegoDialogue('offerTooLow_calculating', { OFFER: amount.toFixed(1) });
-        const counterText = getNegoDialogue(counterKey, { PRICE: counterPrice.toFixed(1) }) || `Voici notre contre-proposition : ${counterPrice.toFixed(1)} M€.`;
+        const rejText = getNegoDialogue(lowKey, { OFFER: amount.toFixed(1) });
+        const counterText = getNegoDialogue(counterKey, { PRICE: counterPrice.toFixed(1) });
 
         addNegoMessage('seller', `${rejText} ${counterText}`);
         audio.play('sms_in');
@@ -3406,7 +3463,7 @@ function handleOfferPrice(amount, type) {
   }, 650);
 }
 
-// GESTION DE LA SURENCHÈRE RIVALE EN DIRECT
+// SURENCHÈRE HOSTILE EN DIRECT
 function triggerRivalSnatchEvent(initialAgreedPrice) {
   activeNegotiation.hasRivalBid = true;
   audio.play('alert');
@@ -3429,18 +3486,20 @@ function triggerRivalSnatchEvent(initialAgreedPrice) {
       🚨 Surenchère hostile de ${rivalClub} (${rivalPrice.toFixed(1)} M€) !
     </div>
     ${canAffordMatch ? `
-      <button onclick="handleMatchRivalBid(${rivalPrice})" class="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition mb-1.5 flex items-center justify-center gap-1.5 cursor-pointer">
-        <span>S'aligner sur ${rivalClub} (${rivalPrice.toFixed(1)} M€)</span>
+      <button onclick="handleMatchRivalBid(${rivalPrice})" class="w-full p-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-black text-xs rounded-xl shadow-lg transition mb-1.5 flex items-center justify-between gap-3 cursor-pointer">
+        <span class="truncate">S'aligner sur ${rivalClub}</span>
+        <span class="font-mono font-black shrink-0 whitespace-nowrap">${rivalPrice.toFixed(1)} M€</span>
       </button>
     ` : `
       <div class="text-[11px] text-rose-400 mb-2 bg-rose-950/30 p-2 rounded-lg border border-rose-900/40">
         Fonds insuffisants pour vous aligner (${currentRemainingBudget.toFixed(1)} M€ restants).
       </div>
     `}
-    <button onclick="handleBluffRivalBid(${initialAgreedPrice})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 transition mb-1.5 flex items-center justify-center gap-1.5 cursor-pointer">
-      <span>Contester le chantage : « Leur offre est du vent, on reste à ${initialAgreedPrice.toFixed(1)} M€ »</span>
+    <button onclick="handleBluffRivalBid(${initialAgreedPrice})" class="w-full p-2.5 bg-gray-800/90 hover:bg-gray-700/90 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 transition mb-1.5 flex items-center justify-between gap-3 cursor-pointer">
+      <span class="truncate">Contester le chantage : « C'est du vent »</span>
+      <span class="text-[10px] font-bold text-amber-400 shrink-0 font-mono">${initialAgreedPrice.toFixed(1)} M€</span>
     </button>
-    <button onclick="failAndLockNegotiation()" class="w-full py-2 text-gray-500 hover:text-white text-xs">
+    <button onclick="failAndLockNegotiation()" class="w-full py-2 text-gray-500 hover:text-white text-xs cursor-pointer">
       Se retirer : Laisser filer le joueur à ${rivalClub}
     </button>
   `;
@@ -3487,6 +3546,7 @@ function handleBluffRivalBid(originalPrice) {
   }, 700);
 }
 
+// CHOIX DE CONTRE-OFFRE AVEC ANTI-RÉPÉTITION
 function showCounterChoices(counterPrice) {
   const choicesContainer = document.getElementById('nego-choices-box');
   const budget = currentRemainingBudget;
@@ -3505,44 +3565,63 @@ function showCounterChoices(counterPrice) {
 
   if (canAffordRaw) {
     buttonsHtml += `
-      <button onclick="handleOfferPrice(${counterPrice}, 'counter_accepted')" class="w-full py-2.5 bg-amber-400 hover:bg-amber-300 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition">
-        Accepter l'exigence du club (${counterPrice.toFixed(1)} M€)
+      <button onclick="handleOfferPrice(${counterPrice}, 'counter_accepted')" class="w-full p-3 bg-amber-400 hover:bg-amber-300 text-black font-display font-black text-xs rounded-xl shadow-lg transition flex items-center justify-between gap-3 cursor-pointer">
+        <span class="truncate">Accepter l'exigence du club</span>
+        <span class="font-mono font-black shrink-0 whitespace-nowrap">${counterPrice.toFixed(1)} M€</span>
       </button>
     `;
   }
 
-  // Clause 25% à la revente
-  if (canAffordSellOn) {
+  // Clause 25% à la revente (verrouillée si déjà refusée)
+  if (activeNegotiation.sellOnClauseRefused) {
     buttonsHtml += `
-      <button onclick="handleClauseSellOn(${counterPrice}, ${sellOnPrice})" class="w-full text-left p-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 border border-emerald-500/40 hover:border-emerald-400 transition flex items-center justify-between text-xs">
-        <div>
-          <span class="font-bold text-emerald-400">Proposer Clause 25% à la revente</span>
-          <span class="block text-[10px] text-gray-400">Offrir <strong>${sellOnPrice.toFixed(1)} M€ cash</strong> + 25% sur la future plus-value</span>
-        </div>
-        <span class="text-[11px] font-mono font-bold text-emerald-300">-${(counterPrice - sellOnPrice).toFixed(1)} M€ cash</span>
-      </button>
+      <div class="w-full p-2.5 rounded-xl bg-gray-900/60 border border-gray-800/80 opacity-40 flex items-center justify-between gap-3 text-xs select-none cursor-not-allowed">
+        <span class="text-gray-500 truncate">Clause 25% à la revente</span>
+        <span class="text-[10px] font-bold text-rose-500/80 shrink-0">Refusée</span>
+      </div>
     `;
-  }
-
-  // Clause Bonus fin de saison (1 M€)
-  if (canAffordBonus) {
+  } else if (canAffordSellOn) {
     buttonsHtml += `
-      <button onclick="handleClauseBonus(${counterPrice}, ${bonusPrice})" class="w-full text-left p-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 border border-blue-500/40 hover:border-blue-400 transition flex items-center justify-between text-xs">
-        <div>
-          <span class="font-bold text-blue-400">Proposer Bonus Fin de Saison (1.0 M€)</span>
-          <span class="block text-[10px] text-gray-400">Offrir <strong>${bonusPrice.toFixed(1)} M€ cash</strong> + 1 M€ si objectif atteint</span>
+      <button onclick="handleClauseSellOn(${counterPrice}, ${sellOnPrice})" class="w-full text-left p-2.5 rounded-xl bg-gray-800/90 hover:bg-gray-700/90 border border-emerald-500/40 hover:border-emerald-400 transition flex items-center justify-between gap-3 text-xs cursor-pointer">
+        <div class="min-w-0 flex-1 leading-snug">
+          <span class="font-bold text-emerald-400 block truncate">Clause 25% à la revente</span>
+          <span class="block text-[10px] text-gray-400">Payer <strong>${sellOnPrice.toFixed(1)} M€ cash</strong></span>
         </div>
-        <span class="text-[11px] font-mono font-bold text-blue-300">-1.0 M€ cash</span>
+        <div class="shrink-0 text-right">
+          <span class="text-[11px] font-mono font-bold text-emerald-300">-${(counterPrice - sellOnPrice).toFixed(1)} M€</span>
+        </div>
       </button>
     `;
   }
 
-  if (!canAffordRaw && !canAffordSellOn && !canAffordBonus) {
+  // Clause Bonus fin de saison (verrouillée si déjà refusée)
+  if (activeNegotiation.bonusClauseRefused) {
+    buttonsHtml += `
+      <div class="w-full p-2.5 rounded-xl bg-gray-900/60 border border-gray-800/80 opacity-40 flex items-center justify-between gap-3 text-xs select-none cursor-not-allowed">
+        <span class="text-gray-500 truncate">Bonus Fin de Saison (1.0 M€)</span>
+        <span class="text-[10px] font-bold text-rose-500/80 shrink-0">Refusé</span>
+      </div>
+    `;
+  } else if (canAffordBonus) {
+    buttonsHtml += `
+      <button onclick="handleClauseBonus(${counterPrice}, ${bonusPrice})" class="w-full text-left p-2.5 rounded-xl bg-gray-800/90 hover:bg-gray-700/90 border border-blue-500/40 hover:border-blue-400 transition flex items-center justify-between gap-3 text-xs cursor-pointer">
+        <div class="min-w-0 flex-1 leading-snug">
+          <span class="font-bold text-blue-400 block truncate">Bonus Fin de Saison (1.0 M€)</span>
+          <span class="block text-[10px] text-gray-400">Payer <strong>${bonusPrice.toFixed(1)} M€ cash</strong></span>
+        </div>
+        <div class="shrink-0 text-right">
+          <span class="text-[11px] font-mono font-bold text-blue-300">-1.0 M€</span>
+        </div>
+      </button>
+    `;
+  }
+
+  if (!canAffordRaw && !canAffordSellOn && !canAffordBonus && !activeNegotiation.allInRefused) {
     buttonsHtml += `
       <div class="bg-rose-950/40 border border-rose-500/30 p-2.5 rounded-xl text-[11px] text-rose-300 mb-2">
         Le vendeur exige au moins ${sellOnPrice.toFixed(1)} M€ avec clause, mais vos caisses ne comptent que ${budget.toFixed(1)} M€ !
       </div>
-      <button onclick="handleDesperateAllInOffer(${budget})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 mb-1">
+      <button onclick="handleDesperateAllInOffer(${budget})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 mb-1 cursor-pointer">
         Proposer notre max absolu (${budget.toFixed(1)} M€)
       </button>
     `;
@@ -3550,10 +3629,11 @@ function showCounterChoices(counterPrice) {
 
   // Coup de bluff
   buttonsHtml += `
-    <button onclick="handleBluffUltimatum()" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-rose-400 font-display font-bold text-xs rounded-xl border border-gray-700">
-      Coup de Bluff : "À ce prix-là, on quitte la table."
+    <button onclick="handleBluffUltimatum()" class="w-full p-2.5 bg-gray-800/90 hover:bg-gray-700/90 border border-gray-700 text-rose-400 font-display font-bold text-xs rounded-xl transition flex items-center justify-between gap-3 cursor-pointer">
+      <span class="truncate">Coup de Bluff : « À ce prix, on quitte la table »</span>
+      <span class="px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-400 text-[10px] font-bold border border-rose-500/30 shrink-0">Ultime</span>
     </button>
-    <button onclick="declineBecauseTooExpensive()" class="w-full py-2 bg-transparent text-gray-500 hover:text-white text-xs">
+    <button onclick="declineBecauseTooExpensive()" class="w-full py-2 bg-transparent text-gray-500 hover:text-white text-xs cursor-pointer">
       Rompre la discussion (Piste fermée)
     </button>
   `;
@@ -3562,6 +3642,7 @@ function showCounterChoices(counterPrice) {
 }
 
 function handleClauseSellOn(rawCounterPrice, cashPrice) {
+  if (activeNegotiation.sellOnClauseRefused) return;
   audio.play('sms_out');
   const p = activeNegotiation.player;
   const dsProfile = activeNegotiation.dsProfile || 'calculating';
@@ -3581,13 +3662,14 @@ function handleClauseSellOn(rawCounterPrice, cashPrice) {
       activeNegotiation.usedClause = true;
       activeNegotiation.offeredPrice = cashPrice;
       updatePatience(+20);
-      addNegoMessage('seller', getNegoDialogue('clauseAccepted'));
+      addNegoMessage('seller', getNegoDialogue('clauseAccepted', { NAME: p.name, PRICE: cashPrice.toFixed(1) }));
       audio.play('sms_in');
       showAgentStep(cashPrice);
     } else {
+      activeNegotiation.sellOnClauseRefused = true;
       updatePatience(-20);
       const rejKey = dsProfile === 'shark' ? 'clauseRefused_shark' : (dsProfile === 'desperate' ? 'clauseRefused_desperate' : 'clauseRefused_general');
-      addNegoMessage('seller', getNegoDialogue(rejKey) || `Nous refusons cette clause. Versez les ${rawCounterPrice.toFixed(1)} M€ comptant.`);
+      addNegoMessage('seller', getNegoDialogue(rejKey, { NAME: p.name, PRICE: rawCounterPrice.toFixed(1) }));
       audio.play('sms_in');
       if (activeNegotiation.patience > 0) {
         showCounterChoices(rawCounterPrice);
@@ -3597,6 +3679,7 @@ function handleClauseSellOn(rawCounterPrice, cashPrice) {
 }
 
 function handleClauseBonus(rawCounterPrice, cashPrice) {
+  if (activeNegotiation.bonusClauseRefused) return;
   audio.play('sms_out');
   const p = activeNegotiation.player;
   const dsProfile = activeNegotiation.dsProfile || 'calculating';
@@ -3616,13 +3699,14 @@ function handleClauseBonus(rawCounterPrice, cashPrice) {
       activeNegotiation.usedClause = true;
       activeNegotiation.offeredPrice = cashPrice;
       updatePatience(+20);
-      addNegoMessage('seller', getNegoDialogue('clauseAccepted'));
+      addNegoMessage('seller', getNegoDialogue('clauseAccepted', { NAME: p.name, PRICE: cashPrice.toFixed(1) }));
       audio.play('sms_in');
       showAgentStep(cashPrice);
     } else {
+      activeNegotiation.bonusClauseRefused = true;
       updatePatience(-20);
       const rejKey = dsProfile === 'shark' ? 'clauseRefused_shark' : (dsProfile === 'desperate' ? 'clauseRefused_desperate' : 'clauseRefused_general');
-      addNegoMessage('seller', getNegoDialogue(rejKey) || `Refus de ce bonus conditionnel. Nous exigeons ${rawCounterPrice.toFixed(1)} M€ fermes.`);
+      addNegoMessage('seller', getNegoDialogue(rejKey, { NAME: p.name, PRICE: rawCounterPrice.toFixed(1) }));
       audio.play('sms_in');
       if (activeNegotiation.patience > 0) {
         showCounterChoices(rawCounterPrice);
@@ -3652,19 +3736,19 @@ function handleBluffUltimatum() {
 
     if (isSuccess) {
       updatePatience(+20);
-      addNegoMessage('seller', getNegoDialogue('bluffSuccess'));
+      addNegoMessage('seller', getNegoDialogue('bluffSuccess', { NAME: p.name }));
       audio.play('sms_in');
       unlockAchievement('as_bluff');
       showAgentStep(activeNegotiation.offeredPrice);
     } else {
-      addNegoMessage('seller', getNegoDialogue('bluffFail'));
+      addNegoMessage('seller', getNegoDialogue('bluffFail', { NAME: p.name }));
       audio.play('fail');
       updatePatience(-100);
     }
   }, 700);
 }
 
-// STEP 2: NÉGOCIATION AVEC L'AGENT (3 CHOIX STRATÉGIQUES)
+// STEP 2: NÉGOCIATION AVEC L'AGENT (3 CHOIX AVEC ANTI-RÉPÉTITION)
 let isDealSigningLocked = false;
 
 function showAgentStep(agreedClubPrice) {
@@ -3674,7 +3758,6 @@ function showAgentStep(agreedClubPrice) {
   const agentProfile = activeNegotiation.agentProfile || 'opportunist';
   const agentLabel = activeNegotiation.agentLabel || 'Agent Négociateur';
 
-  // Commission de l'agent calibrée selon son profil
   let rate = 0.08;
   if (agentProfile === 'shark_agent') rate = 0.10;
   else if (agentProfile === 'pro_player') rate = 0.06;
@@ -3685,7 +3768,10 @@ function showAgentStep(agreedClubPrice) {
   setTimeout(() => {
     const elContact = document.getElementById('nego-contact-name');
     if (elContact) {
-      elContact.innerHTML = `<span>Agent de ${p.name}</span> <span class="text-[10px] font-bold text-blue-500/90 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20">${agentLabel}</span>`;
+      elContact.innerHTML = `
+        <span class="truncate max-w-[170px] sm:max-w-[220px] text-slate-800 dark:text-slate-200" title="Agent de ${p.name}">Agent de ${p.name}</span>
+        <span class="inline-block px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold text-blue-500 dark:text-blue-400 bg-blue-500/10 border border-blue-500/20 whitespace-nowrap shrink-0">${agentLabel}</span>
+      `;
     }
     const elContactSub = document.getElementById('nego-contact-sub');
     if (elContactSub) {
@@ -3693,8 +3779,7 @@ function showAgentStep(agreedClubPrice) {
     }
 
     const demandKey = `agentDemand_${agentProfile}`;
-    const agentMsg = getNegoDialogue(demandKey, { BONUS: agentBonus.toFixed(1), NAME: p.name }) ||
-                     `[Agent] Accord avec le club validé pour ${agreedClubPrice.toFixed(1)} M€. Nous demandons une prime d'engagement de ${agentBonus.toFixed(1)} M€ pour finaliser le bail.`;
+    const agentMsg = getNegoDialogue(demandKey, { BONUS: agentBonus.toFixed(1), NAME: p.name });
     addNegoMessage('seller', agentMsg);
     audio.play('sms_in');
 
@@ -3702,21 +3787,36 @@ function showAgentStep(agreedClubPrice) {
 
     choicesContainer.innerHTML = `
       ${canAffordBonus ? `
-        <button id="btn-accept-agent-bonus" onclick="acceptAgentBonus(${totalCost})" class="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-1.5 cursor-pointer mb-1.5">
-          <span>Payer la prime d'agent & Valider (${totalCost.toFixed(1)} M€)</span>
+        <button id="btn-accept-agent-bonus" onclick="acceptAgentBonus(${totalCost})" class="w-full p-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-black text-xs rounded-xl shadow-lg transition flex items-center justify-between gap-3 cursor-pointer mb-1.5">
+          <span class="truncate">Payer la prime d'agent & Valider</span>
+          <span class="font-mono font-black shrink-0 whitespace-nowrap">${totalCost.toFixed(1)} M€</span>
         </button>
       ` : `
         <div class="text-[11px] text-rose-400 mb-1.5 bg-rose-950/30 p-2 rounded-lg border border-rose-900/40">
           La prime ferait dépasser votre budget disponible (${currentRemainingBudget.toFixed(1)} M€ restants).
         </div>
       `}
-      <button id="btn-promise-starter" onclick="proposePromisedStarterRole(${agreedClubPrice})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-emerald-400 font-display font-bold text-xs rounded-xl border border-emerald-500/40 transition flex items-center justify-between px-3 cursor-pointer mb-1.5">
-        <span class="text-left">Promesse Sportive : « Titulaire Indispensable garanti »</span>
-        <span class="text-[10px] font-mono text-emerald-300 font-bold">0 M€ prime</span>
-      </button>
-      <button id="btn-refuse-agent-bonus" onclick="refuseAgentBonus(${agreedClubPrice})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 transition flex items-center justify-between px-3 cursor-pointer">
-        <span>Bras de fer : « À prendre ou à laisser sans prime (${agreedClubPrice.toFixed(1)} M€) »</span>
-        <span class="text-[10px] font-bold text-rose-400">Risqué</span>
+
+      ${activeNegotiation.promiseStarterRefused ? `
+        <div class="w-full p-2.5 rounded-xl bg-gray-900/60 border border-gray-800/80 opacity-40 flex items-center justify-between gap-3 text-xs select-none cursor-not-allowed mb-1.5">
+          <span class="text-gray-500 truncate">Promesse Sportive : Titulaire indispensable</span>
+          <span class="text-[10px] font-bold text-rose-500/80 shrink-0">Déjà refusée</span>
+        </div>
+      ` : `
+        <button id="btn-promise-starter" onclick="proposePromisedStarterRole(${agreedClubPrice})" class="w-full text-left p-2.5 rounded-xl bg-gray-800/90 hover:bg-gray-700/90 text-emerald-400 font-display font-bold text-xs border border-emerald-500/40 hover:border-emerald-400 transition flex items-center justify-between gap-3 cursor-pointer mb-1.5">
+          <div class="min-w-0 flex-1 leading-snug">
+            <span class="block font-bold truncate">Promesse Sportive</span>
+            <span class="block text-[10px] text-gray-400">Garantir le rôle de Cadre Titulaire</span>
+          </div>
+          <div class="shrink-0 text-right">
+            <span class="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 text-[10px] font-mono font-bold border border-emerald-500/30">0 M€ prime</span>
+          </div>
+        </button>
+      `}
+
+      <button id="btn-refuse-agent-bonus" onclick="refuseAgentBonus(${agreedClubPrice})" class="w-full p-2.5 bg-gray-800/90 hover:bg-gray-700/90 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 transition flex items-center justify-between gap-3 cursor-pointer">
+        <span class="truncate">Bras de fer : Offre sèche sans prime (${agreedClubPrice.toFixed(1)} M€)</span>
+        <span class="px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-400 text-[10px] font-bold border border-rose-500/30 shrink-0">Risqué</span>
       </button>
     `;
   }, 400);
@@ -3750,10 +3850,17 @@ function acceptAgentBonus(totalCost) {
 
 function proposePromisedStarterRole(basePrice) {
   if (isDealSigningLocked) return;
-  isDealSigningLocked = true;
-
-  audio.play('sms_out');
   const p = activeNegotiation.player;
+
+  // VERROUILLAGE ANTI-SPAM STRICT : Si déjà refusé, impossible de redemander
+  if (activeNegotiation.promiseStarterRefused) {
+    addNegoMessage('seller', `[Agent] Nous avons déjà abordé ce sujet et ma réponse est définitive : mon joueur ne signera pas sans sa prime financière.`);
+    updatePatience(-15);
+    return;
+  }
+
+  isDealSigningLocked = true;
+  audio.play('sms_out');
   const agentProfile = activeNegotiation.agentProfile || 'opportunist';
 
   addNegoMessage('me', `Nous ne verserons pas de prime financière, mais le coach s'engage formellement : ${p.name} sera notre titulaire indiscutable et le patron de notre projet sportif.`);
@@ -3761,13 +3868,13 @@ function proposePromisedStarterRole(basePrice) {
   setTimeout(() => {
     let acceptChance = 0.50;
     if (agentProfile === 'pro_player') acceptChance = 0.85;
-    else if (agentProfile === 'shark_agent') acceptChance = 0.05; // Les requins ne croient pas aux promesses de temps de jeu
+    else if (agentProfile === 'shark_agent') acceptChance = 0.05;
 
     const isAccepted = Math.random() < acceptChance;
 
     if (isAccepted) {
       activeNegotiation.promisedStarter = true;
-      const okMsg = getNegoDialogue('agentPromiseAccepted') || `[Agent] C'est une excellente perspective pour mon poulain. Nous acceptons de signer sans prime !`;
+      const okMsg = getNegoDialogue('agentPromiseAccepted', { NAME: p.name });
       addNegoMessage('seller', okMsg);
       audio.play('sms_in');
       setTimeout(() => {
@@ -3776,7 +3883,9 @@ function proposePromisedStarterRole(basePrice) {
       }, 650);
     } else {
       isDealSigningLocked = false;
-      const refMsg = getNegoDialogue('agentPromiseRefused') || `[Agent] Des paroles ne remplacent pas une prime. C'est du concret qu'il nous faut !`;
+      // VERROUILLAGE DÉFINITIF DE L'OPTION
+      activeNegotiation.promiseStarterRefused = true;
+      const refMsg = getNegoDialogue('agentPromiseRefused', { NAME: p.name });
       addNegoMessage('seller', refMsg);
       audio.play('fail');
       updatePatience(-35);
@@ -3809,17 +3918,16 @@ function refuseAgentBonus(basePrice) {
   addNegoMessage('me', `Hors de question de céder aux surenchères d'agent. C'est l'offre sèche (${basePrice.toFixed(1)} M€) ou nous nous retirons.`);
 
   setTimeout(() => {
-    // Équilibrage réaliste des taux de succès au lieu de 72% automatique
     let successOdds = 0.38;
     if (agentProfile === 'pro_player') successOdds = 0.52;
-    else if (agentProfile === 'shark_agent') successOdds = 0.18; // Très difficile de bluffer un agent mercenaire
+    else if (agentProfile === 'shark_agent') successOdds = 0.18;
 
     if (activeScenario.difficulty === 'difficile') successOdds -= 0.08;
 
     const success = Math.random() < Math.max(0.10, successOdds);
 
     if (success) {
-      addNegoMessage('seller', getNegoDialogue('agentRefusalAccepted'));
+      addNegoMessage('seller', getNegoDialogue('agentRefusalAccepted', { NAME: p.name }));
       audio.play('sms_in');
       setTimeout(() => {
         proceedToMedicalExam(basePrice);
@@ -3827,7 +3935,7 @@ function refuseAgentBonus(basePrice) {
       }, 600);
     } else {
       isDealSigningLocked = false;
-      addNegoMessage('seller', getNegoDialogue('agentRefusalRejected'));
+      addNegoMessage('seller', getNegoDialogue('agentRefusalRejected', { NAME: p.name }));
       audio.play('fail');
       updatePatience(-100);
     }
