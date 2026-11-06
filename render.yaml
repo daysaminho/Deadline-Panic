@@ -9,12 +9,3 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 20
-
-  - type: web
-    name: rondo-rush
-    runtime: static
-    staticPublishPath: ./public/rondo-rush
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
