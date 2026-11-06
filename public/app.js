@@ -2155,7 +2155,7 @@ function formatNeedPositionLabels(need) {
 // ==============================================================
 // BASE DE DONNÉES DES PROFILS TACTIQUES & INDICES DU COACH
 // ==============================================================
-const TACTICAL_PROFILES_BY_POS = {
+var TACTICAL_PROFILES_BY_POS = {
   GAR: [
     {
       tacticalTitle: "Gardien Relanceur",
@@ -5753,7 +5753,7 @@ function shareRecapWithFriends() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initAppStartup() {
   updateHeaderStats();
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -5766,7 +5766,13 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     showScreen('screen-portal');
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAppStartup);
+} else {
+  initAppStartup();
+}
 
 
 function openCrisisDetailModal(crisisId) {
@@ -5930,9 +5936,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // Défilement automatique, indicateurs cliquables & support Touch/Swipe
 // ==============================================================
 
-let heroCarouselTimer = null;
-let currentHeroSlideIndex = 0;
-const HERO_CAPTIONS = [
+var heroCarouselTimer = null;
+var currentHeroSlideIndex = 0;
+var HERO_CAPTIONS = [
   'Aperçu du Marché · Négociation Directe',
   'Visite Médicale · Risque & Décision',
   'Flash Braderie · Opportunité DNCG',
@@ -6007,8 +6013,8 @@ function resetHeroCarouselTimer() {
 }
 
 // 2. Carrousel Présentation en Bas de Page
-let bottomCarouselTimer = null;
-let currentBottomSlideIndex = 0;
+var bottomCarouselTimer = null;
+var currentBottomSlideIndex = 0;
 
 function goToBottomSlide(index) {
   const slides = document.querySelectorAll('#bottom-carousel-slides .carousel-slide');
@@ -6202,7 +6208,7 @@ window.pauseHomeCarousels = pauseHomeCarousels;
 // GESTIONNAIRE DU POP-UP DE PATCH NOTES (v5.8)
 // Ne s'affiche qu'une seule fois grâce au localStorage
 // ==============================================================
-const PATCH_NOTES_KEY = 'ddp_patch_notes_v58';
+var PATCH_NOTES_KEY = 'ddp_patch_notes_v58';
 
 function checkAndShowPatchNotes() {
   try {
@@ -6221,6 +6227,7 @@ function openPatchNotesModal() {
   const modal = document.getElementById('modal-patch-notes');
   if (modal) {
     modal.classList.remove('hidden');
+    modal.style.display = 'flex';
   }
 }
 
@@ -6228,6 +6235,7 @@ function closePatchNotesModal() {
   const modal = document.getElementById('modal-patch-notes');
   if (modal) {
     modal.classList.add('hidden');
+    modal.style.display = 'none';
   }
   try {
     localStorage.setItem(PATCH_NOTES_KEY, 'seen');

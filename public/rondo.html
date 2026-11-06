@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>RONDO RUSH ⚡ Le Taureau Express</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #070c09;
+      --bg-panel: rgba(11, 20, 15, 0.88);
+      --neon-cyan: #00f0ff;
+      --neon-cyan-glow: rgba(0, 240, 255, 0.45);
+      --neon-green: #10b981;
+      --neon-green-glow: rgba(16, 185, 129, 0.45);
+      --neon-red: #ff334b;
+      --neon-red-glow: rgba(255, 51, 75, 0.5);
+      --neon-gold: #ffbe0b;
+      --neon-gold-glow: rgba(255, 190, 11, 0.45);
+      --text-white: #ffffff;
+      --text-muted: #8e9bb0;
+      --border-subtle: rgba(255, 255, 255, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg-dark);
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+    }
+
+    /* Background stadium ambiance */
+    .stadium-ambient {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 30%, #0d2316 0%, #06110a 65%, #020704 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #game-container {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      height: 100%;
+      max-height: 920px;
+      background: radial-gradient(circle at 50% 45%, #12301f 0%, #0b1f14 55%, #050d08 100%);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.9), 0 0 0 1px var(--border-subtle);
+      overflow: hidden;
+      touch-action: none;
+      z-index: 1;
+      transform-origin: center center;
+    }
+
+    @media (min-width: 600px) {
+      #game-container {
+        height: 94vh;
+        border-radius: 32px;
+      }
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+
+    /* SVG Icon utility */
+    .svg-icon {
+      display: inline-block;
+      width: 1.25em;
+      height: 1.25em;
+      vertical-align: -0.2em;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* TOP HUD */
+    .hud-top {
+      position: absolute;
+      top: env(safe-area-inset-top, 16px);
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .score-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      background: rgba(11, 22, 16, 0.65);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 14px;
+      padding: 6px 14px 4px 14px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .score-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .score-label .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px #34d399;
+      animation: pulseDot 1.4s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 0.6; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    .score-val {
+      font-family: 'Teko', sans-serif;
+      font-size: 48px;
+      line-height: 0.88;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
+      transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.15s ease;
+    }
+
+    .score-val.pop {
+      transform: scale(1.32);
+      color: #00f0ff;
+      text-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+    }
+
+    .hud-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .combo-badge {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--neon-cyan);
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 20px;
+      padding: 3px 12px;
+      box-shadow: 0 0 12px var(--neon-cyan-glow);
+      opacity: 0;
+      transform: translateY(-8px) scale(0.9);
+      transition: all 0.25s ease;
+    }
+
+    .combo-badge.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .best-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      background: rgba(11, 22, 16, 0.65);
+      border: 1px solid rgba(251, 191, 36, 0.25);
+      border-radius: 14px;
+      padding: 6px 14px 4px 14px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .best-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .best-val {
+      font-family: 'Teko', sans-serif;
+      font-size: 34px;
+      line-height: 0.88;
+      color: #fef08a;
+      text-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+    }
+
+    .hud-actions {
+      position: absolute;
+      bottom: 18px;
+      right: 18px;
+      display: flex;
+      gap: 10px;
+      pointer-events: auto;
+      z-index: 20;
+    }
+
+    .btn-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(15, 27, 20, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      transition: all 0.18s ease;
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+    }
+
+    .btn-icon:active {
+      transform: scale(0.94);
+    }
+
+    /* OVERLAYS (START / GAMEOVER) */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      background: rgba(4, 10, 7, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 50;
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+    }
+
+    .overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .game-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      box-shadow: 0 0 18px var(--neon-cyan-glow);
+      margin-bottom: 12px;
+    }
+
+    .logo-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 52px;
+      line-height: 0.95;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff 0%, #a7f3d0 50%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 6px 18px rgba(16, 185, 129, 0.5));
+    }
+
+    .logo-subtitle {
+      font-size: 14px;
+      font-weight: 600;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+      margin-top: 6px;
+    }
+
+    .how-to-card {
+      background: rgba(14, 27, 20, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 18px 20px;
+      margin-bottom: 26px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .how-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .how-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .how-icon-box {
+      min-width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      color: var(--neon-cyan);
+      box-shadow: 0 0 10px var(--neon-cyan-glow);
+    }
+
+    .how-icon-box.green {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: var(--neon-green);
+      box-shadow: 0 0 10px var(--neon-green-glow);
+    }
+
+    .how-icon-box.red {
+      background: rgba(255, 51, 75, 0.12);
+      border-color: rgba(255, 51, 75, 0.3);
+      color: var(--neon-red);
+      box-shadow: 0 0 10px var(--neon-red-glow);
+    }
+
+    .how-text {
+      font-size: 13px;
+      line-height: 1.45;
+      color: #e2e8f0;
+    }
+
+    .how-text strong {
+      color: #34d399;
+      font-weight: 700;
+    }
+
+    /* MAGNETIC ACTION BUTTONS */
+    .btn-main {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      padding: 18px 36px;
+      background: linear-gradient(135deg, #00f0ff 0%, #0284c7 100%);
+      border: none;
+      border-radius: 20px;
+      color: #041018;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 12px 30px -4px rgba(0, 240, 255, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.6);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      overflow: hidden;
+    }
+
+    .btn-main::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: rotate(25deg);
+      animation: btnShimmer 3s infinite ease-in-out;
+    }
+
+    @keyframes btnShimmer {
+      0% { left: -60%; }
+      30%, 100% { left: 140%; }
+    }
+
+    .btn-main:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 16px 36px -4px rgba(0, 240, 255, 0.65), 0 0 25px rgba(0, 240, 255, 0.4);
+    }
+
+    .btn-main:active {
+      transform: scale(0.96);
+      box-shadow: 0 4px 14px rgba(0, 240, 255, 0.4);
+    }
+
+    .btn-main.green-btn {
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 30px -4px rgba(16, 185, 129, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-main.green-btn:hover {
+      box-shadow: 0 16px 36px -4px rgba(16, 185, 129, 0.65), 0 0 25px rgba(16, 185, 129, 0.4);
+    }
+
+    /* GAME OVER SPECIALS */
+    .over-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(255, 51, 75, 0.15);
+      border: 1px solid var(--neon-red);
+      color: var(--neon-red);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      box-shadow: 0 0 14px var(--neon-red-glow);
+      margin-bottom: 8px;
+    }
+
+    .over-reason {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #fca5a5;
+      margin-bottom: 4px;
+    }
+
+    .over-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 54px;
+      font-weight: 800;
+      color: #ff334b;
+      line-height: 0.9;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 24px var(--neon-red-glow);
+    }
+
+    .over-score-box {
+      background: rgba(14, 27, 20, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 18px 24px;
+      margin-bottom: 22px;
+      width: 100%;
+      max-width: 340px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .over-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .over-stat-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+
+    .over-stat-num {
+      font-family: 'Teko', sans-serif;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 0.88;
+      color: #ffffff;
+    }
+
+    .over-stat-num.gold {
+      color: #fbbf24;
+      text-shadow: 0 0 16px rgba(251, 191, 36, 0.5);
+    }
+
+    .over-rank-tag {
+      margin-top: -10px;
+      margin-bottom: 24px;
+      padding: 6px 16px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #38bdf8;
+    }
+
+    /* Floating feedback text inside canvas container */
+    .float-text {
+      position: absolute;
+      pointer-events: none;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #00f0ff;
+      text-shadow: 0 0 16px rgba(0, 240, 255, 0.8), 0 2px 6px rgba(0, 0, 0, 0.8);
+      animation: floatUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      z-index: 30;
+      transform: translate(-50%, -50%);
+    }
+
+    .float-text.gold {
+      color: #ffbe0b;
+      font-size: 30px;
+      text-shadow: 0 0 20px rgba(255, 190, 11, 0.9), 0 2px 6px rgba(0, 0, 0, 0.8);
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 0; transform: translate(-50%, 0%) scale(0.6); }
+      25% { opacity: 1; transform: translate(-50%, -30%) scale(1.25); }
+      100% { opacity: 0; transform: translate(-50%, -80%) scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stadium-ambient"></div>
+
+  <div id="game-container">
+    <!-- Top HUD -->
+    <div class="hud-top">
+      <div class="score-badge">
+        <span class="score-label"><span class="dot"></span> Passes</span>
+        <span class="score-val" id="hud-score">0</span>
+      </div>
+
+      <div class="hud-center">
+        <div class="combo-badge" id="combo-badge">TIKI-TAKA</div>
+      </div>
+
+      <div class="best-badge">
+        <span class="best-label">
+          <svg class="svg-icon" viewBox="0 0 24 24" style="width: 13px; height: 13px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+          Record
+        </span>
+        <span class="best-val" id="hud-best">0</span>
+      </div>
+    </div>
+
+    <!-- HUD Actions -->
+    <div class="hud-actions">
+      <a href="/" class="btn-icon" title="Retour au Hub Studio" aria-label="Accueil" style="text-decoration: none;">
+        <svg class="svg-icon" viewBox="0 0 24 24">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      </a>
+      <button class="btn-icon" id="btn-sound" title="Couper / Activer le son" aria-label="Audio">
+        <svg class="svg-icon" id="icon-sound-on" viewBox="0 0 24 24">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+        <svg class="svg-icon" id="icon-sound-off" viewBox="0 0 24 24" style="display: none;">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Canvas principal -->
+    <canvas id="rondoCanvas"></canvas>
+
+    <!-- Overlay Accueil -->
+    <div class="overlay" id="start-overlay">
+      <div class="game-logo">
+        <span class="logo-badge">
+          <svg class="svg-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Football Arcade Series
+        </span>
+        <h1 class="logo-title">RONDO RUSH</h1>
+        <p class="logo-subtitle">Le Taureau Express en mode réflexe haute tension</p>
+      </div>
+
+      <div class="how-to-card">
+        <div class="how-row">
+          <div class="how-icon-box">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+          </div>
+          <div class="how-text"><strong>Touche le porteur</strong> et glisse pour orienter ta passe vers le coéquipier libre.</div>
+        </div>
+        <div class="how-row">
+          <div class="how-icon-box green">
+            <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <div class="how-text"><strong>Dose ta puissance</strong> : jauge verte = trajectoire parfaite. Évite la surpuissance !</div>
+        </div>
+        <div class="how-row">
+          <div class="how-icon-box red">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+          </div>
+          <div class="how-text"><strong>Garde le rythme !</strong> Le Taureau accélère à chaque passe validée.</div>
+        </div>
+      </div>
+
+      <button class="btn-main" id="btn-play">
+        <span>JOUER</span>
+        <svg class="svg-icon" viewBox="0 0 24 24" style="stroke-width: 2.5;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+      </button>
+    </div>
+
+    <!-- Overlay Game Over -->
+    <div class="overlay hidden" id="gameover-overlay">
+      <span class="over-badge">Coup de sifflet</span>
+      <div class="over-reason" id="over-reason">Interception !</div>
+      <div class="over-title">GAME OVER</div>
+
+      <div class="over-score-box">
+        <div class="over-stat">
+          <span class="over-stat-label">Passes</span>
+          <span class="over-stat-num" id="over-score">0</span>
+        </div>
+        <div style="width: 1px; height: 50px; background: rgba(255,255,255,0.15);"></div>
+        <div class="over-stat">
+          <span class="over-stat-label">Record</span>
+          <span class="over-stat-num gold" id="over-best">0</span>
+        </div>
+      </div>
+
+      <div class="over-rank-tag" id="over-rank">Maestro du Rondo</div>
+
+      <button class="btn-main green-btn" id="btn-restart">
+        <span>REJOUER</span>
+        <svg class="svg-icon" viewBox="0 0 24 24" style="stroke-width: 2.5;"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    /* ==============================================================
+       RONDO RUSH - DIRECTION ARTISTIQUE & MOTEUR HAUTE DÉFINITION
+       Studio Football UI/UX Elite - 60 FPS Canvas - Procedural Sound
+       ============================================================== */
+
+    // --- MOTEUR AUDIO PROCÉDURAL WEB AUDIO API ---
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.muted = false;
+        // Gamme pentatonique sportive avec boost dynamique
+        this.pitches = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99, 880.00, 1046.50];
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      playPass(streak) {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const pitch = this.pitches[streak % this.pitches.length];
+        
+        // Oscillateur principal (impact propre)
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(pitch, now);
+        osc.frequency.exponentialRampToValueAtTime(pitch * 0.75, now + 0.12);
+
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.17);
+
+        // Sub-bass thump pour le contact du crampon
+        const subOsc = this.ctx.createOscillator();
+        const subGain = this.ctx.createGain();
+        subOsc.type = 'sine';
+        subOsc.frequency.setValueAtTime(110, now);
+        subOsc.frequency.exponentialRampToValueAtTime(45, now + 0.08);
+
+        subGain.gain.setValueAtTime(0.35, now);
+        subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+
+        subOsc.connect(subGain);
+        subGain.connect(this.ctx.destination);
+        subOsc.start();
+        subOsc.stop(now + 0.1);
+      }
+
+      playFlick() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(480, now + 0.07);
+
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.08);
+      }
+
+      playLock() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(680, now);
+
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.05);
+      }
+
+      playFail() {
+        if (this.muted) return;
+        this.init();
+        if (!this.ctx) return;
+
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(160, now);
+        osc.frequency.exponentialRampToValueAtTime(35, now + 0.4);
+
+        gain.gain.setValueAtTime(0.45, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(now + 0.42);
+      }
+    }
+
+    const audio = new SoundEngine();
+
+    // --- GAME ENGINE & SETUP ---
+    const canvas = document.getElementById('rondoCanvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('game-container');
+
+    // UI Doms
+    const hudScore = document.getElementById('hud-score');
+    const hudBest = document.getElementById('hud-best');
+    const comboBadge = document.getElementById('combo-badge');
+    const startOverlay = document.getElementById('start-overlay');
+    const gameoverOverlay = document.getElementById('gameover-overlay');
+    const overReason = document.getElementById('over-reason');
+    const overScore = document.getElementById('over-score');
+    const overBest = document.getElementById('over-best');
+    const overRank = document.getElementById('over-rank');
+    const btnPlay = document.getElementById('btn-play');
+    const btnRestart = document.getElementById('btn-restart');
+    const btnSound = document.getElementById('btn-sound');
+    const iconSoundOn = document.getElementById('icon-sound-on');
+    const iconSoundOff = document.getElementById('icon-sound-off');
+
+    // Persistence High Score
+    let highScore = parseInt(localStorage.getItem('rondo_rush_highscore') || '0', 10);
+    hudBest.textContent = highScore;
+    overBest.textContent = highScore;
+
+    // Viewport & Scaling
+    let width = 0;
+    let height = 0;
+    let centerX = 0;
+    let centerY = 0;
+    let rondoRadius = 145;
+
+    function resize() {
+      const rect = container.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = rect.width;
+      height = rect.height;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      centerX = width / 2;
+      centerY = height / 2 + 15;
+      rondoRadius = Math.min(width * 0.38, 175);
+    }
+    window.addEventListener('resize', resize);
+    window.addEventListener('orientationchange', () => setTimeout(resize, 100));
+
+    // --- ÉTATS DU JEU ---
+    const STATE = { MENU: 0, PLAYING: 1, GAMEOVER: 2 };
+    let currentState = STATE.MENU;
+    let score = 0;
+    let screenShakeTime = 0;
+    let screenShakeMagnitude = 0;
+
+    // Joueurs (5 passeurs)
+    const PLAYER_COUNT = 5;
+    let players = [];
+    let currentCarrierIdx = 0;
+
+    // Le Taureau ("El Toro")
+    let bull = {
+      x: 0,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      angle: 0,
+      targetAngle: 0,
+      radius: 22,
+      baseSpeed: 1.85,
+      speed: 1.85,
+      trail: [],
+      snortTimer: 0
+    };
+
+    // La Balle (Physique & Rendu 3D)
+    let ball = {
+      x: 0,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      radius: 9,
+      rotation: 0,
+      inFlight: false,
+      friction: 0.985,
+      targetPlayerIdx: -1
+    };
+
+    // Contrôle Drag & Flick ergonomique
+    let isDragging = false;
+    let dragStart = { x: 0, y: 0 };
+    let dragCurrent = { x: 0, y: 0 };
+    let carrierTimeLeft = 1.35;
+    let carrierMaxTime = 1.35;
+    let lockedTargetIdx = -1; // Auto-aim feedback visual
+    let lastLockedIdx = -1;
+
+    // Particules & Effets "Juice"
+    let particles = [];
+    let ballTrail = [];
+    let shockwaves = [];
+
+    // Initialisation
+    function initGame() {
+      score = 0;
+      hudScore.textContent = '0';
+      carrierMaxTime = 1.4;
+      carrierTimeLeft = carrierMaxTime;
+      comboBadge.classList.remove('visible');
+
+      players = [];
+      for (let i = 0; i < PLAYER_COUNT; i++) {
+        const baseAngle = (i * 2 * Math.PI) / PLAYER_COUNT - Math.PI / 2;
+        players.push({
+          id: i,
+          baseAngle: baseAngle,
+          currentAngle: baseAngle,
+          oscSpeed: 0.0016 + Math.random() * 0.0012,
+          oscAmp: 0.12 + Math.random() * 0.07,
+          oscPhase: Math.random() * Math.PI * 2,
+          radius: 23,
+          x: 0,
+          y: 0,
+          bounceScale: 1,
+          eyeX: 0,
+          eyeY: 0,
+          panicLevel: 0
+        });
+      }
+
+      currentCarrierIdx = 0;
+      updatePlayerPositions(0);
+
+      // Taureau au centre
+      bull.x = centerX;
+      bull.y = centerY;
+      bull.vx = 0;
+      bull.vy = 0;
+      bull.angle = 0;
+      bull.speed = bull.baseSpeed;
+      bull.trail = [];
+
+      // Balle au pied du premier porteur
+      const carrier = players[currentCarrierIdx];
+      ball.x = carrier.x;
+      ball.y = carrier.y;
+      ball.vx = 0;
+      ball.vy = 0;
+      ball.rotation = 0;
+      ball.inFlight = false;
+      ball.targetPlayerIdx = -1;
+
+      ballTrail = [];
+      particles = [];
+      shockwaves = [];
+      isDragging = false;
+      lockedTargetIdx = -1;
+    }
+
+    function updatePlayerPositions(time) {
+      players.forEach((p, i) => {
+        const offset = Math.sin(time * p.oscSpeed + p.oscPhase) * p.oscAmp;
+        p.currentAngle = p.baseAngle + offset;
+        p.x = centerX + Math.cos(p.currentAngle) * rondoRadius;
+        p.y = centerY + Math.sin(p.currentAngle) * rondoRadius;
+
+        // Amorti d'échelle de contrôle
+        if (p.bounceScale > 1) {
+          p.bounceScale = Math.max(1, p.bounceScale - 0.04);
+        }
+
+        // Calcul du regard : suit la balle
+        const targetX = ball.inFlight ? ball.x : bull.x;
+        const targetY = ball.inFlight ? ball.y : bull.y;
+        const dx = targetX - p.x;
+        const dy = targetY - p.y;
+        const dist = Math.hypot(dx, dy) || 1;
+        p.eyeX = (dx / dist) * 3;
+        p.eyeY = (dy / dist) * 3;
+
+        // Niveau de panique si le taureau est proche
+        const distToBull = Math.hypot(bull.x - p.x, bull.y - p.y);
+        if (i === currentCarrierIdx && distToBull < 95) {
+          p.panicLevel = Math.min(1, p.panicLevel + 0.15);
+        } else {
+          p.panicLevel = Math.max(0, p.panicLevel - 0.08);
+        }
+      });
+    }
+
+    // --- GAME FEEL : SCREEN SHAKE ---
+    function triggerScreenShake(magnitude = 12, duration = 300) {
+      screenShakeMagnitude = magnitude;
+      screenShakeTime = duration;
+    }
+
+    function triggerShockwave(x, y, color = '#00f0ff') {
+      shockwaves.push({
+        x: x,
+        y: y,
+        radius: 12,
+        maxRadius: 46,
+        alpha: 0.85,
+        color: color
+      });
+    }
+
+    // --- GAME OVER ---
+    function triggerGameOver(reason) {
+      if (currentState === STATE.GAMEOVER) return;
+      currentState = STATE.GAMEOVER;
+      audio.playFail();
+      triggerScreenShake(18, 500);
+
+      // Particules d'impact rougeoyantes au point de tacle
+      for (let i = 0; i < 24; i++) {
+        particles.push({
+          x: bull.x,
+          y: bull.y,
+          vx: (Math.random() - 0.5) * 8,
+          vy: (Math.random() - 0.5) * 8,
+          color: '#ff334b',
+          alpha: 1,
+          size: Math.random() * 4 + 2
+        });
+      }
+
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('rondo_rush_highscore', highScore.toString());
+        hudBest.textContent = highScore;
+      }
+
+      // Rang selon performance
+      let rankText = "Apprenti du Toro";
+      if (score >= 35) rankText = "👑 Ballon d'Or Tiki-Taka";
+      else if (score >= 22) rankText = "⚡ Maestro du Rondo";
+      else if (score >= 12) rankText = "🎯 Relayeur Émérite";
+      else if (score >= 5) rankText = "🏃 Passeur Pro";
+
+      overReason.textContent = reason;
+      overScore.textContent = score;
+      overBest.textContent = highScore;
+      overRank.textContent = rankText;
+
+      gameoverOverlay.classList.remove('hidden');
+    }
+
+    // Floating text avec style sport high-tech
+    function createFloatText(x, y, text, isGold = false) {
+      const el = document.createElement('div');
+      el.className = `float-text ${isGold ? 'gold' : ''}`;
+      el.textContent = text;
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      container.appendChild(el);
+      setTimeout(() => el.remove(), 650);
+    }
+
+    // --- GESTIONNAIRE TACTILE & SOURIS ERGONOMIQUE ---
+    function getPointerPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+      const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function onPointerDown(e) {
+      if (currentState !== STATE.PLAYING) return;
+      if (ball.inFlight) return;
+
+      audio.init();
+      const pos = getPointerPos(e);
+      const carrier = players[currentCarrierIdx];
+
+      // Large hitzone confortable sur mobile
+      const dist = Math.hypot(pos.x - carrier.x, pos.y - carrier.y);
+      if (dist < carrier.radius * 2.4) {
+        isDragging = true;
+        dragStart = { x: carrier.x, y: carrier.y };
+        dragCurrent = { x: pos.x, y: pos.y };
+        audio.playFlick();
+        e.preventDefault();
+      }
+    }
+
+    function onPointerMove(e) {
+      if (!isDragging || currentState !== STATE.PLAYING) return;
+      dragCurrent = getPointerPos(e);
+
+      // Smart Target Lock : Calculer si le joueur pointe vers un coéquipier
+      const carrier = players[currentCarrierIdx];
+      const dx = dragCurrent.x - dragStart.x;
+      const dy = dragCurrent.y - dragStart.y;
+      const dist = Math.hypot(dx, dy);
+
+      lockedTargetIdx = -1;
+      if (dist > 25) {
+        const aimAngle = Math.atan2(dy, dx);
+        let closestAngularDiff = 0.35; // ~20 degrés de tolérance
+        for (let i = 0; i < players.length; i++) {
+          if (i === currentCarrierIdx) continue;
+          const p = players[i];
+          const angleToP = Math.atan2(p.y - carrier.y, p.x - carrier.x);
+          let diff = Math.abs(aimAngle - angleToP);
+          if (diff > Math.PI) diff = 2 * Math.PI - diff;
+
+          if (diff < closestAngularDiff) {
+            closestAngularDiff = diff;
+            lockedTargetIdx = i;
+          }
+        }
+      }
+
+      if (lockedTargetIdx !== -1 && lockedTargetIdx !== lastLockedIdx) {
+        audio.playLock();
+      }
+      lastLockedIdx = lockedTargetIdx;
+
+      e.preventDefault();
+    }
+
+    function onPointerUp(e) {
+      if (!isDragging || currentState !== STATE.PLAYING) return;
+      isDragging = false;
+
+      const dx = dragCurrent.x - dragStart.x;
+      const dy = dragCurrent.y - dragStart.y;
+      const dragDist = Math.hypot(dx, dy);
+
+      if (dragDist < 16) {
+        // Clic trop court
+        lockedTargetIdx = -1;
+        return;
+      }
+
+      // Impulsion dynamique
+      let angle = Math.atan2(dy, dx);
+      // Si une cible est verrouillée avec bonne précision, léger magnétisme subtil de passe
+      if (lockedTargetIdx !== -1) {
+        const target = players[lockedTargetIdx];
+        const carrier = players[currentCarrierIdx];
+        const directAngle = Math.atan2(target.y - carrier.y, target.x - carrier.x);
+        // Blend 75% visée joueur + 25% aim assist pour éliminer la frustration mobile
+        angle = directAngle * 0.25 + angle * 0.75;
+      }
+
+      const powerRatio = Math.min(dragDist / 125, 1.8);
+      const baseSpeed = 9.5 + powerRatio * 11;
+
+      ball.vx = Math.cos(angle) * baseSpeed;
+      ball.vy = Math.sin(angle) * baseSpeed;
+      ball.inFlight = true;
+
+      // Particules d'herbe soulevée au shoot
+      for (let i = 0; i < 14; i++) {
+        particles.push({
+          x: ball.x,
+          y: ball.y,
+          vx: (Math.random() - 0.5) * 6 - ball.vx * 0.12,
+          vy: (Math.random() - 0.5) * 6 - ball.vy * 0.12,
+          color: Math.random() > 0.5 ? '#10b981' : '#a7f3d0',
+          alpha: 1,
+          size: Math.random() * 3.5 + 1.5
+        });
+      }
+
+      triggerShockwave(ball.x, ball.y, '#10b981');
+      lockedTargetIdx = -1;
+      e.preventDefault();
+    }
+
+    canvas.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', () => { isDragging = false; lockedTargetIdx = -1; });
+
+    // --- GAME LOOP ---
+    let lastTime = performance.now();
+
+    function loop(now) {
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+
+      // Gestion du Screen Shake
+      if (screenShakeTime > 0) {
+        screenShakeTime -= dt * 1000;
+        const sx = (Math.random() - 0.5) * screenShakeMagnitude;
+        const sy = (Math.random() - 0.5) * screenShakeMagnitude;
+        container.style.transform = `translate(${sx}px, ${sy}px)`;
+      } else {
+        container.style.transform = 'none';
+      }
+
+      update(now, dt);
+      render(now);
+
+      requestAnimationFrame(loop);
+    }
+
+    function update(time, dt) {
+      if (currentState !== STATE.PLAYING) return;
+
+      updatePlayerPositions(time);
+      const carrier = players[currentCarrierIdx];
+
+      // --- CAS 1 : Balle au pied ---
+      if (!ball.inFlight) {
+        ball.x = carrier.x;
+        ball.y = carrier.y;
+
+        // Jauge de temps avant pressing fatal
+        carrierTimeLeft -= dt;
+        if (carrierTimeLeft <= 0) {
+          triggerGameOver('Pressé par le Taureau !');
+          return;
+        }
+
+        // Le Taureau charge vers le porteur
+        const toCarrierX = carrier.x - bull.x;
+        const toCarrierY = carrier.y - bull.y;
+        const distToCarrier = Math.hypot(toCarrierX, toCarrierY);
+
+        if (distToCarrier < bull.radius + carrier.radius * 0.8) {
+          triggerGameOver('Tacle du Taureau !');
+          return;
+        }
+
+        bull.vx = (toCarrierX / distToCarrier) * bull.speed;
+        bull.vy = (toCarrierY / distToCarrier) * bull.speed;
+        bull.x += bull.vx;
+        bull.y += bull.vy;
+
+        // Orientation du taureau vers sa course
+        bull.targetAngle = Math.atan2(bull.vy, bull.vx);
+        bull.angle += (bull.targetAngle - bull.angle) * 0.2;
+      } 
+      // --- CAS 2 : Balle en vol ---
+      else {
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        ball.vx *= ball.friction;
+        ball.vy *= ball.friction;
+        const currentSpeed = Math.hypot(ball.vx, ball.vy);
+        ball.rotation += currentSpeed * 0.12;
+
+        // Traînée cométaire
+        ballTrail.push({ x: ball.x, y: ball.y, alpha: 0.85 });
+        if (ballTrail.length > 12) ballTrail.shift();
+
+        // Le Taureau intercepte vers le ballon
+        const toBallX = ball.x - bull.x;
+        const toBallY = ball.y - bull.y;
+        const distToBall = Math.hypot(toBallX, toBallY);
+
+        const chaseSpeed = bull.speed * 1.18;
+        bull.vx = (toBallX / distToBall) * chaseSpeed;
+        bull.vy = (toBallY / distToBall) * chaseSpeed;
+        bull.x += bull.vx;
+        bull.y += bull.vy;
+
+        bull.targetAngle = Math.atan2(bull.vy, bull.vx);
+        bull.angle += (bull.targetAngle - bull.angle) * 0.25;
+
+        // Détection d'interception
+        if (distToBall < bull.radius + ball.radius) {
+          triggerGameOver('Passe interceptée !');
+          return;
+        }
+
+        // Balle sortie des limites
+        const distFromCenter = Math.hypot(ball.x - centerX, ball.y - centerY);
+        if (distFromCenter > rondoRadius + 60) {
+          triggerGameOver('Passe hors des limites !');
+          return;
+        }
+
+        // Balle trop molle
+        if (currentSpeed < 1.1) {
+          triggerGameOver('Passe trop molle !');
+          return;
+        }
+
+        // Détection de réception par un coéquipier
+        for (let i = 0; i < players.length; i++) {
+          if (i === currentCarrierIdx) continue;
+          const p = players[i];
+          const distToP = Math.hypot(ball.x - p.x, ball.y - p.y);
+
+          if (distToP < p.radius + ball.radius + 8) {
+            // Passe validée !
+            currentCarrierIdx = i;
+            ball.inFlight = false;
+            p.bounceScale = 1.38;
+
+            score++;
+            hudScore.textContent = score;
+
+            // Micro punch animation HUD
+            hudScore.classList.add('pop');
+            setTimeout(() => hudScore.classList.remove('pop'), 180);
+
+            // Audio & Juice
+            audio.playPass(score);
+            triggerScreenShake(4, 90);
+            triggerShockwave(p.x, p.y, '#00f0ff');
+
+            // Feedback flottant
+            if (score % 10 === 0) {
+              createFloatText(p.x, p.y - 10, `COMBO ${score} !`, true);
+              comboBadge.textContent = `MAESTRO x${score}`;
+              comboBadge.classList.add('visible');
+              setTimeout(() => comboBadge.classList.remove('visible'), 2200);
+            } else if (score % 5 === 0) {
+              createFloatText(p.x, p.y - 10, `TIKI-TAKA !`, true);
+            } else {
+              createFloatText(p.x, p.y, `+1`);
+            }
+
+            // Scaling de difficulté
+            bull.speed = bull.baseSpeed + Math.min(score * 0.085, 3.4);
+            carrierMaxTime = Math.max(0.65, 1.4 - score * 0.02);
+            carrierTimeLeft = carrierMaxTime;
+
+            // Flash de particules néon de contrôle
+            for (let k = 0; k < 12; k++) {
+              particles.push({
+                x: p.x,
+                y: p.y,
+                vx: (Math.random() - 0.5) * 6,
+                vy: (Math.random() - 0.5) * 6,
+                color: '#00f0ff',
+                alpha: 1,
+                size: Math.random() * 3.5 + 1.5
+              });
+            }
+            break;
+          }
+        }
+      }
+
+      // Mise à jour des traînées du Taureau
+      bull.snortTimer += dt;
+      if (bull.snortTimer > 0.06) {
+        bull.snortTimer = 0;
+        bull.trail.push({ x: bull.x, y: bull.y, alpha: 0.5 });
+        if (bull.trail.length > 8) bull.trail.shift();
+      }
+
+      // Mise à jour des ondes de choc
+      for (let i = shockwaves.length - 1; i >= 0; i--) {
+        const sw = shockwaves[i];
+        sw.radius += 2.2;
+        sw.alpha -= 0.045;
+        if (sw.alpha <= 0 || sw.radius >= sw.maxRadius) {
+          shockwaves.splice(i, 1);
+        }
+      }
+
+      // Mise à jour des particules
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const pt = particles[i];
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        pt.alpha -= 0.038;
+        if (pt.alpha <= 0) particles.splice(i, 1);
+      }
+    }
+
+    // --- RENDERING CANVAS HAUTE DÉFINITION ---
+    function render(time) {
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Pelouse & Délimitation Pro du Rondo
+      renderPitchArena();
+
+      // 2. Ondes de choc tactiles
+      renderShockwaves();
+
+      // 3. Traînées de vitesse (Taureau & Balle)
+      renderTrails();
+
+      // 4. Flèche de visée (Slingshot indicator) lors du Drag
+      if (isDragging && !ball.inFlight && currentState === STATE.PLAYING) {
+        renderAimArrow();
+      }
+
+      // 5. Les 5 Passeurs (Bleu Cyan & Maillots Athlétiques)
+      players.forEach((p, idx) => {
+        const isCarrier = (idx === currentCarrierIdx && !ball.inFlight);
+        const isTarget = (idx === lockedTargetIdx);
+        renderPlayer(p, isCarrier, isTarget);
+      });
+
+      // 6. Le Taureau ("El Toro")
+      renderBull();
+
+      // 7. La Balle (Rendu sphérique 3D & rotation)
+      renderBall();
+
+      // 8. Particules
+      renderParticles();
+    }
+
+    // 1. Dessin de la Pelouse & de l'Arène
+    function renderPitchArena() {
+      ctx.save();
+
+      // Bandes de tonte d'entraînement concentriques
+      const stripeCount = 6;
+      for (let s = stripeCount; s >= 1; s--) {
+        const r = (rondoRadius * 1.35) * (s / stripeCount);
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, r, 0, Math.PI * 2);
+        ctx.fillStyle = (s % 2 === 0) ? 'rgba(16, 185, 129, 0.03)' : 'rgba(0, 0, 0, 0.08)';
+        ctx.fill();
+      }
+
+      // Éclairage de stade zénithal (Spotlight)
+      const spotGrad = ctx.createRadialGradient(centerX, centerY, 10, centerX, centerY, rondoRadius * 1.25);
+      spotGrad.addColorStop(0, 'rgba(52, 211, 153, 0.12)');
+      spotGrad.addColorStop(0.7, 'rgba(16, 185, 129, 0.03)');
+      spotGrad.addColorStop(1, 'rgba(0, 0, 0, 0.25)');
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, rondoRadius * 1.25, 0, Math.PI * 2);
+      ctx.fillStyle = spotGrad;
+      ctx.fill();
+
+      // Grand cercle du Rondo avec lueur néon
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, rondoRadius, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(52, 211, 153, 0.25)';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      // Ligne intérieure en pointillés techniques
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, rondoRadius, 0, Math.PI * 2);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([8, 10]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Cercle central avec repère tactique
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 32, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#34d399';
+      ctx.fill();
+
+      // Repères cardinaux discrets (cônes d'entraînement)
+      const cardinalAngles = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2];
+      cardinalAngles.forEach(ang => {
+        const cx = centerX + Math.cos(ang) * (rondoRadius + 14);
+        const cy = centerY + Math.sin(ang) * (rondoRadius + 14);
+        ctx.beginPath();
+        ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(251, 191, 36, 0.55)';
+        ctx.fill();
+      });
+
+      ctx.restore();
+    }
+
+    // 2. Ondes de choc
+    function renderShockwaves() {
+      shockwaves.forEach(sw => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = sw.color;
+        ctx.globalAlpha = Math.max(0, sw.alpha);
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        ctx.restore();
+      });
+    }
+
+    // 3. Traînées lumineuses
+    function renderTrails() {
+      // Traînée du Taureau (fumée rougeoyante)
+      bull.trail.forEach((tr, i) => {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(tr.x, tr.y, bull.radius * (i / bull.trail.length) * 0.7, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(239, 68, 68, ${tr.alpha * 0.25})`;
+        ctx.fill();
+        tr.alpha *= 0.92;
+        ctx.restore();
+      });
+
+      // Traînée comète de la Balle
+      for (let i = 0; i < ballTrail.length; i++) {
+        const tr = ballTrail[i];
+        ctx.beginPath();
+        ctx.arc(tr.x, tr.y, ball.radius * (i / ballTrail.length) * 0.9, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 240, 255, ${tr.alpha * 0.35})`;
+        ctx.fill();
+        tr.alpha *= 0.88;
+      }
+    }
+
+    // 4. Indicateur de Visée Ergonomique (Ne masque pas le pouce)
+    function renderAimArrow() {
+      const carrier = players[currentCarrierIdx];
+      const dx = dragCurrent.x - dragStart.x;
+      const dy = dragCurrent.y - dragStart.y;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < 12) return;
+
+      let angle = Math.atan2(dy, dx);
+      if (lockedTargetIdx !== -1) {
+        const target = players[lockedTargetIdx];
+        const directAngle = Math.atan2(target.y - carrier.y, target.x - carrier.x);
+        angle = directAngle * 0.25 + angle * 0.75;
+      }
+
+      const powerPct = Math.min(dist / 115, 1.0);
+      const targetLength = Math.min(dist * 1.6, rondoRadius * 1.5);
+      const endX = carrier.x + Math.cos(angle) * targetLength;
+      const endY = carrier.y + Math.sin(angle) * targetLength;
+
+      // Code couleur haute lisibilité
+      let strokeColor = '#00f0ff'; // Idéal
+      let glowColor = 'rgba(0, 240, 255, 0.4)';
+      if (powerPct > 0.85) {
+        strokeColor = '#ff334b'; // Trop fort
+        glowColor = 'rgba(255, 51, 75, 0.45)';
+      } else if (powerPct < 0.25) {
+        strokeColor = '#f59e0b'; // Trop mou
+        glowColor = 'rgba(245, 158, 11, 0.45)';
+      }
+
+      ctx.save();
+
+      // Ligne principale laser
+      ctx.beginPath();
+      ctx.moveTo(carrier.x + Math.cos(angle) * carrier.radius, carrier.y + Math.sin(angle) * carrier.radius);
+      ctx.lineTo(endX, endY);
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = 4;
+      ctx.shadowColor = strokeColor;
+      ctx.shadowBlur = 12;
+      ctx.setLineDash([8, 8]);
+      ctx.stroke();
+
+      // Billes d'énergie animées le long du laser
+      const dotCount = 5;
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#ffffff';
+      for (let d = 1; d <= dotCount; d++) {
+        const t = (d / (dotCount + 1));
+        const px = carrier.x + Math.cos(angle) * (carrier.radius + (targetLength - carrier.radius) * t);
+        const py = carrier.y + Math.sin(angle) * (carrier.radius + (targetLength - carrier.radius) * t);
+        ctx.beginPath();
+        ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Réticule de tête de flèche
+      ctx.fillStyle = strokeColor;
+      ctx.beginPath();
+      ctx.arc(endX, endY, 7, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(endX, endY, 14, 0, Math.PI * 2);
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    // 5. Affichage d'un Joueur Passeur
+    function renderPlayer(p, isCarrier, isTarget) {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.scale(p.bounceScale, p.bounceScale);
+
+      // Ombre portée au sol
+      ctx.beginPath();
+      ctx.arc(0, 5, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+      ctx.fill();
+
+      // Si coéquipier ciblé : Réticule Lock-On magnétique
+      if (isTarget) {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.radius + 12, 0, Math.PI * 2);
+        ctx.strokeStyle = '#00f0ff';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([6, 6]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = 'rgba(0, 240, 255, 0.15)';
+        ctx.fill();
+      }
+
+      // Halo et jauge circulaire si porteur
+      if (isCarrier) {
+        const pct = Math.max(0, carrierTimeLeft / carrierMaxTime);
+        const timerColor = pct > 0.45 ? '#00f0ff' : (pct > 0.22 ? '#fbbf24' : '#ff334b');
+
+        // Anneau d'urgence
+        ctx.beginPath();
+        ctx.arc(0, 0, p.radius + 8, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * pct);
+        ctx.strokeStyle = timerColor;
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        // Pulsation douce
+        ctx.beginPath();
+        ctx.arc(0, 0, p.radius + 4, 0, Math.PI * 2);
+        ctx.fillStyle = pct > 0.3 ? 'rgba(0, 240, 255, 0.18)' : 'rgba(255, 51, 75, 0.25)';
+        ctx.fill();
+
+        // Si panique critique (< 25% de temps restant), micro shake de l'avatar
+        if (p.panicLevel > 0.5) {
+          ctx.translate((Math.random() - 0.5) * 3, (Math.random() - 0.5) * 3);
+        }
+      }
+
+      // Maillot athlétique pro (Gradient radial Cyan & Royal)
+      const grad = ctx.createRadialGradient(-5, -5, 2, 0, 0, p.radius);
+      grad.addColorStop(0, '#67e8f9');
+      grad.addColorStop(0.65, '#0284c7');
+      grad.addColorStop(1, '#0c4a6e');
+
+      ctx.beginPath();
+      ctx.arc(0, 0, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.strokeStyle = isCarrier ? '#ffffff' : '#bae6fd';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Épaulettes athlétiques stylisées
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+      ctx.beginPath();
+      ctx.arc(0, -6, p.radius * 0.7, 0, Math.PI);
+      ctx.fill();
+
+      // Yeux expressifs suivant le ballon / taureau
+      const eyeOffset = p.panicLevel > 0.6 ? 4 : 3;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(-6 + p.eyeX, -2 + p.eyeY, eyeOffset, 0, Math.PI * 2);
+      ctx.arc(6 + p.eyeX, -2 + p.eyeY, eyeOffset, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.arc(-6 + p.eyeX * 1.2, -2 + p.eyeY * 1.2, p.panicLevel > 0.6 ? 1.5 : 2, 0, Math.PI * 2);
+      ctx.arc(6 + p.eyeX * 1.2, -2 + p.eyeY * 1.2, p.panicLevel > 0.6 ? 1.5 : 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Numéro de maillot technique
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 13px "Chakra Petch", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText((p.id + 1).toString(), 0, 8);
+
+      ctx.restore();
+    }
+
+    // 6. Affichage du Taureau ("El Toro")
+    function renderBull() {
+      ctx.save();
+      ctx.translate(bull.x, bull.y);
+      ctx.rotate(bull.angle);
+
+      // Ombre portée
+      ctx.beginPath();
+      ctx.arc(0, 6, bull.radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
+      ctx.fill();
+
+      // Corps du Taureau (Dégradé rouge sang ardent)
+      const grad = ctx.createRadialGradient(-4, -4, 2, 0, 0, bull.radius);
+      grad.addColorStop(0, '#f87171');
+      grad.addColorStop(0.55, '#dc2626');
+      grad.addColorStop(1, '#7f1d1d');
+
+      ctx.beginPath();
+      ctx.arc(0, 0, bull.radius, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.strokeStyle = '#fca5a5';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Cornes menaçantes dorées affûtées (pointent vers la cible)
+      ctx.fillStyle = '#ffbe0b';
+      // Corne gauche
+      ctx.beginPath();
+      ctx.moveTo(-6, -bull.radius * 0.5);
+      ctx.lineTo(bull.radius * 0.9, -bull.radius * 0.85);
+      ctx.lineTo(bull.radius * 0.3, -bull.radius * 0.2);
+      ctx.closePath();
+      ctx.fill();
+
+      // Corne droite
+      ctx.beginPath();
+      ctx.moveTo(-6, bull.radius * 0.5);
+      ctx.lineTo(bull.radius * 0.9, bull.radius * 0.85);
+      ctx.lineTo(bull.radius * 0.3, bull.radius * 0.2);
+      ctx.closePath();
+      ctx.fill();
+
+      // Yeux féroces étirés néon
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.ellipse(bull.radius * 0.3, -6, 5, 2.5, 0.2, 0, Math.PI * 2);
+      ctx.ellipse(bull.radius * 0.3, 6, 5, 2.5, -0.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#000000';
+      ctx.beginPath();
+      ctx.arc(bull.radius * 0.38, -6, 2, 0, Math.PI * 2);
+      ctx.arc(bull.radius * 0.38, 6, 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Anneau de nez doré
+      ctx.beginPath();
+      ctx.arc(bull.radius * 0.75, 0, 4.5, -Math.PI / 2, Math.PI / 2);
+      ctx.strokeStyle = '#ffbe0b';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    // 7. Affichage de la Balle (Texture 3D & Coutures rotatives)
+    function renderBall() {
+      ctx.save();
+      ctx.translate(ball.x, ball.y);
+
+      // Ombre portée au sol découplée
+      ctx.beginPath();
+      ctx.arc(0, 4, ball.radius * 0.95, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+      ctx.fill();
+
+      // Rotation de la texture du ballon
+      ctx.rotate(ball.rotation);
+
+      // Sphère du ballon avec dégradé spéculaire 3D
+      const ballGrad = ctx.createRadialGradient(-3, -3, 1, 0, 0, ball.radius);
+      ballGrad.addColorStop(0, '#ffffff');
+      ballGrad.addColorStop(0.7, '#f1f5f9');
+      ballGrad.addColorStop(1, '#94a3b8');
+
+      ctx.beginPath();
+      ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
+      ctx.fillStyle = ballGrad;
+      ctx.fill();
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Panneau pentagonal central réaliste
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      const pR = ball.radius * 0.45;
+      for (let i = 0; i < 5; i++) {
+        const a = (i * 2 * Math.PI) / 5 - Math.PI / 2;
+        const px = Math.cos(a) * pR;
+        const py = Math.sin(a) * pR;
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.fill();
+
+      // Coutures vers l'extérieur
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1.2;
+      for (let i = 0; i < 5; i++) {
+        const a = (i * 2 * Math.PI) / 5 - Math.PI / 2;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(a) * pR, Math.sin(a) * pR);
+        ctx.lineTo(Math.cos(a) * ball.radius, Math.sin(a) * ball.radius);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    // 8. Particules
+    function renderParticles() {
+      particles.forEach(pt => {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, pt.alpha);
+        ctx.fillStyle = pt.color;
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, pt.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+    }
+
+    // --- GESTIONNAIRES DE BOUTONS ---
+    btnPlay.addEventListener('click', () => {
+      audio.init();
+      startOverlay.classList.add('hidden');
+      currentState = STATE.PLAYING;
+      initGame();
+    });
+
+    btnRestart.addEventListener('click', () => {
+      audio.init();
+      gameoverOverlay.classList.add('hidden');
+      currentState = STATE.PLAYING;
+      initGame();
+    });
+
+    btnSound.addEventListener('click', () => {
+      audio.muted = !audio.muted;
+      iconSoundOn.style.display = audio.muted ? 'none' : 'block';
+      iconSoundOff.style.display = audio.muted ? 'block' : 'none';
+    });
+
+    // Lancement initial
+    resize();
+    initGame();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

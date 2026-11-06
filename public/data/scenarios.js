@@ -7904,7 +7904,7 @@ function formatNeedPositionLabels(need) {
 // ==============================================================
 // BASE DE DONNÉES DES PROFILS TACTIQUES & INDICES DU COACH
 // ==============================================================
-const TACTICAL_PROFILES_BY_POS = {
+var TACTICAL_PROFILES_BY_POS = {
   GAR: [
     {
       tacticalTitle: "Gardien Relanceur",

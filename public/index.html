@@ -351,6 +351,13 @@
           <span>clubs</span>
         </div>
 
+        <!-- Mini-Jeu Rondo Rush Badge -->
+        <a href="/rondo.html" class="px-3 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition transform hover:scale-105" title="Découvrir Rondo Rush - Le Taureau Express">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path></svg>
+          <span class="hidden xs:inline">Rondo Rush</span>
+          <span class="bg-emerald-800 text-[10px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Arcade</span>
+        </a>
+
         <!-- Theme Toggle Button -->
         <button id="btn-theme-toggle" onclick="toggleTheme()" class="px-2.5 py-1.5 rounded-full border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 text-xs font-bold flex items-center gap-1.5 transition text-slate-700 dark:text-slate-200 hover:bg-gray-100 dark:hover:bg-slate-700" title="Basculer Mode Clair / Sombre">
           <svg class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -1679,7 +1686,7 @@
   </div>
 
   <!-- MODAL: PATCH NOTES v5.8 (POP-UP NOUVEAUTÉS DU JEU) -->
-  <div id="modal-patch-notes" class="modal-overlay fixed inset-0 bg-slate-900/70 dark:bg-black/85 backdrop-blur-xs z-[100] flex items-center justify-center p-3 sm:p-4 hidden" onclick="if(event.target === this) closePatchNotesModal()">
+  <div id="modal-patch-notes" style="display: none;" class="modal-overlay fixed inset-0 bg-slate-900/70 dark:bg-black/85 backdrop-blur-xs z-[100] flex items-center justify-center p-3 sm:p-4 hidden" onclick="if(event.target === this) closePatchNotesModal()">
     <div class="bg-white dark:bg-[#121826] border border-gray-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl relative overflow-y-auto max-h-[90vh] transition-colors select-none" onclick="event.stopPropagation()">
       <button onclick="closePatchNotesModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 dark:hover:text-white p-1 rounded-xl transition cursor-pointer" aria-label="Fermer">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -2070,12 +2077,12 @@
 
   <!-- Load Data Files & App Logic with Cache Buster -->
   <script src="/socket.io/socket.io.js"></script>
-  <script src="icons.js?v=5.8"></script>
-  <script src="data/archetypes.js?v=5.8"></script>
-  <script src="data/generator.js?v=5.8"></script>
-  <script src="data/scenarios.js?v=5.8"></script>
-  <script src="duel.js?v=5.8"></script>
-  <script src="app.js?v=5.8"></script>
+  <script src="icons.js?v=5.9"></script>
+  <script src="data/archetypes.js?v=5.9"></script>
+  <script src="data/generator.js?v=5.9"></script>
+  <script src="data/scenarios.js?v=5.9"></script>
+  <script src="duel.js?v=5.9"></script>
+  <script src="app.js?v=5.9"></script>
 
   <!-- PWA, Theme & Modal Scroll Lock System -->
   <script>
