@@ -2776,43 +2776,72 @@ function renderSignedPlayers() {
   }
 }
 
+// ==============================================================
+// MOTEUR DE NÉGOCIATION PROFONDE & DRAMATURGIE REALISTE (v5.5)
+// Directeurs Sportifs asymétriques • Profils d'Agents • Surenchères en Direct
+// ==============================================================
+
+const RIVAL_CLUBS_POOL = [
+  'Aston Villa', 'Everton FC', 'West Ham United', 'Newcastle United', 'Fulham FC',
+  'Real Betis', 'FC Séville', 'Villarreal CF', 'Valence CF', 'Real Sociedad',
+  'Atalanta Bergamo', 'ACF Fiorentina', 'Lazio Rome', 'Torino FC', 'Bologne FC',
+  'Eintracht Francfort', 'VfB Stuttgart', 'VfL Wolfsburg', 'Borussia M\'Gladbach',
+  'Stade Rennais', 'OGC Nice', 'RC Lens', 'LOSC Lille', 'Olympique Lyonnais',
+  'Fenerbahçe SK', 'Sporting CP', 'SL Benfica', 'Ajax Amsterdam', 'Galatasaray'
+];
+
 const NEGO_DIALOGUES = {
-  sellerOpeningNeutral: [
-    "Bonjour. Le chrono tourne, soyons directs : {NAME} est estimé à {PRICE} M€. Qu'avez-vous à poser sur la table ?",
-    "Nous écoutons. {NAME} suscite de l'intérêt, sa cote est de {PRICE} M€. Quelle est votre première proposition ?",
-    "La fin de mercato approche. Nous sommes disposés à discuter pour {NAME} ({PRICE} M€), mais pas à perdre notre temps.",
-    "Bonjour. Pour {NAME}, la mise de départ tourne autour de {PRICE} M€. Faites-nous une offre décente.",
-    "Le téléphone sonne beaucoup ce soir. Pour {NAME} ({PRICE} M€), nous attendons une prise de position rapide.",
-    "Entrons dans le vif du sujet : {NAME} a une valeur de marché de {PRICE} M€. Qu'avez-vous à nous proposer ?",
-    "Nous avons peu de temps avant le gong de minuit. {NAME} ({PRICE} M€) peut partir si l'offre est convenable.",
+  // --- 1. OUVERTURES CLUB VENDEUR SELON dsProfile ---
+  sellerOpening_shark: [
+    "Soyons clairs : notre cellule a refusé deux offres de Premier League ce matin. {NAME} ({PRICE} M€) ne partira que si vous payez le prix fort comptant.",
+    "Pas question de solder nos cadres au rabais ! Pour {NAME}, c'est minimum {PRICE} M€ net, ou la ligne est coupée immédiatement.",
+    "Je vous préviens d'emblée : nous n'avons aucun besoin de vendre. Si vous voulez nous arracher {NAME} ({PRICE} M€), sortez le chéquier.",
+    "Si vous pensiez faire les soldes avec {NAME} ({PRICE} M€), vous vous trompez d'adresse. Nos actionnaires n'ont besoin de rien.",
+    "Nos supporters nous assassineraient si on cédait {NAME} sous sa cote. Sa valeur plancher est {PRICE} M€ cash, sans discussion.",
+    "Le coach compte fermement sur {NAME}. Pour le déloger à {PRICE} M€, va falloir vous montrer extrêmement convaincant.",
+    "Nous sommes inflexibles sur ce dossier. {NAME} est un taulier chez nous, c'est {PRICE} M€ ou nous fermons le bureau.",
+    "Ne nous faites pas perdre de précieuses minutes : {NAME} est estimé à {PRICE} M€, nous attendons du très solide.",
+    "On a déjà repoussé une approche étrangère pour {NAME} ({PRICE} M€). Posez du lourd ou passez votre chemin.",
+    "On ne négocie pas au rabais dans ce club. {NAME} ({PRICE} M€) ne bougera que contre une offre immédiate irréprochable."
+  ],
+  sellerOpening_desperate: [
+    "La DNCG nous surveille et la nuit s'annonce glaciale... Nous devons impérativement vendre {NAME} ({PRICE} M€) avant minuit !",
+    "Nos caisses sont dans le rouge. Proposez-nous une offre décente autour de {PRICE} M€ pour {NAME} et on signe le protocole.",
+    "La situation comptable du club est critique : nous sommes prêts à écouter toute offre rapide pour {NAME} ({PRICE} M€).",
+    "Le président exige d'alléger la masse salariale avant minuit. {NAME} ({PRICE} M€) peut partir chez vous si vous êtes réactifs.",
+    "Trouvons vite un terrain d'entente. {NAME} vaut {PRICE} M€, mais nous examinerons très sérieusement votre offre.",
+    "Les créanciers nous mettent une pression folle. {NAME} est sur le marché à {PRICE} M€, nous sommes ouverts aux compromis.",
+    "C'est la panique dans nos bureaux comptables... Faites-nous une offre pour {NAME} ({PRICE} M€) avant le gong final.",
+    "Le board veut boucler ce dossier pour équilibrer le bilan. {NAME} ({PRICE} M€) doit impérativement trouver preneur ce soir.",
+    "Nous n'avons plus beaucoup de marge de manœuvre. {NAME} ({PRICE} M€) est libre de partir si l'offre tient la route.",
+    "Le président nous autorise à lâcher du lest si le deal se conclut vite. Combien posez-vous pour {NAME} ({PRICE} M€) ?"
+  ],
+  sellerOpening_calculating: [
+    "Bonjour. Le chrono tourne, soyons méthodiques : {NAME} a une cote établie à {PRICE} M€. Qu'avez-vous à poser sur la table ?",
+    "Nous écoutons votre proposition. {NAME} a une valeur de référence de {PRICE} M€. Quelle est votre première offre ?",
+    "La fin du mercato approche. Nous sommes disposés à discuter pour {NAME} ({PRICE} M€), mais nous voulons un montage carré.",
+    "Bonjour. Pour {NAME}, la mise de départ tourne autour de {PRICE} M€. Faites-nous une offre décente et structurée.",
+    "Le téléphone sonne beaucoup ce soir. Pour {NAME} ({PRICE} M€), nous attendons une prise de position chiffrée.",
+    "Entrons dans le vif du sujet : {NAME} est coté à {PRICE} M€. Que propose votre direction sportive ?",
+    "Nous avons peu de temps avant minuit. {NAME} ({PRICE} M€) peut faire l'objet d'un accord si l'offre respecte sa valeur.",
     "Bienvenue. Le président nous a donné le feu vert pour ouvrir les pourparlers pour {NAME} ({PRICE} M€).",
-    "On m'a dit que vous cherchiez du renfort. {NAME} est disponible, sa valeur marchande est fixée à {PRICE} M€.",
-    "Le temps presse pour tout le monde. {NAME} est à vous si vous vous alignez sur sa valeur de {PRICE} M€."
+    "On m'a dit que vous cherchiez du renfort à ce poste. {NAME} est disponible, sa valeur marchande est fixée à {PRICE} M€.",
+    "Le temps presse pour tout le monde. {NAME} est à vous si vous vous alignez sérieusement sur sa valeur de {PRICE} M€."
   ],
-  sellerOpeningAggressive: [
-    "Soyons clairs : {NAME} est intransférable à moins d'une offre irrefusable au-dessus de {PRICE} M€ !",
-    "Vous arrivez à la dernière minute pour notre meilleur élément ({NAME}, {PRICE} M€). Ne comptez pas sur un cadeau.",
-    "Pas question de solder nos cadres ! Pour {NAME}, c'est minimum {PRICE} M€, ou la porte est fermée.",
-    "Je vous préviens d'emblée : nous n'avons aucun besoin de vendre {NAME} ({PRICE} M€). Sortez le chéquier.",
-    "Si vous pensiez faire les soldes avec {NAME} ({PRICE} M€), vous vous trompez d'adresse. On veut du solide.",
-    "Nos supporters nous assassineraient si on cédait {NAME} à bas prix. Sa valeur plancher est {PRICE} M€ cash.",
-    "Le coach compte sur {NAME}. Si vous voulez le déloger à {PRICE} M€, va falloir vous montrer très convaincant.",
-    "Nous sommes inflexibles sur ce dossier. {NAME} vaut {PRICE} M€ et nous ne ferons aucune concession.",
-    "Ne nous faites pas perdre de précieuses minutes : {NAME} est estimé à {PRICE} M€, montrez-vous à la hauteur.",
-    "On a déjà refusé des offres étrangères pour {NAME} ({PRICE} M€). Posez du lourd ou passez votre chemin."
+  sellerOpening_crisis: [
+    "Le joueur est en clash ouvert avec notre entraîneur, l'ambiance est invivable ! {NAME} ({PRICE} M€) doit partir ce soir.",
+    "Rupture totale : {NAME} a vidé son casier et refuse de jouer pour nous. Proposez une offre autour de {PRICE} M€ et on règle ça.",
+    "Notre vestiaire est au bord de l'implosion à cause de ce dossier. Nous voulons céder {NAME} ({PRICE} M€) dans l'heure.",
+    "Le coach a été catégorique : il ne veut plus voir {NAME} à l'entraînement. Faites une offre décente pour ses {PRICE} M€.",
+    "La rupture est consommée entre le joueur et le staff. {NAME} ({PRICE} M€) est à prendre si vous avancez du concret.",
+    "Nous voulons tourner la page au plus vite. {NAME} est coté à {PRICE} M€, mais nous voulons clore ce feuilleton avant minuit.",
+    "Le clash est dans la presse, nous devons assainir le vestiaire. Combien mettez-vous sur {NAME} ({PRICE} M€) ?",
+    "Le joueur pousse pour son départ et nous ne retiendrons personne contre son gré. Proposez une offre pour {NAME} ({PRICE} M€).",
+    "Chaque heure passée avec ce joueur plombe le groupe. Faites une offre raisonnable pour {NAME} ({PRICE} M€) et on signe.",
+    "Situation d'urgence interne : {NAME} ({PRICE} M€) est transférable immédiatement pour préserver la cohésion du club."
   ],
-  sellerOpeningDesperate: [
-    "La DNCG nous surveille et la nuit s'annonce tendue... Nous devons vendre {NAME} ({PRICE} M€) avant minuit !",
-    "Nos caisses sont à sec. Faites-nous une offre raisonnable autour de {PRICE} M€ pour {NAME} et on s'entend.",
-    "La situation comptable est critique : nous sommes prêts à écouter toute offre crédible pour {NAME} ({PRICE} M€).",
-    "Le joueur pousse clairement pour partir et le club a besoin de liquidités. {NAME} ({PRICE} M€) peut signer chez vous.",
-    "Nous avons un besoin urgent d'alléger la masse salariale. Que pouvez-vous proposer pour {NAME} ({PRICE} M€) ?",
-    "Trouvons vite un terrain d'entente. {NAME} vaut {PRICE} M€, mais nous examinerons sérieusement votre offre.",
-    "Les créanciers frappent à la porte. {NAME} est sur le marché à {PRICE} M€, nous sommes ouverts à la discussion.",
-    "C'est la panique dans nos bureaux. Proposez-nous quelque chose pour {NAME} ({PRICE} M€) avant le gong.",
-    "Le président veut boucler ce dossier au plus vite. {NAME} ({PRICE} M€) doit trouver preneur ce soir.",
-    "Nous n'avons plus beaucoup de marge de manœuvre. {NAME} ({PRICE} M€) est libre de négocier si l'offre tient la route."
-  ],
+
+  // --- 2. OFFRES JOUEUR ---
   userMakeOffer: [
     "Nous vous soumettons une offre formelle de {OFFER} M€ pour la signature immédiate de {NAME}.",
     "Après validation par notre board, nous mettons officiellement {OFFER} M€ sur la table.",
@@ -2820,190 +2849,169 @@ const NEGO_DIALOGUES = {
     "Notre direction sportive a calibré notre enveloppe : nous offrons {OFFER} M€ pour ce transfert.",
     "Nous venons avec du concret : voici une proposition contractuelle de {OFFER} M€.",
     "Nous croyons beaucoup en {NAME} et posons {OFFER} M€ pour finaliser le deal sans tarder.",
-    "Voici notre enveloppe maximale sur ce profil : {OFFER} M€ pour un engagement ferme.",
+    "Voici notre proposition ferme sur ce profil : {OFFER} M€ pour un engagement immédiat.",
     "Nous posons un chèque garanti de {OFFER} M€ pour la mutation définitive de {NAME}.",
-    "Le club formule une offre ferme et sincère de {OFFER} M€ pour votre joueur.",
+    "Le club formule une offre sincère et calibrée de {OFFER} M€ pour votre joueur.",
     "Nos comptes sont calés : voici notre engagement d'achat à hauteur de {OFFER} M€."
   ],
-  offerTooLow: [
-    "C'est une plaisanterie ? À ce tarif-là, vous n'achetez même pas son pied gauche !",
-    "Votre proposition est dérisoire. Nous ne sommes pas une association caritative.",
-    "Vous sous-estimez gravement le joueur. Avec {OFFER} M€, vous n'êtes nulle part.",
-    "Notre président a failli s'étouffer en voyant votre offre. Vous êtes très loin du compte.",
-    "Pour {OFFER} M€, nous ne prenons même pas la peine d'ouvrir le classeur contractuel.",
-    "Est-ce une tentative de déstabilisation ? Ce montant est totalement hors marché.",
-    "Vous abusez de notre patience avec de tels montants. Montrez un peu plus de sérieux.",
-    "Nous avons d'autres clubs prêts à mettre bien davantage. Votre proposition ne tient pas la route.",
-    "À ce prix dérisoire ({OFFER} M€), le joueur reste chez nous sans la moindre hésitation.",
-    "C'est insultant pour un joueur de son statut. Il va falloir rehausser considérablement votre offre."
+
+  // --- 3. REJET OFFRE TROP BASSE SELON dsProfile ---
+  offerTooLow_shark: [
+    "C'est une plaisanterie ? À {OFFER} M€, vous n'achetez même pas son crampon gauche ! Vous nous prenez pour qui ?",
+    "Votre proposition est une insulte à notre institution. On ne brade pas nos cadors à des tarifs de seconde division !",
+    "Vous sous-estimez gravement le joueur. Avec {OFFER} M€, nous ne prenons même pas la peine d'ouvrir le dossier.",
+    "Notre président a failli raccrocher en voyant ce chiffre dérisoire. Vous êtes à des années-lumière du compte.",
+    "Pour {OFFER} M€, le joueur reste chez nous et dispute la coupe d'Europe. Revenez avec une vraie offre ou adieu !"
   ],
-  counterOffer: [
-    "Si vous voulez {NAME}, notre président n'ouvrira la porte qu'à partir de {PRICE} M€.",
-    "Nous voulons bien faire un effort, mais le prix plancher est fixé à {PRICE} M€.",
-    "Coupons la poire en deux : versez {PRICE} M€ immédiatement et on envoie la lettre de sortie.",
-    "Notre direction exige au strict minimum {PRICE} M€ pour libérer {NAME} avant minuit.",
-    "Mon conseil : alignez {PRICE} M€ sur notre bureau et nous concluons dans le quart d'heure.",
-    "Voici notre contre-proposition non négociable : {PRICE} M€, pas un centime de moins.",
-    "Pour {PRICE} M€, nous acceptons de signer le protocole d'accord dès maintenant.",
-    "Le board refuse sous la barre des {PRICE} M€. À vous de voir si vous pouvez vous aligner.",
-    "Si vous mettez {PRICE} M€ sur la table, nous trouvons un consensus avant le coup de minuit.",
-    "Nous pouvons clore le dossier ce soir, mais uniquement si vous montez votre offre à {PRICE} M€."
+  offerTooLow_desperate: [
+    "Nous avons besoin d'argent, certes, mais {OFFER} M€ ne comble même pas un quart de notre trou bancaire !",
+    "Ne profitez pas de notre détresse pour nous dépouiller ! {OFFER} M€, c'est beaucoup trop bas pour valider devant la ligue.",
+    "C'est trop maigre ! Avec {OFFER} M€, la DNCG nous relègue d'office. Il faut remonter cette proposition !",
+    "Nous voulons bien faire un gros effort, mais à {OFFER} M€, le conseil de surveillance va mettre son veto.",
+    "Aïe... {OFFER} M€ ne passe pas auprès des créanciers. Faites un pas vers nous, s'il vous plaît !"
   ],
-  dealAccepted: [
-    "Accord total entre nos deux clubs ! Pour {PRICE} M€, nous validons le transfert de {NAME}.",
-    "Marché conclu ! Votre offre de {PRICE} M€ convient à notre président. Passons aux détails contractuels.",
-    "Nous avons un deal ! {PRICE} M€ pour {NAME}, nous préparons les documents officiels.",
-    "Affaire conclue. Pour {PRICE} M€, {NAME} est autorisé à parapher son contrat chez vous.",
-    "Proposition acceptée ! {PRICE} M€, c'est un montant équitable pour les deux parties.",
-    "Top là ! Le protocole d'accord est validé à {PRICE} M€. Vous faites une excellente pioche.",
-    "Feu vert du président ! Pour {PRICE} M€, {NAME} s'engage avec votre formation.",
-    "C'est un soulagement pour tout le monde : l'accord est entériné à hauteur de {PRICE} M€.",
-    "Dossier bouclé entre nos états-majors ! {PRICE} M€, envoyez votre médecin sans tarder.",
-    "Le fax de confirmation vient de partir : {PRICE} M€, nous sommes parfaitement d'accord !"
+  offerTooLow_calculating: [
+    "Votre offre de {OFFER} M€ est nettement inférieure aux ratios du marché pour un joueur de cet âge et ce calibre.",
+    "Les indicateurs statistiques de {NAME} justifient une valorisation bien supérieure à vos {OFFER} M€.",
+    "Calcul insuffisant. À {OFFER} M€, le remplacement du joueur nous coûterait le double. Nous refusons.",
+    "Notre modèle financier fixe le prix de réserve bien plus haut que vos {OFFER} M€. Ajustez votre montant.",
+    "Nous avons analysé votre proposition : {OFFER} M€ ne correspond pas aux standards actuels de la division."
+  ],
+  offerTooLow_crisis: [
+    "Même si le torchon brûle avec le coach, on ne va pas donner {NAME} pour {OFFER} M€ ! Montrez un minimum de respect.",
+    "Ce n'est pas parce qu'il y a de la tension dans l'air qu'on va brader notre actif pour {OFFER} M€ !",
+    "Le joueur veut partir, oui, mais pas à ce tarif dérisoire ({OFFER} M€). Nos supporters ne le pardonneraient pas.",
+    "Vous profitez de la crise interne... Mais à {OFFER} M€, le président préfère encore l'envoyer en réserve !",
+    "Non, {OFFER} M€ c'est inacceptable. Il faut une indemnité qui nous permette de recruter son successeur."
+  ],
+
+  // --- 4. CONTRE-OFFRES ---
+  counterOffer_shark: [
+    "Si vous voulez {NAME}, c'est {PRICE} M€ net et comptant, ou le dossier est enterré sur-le-champ.",
+    "Voici notre tarif non négociable : {PRICE} M€. Vous vous alignez dans les dix minutes ou nous passons à autre chose.",
+    "Pour {PRICE} M€, nous acceptons de signer le protocole. Pas un euro de moins, notre conseil est intraitable."
+  ],
+  counterOffer_desperate: [
+    "Écoutez : versez {PRICE} M€ tout de suite pour nos échéances, et nous signons la lettre de sortie immédiatement !",
+    "Faisons un compromis : coupez la poire en deux à {PRICE} M€ et on envoie le contrat à la ligue avant minuit.",
+    "Si vous montez à {PRICE} M€, nos commissaires aux comptes donnent le feu vert. C'est notre plancher absolu."
+  ],
+  counterOffer_calculating: [
+    "Après délibération, notre prix d'équilibre est arrêté à {PRICE} M€. C'est une valeur juste pour les deux clubs.",
+    "Nous pouvons trouver un accord mutuellement profitable à {PRICE} M€. Qu'en pense votre cellule de recrutement ?",
+    "Notre contre-proposition est fixée à {PRICE} M€. C'est le prix médian pour débloquer le certificat de mutation."
+  ],
+  counterOffer_crisis: [
+    "Pour clore ce bazar et libérer la place dans le vestiaire, on vous le cède à {PRICE} M€. Affaire pliée ?",
+    "Le président veut en finir ce soir : donnez-nous {PRICE} M€ et le joueur prend le train chez vous dans la nuit.",
+    "On liquide le dossier à {PRICE} M€ pour retrouver la sérénité. C'est à prendre ou à laisser."
+  ],
+
+  // --- 5. RIVAL SNATCH EVENT (Surenchère d'un Club Concurrent) ---
+  rivalSnatchWarning: [
+    "🚨 Alerte de dernière minute ! {RIVAL} vient d'appeler notre président et dépose une offre formelle de {RIVAL_OFFER} M€ sur la table ! Si vous ne vous alignez pas immédiatement sur {RIVAL_OFFER} M€, le joueur signe chez eux !",
+    "⚡ Coup de théâtre ! Le directeur sportif de {RIVAL} vient d'entrer dans la danse avec une proposition de {RIVAL_OFFER} M€ cash. Vous vous alignez sur {RIVAL_OFFER} M€ ou nous signons avec eux dans le quart d'heure ?",
+    "📞 Mon téléphone sonne... C'est {RIVAL} qui surenchérit à {RIVAL_OFFER} M€ ! Si vous voulez verrouiller {NAME}, vous devez monter à {RIVAL_OFFER} M€ sur-le-champ !"
+  ],
+  rivalMatchAccepted: [
+    "Excellente réaction ! Vous avez des nerfs d'acier. Puisque vous vous alignez sur {RIVAL_OFFER} M€, nous donnons notre priorité à votre club !",
+    "C'est un véritable tour de force ! Vous égalez la surenchère de {RIVAL}. {NAME} est à vous, passons à son agent sans délai !",
+    "Chapeau pour votre réactivité ! Votre board a du répondant. L'accord est scellé à {RIVAL_OFFER} M€ !"
+  ],
+  rivalBluffSuccess: [
+    "Vous aviez vu juste... {RIVAL} n'avait pas les garanties bancaires pour suivre. Nous capitulons et acceptons votre offre initiale de {PRICE} M€ !",
+    "Incroyable coup de poker ! {RIVAL} s'est rétracté au dernier moment. Votre offre ferme de {PRICE} M€ est validée par notre direction !",
+    "Le président a vérifié : l'offre concurrente était un leurre d'agent... Vous remportez le bras de fer pour {PRICE} M€ !"
+  ],
+  rivalBluffFail: [
+    "Ce n'était absolument pas du bluff ! {RIVAL} vient d'envoyer la preuve de virement à notre banque. {NAME} s'engage chez eux. Négociations closes !",
+    "Vous avez joué et vous avez perdu ! {RIVAL} a signé les papiers il y a deux minutes. Le joueur s'envole chez eux, adieu !",
+    "Votre refus nous oblige à finaliser avec {RIVAL}. C'est officiel : {NAME} ne viendra pas chez vous ce soir."
+  ],
+
+  // --- 6. CLAUSES ET BLUFFS ---
+  clauseAccepted: [
+    "Cette clause nous convient parfaitement ! C'est un montage ingénieux qui préserve nos intérêts futurs.",
+    "Marché conclu avec cette clause ! Nos comptables valident le montage financier, nous signons !",
+    "Le board valide avec enthousiasme cet intéressement. Le protocole contractuel est paraphé !",
+    "Vous faites preuve d'une belle ingéniosité financière. Nous acceptons la clause et le deal est scellé !",
+    "Cette formule débloque le dossier tout en protégeant nos finances. Affaire conclue !"
+  ],
+  clauseRefused_shark: [
+    "Hors de question ! Les requins ne vivent pas de promesses lointaines. C'est du cash comptant ou rien !",
+    "Nous refusons catégoriquement les clauses alambiquées. Versez l'indemnité pleine et entière dès ce soir."
+  ],
+  clauseRefused_desperate: [
+    "Cette clause ne résout pas notre urgence immédiate ! Nous avons des salaires à payer demain matin, il nous faut du cash sec.",
+    "Les créanciers n'acceptent pas des pourcentages hypothétiques ! Revenez avec du cash disponible."
+  ],
+  clauseRefused_general: [
+    "Notre direction financière a examiné votre clause et l'a rejetée. Restons sur une transaction ferme et directe.",
+    "Ne tentez pas d'édulcorer l'indemnité avec des bonus hasardeux. C'est non pour cette formule."
+  ],
+  bluffSuccess: [
+    "Vous avez des nerfs d'acier... Le board ne peut pas se permettre de repartir bredouille. On accepte votre prix !",
+    "Impressionnant coup de poker... Vos conditions sont acceptées, vous avez remporté votre bras de fer.",
+    "Le président craint de voir la transaction capoter à la dernière seconde. Deal accepté à votre prix !",
+    "C'est un pari risqué qui paie pour vous... Nous cédons sur votre montant pour éviter le fiasco à minuit."
+  ],
+  bluffFail: [
+    "Votre tentative d'intimidation est pathétique. On ne menace pas notre institution ! Fin des discussions.",
+    "Le bluff ne prend pas avec nous. Vous vouliez jouer au plus fin ? Vous repartez les mains vides !",
+    "Vous avez surestimé votre force de persuasion. Les négociations sont immédiatement stoppées !",
+    "Nous ne cédons jamais au chantage de dernière minute. Prenez la porte, le dossier est définitivement clos."
+  ],
+
+  // --- 7. AGENT DEALS SELON agentProfile ---
+  agentDemand_shark_agent: [
+    "[Agent] Mon cabinet gère les intérêts des plus grands talents européens. J'exige une prime d'installation de {BONUS} M€ pour débloquer le contrat de {NAME}.",
+    "[Agent] Soyons pragmatiques : {NAME} a des propositions en Angleterre. Si vous voulez son paraphe ce soir, alignez {BONUS} M€ de prime ou nous étudions l'autre offre.",
+    "[Agent] Les honoraires de mon agence sont non négociables sur ce calibre de joueur : versez {BONUS} M€ ou le transfert ne se fera pas."
+  ],
+  agentDemand_pro_player: [
+    "[Agent] Mon rôle est avant tout de protéger l'épanouissement sportif de {NAME}. Nous demandons une prime d'entrée de {BONUS} M€ pour valider le bail.",
+    "[Agent] {NAME} est très enthousiaste à l'idée de jouer sous vos ordres, mais nous devons sécuriser ses conditions avec un bonus de {BONUS} M€.",
+    "[Agent] Pour finaliser sereinement l'arrivée de {NAME}, une prime de {BONUS} M€ est demandée par sa famille et son entourage."
+  ],
+  agentDemand_opportunist: [
+    "[Agent] Accord trouvé entre les clubs, parfait ! Pour finaliser les conditions personnelles, nous sollicitons un bonus contractuel de {BONUS} M€.",
+    "[Agent] Dans le football moderne, la signature se valide avec une commission d'intermédiaire : {BONUS} M€ et nous scellons l'accord.",
+    "[Agent] Le joueur veut franchir un palier chez vous. Alignez {BONUS} M€ de prime et nous finalisons les papiers dans l'instant."
+  ],
+
+  // Réactions Promesse Sportive ("Rôle de Titulaire Indispensable")
+  agentPromiseAccepted: [
+    "[Agent] C'est exactement ce que nous voulions entendre ! Pour la progression de {NAME}, le statut de cadre indiscutable vaut tout l'or du monde. Nous renonçons à la prime !",
+    "[Agent] Vous avez les mots justes. Mon joueur veut du temps de jeu et des responsabilités. Marché conclu sans prime d'agent !",
+    "[Agent] Si le coach s'engage à faire de {NAME} un titulaire indiscutable, nous abandonnons toute revendication financière. On signe !"
+  ],
+  agentPromiseRefused: [
+    "[Agent] Des promesses sportives ? Vous plaisantez ? Les belles paroles ne paient pas les charges de mon agence ! C'est la prime en cash ou rien du tout !",
+    "[Agent] Mon client mérite ce statut de toute façon, ça ne compense pas mes honoraires. Refus catégorique de votre promesse.",
+    "[Agent] Vous essayez de négocier du vent. Nous exigeons du cash sonnant et trébuchant, pas des promesses de vestiaire !"
+  ],
+
+  // Réactions Refus de Prime Sec (Bras de fer)
+  agentRefusalAccepted: [
+    "[Agent] Le joueur a mis son veto pour venir chez vous. Je renonce exceptionnellement à ma prime pour ne pas ruiner sa carrière.",
+    "[Agent] Vous êtes redoutable en affaires... Pour l'amour du jeu et du projet, j'accepte le contrat sans prime.",
+    "[Agent] Mon joueur insiste tellement pour signer chez vous que je consens à faire une croix sur ma commission. On signe !"
+  ],
+  agentRefusalRejected: [
+    "[Agent] Vous refusez ma commission ? Dans ce cas, mon joueur reste bien au chaud où il est. Transfert annulé !",
+    "[Agent] Sans respect pour le travail de mon cabinet, aucune signature n'aura lieu. Fin des pourparlers !",
+    "[Agent] Ce refus est un manque de considération inacceptable. Je bloque la délivrance du certificat, adieu !"
+  ],
+
+  declineTooExpensive: [
+    "Après examen de nos comptes, cette opération dépasse nos capacités financières. Nous nous retirons.",
+    "Ce montant mettrait en péril l'équilibre financier de notre institution. Nous quittons la table.",
+    "Nos caisses ne permettent pas une telle folie à cette heure-ci. Bonne continuation pour votre mercato."
   ],
   dealFailedPatience: [
     "Trop de tergiversations ! Vous nous avez fait perdre un temps précieux. Négociations closes !",
     "Notre patience a des limites. Vous n'avez pas les moyens de vos ambitions, dossier classé.",
-    "C'est terminé. Nous refusons de poursuivre ces échanges stériles, la piste est fermée.",
-    "Vous avez épuisé notre temps imparti. Nous nous tournons vers une autre opportunité. Adieu.",
-    "Fin de non-recevoir. Le président vient de raccrocher le combiné, affaire définitivement enterrée.",
-    "Nous ne pouvons plus perdre la moindre minute avec vous. Les pourparlers sont rompus.",
-    "Votre manque de réactivité nous contraint à stopper les pourparlers. Vous n'aurez pas {NAME}.",
-    "Le conseil d'administration a tranché : stop au cirque. La porte est désormais verrouillée.",
-    "Vous avez trop tiré sur la corde. Négociation close, {NAME} restera au club.",
-    "Rideau ! Vous avez trop tergiversé dans l'urgence. Piste définitivement close."
-  ],
-  userBluff: [
-    "C'est à prendre ou à laisser. Si vous refusez, nous levons immédiatement l'option sur notre plan B !",
-    "À ce montant-là, nous quittons la table immédiatement. Réfléchissez bien avant de refuser.",
-    "Le chrono tourne aussi pour vous : prenez ce chèque maintenant ou vous vous retrouvez le bec dans l'eau.",
-    "Nous ne ferons pas un centime de surenchère. C'est notre offre finale et définitive.",
-    "Soit vous acceptez nos conditions sur-le-champ, soit nous signons notre autre cible dans dix minutes.",
-    "Nous avons une alternative prête à signer pour moins cher. Dernière chance de conclure.",
-    "Nos dirigeants ne tolèrent aucun chantage. Acceptez ce montant ou nous mettons un terme aux pourparlers.",
-    "Vous n'aurez pas de meilleure opportunité ce soir. Prenez l'offre ou gardez votre joueur sur le banc.",
-    "Nous posons cet argent ici et maintenant. Une minute de réflexion, pas une de plus.",
-    "C'est notre proposition ultime. Si vous dites non, nous coupons court à la communication."
-  ],
-  bluffSuccess: [
-    "Vous avez des nerfs d'acier... Le board ne peut pas se permettre de repartir bredouille. On accepte !",
-    "Impressionnant coup de poker... Vos conditions sont acceptées, vous avez gagné votre bras de fer.",
-    "Le président ne veut pas voir la transaction capoter à la dernière seconde. Deal accepté !",
-    "C'est un pari risqué qui paie pour vous... Nous cédons sur votre montant pour éviter le fiasco.",
-    "Vous nous prenez à la gorge avec le chrono... D'accord, nous nous alignons sur votre dernière offre !",
-    "Bien joué. On sent le négociateur expérimenté... Nous ratifions l'accord à vos conditions.",
-    "Le conseil craint de se retrouver sans liquidités. Vous emportez la décision, affaire conclue !",
-    "Vous bluffez sans doute, mais nous n'avons pas le luxe de le vérifier. Le joueur est à vous.",
-    "Le timing joue en votre faveur. Vos exigences sont validées par notre direction générale.",
-    "Nous capitulons face à votre fermeté. Le contrat est approuvé au montant que vous imposiez !"
-  ],
-  bluffFail: [
-    "Votre tentative d'intimidation est pathétique. On ne menace pas notre institution ! Fin de discussion.",
-    "Le bluff ne prend pas avec nous. Vous vouliez jouer au plus fin ? Vous repartez les mains vides !",
-    "Vous avez surestimé votre force de persuasion. Les négociations sont immédiatement stoppées !",
-    "Nous ne cédons jamais au chantage de dernière minute. Prenez la porte, le dossier est clos.",
-    "Vous pensiez nous faire trembler avec votre plan B imaginaire ? C'est non, et adieu !",
-    "Mauvais calcul ! Notre président déteste ce genre d'arrogance. La transaction est annulée.",
-    "Inutile de dramatiser : vous n'aurez rien du tout. Piste définitivement refermée !",
-    "Un coup de bluff aussi grossier méritait une sanction : vous êtes rayé de nos carnets ce soir.",
-    "Fin du sketch ! Nous gardons notre joueur et nous vous laissons avec vos regrets.",
-    "Vous avez poussé le bouchon trop loin. Négociation immédiatement terminée !"
-  ],
-  agentDemand: [
-    "[Agent] Mon joueur a des prétentions légitimes. J'exige une prime de signature de {BONUS} M€.",
-    "[Agent] {NAME} fait un effort pour vous rejoindre, mais mes honoraires s'élèvent à {BONUS} M€.",
-    "[Agent] Plusieurs clubs anglais sont à l'affût. Pour signer le bail, versez {BONUS} M€ de prime.",
-    "[Agent] Les commissions d'intermédiaire sur ce transfert sont arrêtées à {BONUS} M€ nets.",
-    "[Agent] Mon poulain est d'accord sur le projet, à condition d'ajouter {BONUS} M€ à la signature.",
-    "[Agent] Dans le football moderne, la qualité se rémunère. Mon mandat exige {BONUS} M€ de prime.",
-    "[Agent] Nous avons un préaccord oral, mais mon agence demande {BONUS} M€ pour finaliser le bail.",
-    "[Agent] Pour garantir la loyauté totale du joueur sur plusieurs saisons, il faut poser {BONUS} M€ de prime.",
-    "[Agent] Nous touchons au but, mais il reste ma commission de {BONUS} M€ à régulariser sans délai.",
-    "[Agent] Ne bloquez pas l'opération pour des miettes : versez la prime de {BONUS} M€ et le joueur est à vous."
-  ],
-  agentRefusalAccepted: [
-    "[Agent] Le joueur a mis son veto pour venir chez vous. Je renonce exceptionnellement à ma prime.",
-    "[Agent] Vous êtes redoutable en négociation. Pour l'amour du jeu et du projet, j'accepte le deal sec.",
-    "[Agent] Mon joueur insiste tant pour signer chez vous que je consens à abandonner mes honoraires.",
-    "[Agent] Soit ! La volonté de {NAME} passe avant mon chèque. Nous signons sans frais supplémentaires.",
-    "[Agent] Vous avez le sens de l'économie... Marché conclu sans commission additionnelle.",
-    "[Agent] Mon client prend en charge mes émoluments pour ne pas compromettre son arrivée. On signe !",
-    "[Agent] Rarement vu un directeur financier aussi intraitable ! D'accord pour le contrat sans prime.",
-    "[Agent] Face à votre intransigeance et l'envie de mon poulain, je retire ma revendication financière.",
-    "[Agent] Entendu. Nous signons sur les bases financières du club uniquement. Envoyez le protocole.",
-    "[Agent] La perspective sportive compense le manque à gagner : nous validons l'engagement sec !"
-  ],
-  agentRefusalRejected: [
-    "[Agent] Vous refusez ma commission ? Dans ce cas, mon joueur reste bien au chaud où il est. Terminé.",
-    "[Agent] Sans respect pour le travail de mon agence, aucune signature n'aura lieu. Fin des pourparlers !",
-    "[Agent] Mon client mérite un traitement digne des cadors. Vous n'avez pas le standing, adieu !",
-    "[Agent] Ce refus est un manque de respect caractérisé. Je bloque la délivrance du certificat de transfert.",
-    "[Agent] Le marché ne fonctionne pas ainsi. Pas de prime, pas de contrat. Le deal s'arrête ici.",
-    "[Agent] J'ai trois autres écuries prêtes à payer le double. Nous annulons les démarches avec vous.",
-    "[Agent] Vous venez de saboter le transfert de votre propre main. Bonne chance pour votre fin de saison !",
-    "[Agent] Mon rôle est de protéger les intérêts de mon protégé. Votre posture est inacceptable. C'est fini.",
-    "[Agent] C'est tout bonnement insultant pour mes services. Je coupe immédiatement la ligne.",
-    "[Agent] Aucune flexibilité de votre part, aucune tolérance de la nôtre : dossier définitivement refermé !"
-  ],
-  proposeClauseSellOn: [
-    "Nous intégrons une clause de 20% sur la plus-value à la revente en échange d'un cash immédiat de {PRICE} M€.",
-    "Acceptons une alliance d'avenir : 20% à la revente future de {NAME} contre une indemnité sèche de {PRICE} M€.",
-    "Voici une proposition gagnant-gagnant : nous versons {PRICE} M€ cash et vous conservez 20% sur sa revente.",
-    "Pour soulager notre trésorerie ce soir, prenez {PRICE} M€ cash et encaissez 20% sur son prochain départ !",
-    "Cédons sur le futur : un pourcentage élevé de 20% à la revente pour ramener le coût immédiat à {PRICE} M€.",
-    "Vous toucherez le pactole sur son prochain transfert : nous proposons 20% à la revente et {PRICE} M€ ce soir.",
-    "Notre structure de deal inclut 20% sur future cession afin de débloquer {PRICE} M€ de liquidités immédiates.",
-    "Partageons les bénéfices futurs : 20% garantis à la revente contre un virement garanti de {PRICE} M€ maintenant.",
-    "C'est l'offre moderne par excellence : {PRICE} M€ en cash et un intéressement massif de 20% à la revente.",
-    "Réduisons l'impact cash immédiat : nous vous cédons 20% sur la revente en posant {PRICE} M€ sur la table."
-  ],
-  proposeClauseBonus: [
-    "Nous complétons l'offre avec un bonus de 1.0 M€ payé en fin de saison si l'objectif du club est atteint.",
-    "Pour préserver nos fonds, nous vous proposons {PRICE} M€ fixes plus 1.0 M€ garantis au bilan de la saison.",
-    "Voici notre montage d'incentive : {PRICE} M€ ce soir et un virement différé de 1.0 M€ en juin prochain.",
-    "Nous indexons 1.0 M€ supplémentaires sur nos performances sportives, avec {PRICE} M€ versés à la signature.",
-    "Acceptons ce bonus conditionnel : {PRICE} M€ payables maintenant et 1.0 M€ ajoutés en fin d'exercice.",
-    "Un bonus de maintien/Europe d'un million d'euros sera crédité en juin pour sécuriser vos {PRICE} M€ immédiats.",
-    "Nos finances exigent d'échelonner l'effort : {PRICE} M€ cash et 1.0 M€ débloqués en clôture de championnat.",
-    "Voici un bonus de performance de 1.0 M€ au terme de la saison, complétant les {PRICE} M€ d'acompte ferme.",
-    "Partageons le risque sportif : {PRICE} M€ garantis ce soir, et 1.0 M€ versés lors du bilan officiel.",
-    "C'est un montage responsable : {PRICE} M€ de cash disponible et 1.0 M€ réglés après la 38e journée."
-  ],
-  clauseAccepted: [
-    "Cette clause nous convient parfaitement ! C'est une excellente affaire pour notre club à long terme.",
-    "Marché conclu avec cette clause ! Nos comptables valident le montage financier, nous signons !",
-    "Le board valide avec enthousiasme cet intéressement. Le protocole contractuel est validé !",
-    "Vous faites preuve d'une belle ingéniosité financière. Nous acceptons la clause et le deal est scellé !",
-    "Cette formule préserve nos intérêts futurs tout en débloquant le dossier. Affaire conclue !",
-    "Proposition intelligente qui satisfait toutes les parties prenantes. Accord entériné avec cette clause !",
-    "C'est validé par nos commissaires aux comptes ! La clause est annexée au contrat de mutation.",
-    "Excellente négociation : nous empochons les liquidités et nous gardons une part sur l'avenir. Vendu !",
-    "Notre président approuve cette clause avec grand plaisir. Préparons la visite médicale !",
-    "Accord parfait ! La clause compense l'effort financier consenti ce soir. Bienvenue au joueur !"
-  ],
-  clauseRefused: [
-    "Hors de question ! Nous exigeons du cash immédiat pour boucler nos propres transferts ce soir !",
-    "Nous ne croyons pas aux promesses lointaines. C'est l'indemnité pleine et entière ou rien du tout !",
-    "Notre direction refuse systématiquement les clauses conditionnelles. Versez la somme demandée.",
-    "Des pourcentages hypothétiques ne combleront pas notre déficit actuel. Clause rejetée.",
-    "Nous voulons de la trésorerie disponible à minuit, pas des primes différées. Revenez avec du cash.",
-    "La clause proposée est jugée insuffisante par notre directeur financier. Refus catégorique.",
-    "Ne tentez pas d'édulcorer l'indemnité avec des bonus hasardeux. C'est non pour cette formule.",
-    "Nous sommes sous la pression de la ligue : il nous faut du cash sonnant et trébuchant dès ce soir.",
-    "Votre montage ne résout rien pour nous ce soir. Clause déclinée, maintenez l'offre principale.",
-    "Notre politique interne proscrit ce type d'artifice. Restons sur une transaction simple et directe."
-  ],
-  declineTooExpensive: [
-    "Après examen de nos comptes, cette opération dépasse nos capacités financières. Nous nous retirons.",
-    "Ce montant mettrait en péril l'équilibre financier de notre institution. Nous quittons la table.",
-    "Nos caisses ne permettent pas une telle folie à cette heure-ci. Bonne continuation pour votre mercato.",
-    "Nous avons une gestion saine et refusons de nous endetter déraisonnablement. Le dossier s'arrête ici.",
-    "L'opération est bien trop onéreuse pour notre enveloppe actuelle. Nous refermons poliment cette piste.",
-    "C'est au-dessus de nos moyens financiers actuels. Nous préférons nous concentrer sur des cibles accessibles.",
-    "Le conseil d'administration a mis son veto : trop cher pour nos finances. Fin des discussions.",
-    "Nous ne pouvons pas hypothéquer le futur du club sur un seul dossier. Nous passons notre tour.",
-    "Face à de telles exigences budgétaires, nous devons renoncer avec regret. Bonne fin de soirée.",
-    "Nos marges de manœuvre sont épuisées pour ce tarif. Nous nous retirons des pourparlers."
+    "C'est terminé. Nous refusons de poursuivre ces échanges stériles, la piste est fermée."
   ]
 };
 
@@ -3035,13 +3043,11 @@ function startNegotiation(playerId) {
   }
 
   // 2. NETTOYAGE STRICT DES STATUTS (CLEANUP)
-  // Un seul joueur à la fois dans toute la base de données locale peut posséder le booléen isNegotiating: true
   currentMarketPlayers.forEach(pl => {
     pl.isNegotiating = false;
   });
   p.isNegotiating = true;
 
-  // En mode Duel 1v1 : vérifier et verrouiller le joueur auprès du serveur
   if (typeof isDuelActive !== 'undefined' && isDuelActive && typeof socket !== 'undefined' && socket) {
     socket.emit('lockPlayerNegotiation', { playerId: p.id });
   }
@@ -3053,15 +3059,28 @@ function startNegotiation(playerId) {
     basePatience = Math.max(35, basePatience - 10);
   }
 
-  // 3. ÉCRASEMENT STRICT DE L'ÉTAT (REMPLACEMENT PUR ET SIMPLE SANS FUSION DE DONNÉES)
+  const dsProfile = p.dsProfile || 'calculating';
+  const dsLabel = p.dsLabel || 'Négociateur Rationnel';
+  const agentProfile = p.agentProfile || 'opportunist';
+  const agentLabel = p.agentLabel || 'Agent Négociateur';
+
+  // 3. ÉCRASEMENT STRICT DE L'ÉTAT
   activeNegotiation = {
     player: p,
     patience: basePatience,
     step: 1,
     offeredPrice: Math.min(p.estimatedPrice, currentRemainingBudget),
     sellerName: `Directeur Sportif (${p.club})`,
+    dsProfile: dsProfile,
+    dsLabel: dsLabel,
+    agentProfile: agentProfile,
+    agentLabel: agentLabel,
     history: [],
-    usedClause: false
+    usedClause: false,
+    promisedStarter: false,
+    hasRivalBid: false,
+    rivalClub: null,
+    rivalPrice: null
   };
   window.currentNegotiation = activeNegotiation;
 
@@ -3085,14 +3104,16 @@ function startNegotiation(playerId) {
     stampOverlay.classList.remove('opacity-100');
   }
 
-  // En-tête épuré
+  // En-tête épuré avec profil psychologique discret
   const natName = p.nationality ? p.nationality.name : '';
   const roleName = p.subPosName || p.subPos || p.pos || 'Joueur';
   const valText = `Valeur : ${p.estimatedPrice} M€`;
   const subText = [roleName, natName, valText].filter(Boolean).join(' • ');
 
   const elContact = document.getElementById('nego-contact-name');
-  if (elContact) elContact.textContent = activeNegotiation.sellerName;
+  if (elContact) {
+    elContact.innerHTML = `<span>${activeNegotiation.sellerName}</span> <span class="text-[10px] font-bold text-amber-500/90 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">${dsLabel}</span>`;
+  }
   const elContactSub = document.getElementById('nego-contact-sub');
   if (elContactSub) elContactSub.innerHTML = `${typeof getSvgIcon === 'function' ? getSvgIcon('liveRadar', 'w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400') : '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block"></span>'} <span>En direct</span>`;
 
@@ -3102,26 +3123,18 @@ function startNegotiation(playerId) {
     elPName.innerHTML = `${p.nationality ? renderFlag(p.nationality.flag, p.nationality.name) + ' ' : ''}<span>${p.name}</span>`;
   }
 
-  // Ligne 2 : Rôle • Nationalité • Valeur (épuré, texte plus petit, grisé)
+  // Ligne 2 : Rôle • Nationalité • Valeur
   const elPSub = document.getElementById('nego-player-sub');
-  if (elPSub) {
-    elPSub.textContent = subText;
-  }
+  if (elPSub) elPSub.textContent = subText;
   const elPRep = document.getElementById('nego-player-rep');
-  if (elPRep) {
-    elPRep.textContent = subText;
-  }
+  if (elPRep) elPRep.textContent = subText;
   const elPVal = document.getElementById('nego-player-val');
-  if (elPVal) {
-    elPVal.textContent = '';
-  }
+  if (elPVal) elPVal.textContent = '';
 
-  let introMsg = getNegoDialogue('sellerOpeningNeutral', { NAME: p.name, PRICE: p.estimatedPrice });
-  if (p.sellerProfile === 'aggressive') {
-    introMsg = getNegoDialogue('sellerOpeningAggressive', { NAME: p.name, PRICE: p.estimatedPrice });
-  } else if (p.sellerProfile === 'desperate') {
-    introMsg = getNegoDialogue('sellerOpeningDesperate', { NAME: p.name, PRICE: p.estimatedPrice });
-  }
+  // Message d'ouverture adapté au tempérament du DS
+  const openKey = `sellerOpening_${dsProfile}`;
+  const introMsg = getNegoDialogue(openKey, { NAME: p.name, PRICE: p.estimatedPrice }) ||
+                   getNegoDialogue('sellerOpening_calculating', { NAME: p.name, PRICE: p.estimatedPrice });
 
   addNegoMessage('seller', introMsg);
   audio.play('sms_in');
@@ -3131,7 +3144,7 @@ function startNegotiation(playerId) {
   const idleState = document.getElementById('nego-idle-state'); if (idleState) idleState.classList.add('hidden');
   const activeState = document.getElementById('nego-active-state'); if (activeState) activeState.classList.remove('hidden');
 
-  // 4b. Activation de l'overlay mobile plein écran et liaison de données du budget
+  // Activation de l'overlay mobile plein écran et liaison de données du budget
   const negoCol = document.getElementById('in-game-negotiation-col');
   if (negoCol) {
     negoCol.classList.add('mobile-nego-active');
@@ -3143,7 +3156,6 @@ function startNegotiation(playerId) {
     elNegoMobBudget.textContent = `${liveVal} M€`;
   }
 
-  // 5. RAFRAÎCHISSEMENT IMMÉDIAT DU MARCHÉ (seul le joueur actif portera 'En ligne')
   renderMarketPlayers();
 }
 
@@ -3159,7 +3171,7 @@ function addNegoMessage(sender, text) {
     ? 'bg-blue-600 text-white font-medium text-xs px-3.5 py-2.5 rounded-2xl rounded-tr-none max-w-[85%] shadow-xs leading-relaxed' 
     : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-gray-100 font-medium text-xs px-3.5 py-2.5 rounded-2xl rounded-tl-none max-w-[85%] border border-slate-200/60 dark:border-slate-700/60 shadow-xs leading-relaxed';
 
-  bubble.textContent = text;
+  bubble.innerHTML = text;
   msgDiv.appendChild(bubble);
 
   const timeSpan = document.createElement('span');
@@ -3308,8 +3320,8 @@ function handleDesperateAllInOffer(budgetAmount) {
 
   setTimeout(() => {
     const p = activeNegotiation.player;
-    const isDesperateSeller = (p.sellerProfile === 'desperate' || p.availability === 'En froid avec le coach');
-    const miracle = isDesperateSeller && Math.random() < 0.12;
+    const isDesperateSeller = (p.dsProfile === 'desperate' || p.dsProfile === 'crisis');
+    const miracle = isDesperateSeller && Math.random() < 0.15;
 
     if (miracle) {
       updatePatience(+10);
@@ -3318,7 +3330,9 @@ function handleDesperateAllInOffer(budgetAmount) {
       showAgentStep(budgetAmount);
     } else {
       updatePatience(-50);
-      addNegoMessage('seller', getNegoDialogue('offerTooLow', { OFFER: budgetAmount.toFixed(1) }));
+      const lowRejKey = `offerTooLow_${p.dsProfile || 'calculating'}`;
+      const msg = getNegoDialogue(lowRejKey, { OFFER: budgetAmount.toFixed(1) }) || getNegoDialogue('offerTooLow_calculating', { OFFER: budgetAmount.toFixed(1) });
+      addNegoMessage('seller', msg);
       audio.play('sms_in');
 
       document.getElementById('nego-choices-box').innerHTML = `
@@ -3344,19 +3358,47 @@ function handleOfferPrice(amount, type) {
 
   setTimeout(() => {
     const hiddenPrice = p.hiddenRealPrice;
+    const dsProfile = activeNegotiation.dsProfile || 'calculating';
 
     if (amount >= hiddenPrice) {
+      // ÉVÉNEMENT DRAMATIQUE : Surenchère d'un Club Rival (20% de chances sur les bons profils si pas encore eu de surenchère)
+      const isHighCaliber = (p.caliberTier === 'TOP_TARGET' || p.caliberTier === 'SOLID' || p.estimatedPrice >= 6.0);
+      const canTriggerRival = isHighCaliber && !activeNegotiation.hasRivalBid && realtimeRemainingSeconds > 25 && Math.random() < 0.22;
+
+      if (canTriggerRival) {
+        triggerRivalSnatchEvent(amount);
+        return;
+      }
+
       updatePatience(+20);
-      addNegoMessage('seller', getNegoDialogue('dealAccepted', { NAME: p.name, PRICE: amount.toFixed(1) }));
+      addNegoMessage('seller', `Accord trouvé entre nos deux clubs ! Pour ${amount.toFixed(1)} M€, nous validons le transfert de ${p.name}. Voyez maintenant avec son représentant.`);
       audio.play('sms_in');
       showAgentStep(amount);
     } else {
-      const diffPatienceLoss = activeScenario.difficulty === 'difficile' ? -40 : -25;
-      updatePatience(diffPatienceLoss);
+      // Perte de patience asymétrique selon le tempérament du DS
+      let diffLoss = -25;
+      if (dsProfile === 'shark') diffLoss = -42;
+      else if (dsProfile === 'calculating') diffLoss = -30;
+      else if (dsProfile === 'crisis') diffLoss = -22;
+      else if (dsProfile === 'desperate') diffLoss = -18;
+
+      if (activeScenario.difficulty === 'difficile') diffLoss -= 8;
+
+      updatePatience(diffLoss);
 
       if (activeNegotiation.patience > 0) {
-        const counterPrice = Math.round(Math.max(amount * 1.15, hiddenPrice) * 10) / 10;
-        addNegoMessage('seller', `${getNegoDialogue('offerTooLow', { OFFER: amount.toFixed(1) })} ${getNegoDialogue('counterOffer', { NAME: p.name, PRICE: counterPrice.toFixed(1) })}`);
+        let counterFactor = 1.15;
+        if (dsProfile === 'shark') counterFactor = 1.25;
+        else if (dsProfile === 'desperate') counterFactor = 1.08;
+
+        const counterPrice = Math.round(Math.max(amount * counterFactor, hiddenPrice) * 10) / 10;
+        const lowKey = `offerTooLow_${dsProfile}`;
+        const counterKey = `counterOffer_${dsProfile}`;
+
+        const rejText = getNegoDialogue(lowKey, { OFFER: amount.toFixed(1) }) || getNegoDialogue('offerTooLow_calculating', { OFFER: amount.toFixed(1) });
+        const counterText = getNegoDialogue(counterKey, { PRICE: counterPrice.toFixed(1) }) || `Voici notre contre-proposition : ${counterPrice.toFixed(1)} M€.`;
+
+        addNegoMessage('seller', `${rejText} ${counterText}`);
         audio.play('sms_in');
         showCounterChoices(counterPrice);
       }
@@ -3364,15 +3406,95 @@ function handleOfferPrice(amount, type) {
   }, 650);
 }
 
+// GESTION DE LA SURENCHÈRE RIVALE EN DIRECT
+function triggerRivalSnatchEvent(initialAgreedPrice) {
+  activeNegotiation.hasRivalBid = true;
+  audio.play('alert');
+
+  const rivalClub = RIVAL_CLUBS_POOL[Math.floor(Math.random() * RIVAL_CLUBS_POOL.length)];
+  const hike = Math.max(0.5, Math.round(initialAgreedPrice * 0.08 * 10) / 10);
+  const rivalPrice = Math.round((initialAgreedPrice + hike) * 10) / 10;
+
+  activeNegotiation.rivalClub = rivalClub;
+  activeNegotiation.rivalPrice = rivalPrice;
+
+  const warningMsg = getNegoDialogue('rivalSnatchWarning', { RIVAL: rivalClub, RIVAL_OFFER: rivalPrice.toFixed(1) });
+  addNegoMessage('seller', warningMsg);
+
+  const choicesContainer = document.getElementById('nego-choices-box');
+  const canAffordMatch = (rivalPrice <= currentRemainingBudget);
+
+  choicesContainer.innerHTML = `
+    <div class="bg-rose-950/40 border border-rose-500/40 p-2.5 rounded-xl text-[11px] text-rose-300 mb-2 font-bold animate-pulse">
+      🚨 Surenchère hostile de ${rivalClub} (${rivalPrice.toFixed(1)} M€) !
+    </div>
+    ${canAffordMatch ? `
+      <button onclick="handleMatchRivalBid(${rivalPrice})" class="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition mb-1.5 flex items-center justify-center gap-1.5 cursor-pointer">
+        <span>S'aligner sur ${rivalClub} (${rivalPrice.toFixed(1)} M€)</span>
+      </button>
+    ` : `
+      <div class="text-[11px] text-rose-400 mb-2 bg-rose-950/30 p-2 rounded-lg border border-rose-900/40">
+        Fonds insuffisants pour vous aligner (${currentRemainingBudget.toFixed(1)} M€ restants).
+      </div>
+    `}
+    <button onclick="handleBluffRivalBid(${initialAgreedPrice})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 transition mb-1.5 flex items-center justify-center gap-1.5 cursor-pointer">
+      <span>Contester le chantage : « Leur offre est du vent, on reste à ${initialAgreedPrice.toFixed(1)} M€ »</span>
+    </button>
+    <button onclick="failAndLockNegotiation()" class="w-full py-2 text-gray-500 hover:text-white text-xs">
+      Se retirer : Laisser filer le joueur à ${rivalClub}
+    </button>
+  `;
+}
+
+function handleMatchRivalBid(newPrice) {
+  audio.play('sms_out');
+  addNegoMessage('me', `Nous nous alignons immédiatement sur les ${newPrice.toFixed(1)} M€ ! Envoyez les papiers.`);
+
+  setTimeout(() => {
+    activeNegotiation.offeredPrice = newPrice;
+    updatePatience(+20);
+    const acceptMsg = getNegoDialogue('rivalMatchAccepted', { RIVAL_OFFER: newPrice.toFixed(1) });
+    addNegoMessage('seller', acceptMsg);
+    audio.play('sms_in');
+    showAgentStep(newPrice);
+  }, 600);
+}
+
+function handleBluffRivalBid(originalPrice) {
+  audio.play('sms_out');
+  addNegoMessage('me', `C'est une ficelle trop grosse. Nous ne croyons pas à cette offre de ${activeNegotiation.rivalClub}. C'est ${originalPrice.toFixed(1)} M€ ou rien.`);
+
+  setTimeout(() => {
+    const dsProfile = activeNegotiation.dsProfile || 'calculating';
+    let bluffOdds = 0.25;
+    if (dsProfile === 'desperate' || dsProfile === 'crisis') bluffOdds = 0.50;
+    else if (dsProfile === 'shark') bluffOdds = 0.12;
+
+    const bluffSuccess = Math.random() < bluffOdds;
+
+    if (bluffSuccess) {
+      updatePatience(+20);
+      const winMsg = getNegoDialogue('rivalBluffSuccess', { PRICE: originalPrice.toFixed(1) });
+      addNegoMessage('seller', winMsg);
+      audio.play('sms_in');
+      showAgentStep(originalPrice);
+    } else {
+      audio.play('fail');
+      const failMsg = getNegoDialogue('rivalBluffFail', { RIVAL: activeNegotiation.rivalClub, NAME: activeNegotiation.player.name });
+      addNegoMessage('seller', failMsg);
+      updatePatience(-100);
+    }
+  }, 700);
+}
+
 function showCounterChoices(counterPrice) {
   const choicesContainer = document.getElementById('nego-choices-box');
   const budget = currentRemainingBudget;
   const p = activeNegotiation.player;
 
-  // Clause calculations:
-  // 1) 20% à la revente -> cuts cash by 15%
+  // Clause 25% à la revente -> cuts cash by 15%
   const sellOnPrice = Math.round(counterPrice * 0.85 * 10) / 10;
-  // 2) Bonus de fin de saison -> cuts upfront cash by 1.0 M€
+  // Clause Bonus de fin de saison -> cuts cash by 1.0 M€
   const bonusPrice = Math.round(Math.max(0.8, counterPrice - 1.0) * 10) / 10;
 
   const canAffordRaw = (counterPrice <= budget);
@@ -3389,13 +3511,13 @@ function showCounterChoices(counterPrice) {
     `;
   }
 
-  // Clause 20% à la revente
+  // Clause 25% à la revente
   if (canAffordSellOn) {
     buttonsHtml += `
       <button onclick="handleClauseSellOn(${counterPrice}, ${sellOnPrice})" class="w-full text-left p-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 border border-emerald-500/40 hover:border-emerald-400 transition flex items-center justify-between text-xs">
         <div>
-          <span class="font-bold text-emerald-400">Proposer Clause 20% à la revente</span>
-          <span class="block text-[10px] text-gray-400">Offrir <strong>${sellOnPrice.toFixed(1)} M€ cash</strong> + 20% sur la plus-value future</span>
+          <span class="font-bold text-emerald-400">Proposer Clause 25% à la revente</span>
+          <span class="block text-[10px] text-gray-400">Offrir <strong>${sellOnPrice.toFixed(1)} M€ cash</strong> + 25% sur la future plus-value</span>
         </div>
         <span class="text-[11px] font-mono font-bold text-emerald-300">-${(counterPrice - sellOnPrice).toFixed(1)} M€ cash</span>
       </button>
@@ -3442,26 +3564,30 @@ function showCounterChoices(counterPrice) {
 function handleClauseSellOn(rawCounterPrice, cashPrice) {
   audio.play('sms_out');
   const p = activeNegotiation.player;
+  const dsProfile = activeNegotiation.dsProfile || 'calculating';
 
-  addNegoMessage('me', getNegoDialogue('proposeClauseSellOn', { NAME: p.name, PRICE: cashPrice.toFixed(1) }));
+  addNegoMessage('me', `Nous vous proposons ${cashPrice.toFixed(1)} M€ cash et nous vous garantissons 25% sur la future plus-value de ${p.name}.`);
 
   setTimeout(() => {
-    let acceptChance = 0.70;
-    if (activeRunModifier && activeRunModifier.id === 'crise_liquidites') acceptChance += 0.25;
-    if (activeRunModifier && activeRunModifier.id === 'fuite_mediatique') acceptChance -= 0.30;
-    if (p.sellerProfile === 'desperate') acceptChance = Math.min(0.95, acceptChance + 0.15);
-    if (p.sellerProfile === 'aggressive') acceptChance = Math.max(0.15, acceptChance - 0.20);
+    let acceptChance = 0.60;
+    if (dsProfile === 'desperate') acceptChance = 0.85;
+    else if (dsProfile === 'crisis') acceptChance = 0.75;
+    else if (dsProfile === 'shark') acceptChance = 0.25;
+
+    if (activeRunModifier && activeRunModifier.id === 'crise_liquidites') acceptChance += 0.20;
+    if (activeRunModifier && activeRunModifier.id === 'fuite_mediatique') acceptChance -= 0.25;
 
     if (Math.random() < acceptChance) {
       activeNegotiation.usedClause = true;
       activeNegotiation.offeredPrice = cashPrice;
       updatePatience(+20);
-      addNegoMessage('seller', getNegoDialogue('clauseAccepted', { NAME: p.name, PRICE: cashPrice.toFixed(1) }));
+      addNegoMessage('seller', getNegoDialogue('clauseAccepted'));
       audio.play('sms_in');
       showAgentStep(cashPrice);
     } else {
       updatePatience(-20);
-      addNegoMessage('seller', getNegoDialogue('clauseRefused', { NAME: p.name, PRICE: rawCounterPrice.toFixed(1) }));
+      const rejKey = dsProfile === 'shark' ? 'clauseRefused_shark' : (dsProfile === 'desperate' ? 'clauseRefused_desperate' : 'clauseRefused_general');
+      addNegoMessage('seller', getNegoDialogue(rejKey) || `Nous refusons cette clause. Versez les ${rawCounterPrice.toFixed(1)} M€ comptant.`);
       audio.play('sms_in');
       if (activeNegotiation.patience > 0) {
         showCounterChoices(rawCounterPrice);
@@ -3473,26 +3599,30 @@ function handleClauseSellOn(rawCounterPrice, cashPrice) {
 function handleClauseBonus(rawCounterPrice, cashPrice) {
   audio.play('sms_out');
   const p = activeNegotiation.player;
+  const dsProfile = activeNegotiation.dsProfile || 'calculating';
 
-  addNegoMessage('me', getNegoDialogue('proposeClauseBonus', { NAME: p.name, PRICE: cashPrice.toFixed(1) }));
+  addNegoMessage('me', `Nous posons ${cashPrice.toFixed(1)} M€ fermes ce soir, plus 1.0 M€ de bonus si notre club remplit son objectif de fin de saison.`);
 
   setTimeout(() => {
     let acceptChance = 0.65;
-    if (activeRunModifier && activeRunModifier.id === 'crise_liquidites') acceptChance += 0.25;
-    if (activeRunModifier && activeRunModifier.id === 'fuite_mediatique') acceptChance -= 0.30;
-    if (p.sellerProfile === 'desperate') acceptChance = Math.min(0.95, acceptChance + 0.15);
-    if (p.sellerProfile === 'aggressive') acceptChance = Math.max(0.15, acceptChance - 0.20);
+    if (dsProfile === 'shark') acceptChance = 0.20;
+    else if (dsProfile === 'desperate') acceptChance = 0.50;
+    else if (dsProfile === 'crisis') acceptChance = 0.70;
+
+    if (activeRunModifier && activeRunModifier.id === 'crise_liquidites') acceptChance += 0.20;
+    if (activeRunModifier && activeRunModifier.id === 'fuite_mediatique') acceptChance -= 0.25;
 
     if (Math.random() < acceptChance) {
       activeNegotiation.usedClause = true;
       activeNegotiation.offeredPrice = cashPrice;
       updatePatience(+20);
-      addNegoMessage('seller', getNegoDialogue('clauseAccepted', { NAME: p.name, PRICE: cashPrice.toFixed(1) }));
+      addNegoMessage('seller', getNegoDialogue('clauseAccepted'));
       audio.play('sms_in');
       showAgentStep(cashPrice);
     } else {
       updatePatience(-20);
-      addNegoMessage('seller', getNegoDialogue('clauseRefused', { NAME: p.name, PRICE: rawCounterPrice.toFixed(1) }));
+      const rejKey = dsProfile === 'shark' ? 'clauseRefused_shark' : (dsProfile === 'desperate' ? 'clauseRefused_desperate' : 'clauseRefused_general');
+      addNegoMessage('seller', getNegoDialogue(rejKey) || `Refus de ce bonus conditionnel. Nous exigeons ${rawCounterPrice.toFixed(1)} M€ fermes.`);
       audio.play('sms_in');
       if (activeNegotiation.patience > 0) {
         showCounterChoices(rawCounterPrice);
@@ -3504,49 +3634,67 @@ function handleClauseBonus(rawCounterPrice, cashPrice) {
 function handleBluffUltimatum() {
   audio.play('sms_out');
   const p = activeNegotiation.player;
+  const dsProfile = activeNegotiation.dsProfile || 'calculating';
   addNegoMessage('me', getNegoDialogue('userBluff', { NAME: p.name }));
 
   setTimeout(() => {
-    let bluffSuccessRate = activeScenario.difficulty === 'difficile' ? 0.20 : 0.45;
+    let bluffSuccessRate = 0.25;
+    if (dsProfile === 'shark') bluffSuccessRate = 0.12;
+    else if (dsProfile === 'calculating') bluffSuccessRate = 0.25;
+    else if (dsProfile === 'crisis') bluffSuccessRate = 0.45;
+    else if (dsProfile === 'desperate') bluffSuccessRate = 0.50;
+
+    if (activeScenario.difficulty === 'difficile') bluffSuccessRate -= 0.10;
     if (activeRunModifier && activeRunModifier.id === 'as_bluffeur') bluffSuccessRate += 0.25;
     if (activeRunModifier && activeRunModifier.id === 'inflation_panique') bluffSuccessRate -= 0.15;
-    const isSuccess = Math.random() < bluffSuccessRate;
+
+    const isSuccess = Math.random() < Math.max(0.08, bluffSuccessRate);
 
     if (isSuccess) {
       updatePatience(+20);
-      addNegoMessage('seller', getNegoDialogue('bluffSuccess', { NAME: p.name, PRICE: activeNegotiation.offeredPrice.toFixed(1) }));
+      addNegoMessage('seller', getNegoDialogue('bluffSuccess'));
       audio.play('sms_in');
       unlockAchievement('as_bluff');
       showAgentStep(activeNegotiation.offeredPrice);
     } else {
-      addNegoMessage('seller', getNegoDialogue('bluffFail', { NAME: p.name }));
+      addNegoMessage('seller', getNegoDialogue('bluffFail'));
       audio.play('fail');
       updatePatience(-100);
     }
   }, 700);
 }
 
-// STEP 2: AGENT NEGOTIATION (TENSION SUR LES CONDITIONS DU JOUEUR)
+// STEP 2: NÉGOCIATION AVEC L'AGENT (3 CHOIX STRATÉGIQUES)
 let isDealSigningLocked = false;
 
 function showAgentStep(agreedClubPrice) {
   isDealSigningLocked = false;
   const choicesContainer = document.getElementById('nego-choices-box');
   const p = activeNegotiation.player;
-  const agentBonus = Math.max(0.6, Math.round(agreedClubPrice * 0.08 * 10) / 10);
+  const agentProfile = activeNegotiation.agentProfile || 'opportunist';
+  const agentLabel = activeNegotiation.agentLabel || 'Agent Négociateur';
+
+  // Commission de l'agent calibrée selon son profil
+  let rate = 0.08;
+  if (agentProfile === 'shark_agent') rate = 0.10;
+  else if (agentProfile === 'pro_player') rate = 0.06;
+
+  const agentBonus = Math.max(0.5, Math.round(agreedClubPrice * rate * 10) / 10);
   const totalCost = Math.round((agreedClubPrice + agentBonus) * 10) / 10;
 
   setTimeout(() => {
-    // Contact updates to the Agent
-    document.getElementById('nego-contact-name').textContent = `Agent de ${p.name}`;
-    document.getElementById('nego-contact-sub').innerHTML = `<span class="text-amber-400 font-bold">Conseiller Sportif</span> • <span class="inline-flex items-center gap-1 text-emerald-400 font-semibold">${typeof getSvgIcon === 'function' ? getSvgIcon('liveRadar', 'w-3 h-3 text-emerald-400') : ''} En direct</span>`;
+    const elContact = document.getElementById('nego-contact-name');
+    if (elContact) {
+      elContact.innerHTML = `<span>Agent de ${p.name}</span> <span class="text-[10px] font-bold text-blue-500/90 dark:text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20">${agentLabel}</span>`;
+    }
+    const elContactSub = document.getElementById('nego-contact-sub');
+    if (elContactSub) {
+      elContactSub.innerHTML = `<span class="inline-flex items-center gap-1 text-emerald-400 font-semibold">${typeof getSvgIcon === 'function' ? getSvgIcon('liveRadar', 'w-3 h-3 text-emerald-400') : ''} En direct</span>`;
+    }
 
-    const agentDialogues = [
-      `[Agent] Accord trouvé avec le club vendeur pour ${agreedClubPrice.toFixed(1)} M€ ! Mon joueur est très motivé, mais un club anglais lui propose une prime de signature de ${agentBonus.toFixed(1)} M€. Si vous vous alignez (+${agentBonus.toFixed(1)} M€), nous signons dans la minute !`,
-      `[Agent] Feu vert du club pour ${agreedClubPrice.toFixed(1)} M€. Mon client a deux autres touches sérieuses : nous exigeons une prime d'installation de ${agentBonus.toFixed(1)} M€ pour valider le contrat immédiatement.`,
-      `[Agent] Parfait pour l'indemnité (${agreedClubPrice.toFixed(1)} M€). Pour finaliser les conditions personnelles de ${p.name}, nous demandons ${agentBonus.toFixed(1)} M€ de bonus contractuel.`
-    ];
-    const agentMsg = agentDialogues[Math.floor(Math.random() * agentDialogues.length)];
+    const demandKey = `agentDemand_${agentProfile}`;
+    const agentMsg = getNegoDialogue(demandKey, { BONUS: agentBonus.toFixed(1), NAME: p.name }) ||
+                     `[Agent] Accord avec le club validé pour ${agreedClubPrice.toFixed(1)} M€. Nous demandons une prime d'engagement de ${agentBonus.toFixed(1)} M€ pour finaliser le bail.`;
     addNegoMessage('seller', agentMsg);
     audio.play('sms_in');
 
@@ -3554,16 +3702,21 @@ function showAgentStep(agreedClubPrice) {
 
     choicesContainer.innerHTML = `
       ${canAffordBonus ? `
-        <button id="btn-accept-agent-bonus" onclick="acceptAgentBonus(${totalCost})" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-1.5 cursor-pointer">
-          <span>Payer la prime & Valider le contrat (${totalCost.toFixed(1)} M€)</span>
+        <button id="btn-accept-agent-bonus" onclick="acceptAgentBonus(${totalCost})" class="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-display font-extrabold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-1.5 cursor-pointer mb-1.5">
+          <span>Payer la prime d'agent & Valider (${totalCost.toFixed(1)} M€)</span>
         </button>
       ` : `
-        <div class="text-[11px] text-rose-400 mb-2 bg-rose-950/30 p-2 rounded-lg border border-rose-900/40">
+        <div class="text-[11px] text-rose-400 mb-1.5 bg-rose-950/30 p-2 rounded-lg border border-rose-900/40">
           La prime ferait dépasser votre budget disponible (${currentRemainingBudget.toFixed(1)} M€ restants).
         </div>
       `}
-      <button id="btn-refuse-agent-bonus" onclick="refuseAgentBonus(${agreedClubPrice})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 transition flex items-center justify-center gap-1.5 cursor-pointer">
-        <span>Coup de bluff : « À prendre ou à laisser sans prime (${agreedClubPrice.toFixed(1)} M€) ! »</span>
+      <button id="btn-promise-starter" onclick="proposePromisedStarterRole(${agreedClubPrice})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-emerald-400 font-display font-bold text-xs rounded-xl border border-emerald-500/40 transition flex items-center justify-between px-3 cursor-pointer mb-1.5">
+        <span class="text-left">Promesse Sportive : « Titulaire Indispensable garanti »</span>
+        <span class="text-[10px] font-mono text-emerald-300 font-bold">0 M€ prime</span>
+      </button>
+      <button id="btn-refuse-agent-bonus" onclick="refuseAgentBonus(${agreedClubPrice})" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-amber-400 font-display font-bold text-xs rounded-xl border border-gray-700 transition flex items-center justify-between px-3 cursor-pointer">
+        <span>Bras de fer : « À prendre ou à laisser sans prime (${agreedClubPrice.toFixed(1)} M€) »</span>
+        <span class="text-[10px] font-bold text-rose-400">Risqué</span>
       </button>
     `;
   }, 400);
@@ -3573,7 +3726,6 @@ function acceptAgentBonus(totalCost) {
   if (isDealSigningLocked) return;
   isDealSigningLocked = true;
 
-  // Verrouillage et désactivation immédiate des boutons pour éliminer les clics multiples
   const choicesContainer = document.getElementById('nego-choices-box');
   if (choicesContainer) {
     choicesContainer.innerHTML = `
@@ -3587,7 +3739,7 @@ function acceptAgentBonus(totalCost) {
   audio.play('sms_out');
   addNegoMessage('me', `D'accord pour la prime. L'important est que le joueur soit pleinement investi dès demain.`);
   setTimeout(() => {
-    addNegoMessage('seller', `[Agent] Parfait, accord personnel validé ! Nous finalisons les examens médicaux.`);
+    addNegoMessage('seller', `[Agent] Parfait, accord personnel entériné ! Nous finalisons les examens médicaux.`);
     audio.play('sms_in');
     setTimeout(() => {
       proceedToMedicalExam(totalCost);
@@ -3596,29 +3748,78 @@ function acceptAgentBonus(totalCost) {
   }, 600);
 }
 
+function proposePromisedStarterRole(basePrice) {
+  if (isDealSigningLocked) return;
+  isDealSigningLocked = true;
+
+  audio.play('sms_out');
+  const p = activeNegotiation.player;
+  const agentProfile = activeNegotiation.agentProfile || 'opportunist';
+
+  addNegoMessage('me', `Nous ne verserons pas de prime financière, mais le coach s'engage formellement : ${p.name} sera notre titulaire indiscutable et le patron de notre projet sportif.`);
+
+  setTimeout(() => {
+    let acceptChance = 0.50;
+    if (agentProfile === 'pro_player') acceptChance = 0.85;
+    else if (agentProfile === 'shark_agent') acceptChance = 0.05; // Les requins ne croient pas aux promesses de temps de jeu
+
+    const isAccepted = Math.random() < acceptChance;
+
+    if (isAccepted) {
+      activeNegotiation.promisedStarter = true;
+      const okMsg = getNegoDialogue('agentPromiseAccepted') || `[Agent] C'est une excellente perspective pour mon poulain. Nous acceptons de signer sans prime !`;
+      addNegoMessage('seller', okMsg);
+      audio.play('sms_in');
+      setTimeout(() => {
+        proceedToMedicalExam(basePrice);
+        isDealSigningLocked = false;
+      }, 650);
+    } else {
+      isDealSigningLocked = false;
+      const refMsg = getNegoDialogue('agentPromiseRefused') || `[Agent] Des paroles ne remplacent pas une prime. C'est du concret qu'il nous faut !`;
+      addNegoMessage('seller', refMsg);
+      audio.play('fail');
+      updatePatience(-35);
+
+      if (activeNegotiation.patience > 0) {
+        showAgentStep(basePrice);
+      }
+    }
+  }, 700);
+}
+
 function refuseAgentBonus(basePrice) {
   if (isDealSigningLocked) return;
   isDealSigningLocked = true;
 
-  // Verrouillage et désactivation immédiate des boutons
   const choicesContainer = document.getElementById('nego-choices-box');
   if (choicesContainer) {
     choicesContainer.innerHTML = `
       <div class="py-3 px-4 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold text-center flex items-center justify-center gap-2">
         <svg class="w-4 h-4 animate-spin text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
-        <span>Attente de la réponse de l'agent...</span>
+        <span>Bras de fer en cours avec l'agent...</span>
       </div>
     `;
   }
 
   audio.play('sms_out');
   const p = activeNegotiation.player;
+  const agentProfile = activeNegotiation.agentProfile || 'opportunist';
+
   addNegoMessage('me', `Hors de question de céder aux surenchères d'agent. C'est l'offre sèche (${basePrice.toFixed(1)} M€) ou nous nous retirons.`);
 
   setTimeout(() => {
-    const success = Math.random() < 0.72;
+    // Équilibrage réaliste des taux de succès au lieu de 72% automatique
+    let successOdds = 0.38;
+    if (agentProfile === 'pro_player') successOdds = 0.52;
+    else if (agentProfile === 'shark_agent') successOdds = 0.18; // Très difficile de bluffer un agent mercenaire
+
+    if (activeScenario.difficulty === 'difficile') successOdds -= 0.08;
+
+    const success = Math.random() < Math.max(0.10, successOdds);
+
     if (success) {
-      addNegoMessage('seller', `[Agent] Bon... mon client adore le coach et veut absolument rejoindre votre équipe. On signe sans la prime !`);
+      addNegoMessage('seller', getNegoDialogue('agentRefusalAccepted'));
       audio.play('sms_in');
       setTimeout(() => {
         proceedToMedicalExam(basePrice);
@@ -3626,91 +3827,13 @@ function refuseAgentBonus(basePrice) {
       }, 600);
     } else {
       isDealSigningLocked = false;
-      addNegoMessage('seller', `[Agent] Dommage. Mon client ne se bradera pas dans ces conditions. Les discussions sont rompues !`);
+      addNegoMessage('seller', getNegoDialogue('agentRefusalRejected'));
       audio.play('fail');
       updatePatience(-100);
     }
-  }, 650);
+  }, 700);
 }
 
-// ==============================================================
-// 6. VISITE MÉDICALE & ANOMALIES PHYSIQUES VARIÉES (12 SCÉNARIOS)
-// ==============================================================
-
-const MEDICAL_DILEMMAS_DB = [
-  {
-    id: 'achille',
-    title: 'Tendon d\'Achille Enflammé',
-    desc: (p) => `Le médecin-chef alerte : un épaississement et un nodule inflammatoire sont visibles à l'échographie sur le tendon d'Achille de <strong>${p.name}</strong>. Risque élevé de rupture en cas d'enchaînement de matchs. Prenez-vous le risque de valider le contrat ?`,
-    addedTrait: 'Genou en cristal'
-  },
-  {
-    id: 'pubalgie',
-    title: 'Pubalgie Chronique Tenace',
-    desc: (p) => `L'IRM pelvienne révèle une inflammation symphysaire carabinée chez <strong>${p.name}</strong>. Il a joué sous infiltrations ces derniers mois. Risque d'arrêt de 3 à 5 mois au moindre faux mouvement. Signez-vous quand même ?`,
-    addedTrait: 'Genou en cristal'
-  },
-  {
-    id: 'ischios',
-    title: 'Fibrose aux Ischio-Jambiers',
-    desc: (p) => `Le staff médical relève une cicatrice fibreuse profonde à l'arrière de la cuisse de <strong>${p.name}</strong> suite à un ancien claquage mal soigné. Les accélérations brutales risquent de rouvrir la lésion. Validez-vous ce pari ?`,
-    addedTrait: 'Genou en cristal'
-  },
-  {
-    id: 'croises',
-    title: 'Laxité du Ligament Croisé Antérieur',
-    desc: (p) => `L'examen orthopédique décèle un tiroir antérieur anormal au genou de <strong>${p.name}</strong>. Une rechute ligamentaire majeure n'est pas à exclure lors des chocs hivernaux. Prenez-vous le risque ?`,
-    addedTrait: 'Genou en cristal'
-  },
-  {
-    id: 'metatarse',
-    title: 'Fissure de Fatigue au Métatarse',
-    desc: (p) => `La radiologie osseuse montre une micro-fissure d'usure au pied d'appui de <strong>${p.name}</strong>. S'il enchaîne les 90 minutes sans repos strict, une fracture nette le privera de compétition. Confirmez-vous le transfert ?`,
-    addedTrait: 'Genou en cristal'
-  },
-  {
-    id: 'cheville',
-    title: 'Instabilité Chronique de la Cheville',
-    desc: (p) => `Les antécédents d'entorses à répétition ont provoqué une distension ligamentaire à la cheville de <strong>${p.name}</strong>. Le joueur aura besoin d'infiltrations et d'un protocole renforcé chaque semaine. Prenez-vous le risque ?`,
-    addedTrait: 'Genou en cristal'
-  },
-  {
-    id: 'epaule',
-    title: 'Séquelles d\'Opération de l\'Épaule',
-    desc: (p) => `Le médecin constate une instabilité de la coiffe des rotateurs suite à une ancienne luxation de <strong>${p.name}</strong>. Il sera très vulnérable au moindre duel aérien rugueux. Validez-vous la signature ?`,
-    addedTrait: 'Genou en cristal'
-  },
-  {
-    id: 'lombalgie',
-    title: 'Pincement Discal L5-S1 (Lombalgie)',
-    desc: (p) => `Le scanner vertébral met en évidence une hernie discale naissante chez <strong>${p.name}</strong>. Des douleurs sciatiques invalidantes risquent de le paralyser sur les terrains lourds. Prenez-vous le risque ?`,
-    addedTrait: 'Genou en cristal'
-  },
-  {
-    id: 'menisque',
-    title: 'Languette Méniscale Fissurée',
-    desc: (p) => `Le radiologue repère une petite languette cartilagineuse instable au ménisque interne de <strong>${p.name}</strong>. Un blocage articulaire soudain reste possible à tout moment s'il subit une torsion. Prenez-vous le risque de signer ?`,
-    addedTrait: 'Genou en cristal'
-  },
-  {
-    id: 'cardiologie',
-    title: 'Alerte Cardiaque : Extrasystoles d\'Effort',
-    desc: (p) => `Le cardiologue du club relève une légère arythmie bénigne mais atypique lors du test VO2 max de <strong>${p.name}</strong>. Un protocole physique et des bilans trimestriels devront être scrupuleusement respectés. Signez-vous ?`,
-    addedTrait: 'Genou en cristal'
-  },
-  {
-    id: 'nocturne',
-    title: 'Vie Nocturne Tumultueuse',
-    desc: (p) => `Un rapport d'indicateur révèle que <strong>${p.name}</strong> a écumé plusieurs boîtes de nuit jusqu'à 5h du matin ces dernières semaines. Le coach abhorre ce manque de discipline. Prenez-vous le risque d'enflammer le vestiaire ?`,
-    addedTrait: 'Fêtard invétéré'
-  },
-  {
-    id: 'clash_ego',
-    title: 'Égo Surdimensionné & Conflit d\'Agent',
-    desc: (p) => `L'entourage de <strong>${p.name}</strong> réclame déjà des privilèges contractuels exorbitants et menace de créer un scandale médiatique s'il n'est pas titulaire garanti à chaque match. Prenez-vous le risque ?`,
-    addedTrait: 'Fêtard invétéré'
-  }
-];
 
 function proceedToMedicalExam(finalPrice) {
   if (finalPrice > currentRemainingBudget) {

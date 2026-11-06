@@ -525,6 +525,60 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
 
     const playerArchetype = resolvePlayerArchetype(pos, subPosKey, idx);
     const playerPsychology = resolvePlayerPsychology(tier, idx, age);
+    // Profils psychologiques de négociation (Directeur Sportif & Agent)
+    let dsProfile = 'calculating';
+    let dsLabel = 'Négociateur Rationnel';
+    if (stance.profile === 'aggressive') {
+      dsProfile = 'shark';
+      dsLabel = 'Requin Intransigeant';
+    } else if (stance.profile === 'desperate') {
+      if ((stance.text && stance.text.includes('En froid')) || Math.random() < 0.45) {
+        dsProfile = 'crisis';
+        dsLabel = 'Vendeur sous Pression';
+      } else {
+        dsProfile = 'desperate';
+        dsLabel = 'Club aux Abois';
+      }
+    }
+
+    let agentProfile = 'opportunist';
+    let agentLabel = 'Agent Négociateur';
+    const randAgent = Math.random();
+    if (tier === 'TOP_TARGET' || estimatedValue > 10) {
+      if (randAgent < 0.60) {
+        agentProfile = 'shark_agent';
+        agentLabel = 'Cabinet Mercenaire';
+      } else if (randAgent < 0.85) {
+        agentProfile = 'opportunist';
+        agentLabel = "Agent d'Affaires";
+      } else {
+        agentProfile = 'pro_player';
+        agentLabel = 'Conseiller Sportif';
+      }
+    } else if (age <= 21 || tier === 'BARGAIN_RISK') {
+      if (randAgent < 0.55) {
+        agentProfile = 'pro_player';
+        agentLabel = 'Conseiller Protecteur';
+      } else if (randAgent < 0.85) {
+        agentProfile = 'opportunist';
+        agentLabel = 'Agent de Joueur';
+      } else {
+        agentProfile = 'shark_agent';
+        agentLabel = "Cabinet d'Affaires";
+      }
+    } else {
+      if (randAgent < 0.45) {
+        agentProfile = 'opportunist';
+        agentLabel = 'Agent Négociateur';
+      } else if (randAgent < 0.75) {
+        agentProfile = 'pro_player';
+        agentLabel = 'Conseiller Sportif';
+      } else {
+        agentProfile = 'shark_agent';
+        agentLabel = 'Cabinet Mercenaire';
+      }
+    }
+
 
     players.push({
       id: `proc_${Date.now()}_${idx}_${Math.random().toString(36).substring(2, 5)}`,
@@ -547,6 +601,10 @@ function generateProceduralMarket(clubBudget = 50, scenario = null) {
       club: club,
       availability: stance.text,
       sellerProfile: stance.profile,
+      dsProfile: dsProfile,
+      dsLabel: dsLabel,
+      agentProfile: agentProfile,
+      agentLabel: agentLabel,
       traits: playerTraits,
       isSoldToRival: false,
       rivalBidClub: null,

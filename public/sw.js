@@ -1,5 +1,5 @@
 // Service Worker for DEADLINE DAY PANIC (PWA)
-const CACHE_NAME = 'deadline-panic-v5.0';
+const CACHE_NAME = 'deadline-panic-v5.5';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
